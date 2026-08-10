@@ -1,0 +1,36 @@
+{
+  "NEM_SA1/GBDT": {
+    "M3_shrink": 1.0,
+    "M4_offset": -3.574852522913119,
+    "M5_maps": {
+      "neg": [
+        -16.53659986456697,
+        0.12561405927780941
+      ],
+      "pos": [
+        217.26293353188032,
+        -0.03130325543047258
+      ]
+    },
+    "M7_routing": {
+      "n_fire_neg": 2251,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.25790559120073325,
+      "lam_neg": 0.55,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 2189,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.2508020164986251,
+      "lam_neg": 0.25,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  }
+}

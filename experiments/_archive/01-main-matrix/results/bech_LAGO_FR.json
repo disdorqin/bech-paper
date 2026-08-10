@@ -1,0 +1,405 @@
+{
+  "dataset": "LAGO_FR",
+  "tier": "L2",
+  "currency": "EUR",
+  "note": "",
+  "n_rows": 52224,
+  "spike_thr_train": 91.40711999999999,
+  "neg_pct_all": 0.06701899509803921,
+  "neg_pct_test": 0.019146084625694046,
+  "split": {
+    "S1": [
+      0,
+      26111
+    ],
+    "S2": [
+      26112,
+      36555
+    ],
+    "S3": [
+      36556,
+      41777
+    ],
+    "S4": [
+      41778,
+      52223
+    ]
+  },
+  "test_span": [
+    "2015-10-23 18:00:00",
+    "2016-12-31 23:00:00"
+  ],
+  "models": {
+    "Linear": {
+      "base": {
+        "n": 10446,
+        "mae": 5.79236040285587,
+        "rmse": 14.674435977067278,
+        "rmae": 0.7482717449303329,
+        "neg_n": 2,
+        "neg_miss_rate": 1.0,
+        "mae_on_neg": 7.02713953838275,
+        "bias_on_neg": 7.02713953838275,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 59.13647852184506,
+        "spike_miss_rate": 0.8141592920353983,
+        "tail_rmse": 60.6542418548329,
+        "mae_on_normal": 5.2086458635356845
+      },
+      "bech": {
+        "n": 10446,
+        "mae": 5.79236040285587,
+        "rmse": 14.674435977067278,
+        "rmae": 0.7482717449303329,
+        "neg_n": 2,
+        "neg_miss_rate": 1.0,
+        "mae_on_neg": 7.02713953838275,
+        "bias_on_neg": 7.02713953838275,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 59.13647852184506,
+        "spike_miss_rate": 0.8141592920353983,
+        "tail_rmse": 60.6542418548329,
+        "mae_on_normal": 5.2086458635356845
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 10446,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "n_pos_events_S2a": 53,
+        "n_pos_magtrain": 53,
+        "spike_thr_report": 91.40711999999999,
+        "pos_train_thr": 68.89419999999998,
+        "scarr": {
+          "_n_calib": 7833,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 0
+          }
+        }
+      },
+      "seconds": 3.6
+    },
+    "MLP": {
+      "base": {
+        "n": 10446,
+        "mae": 6.530073932088038,
+        "rmse": 15.779748916063678,
+        "rmae": 0.8435714416662446,
+        "neg_n": 2,
+        "neg_miss_rate": 0.0,
+        "mae_on_neg": 5.725521346507048,
+        "bias_on_neg": 4.132553700147559,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 59.26461974060486,
+        "spike_miss_rate": 0.7433628318584071,
+        "tail_rmse": 64.68750491743229,
+        "mae_on_normal": 5.953421665009222
+      },
+      "bech": {
+        "n": 10446,
+        "mae": 6.530073932088038,
+        "rmse": 15.779748916063678,
+        "rmae": 0.8435714416662446,
+        "neg_n": 2,
+        "neg_miss_rate": 0.0,
+        "mae_on_neg": 5.725521346507048,
+        "bias_on_neg": 4.132553700147559,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 59.26461974060486,
+        "spike_miss_rate": 0.7433628318584071,
+        "tail_rmse": 64.68750491743229,
+        "mae_on_normal": 5.953421665009222
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 10446,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "n_pos_events_S2a": 53,
+        "n_pos_magtrain": 53,
+        "spike_thr_report": 91.40711999999999,
+        "pos_train_thr": 68.89419999999998,
+        "scarr": {
+          "_n_calib": 7833,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 1
+          }
+        }
+      },
+      "seconds": 17.2
+    },
+    "LSTM": {
+      "base": {
+        "n": 10446,
+        "mae": 5.628283599473474,
+        "rmse": 15.01310209587203,
+        "rmae": 0.7270758891080668,
+        "neg_n": 2,
+        "neg_miss_rate": 1.0,
+        "mae_on_neg": 8.906789073944092,
+        "bias_on_neg": 8.906789073944092,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 58.88516461937828,
+        "spike_miss_rate": 0.8407079646017699,
+        "tail_rmse": 62.5475551570201,
+        "mae_on_normal": 5.0451276062300145
+      },
+      "bech": {
+        "n": 10446,
+        "mae": 5.628283599473474,
+        "rmse": 15.01310209587203,
+        "rmae": 0.7270758891080668,
+        "neg_n": 2,
+        "neg_miss_rate": 1.0,
+        "mae_on_neg": 8.906789073944092,
+        "bias_on_neg": 8.906789073944092,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 58.88516461937828,
+        "spike_miss_rate": 0.8407079646017699,
+        "tail_rmse": 62.5475551570201,
+        "mae_on_normal": 5.0451276062300145
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 10446,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "n_pos_events_S2a": 53,
+        "n_pos_magtrain": 53,
+        "spike_thr_report": 91.40711999999999,
+        "pos_train_thr": 68.89419999999998,
+        "scarr": {
+          "_n_calib": 7833,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 4
+          }
+        }
+      },
+      "seconds": 956.7
+    },
+    "Transformer": {
+      "base": {
+        "n": 10446,
+        "mae": 5.594993308932759,
+        "rmse": 14.588640256330763,
+        "rmae": 0.7227753653043585,
+        "neg_n": 2,
+        "neg_miss_rate": 0.0,
+        "mae_on_neg": 4.828420333862304,
+        "bias_on_neg": 4.560288558006286,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 54.496389578760194,
+        "spike_miss_rate": 0.7699115044247787,
+        "tail_rmse": 60.46023796882214,
+        "mae_on_normal": 5.060260501601391
+      },
+      "bech": {
+        "n": 10446,
+        "mae": 5.594993308932759,
+        "rmse": 14.588640256330763,
+        "rmae": 0.7227753653043585,
+        "neg_n": 2,
+        "neg_miss_rate": 0.0,
+        "mae_on_neg": 4.828420333862304,
+        "bias_on_neg": 4.560288558006286,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 54.496389578760194,
+        "spike_miss_rate": 0.7699115044247787,
+        "tail_rmse": 60.46023796882214,
+        "mae_on_normal": 5.060260501601391
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 10446,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "n_pos_events_S2a": 53,
+        "n_pos_magtrain": 53,
+        "spike_thr_report": 91.40711999999999,
+        "pos_train_thr": 68.89419999999998,
+        "scarr": {
+          "_n_calib": 7833,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 7
+          }
+        }
+      },
+      "seconds": 51.9
+    },
+    "GBDT": {
+      "base": {
+        "n": 10446,
+        "mae": 6.4590808666671515,
+        "rmse": 18.09327920973301,
+        "rmae": 0.8344003781885218,
+        "neg_n": 2,
+        "neg_miss_rate": 0.0,
+        "mae_on_neg": 18.989807741364007,
+        "bias_on_neg": -15.33923209382924,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 73.50994701767257,
+        "spike_miss_rate": 0.8053097345132744,
+        "tail_rmse": 76.50219471002562,
+        "mae_on_normal": 5.723255745303004
+      },
+      "bech": {
+        "n": 10446,
+        "mae": 6.4590808666671515,
+        "rmse": 18.09327920973301,
+        "rmae": 0.8344003781885218,
+        "neg_n": 2,
+        "neg_miss_rate": 0.0,
+        "mae_on_neg": 18.989807741364007,
+        "bias_on_neg": -15.33923209382924,
+        "spike_thr": 91.40711999999999,
+        "spike_n": 113,
+        "mae_on_spike": 73.50994701767257,
+        "spike_miss_rate": 0.8053097345132744,
+        "tail_rmse": 76.50219471002562,
+        "mae_on_normal": 5.723255745303004
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 10446,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "n_pos_events_S2a": 53,
+        "n_pos_magtrain": 53,
+        "spike_thr_report": 91.40711999999999,
+        "pos_train_thr": 68.89419999999998,
+        "scarr": {
+          "_n_calib": 7833,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 6
+          }
+        }
+      },
+      "seconds": 24.5
+    }
+  },
+  "seconds": 1054.1
+}

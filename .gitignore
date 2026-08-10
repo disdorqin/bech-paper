@@ -1,0 +1,43 @@
+# === Base excludes for all auto-backup repos (WorkBuddy) ===
+# Secrets / nested repos (CRITICAL - never push these)
+.env
+.env.*
+!.env.example
+**/.git/
+**/.git
+.git_old/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+# Node / JS
+node_modules/
+dist/
+build/
+# Venvs
+.venv/
+venv/
+env/
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+# Logs
+*.log
+*.safetensors
+*.pth
+*.pkl
+*.ckpt
+*.bin
+*.zip
+# GitHub 100MB 限制 — 过大数据文件
+data/raw/gefcom2014/els_mmc1.zip
+data/raw/gefcom2014/probe_dropbox_official
+data/raw/ts_benchmarks/traffic.csv
+data/raw/ts_benchmarks/electricity.csv
+# 嵌入的 git 仓库
+experiments/07-route-e/peers/PIR/

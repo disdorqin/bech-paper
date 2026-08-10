@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="100%" role="img">
+  <title>图3：同行对照 M0-M9 — MAE 增益与最坏单点伤害</title>
+  <desc>M0-M9 同行方法对照：绿柱=平均 MAE 增益（正增益），红方块=最坏单点伤害（对数轴）；M2/M4 在 MAE 上碾压 BECH，但红方块高出 3-7 倍且没有零退化保证。BECH 是唯一 18/18 零退化的方法。</desc>
+
+  <rect x="20" y="20" width="640" height="340" fill="#1a1a1a" rx="8"/>
+  <text x="40" y="48" font-size="14" font-weight="500" fill="#f1efe8" font-family="system-ui,sans-serif">图3：同行对照 M0-M9 — 三指标叠加</text>
+  <text x="40" y="65" font-size="11" fill="#888780" font-family="system-ui,sans-serif">绿柱=MAE 增益 | 红方块=最坏单点伤害对数 | 蓝字=加权负价漏判率</text>
+
+  <line x1="40" y1="78" x2="640" y2="78" stroke="#444441" stroke-width="0.5"/>
+
+  <g font-family="system-ui,sans-serif" font-size="11">
+    <line x1="240" y1="88" x2="240" y2="328" stroke="#444441" stroke-width="0.5" stroke-dasharray="2 2"/>
+    <text x="232" y="328" text-anchor="end" fill="#888780" font-size="10">0%</text>
+
+    <text x="40" y="108" fill="#B4B2A9">base</text>
+    <line x1="240" y1="105" x2="240" y2="108" stroke="#5DCAA5" stroke-width="6" opacity="0.0"/>
+    <text x="248" y="108" fill="#888780" font-size="10">漏判 0.656</text>
+
+    <text x="40" y="128" fill="#B4B2A9">M0 重训</text>
+    <rect x="240" y="120" width="80" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="324" y="128" fill="#f1efe8" font-family="monospace" font-size="10">+3.91%</text>
+    <text x="380" y="128" fill="#888780" font-size="10">漏判 0.632</text>
+    <rect x="566" y="118" width="20" height="14" rx="1" fill="#F09595" opacity="0.6"/>
+    <text x="566" y="116" text-anchor="middle" fill="#888780" font-size="8">461</text>
+
+    <text x="40" y="148" fill="#B4B2A9">M1 δ-L2</text>
+    <rect x="160" y="140" width="80" height="10" rx="1" fill="#F09595" opacity="0.55"/>
+    <text x="244" y="148" fill="#F09595" font-family="monospace" font-size="10">-3.97%</text>
+    <text x="380" y="148" fill="#888780" font-size="10">漏判 0.637</text>
+    <rect x="586" y="138" width="28" height="14" rx="1" fill="#F09595" opacity="0.8"/>
+    <text x="586" y="136" text-anchor="middle" fill="#888780" font-size="8">1528</text>
+
+    <text x="40" y="168" fill="#B4B2A9">M2 δ-L1</text>
+    <rect x="240" y="160" width="244" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="488" y="168" fill="#f1efe8" font-family="monospace" font-size="10">+12.19%</text>
+    <text x="510" y="168" fill="#888780" font-size="10">漏判 0.588</text>
+    <rect x="548" y="158" width="14" height="14" rx="1" fill="#F09595" opacity="0.6"/>
+    <text x="548" y="156" text-anchor="middle" fill="#888780" font-size="8">214</text>
+
+    <text x="40" y="188" fill="#B4B2A9">M3 +shrink</text>
+    <rect x="240" y="180" width="218" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="462" y="188" fill="#f1efe8" font-family="monospace" font-size="10">+10.94%</text>
+    <text x="510" y="188" fill="#888780" font-size="10">漏判 0.600</text>
+    <rect x="546" y="178" width="13" height="14" rx="1" fill="#F09595" opacity="0.6"/>
+    <text x="546" y="176" text-anchor="middle" fill="#888780" font-size="8">200</text>
+
+    <text x="40" y="208" fill="#B4B2A9">M4 分位</text>
+    <rect x="240" y="200" width="114" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="358" y="208" fill="#f1efe8" font-family="monospace" font-size="10">+5.67%</text>
+    <text x="430" y="208" fill="#888780" font-size="10">漏判 0.586</text>
+    <rect x="568" y="198" width="18" height="14" rx="1" fill="#F09595" opacity="0.7"/>
+    <text x="568" y="196" text-anchor="middle" fill="#888780" font-size="8">450</text>
+
+    <text x="40" y="228" fill="#B4B2A9">M5 EVT</text>
+    <rect x="240" y="220" width="56" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="300" y="228" fill="#f1efe8" font-family="monospace" font-size="10">+2.83%</text>
+    <text x="430" y="228" fill="#F09595" font-size="10">漏判 0.715 ↑</text>
+    <rect x="570" y="218" width="19" height="14" rx="1" fill="#F09595" opacity="0.7"/>
+    <text x="570" y="216" text-anchor="middle" fill="#888780" font-size="8">488</text>
+
+    <text x="40" y="248" fill="#B4B2A9">M6 无证书</text>
+    <rect x="228" y="240" width="12" height="10" rx="1" fill="#F09595" opacity="0.55"/>
+    <text x="244" y="248" fill="#F09595" font-family="monospace" font-size="10">-0.60%</text>
+    <text x="430" y="248" fill="#F09595" font-size="10">漏判 0.437</text>
+    <rect x="558" y="238" width="16" height="14" rx="1" fill="#F09595" opacity="0.6"/>
+    <text x="558" y="236" text-anchor="middle" fill="#888780" font-size="8">337</text>
+
+    <text x="40" y="272" fill="#f1efe8" font-weight="500">M7 BECH</text>
+    <rect x="240" y="260" width="11" height="10" rx="1" fill="#5DCAA5" opacity="0.85"/>
+    <text x="256" y="272" fill="#f1efe8" font-family="monospace" font-size="10" font-weight="500">+0.54%</text>
+    <text x="320" y="272" fill="#5DCAA5" font-size="10" font-weight="500">漏判 0.535 ↓</text>
+    <text x="430" y="272" fill="#5DCAA5" font-size="10" font-weight="500">0/18 退化 ✓</text>
+    <rect x="528" y="258" width="8" height="14" rx="1" fill="#5DCAA5" opacity="0.85"/>
+    <text x="528" y="256" text-anchor="middle" fill="#04342C" font-size="8" font-weight="500">66</text>
+
+    <text x="40" y="292" fill="#B4B2A9">M8 M2+BECH</text>
+    <rect x="240" y="284" width="244" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="488" y="292" fill="#f1efe8" font-family="monospace" font-size="10">+12.20%</text>
+    <text x="510" y="292" fill="#888780" font-size="10">漏判 0.574</text>
+    <rect x="510" y="282" width="5" height="14" rx="1" fill="#5DCAA5" opacity="0.85"/>
+    <text x="510" y="280" text-anchor="middle" fill="#04342C" font-size="8" font-weight="500">27</text>
+
+    <text x="40" y="312" fill="#f1efe8" font-weight="500">M9 M0+BECH</text>
+    <rect x="240" y="304" width="85" height="10" rx="1" fill="#5DCAA5" opacity="0.7"/>
+    <text x="330" y="312" fill="#f1efe8" font-family="monospace" font-size="10" font-weight="500">+4.25%</text>
+    <text x="430" y="312" fill="#5DCAA5" font-size="10" font-weight="500">漏判 0.527</text>
+    <text x="540" y="312" fill="#5DCAA5" font-size="10" font-weight="500">0/18 退化 ✓</text>
+    <rect x="544" y="302" width="9" height="14" rx="1" fill="#5DCAA5" opacity="0.85"/>
+    <text x="544" y="300" text-anchor="middle" fill="#04342C" font-size="8" font-weight="500">77</text>
+  </g>
+
+  <g transform="translate(40, 336)">
+    <rect x="0" y="0" width="10" height="10" rx="1" fill="#5DCAA5" opacity="0.55"/>
+    <text x="14" y="9" fill="#888780" font-size="10">MAE 增益（越长=改善越多）</text>
+    <rect x="170" y="0" width="10" height="10" rx="1" fill="#F09595" opacity="0.55"/>
+    <text x="184" y="9" fill="#888780" font-size="10">MAE 退化</text>
+    <rect x="260" y="0" width="14" height="10" rx="1" fill="#F09595" opacity="0.7"/>
+    <text x="280" y="9" fill="#888780" font-size="10">最坏伤害（对数位置）</text>
+    <text x="400" y="9" fill="#5DCAA5" font-size="10" font-weight="500">✓ = 18/18 零退化</text>
+  </g>
+</svg>

@@ -1,0 +1,395 @@
+{
+  "dataset": "GEFCOM14P",
+  "tier": "L3",
+  "currency": "USD",
+  "note": "NEGATIVE CONTROL: 0.000% negative price (2011-2013)",
+  "n_rows": 25775,
+  "spike_thr_train": 139.7256,
+  "neg_pct_all": 0.0,
+  "neg_pct_test": 0.0,
+  "split": {
+    "S1": [
+      0,
+      12886
+    ],
+    "S2": [
+      12887,
+      18041
+    ],
+    "S3": [
+      18042,
+      20618
+    ],
+    "S4": [
+      20619,
+      25774
+    ]
+  },
+  "test_span": [
+    "2013-05-17 04:00:00",
+    "2013-12-17 23:00:00"
+  ],
+  "models": {
+    "Linear": {
+      "base": {
+        "n": 5156,
+        "mae": 5.755013419463846,
+        "rmse": 10.442187815624024,
+        "rmae": 0.4643737931588766,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 54.84911225025631,
+        "spike_miss_rate": 0.5915492957746479,
+        "tail_rmse": 40.05265796787878,
+        "mae_on_normal": 5.069530426939506
+      },
+      "bech": {
+        "n": 5156,
+        "mae": 5.755013419463846,
+        "rmse": 10.442187815624024,
+        "rmae": 0.4643737931588766,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 54.84911225025631,
+        "spike_miss_rate": 0.5915492957746479,
+        "tail_rmse": 40.05265796787878,
+        "mae_on_normal": 5.069530426939506
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 5156,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 1.01
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "spike_thr_report": 139.7256,
+        "pos_train_thr": 201.22780000000006,
+        "scarr": {
+          "_n_calib": 3866,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          }
+        }
+      },
+      "seconds": 0.1
+    },
+    "MLP": {
+      "base": {
+        "n": 5156,
+        "mae": 6.360250147309374,
+        "rmse": 11.972062183544708,
+        "rmae": 0.51321052985842,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 49.45700514296898,
+        "spike_miss_rate": 0.5633802816901409,
+        "tail_rmse": 46.65922894678336,
+        "mae_on_normal": 5.7585058789333985
+      },
+      "bech": {
+        "n": 5156,
+        "mae": 6.360250147309374,
+        "rmse": 11.972062183544708,
+        "rmae": 0.51321052985842,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 49.45700514296898,
+        "spike_miss_rate": 0.5633802816901409,
+        "tail_rmse": 46.65922894678336,
+        "mae_on_normal": 5.7585058789333985
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 5156,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 1.01
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "spike_thr_report": 139.7256,
+        "pos_train_thr": 201.22780000000006,
+        "scarr": {
+          "_n_calib": 3866,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          }
+        }
+      },
+      "seconds": 49.8
+    },
+    "LSTM": {
+      "base": {
+        "n": 5156,
+        "mae": 4.728823634977022,
+        "rmse": 9.360721955931245,
+        "rmae": 0.3815702255579114,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 40.766348537391345,
+        "spike_miss_rate": 0.39436619718309857,
+        "tail_rmse": 37.044494818510266,
+        "mae_on_normal": 4.225644821196999
+      },
+      "bech": {
+        "n": 5156,
+        "mae": 4.728823634977022,
+        "rmse": 9.360721955931245,
+        "rmae": 0.3815702255579114,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 40.766348537391345,
+        "spike_miss_rate": 0.39436619718309857,
+        "tail_rmse": 37.044494818510266,
+        "mae_on_normal": 4.225644821196999
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 5156,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 1.01
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "spike_thr_report": 139.7256,
+        "pos_train_thr": 201.22780000000006,
+        "scarr": {
+          "_n_calib": 3866,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          }
+        }
+      },
+      "seconds": 541.9
+    },
+    "Transformer": {
+      "base": {
+        "n": 5156,
+        "mae": 6.2349921003212945,
+        "rmse": 12.348776438294808,
+        "rmae": 0.5031034197330458,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 61.35140439745407,
+        "spike_miss_rate": 0.6338028169014085,
+        "tail_rmse": 49.308792064875824,
+        "mae_on_normal": 5.465421741796923
+      },
+      "bech": {
+        "n": 5156,
+        "mae": 6.2349921003212945,
+        "rmse": 12.348776438294808,
+        "rmae": 0.5031034197330458,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 61.35140439745407,
+        "spike_miss_rate": 0.6338028169014085,
+        "tail_rmse": 49.308792064875824,
+        "mae_on_normal": 5.465421741796923
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 5156,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 1.01
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "spike_thr_report": 139.7256,
+        "pos_train_thr": 201.22780000000006,
+        "scarr": {
+          "_n_calib": 3866,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          }
+        }
+      },
+      "seconds": 46.9
+    },
+    "GBDT": {
+      "base": {
+        "n": 5156,
+        "mae": 6.2184649626593504,
+        "rmse": 12.564704794157086,
+        "rmae": 0.5017698399397861,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 60.26608202091273,
+        "spike_miss_rate": 0.5492957746478874,
+        "tail_rmse": 50.1905683290398,
+        "mae_on_normal": 5.463817802160631
+      },
+      "bech": {
+        "n": 5156,
+        "mae": 6.2184649626593504,
+        "rmse": 12.564704794157086,
+        "rmae": 0.5017698399397861,
+        "neg_n": 0,
+        "neg_miss_rate": null,
+        "mae_on_neg": null,
+        "bias_on_neg": null,
+        "spike_thr": 139.7256,
+        "spike_n": 71,
+        "mae_on_spike": 60.26608202091273,
+        "spike_miss_rate": 0.5492957746478874,
+        "tail_rmse": 50.1905683290398,
+        "mae_on_normal": 5.463817802160631
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 5156,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 1.01,
+        "tau_pos": 1.01
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "spike_thr_report": 139.7256,
+        "pos_train_thr": 201.22780000000006,
+        "scarr": {
+          "_n_calib": 3866,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          },
+          "pos": {
+            "status": "disabled(no training events)",
+            "n_fire": 0
+          }
+        }
+      },
+      "seconds": 1.6
+    }
+  },
+  "seconds": 640.4
+}

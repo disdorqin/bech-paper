@@ -1,0 +1,9 @@
+arxiv_id,local_pdf,url,sha256,coordinate,verbatim_quote,counted
+2512.22428,D:\AI_Memory\papers\raw\2512.22428.pdf,https://arxiv.org/abs/2512.22428,786fdee0de162a6f88bf5fb64f45a9f58b15c14894a1651bbdbb88dc6ad404d1,p4 Eq(9),The unconstrained correction is Δ_i = Δ_ridge,yes
+2601.20280,D:\AI_Memory\papers\raw\2601.20280.pdf,https://arxiv.org/abs/2601.20280,15ef4a50e3285111379fcf90a5311076950b442f16c3a3108f6814850cbd00d8,p3 Eq1.3,Output-side correction: ˜Y=F(X)+δ A_out,yes
+2605.21088,D:\AI_Memory\papers\raw\2605.21088.pdf,https://arxiv.org/abs/2605.21088,42b30709214795c7847f864f58e056e712b05f81b29211a9b923ad40f342872e,p4 decomposition,we decompose the backbone prediction into trend and seasonal,yes
+2605.08935,D:\AI_Memory\papers\raw\2605.08935.pdf,https://arxiv.org/abs/2605.08935,3cc3bd37cac4d6d9594d97d2253da92781d2c9766be724a50a5426e55ecebe9d,p10 L422,outputs a corrected state ˜X_{t+1},yes
+2505.15354,D:\AI_Memory\papers\raw\2505.15354.pdf,https://arxiv.org/abs/2505.15354,421d6a950ba867c5cabe9d0d97ea0c3b8c941692a99015e1fbb08a287e22f1ee,p4 L3,"applying an affine correction g_{a,b}(y)=ay+b",yes
+2505.23583,D:\作业\science\solar_leak_price_model\docs\paper_prep\refs\2505.23583.pdf,https://arxiv.org/abs/2505.23583,6e9e4c828f26fdd5f86ec0a17960bd2bd37f32667f057add726b58c12f01c66c,p6 Eq(4),"y_global = WeightedSum(p, Y_re)",yes
+2101.02703,D:\作业\science\solar_leak_price_model\docs\paper_prep\refs\2101.02703.pdf,https://arxiv.org/abs/2101.02703,082cb7f952b4a4f91ad184a394ebe3766e66a1ccc4c7bbb295b2f7b7994a7983,p5 Theorem 1,Theorem 1 (Validity of UCB calibration),yes
+2110.01052,D:\作业\science\solar_leak_price_model\docs\paper_prep\refs\2110.01052.pdf,https://arxiv.org/abs/2110.01052,a43d0f089add075ecb4c74f71c9eb6a648e020edc70139b19360d6e717ddc0e2,p3 L17,"control the risk, abbreviated as R(λ)=R(T_λ)",yes

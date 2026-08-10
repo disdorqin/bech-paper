@@ -1,0 +1,113 @@
+{
+  "task": "tf3ace032 (v8-E3 repair of t354a219e)",
+  "generated_at": "2026-08-08",
+  "csv_path": "D:\\作业\\science\\solar_leak_price_model\\docs\\paper_prep\\31c_sources.csv",
+  "row_count": 29,
+  "counted_count": 8,
+  "schema_check": {
+    "expected_columns": 17,
+    "header": [
+      "title",
+      "authors",
+      "year",
+      "venue",
+      "id",
+      "pdf_sha256_or_url",
+      "local_path",
+      "coordinate",
+      "verbatim_quote",
+      "negative_price_treatment",
+      "target_horizon",
+      "market",
+      "duration_or_spell",
+      "forecasting",
+      "postprocessing",
+      "counted",
+      "notes"
+    ],
+    "all_rows_have_17_columns": true,
+    "counted_values": [
+      "yes",
+      "no"
+    ],
+    "counted_values_valid": true
+  },
+  "csv_roundtrip": true,
+  "counted_pdfs": {
+    "hagfors2016_wpf1622.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 796098,
+      "computed_sha256": "DA1625F2419DA9D8F0C4EEFF4F47E27D99FDA369B8270BD1C76588D5FD44478E",
+      "recorded_sha256": "DA1625F2419DA9D8F0C4EEFF4F47E27D99FDA369B8270BD1C76588D5FD44478E"
+    },
+    "eichler2012_spikeoccurrence.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 1009917,
+      "computed_sha256": "3410B65A12FFEB391FD8CDA62E122199CC385F5AFAFAFB20A7340AA06FE626DF",
+      "recorded_sha256": "3410B65A12FFEB391FD8CDA62E122199CC385F5AFAFAFB20A7340AA06FE626DF"
+    },
+    "fanone2013_warwick.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 727018,
+      "computed_sha256": "128B618E27A58DE2EDA26B3DE3EFA714F669A5AFD652717184A2FF7567B7543E",
+      "recorded_sha256": "128B618E27A58DE2EDA26B3DE3EFA714F669A5AFD652717184A2FF7567B7543E"
+    },
+    "christensen2009_ncer.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 901610,
+      "computed_sha256": "23777F55A907DDEB3D96426A9057AE67E18A6DC8A95E02D7A410A9988051ED58",
+      "recorded_sha256": "23777F55A907DDEB3D96426A9057AE67E18A6DC8A95E02D7A410A9988051ED58"
+    },
+    "zamudio2024_wayback.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 551996,
+      "computed_sha256": "6DB00B56FB606BF1278DEDE0DF1F3D36A94557BE581C8806A352EB082082B1DF",
+      "recorded_sha256": "6DB00B56FB606BF1278DEDE0DF1F3D36A94557BE581C8806A352EB082082B1DF"
+    },
+    "nicolosi2010_mpra.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 3935520,
+      "computed_sha256": "934C124B6C2DF4669EF3FA4DC8C7A6737F0E03AD3B9D2C0264561366A3E7FE3C",
+      "recorded_sha256": "934C124B6C2DF4669EF3FA4DC8C7A6737F0E03AD3B9D2C0264561366A3E7FE3C"
+    },
+    "gloei2026_fulltext.html": {
+      "exists": true,
+      "hash_match": true,
+      "size": 115903,
+      "computed_sha256": "B21AA7DEEF6B394A43D843A3E72C8DEA33D0A53DB3A86FAE9E05EAABCCDF217C",
+      "recorded_sha256": "B21AA7DEEF6B394A43D843A3E72C8DEA33D0A53DB3A86FAE9E05EAABCCDF217C"
+    },
+    "zamudio2025_duration.pdf": {
+      "exists": true,
+      "hash_match": true,
+      "size": 1352617,
+      "computed_sha256": "7FE1280A50B64DC71801C9B9889C776D2BA8988B66E38676C6C6B9A05C5F47E1",
+      "recorded_sha256": "7FE1280A50B64DC71801C9B9889C776D2BA8988B66E38676C6C6B9A05C5F47E1"
+    }
+  },
+  "full_hashes_64hex": true,
+  "database_coverage": {
+    "OpenAlex": "success (title/search queries)",
+    "Crossref": "success (DOI metadata)",
+    "Unpaywall": "success (OA location)",
+    "IDEAS/RePEc": "success (NCER WP #25 located; MDPI full-text links)",
+    "DOAJ": "success (gloei 2026 indexed)",
+    "Wayback Machine": "success (restored Fanone/Christensen2009/Zamudio2024/Nicolosi PDFs + Zamudio2025 mdpi-res snapshot)",
+    "Semantic Scholar graph API": "FAILED (HTTP 429 rate limit, retries+backoff exhausted)"
+  },
+  "thresholds": {
+    "counted_fulltexts_required": 8,
+    "counted_fulltexts_obtained": 8,
+    "independent_databases_required": 3,
+    "independent_databases_success": 6,
+    "threshold_met": true,
+    "verdict": "EVIDENCE INSUFFICIENT",
+    "verdict_rationale": "8 counted full texts and >=3 successful databases obtained, BUT Semantic Scholar failed (429) and key candidates remain inaccessible (De Vos 2015 full text, Christensen et al. 2012 full text, Keles 2011, Stolberg 2019), and a closest prior for negative-price duration modeling was found (Zamudio Lopez & Zareipour 2025). Per task instruction, NO DIRECT PRIOR may not be claimed while a database failed or key candidates remain inaccessible; direct-prior-found statement is limited to verified items."
+  }
+}

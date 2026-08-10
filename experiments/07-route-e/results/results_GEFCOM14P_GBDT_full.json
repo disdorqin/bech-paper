@@ -1,0 +1,128 @@
+[
+  {
+    "dataset": "GEFCOM14P",
+    "backbone": "GBDT",
+    "seed": 906,
+    "n_train_S1": 12887,
+    "n_train_S2": 5155,
+    "n_calib_S3": 2577,
+    "n_test_S4": 5156,
+    "base": {
+      "n": 5156,
+      "mae": 6.267857895182536,
+      "rmse": 12.782262462399732,
+      "neg_n": 0,
+      "neg_miss_rate": null,
+      "mae_on_neg": null,
+      "bias_on_neg": null,
+      "spike_thr": 155.4454999999998,
+      "spike_n": 52,
+      "mae_on_spike": 61.09536478907559,
+      "spike_miss_rate": 0.5384615384615384,
+      "tail_rmse": 51.13410894067836,
+      "mae_on_normal": 5.709270442501808,
+      "ep_n_true_episodes": 0,
+      "ep_n_base_episodes": 0,
+      "ep_n_pred_episodes": 0,
+      "ep_base_episode_recall": 1.0,
+      "ep_our_episode_recall": 1.0,
+      "ep_base_complete_miss": 0.0,
+      "ep_our_complete_miss": 0.0,
+      "ep_base_false_events": 0,
+      "ep_our_false_events": 0,
+      "ep_base_boundary_mae": 0.0,
+      "ep_our_boundary_mae": 0.0
+    },
+    "ours": {
+      "n": 5156,
+      "mae": 6.267857895182536,
+      "rmse": 12.782262462399732,
+      "neg_n": 0,
+      "neg_miss_rate": null,
+      "mae_on_neg": null,
+      "bias_on_neg": null,
+      "spike_thr": 155.4454999999998,
+      "spike_n": 52,
+      "mae_on_spike": 61.09536478907559,
+      "spike_miss_rate": 0.5384615384615384,
+      "tail_rmse": 51.13410894067836,
+      "mae_on_normal": 5.709270442501808,
+      "ep_n_true_episodes": 0,
+      "ep_n_base_episodes": 0,
+      "ep_n_pred_episodes": 0,
+      "ep_base_episode_recall": 1.0,
+      "ep_our_episode_recall": 1.0,
+      "ep_base_complete_miss": 0.0,
+      "ep_our_complete_miss": 0.0,
+      "ep_base_false_events": 0,
+      "ep_our_false_events": 0,
+      "ep_base_boundary_mae": 0.0,
+      "ep_our_boundary_mae": 0.0,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0
+    },
+    "hch_info": {
+      "spike_thr": 174.4280000000003,
+      "n_pos_events_S2": 79,
+      "scarr": {
+        "_n_calib": 8216,
+        "_s2b_reused": true,
+        "neg": {
+          "status": "disabled(no training events)",
+          "n_fire": 0
+        },
+        "pos": {
+          "status": "abstain(no lambda certified)",
+          "n_fire": 56,
+          "lam": 0.0,
+          "lcb_mean_gain": 0.0,
+          "conformal_rank": 52,
+          "branch_base_mae": 46.23927938208811,
+          "harm_budget": 23.119639691044053,
+          "rho": 0.5,
+          "alpha": 0.1,
+          "grid": [
+            {
+              "lam": 0.0,
+              "harm_q": 0.0,
+              "mean_gain": -0.0,
+              "lcb": 0.0
+            },
+            {
+              "lam": 0.2,
+              "harm_q": 6.411,
+              "mean_gain": 0.4914,
+              "lcb": -0.0043
+            },
+            {
+              "lam": 0.4,
+              "harm_q": 15.074,
+              "mean_gain": -1.2175,
+              "lcb": -0.02718
+            },
+            {
+              "lam": 0.6,
+              "harm_q": 30.23,
+              "mean_gain": -3.8371,
+              "lcb": -0.05892
+            },
+            {
+              "lam": 0.8,
+              "harm_q": 46.884,
+              "mean_gain": -6.6749,
+              "lcb": -0.09338
+            },
+            {
+              "lam": 1.0,
+              "harm_q": 63.891,
+              "mean_gain": -10.0448,
+              "lcb": -0.13047
+            }
+          ]
+        }
+      }
+    },
+    "duration_s": 1.1
+  }
+]

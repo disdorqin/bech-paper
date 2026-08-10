@@ -1,0 +1,4 @@
+dataset,backbone,max_abs_corr_Z_vs_y,worst_col,resid_lag24_structural_err,R0_frozen_backbone,R1_sameFeat_newData,R2_richFeat_newData,R2b_richFeat_noResidHist,pct_from_recency,pct_from_features,pct_from_resid_history,pct_total
+NEM_SA1,GBDT,0.2124,x_act_demand_lag24,0.0,113.605,72.322,71.725,71.594,36.34,0.53,-0.12,36.86
+NEM_VIC1,GBDT,0.2649,yhat,0.0,65.264,56.817,56.908,56.819,12.94,-0.14,-0.14,12.8
+LAGO_DE,GBDT,0.869,yhat,0.0,6.664,6.043,5.575,5.697,9.33,7.02,1.83,16.35

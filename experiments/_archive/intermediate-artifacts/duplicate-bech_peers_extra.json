@@ -1,0 +1,728 @@
+{
+  "NEM_SA1/Linear": {
+    "M3_shrink": 0.75,
+    "M4_offset": 2.283704267622686,
+    "M5_maps": {
+      "neg": [
+        4.9372295612217405,
+        0.6972800295787218
+      ],
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 2006,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.22983501374885426,
+      "lam_neg": 0.55,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 2089,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.23934463794683777,
+      "lam_neg": 0.5,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "NEM_SA1/GBDT": {
+    "M3_shrink": 1.0,
+    "M4_offset": -3.574852522913119,
+    "M5_maps": {
+      "neg": [
+        -16.53659986456697,
+        0.12561405927780941
+      ],
+      "pos": [
+        217.26293353188032,
+        -0.03130325543047258
+      ]
+    },
+    "M7_routing": {
+      "n_fire_neg": 2251,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.25790559120073325,
+      "lam_neg": 0.55,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 2189,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.2508020164986251,
+      "lam_neg": 0.25,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 2119,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.24278185151237397,
+      "lam_neg": 0.55,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "NEM_VIC1/Linear": {
+    "M3_shrink": 0.6,
+    "M4_offset": -2.2974205180598375,
+    "M5_maps": {
+      "neg": [
+        9.017651233399489,
+        0.8627554331026044
+      ],
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 2027,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.2322410632447296,
+      "lam_neg": 0.3,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 1918,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.2197525206232814,
+      "lam_neg": 0.3,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "NEM_VIC1/GBDT": {
+    "M3_shrink": 0.85,
+    "M4_offset": 0.15754932963830015,
+    "M5_maps": {
+      "neg": [
+        -16.414614053714626,
+        0.7139418642725313
+      ],
+      "pos": [
+        383.5713864774395,
+        -0.22540199023651591
+      ]
+    },
+    "M7_routing": {
+      "n_fire_neg": 1920,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.21998166819431714,
+      "lam_neg": 0.4,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 2087,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.23911549037580201,
+      "lam_neg": 0.4,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "NEM_NSW1/Linear": {
+    "M3_shrink": 0.85,
+    "M4_offset": 3.797446954177204,
+    "M5_maps": {
+      "neg": [
+        17.543669624570168,
+        0.9109295756536562
+      ],
+      "pos": [
+        180.1023978541183,
+        0.4934885602874371
+      ]
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "NEM_NSW1/GBDT": {
+    "M3_shrink": 1.0,
+    "M4_offset": 2.5645100793760065,
+    "M5_maps": {
+      "neg": [
+        26.59746222869611,
+        -0.3502991537211114
+      ],
+      "pos": [
+        5.6180276274376135,
+        0.8276877778906258
+      ]
+    },
+    "M7_routing": {
+      "n_fire_neg": 496,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.05682859761686526,
+      "lam_neg": 0.35,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 555,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.0635884509624198,
+      "lam_neg": 0.05,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 622,
+      "n_fire_pos": 0,
+      "n_total": 8728,
+      "fire_rate": 0.07126489459211732,
+      "lam_neg": 0.15,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_DE/Linear": {
+    "M3_shrink": 1.0,
+    "M4_offset": -0.7452162791725705,
+    "M5_maps": {
+      "neg": [
+        3.2669858749884897,
+        0.10340899747702123
+      ],
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_DE/GBDT": {
+    "M3_shrink": 0.9,
+    "M4_offset": -0.6994176610425598,
+    "M5_maps": {
+      "neg": [
+        6.690637650316447,
+        0.2981970910374929
+      ],
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 148,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.014168102623013594,
+      "lam_neg": 1.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 144,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.013785180930499713,
+      "lam_neg": 0.35,
+      "lam_pos": 0.0,
+      "tau_neg": 0.5,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_BE/Linear": {
+    "M3_shrink": 0.95,
+    "M4_offset": 0.6238198400915351,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_BE/GBDT": {
+    "M3_shrink": 0.8,
+    "M4_offset": 1.6785044954566608,
+    "M5_maps": {
+      "neg": null,
+      "pos": [
+        53.57844042113526,
+        0.009780970241247546
+      ]
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_FR/Linear": {
+    "M3_shrink": 0.9,
+    "M4_offset": 0.9253989994879817,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_FR/GBDT": {
+    "M3_shrink": 0.6,
+    "M4_offset": 1.1989972989374902,
+    "M5_maps": {
+      "neg": [
+        10.00289968374618,
+        0.17822108588846433
+      ],
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_PJM/Linear": {
+    "M3_shrink": 1.0,
+    "M4_offset": 0.2200389210815299,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_PJM/GBDT": {
+    "M3_shrink": 0.8,
+    "M4_offset": 0.22263322519345508,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_NP/Linear": {
+    "M3_shrink": 0.85,
+    "M4_offset": 0.0042094652401036825,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "LAGO_NP/GBDT": {
+    "M3_shrink": 0.7,
+    "M4_offset": 0.2524736872009079,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 10446,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 0.5
+    }
+  },
+  "GEFCOM14P/Linear": {
+    "M3_shrink": 0.25,
+    "M4_offset": 0.6349271198085837,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    }
+  },
+  "GEFCOM14P/GBDT": {
+    "M3_shrink": 0.0,
+    "M4_offset": 0.17866919263219216,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    },
+    "M8_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    },
+    "M9_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    }
+  }
+}

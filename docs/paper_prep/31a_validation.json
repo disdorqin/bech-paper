@@ -1,0 +1,48 @@
+{
+  "row_count": 8,
+  "counted_count": 8,
+  "per_file": {
+    "2512.22428": {
+      "path": "D:\\AI_Memory\\papers\\raw\\2512.22428.pdf",
+      "exists": true,
+      "sha256": "786fdee0de162a6f88bf5fb64f45a9f58b15c14894a1651bbdbb88dc6ad404d1"
+    },
+    "2601.20280": {
+      "path": "D:\\AI_Memory\\papers\\raw\\2601.20280.pdf",
+      "exists": true,
+      "sha256": "15ef4a50e3285111379fcf90a5311076950b442f16c3a3108f6814850cbd00d8"
+    },
+    "2605.21088": {
+      "path": "D:\\AI_Memory\\papers\\raw\\2605.21088.pdf",
+      "exists": true,
+      "sha256": "42b30709214795c7847f864f58e056e712b05f81b29211a9b923ad40f342872e"
+    },
+    "2605.08935": {
+      "path": "D:\\AI_Memory\\papers\\raw\\2605.08935.pdf",
+      "exists": true,
+      "sha256": "3cc3bd37cac4d6d9594d97d2253da92781d2c9766be724a50a5426e55ecebe9d"
+    },
+    "2505.15354": {
+      "path": "D:\\AI_Memory\\papers\\raw\\2505.15354.pdf",
+      "exists": true,
+      "sha256": "421d6a950ba867c5cabe9d0d97ea0c3b8c941692a99015e1fbb08a287e22f1ee"
+    },
+    "2505.23583": {
+      "path": "D:\\作业\\science\\solar_leak_price_model\\docs\\paper_prep\\refs\\2505.23583.pdf",
+      "exists": true,
+      "sha256": "6e9e4c828f26fdd5f86ec0a17960bd2bd37f32667f057add726b58c12f01c66c"
+    },
+    "2101.02703": {
+      "path": "D:\\作业\\science\\solar_leak_price_model\\docs\\paper_prep\\refs\\2101.02703.pdf",
+      "exists": true,
+      "sha256": "082cb7f952b4a4f91ad184a394ebe3766e66a1ccc4c7bbb295b2f7b7994a7983"
+    },
+    "2110.01052": {
+      "path": "D:\\作业\\science\\solar_leak_price_model\\docs\\paper_prep\\refs\\2110.01052.pdf",
+      "exists": true,
+      "sha256": "a43d0f089add075ecb4c74f71c9eb6a648e020edc70139b19360d6e717ddc0e2"
+    }
+  },
+  "csv_roundtrip": true,
+  "all_hashes_full_64": true
+}

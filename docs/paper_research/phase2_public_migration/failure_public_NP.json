@@ -1,0 +1,30 @@
+{
+  "market": "NP",
+  "n_test": 10450,
+  "LEAR": {
+    "overall": {
+      "mae": 3.2597810036372423,
+      "rmse": 5.529787302479287
+    },
+    "neg_n": 0,
+    "neg_miss_rate": null,
+    "med_pred_on_neg": null,
+    "mae_on_neg": null,
+    "spike_thr": 66.9502,
+    "mae_on_spike": 21.0030979881915,
+    "tail_rmse": 20.021506710089096
+  },
+  "MLP": {
+    "overall": {
+      "mae": 3.5329567384479525,
+      "rmse": 5.657812200100063
+    },
+    "neg_n": 0,
+    "neg_miss_rate": null,
+    "med_pred_on_neg": null,
+    "mae_on_neg": null,
+    "spike_thr": 66.9502,
+    "mae_on_spike": 16.79895347653401,
+    "tail_rmse": 19.826332025504676
+  }
+}

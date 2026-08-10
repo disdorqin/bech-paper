@@ -1,0 +1,161 @@
+{
+  "generated_at": "2026-08-08T03:43:06.1939563+08:00",
+  "rule": "PDF first-page title and every listed author; normalized full-text quote and page; exact full-file SHA256",
+  "source_count": 8,
+  "passed_count": 8,
+  "all_pass": true,
+  "results": [
+    {
+      "id": "DETR-2005.12872",
+      "pdf": "docs/paper_prep/phaseA_sources/DETR_2005.12872.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 5,
+      "observed_quote_pdf_pages": [
+        5
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "d4b846bd44896e1d21527f48eddc422c263c9a4f8a3fa4be249750956882698d",
+      "actual_sha256": "d4b846bd44896e1d21527f48eddc422c263c9a4f8a3fa4be249750956882698d",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "ActionFormer-2202.07925",
+      "pdf": "docs/paper_prep/phaseA_sources/ActionFormer_2202.07925.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 4,
+      "observed_quote_pdf_pages": [
+        4
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "921c53502df2855a893af902ccbae17edfa512ff0f771536cd4bcc0a8b4dea0a",
+      "actual_sha256": "921c53502df2855a893af902ccbae17edfa512ff0f771536cd4bcc0a8b4dea0a",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "Levenshtein-1905.11006",
+      "pdf": "docs/paper_prep/phaseA_sources/Levenshtein_1905.11006.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 12,
+      "observed_quote_pdf_pages": [
+        12
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "58708bd187877c9ee17f10eecd7a0764222cb05a85446e88c9b6009ebdc783ef",
+      "actual_sha256": "58708bd187877c9ee17f10eecd7a0764222cb05a85446e88c9b6009ebdc783ef",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "Ciliberto-1605.07588",
+      "pdf": "docs/paper_prep/phaseA_sources/Ciliberto_1605.07588.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 2,
+      "observed_quote_pdf_pages": [
+        2
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "e11fea756cc4f2b57b54a2b68ad70e0f035ca43b5b891dde4694c5dbd698e779",
+      "actual_sha256": "e11fea756cc4f2b57b54a2b68ad70e0f035ca43b5b891dde4694c5dbd698e779",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "Ciliberto-2002.05424",
+      "pdf": "docs/paper_prep/phaseA_sources/Ciliberto_2002.05424.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 1,
+      "observed_quote_pdf_pages": [
+        1
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "e964a9a93b83631fbfb56c90a7d45df4f36f76522e20481b107720cb19a9b8e8",
+      "actual_sha256": "e964a9a93b83631fbfb56c90a7d45df4f36f76522e20481b107720cb19a9b8e8",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "Yuan-1704.04671",
+      "pdf": "docs/paper_prep/phaseA_sources/Yuan_1704.04671.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 1,
+      "observed_quote_pdf_pages": [
+        1
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "bbce8ac38f094a1bc284a538820ea5e4d4b68f26eda0014cf0d0a30c6e0f834f",
+      "actual_sha256": "bbce8ac38f094a1bc284a538820ea5e4d4b68f26eda0014cf0d0a30c6e0f834f",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "Rabiner-18626",
+      "pdf": "docs/paper_prep/phaseA_sources/Rabiner_18626_illinois.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 13,
+      "observed_quote_pdf_pages": [
+        13
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "d5cb7e282741d6ace368bab6260acc5eb5a4decbc6b984a7f0f1a73c9c22517c",
+      "actual_sha256": "d5cb7e282741d6ace368bab6260acc5eb5a4decbc6b984a7f0f1a73c9c22517c",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    },
+    {
+      "id": "CRF-Lafferty-2001",
+      "pdf": "docs/paper_prep/phaseA_sources/CRF_Lafferty_2001.pdf",
+      "pdf_header_pass": true,
+      "first_page_title_pass": true,
+      "first_page_authors_pass": true,
+      "missing_first_page_authors": [],
+      "bibliographic_identity_pass": true,
+      "normalized_quote_pass": true,
+      "expected_quote_pdf_page": 1,
+      "observed_quote_pdf_pages": [
+        1
+      ],
+      "quote_page_pass": true,
+      "expected_sha256": "92c13ce790046fef6fbc361f8b9dfcdd3bf73bbd511cf063036bceddb7247b4a",
+      "actual_sha256": "92c13ce790046fef6fbc361f8b9dfcdd3bf73bbd511cf063036bceddb7247b4a",
+      "full_sha256_pass": true,
+      "all_three_checks_pass": true
+    }
+  ]
+}

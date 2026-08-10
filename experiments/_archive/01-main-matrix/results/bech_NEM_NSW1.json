@@ -1,0 +1,775 @@
+{
+  "dataset": "NEM_NSW1",
+  "tier": "L2",
+  "currency": "AUD",
+  "note": "",
+  "n_rows": 43633,
+  "spike_thr_train": 594.5980833333329,
+  "neg_pct_all": 5.995462150207412,
+  "neg_pct_test": 12.45417048579285,
+  "split": {
+    "S1": [
+      0,
+      21815
+    ],
+    "S2": [
+      21816,
+      30541
+    ],
+    "S3": [
+      30542,
+      34904
+    ],
+    "S4": [
+      34905,
+      43632
+    ]
+  },
+  "test_span": [
+    "2025-01-02 09:00:00",
+    "2026-01-01 00:00:00"
+  ],
+  "models": {
+    "Linear": {
+      "base": {
+        "n": 8728,
+        "mae": 62.51199632159607,
+        "rmse": 351.4024148259939,
+        "rmae": 0.743073664429633,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.5574977000919963,
+        "mae_on_neg": 42.07239409961411,
+        "bias_on_neg": 31.751849071073206,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2653.0945195971894,
+        "spike_miss_rate": 0.9016393442622951,
+        "tail_rmse": 1561.0420603969703,
+        "mae_on_normal": 44.595415014931575
+      },
+      "bech": {
+        "n": 8728,
+        "mae": 62.51199632159607,
+        "rmse": 351.4024148259939,
+        "rmae": 0.743073664429633,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.5574977000919963,
+        "mae_on_neg": 42.07239409961411,
+        "bias_on_neg": 31.751849071073206,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2653.0945195971894,
+        "spike_miss_rate": 0.9016393442622951,
+        "tail_rmse": 1561.0420603969703,
+        "mae_on_normal": 44.595415014931575
+      },
+      "dm": {
+        "dm_stat": null,
+        "p_value": null,
+        "mean_gain": 0.0
+      },
+      "routing": {
+        "n_fire_neg": 0,
+        "n_fire_pos": 0,
+        "n_total": 8728,
+        "fire_rate": 0.0,
+        "lam_neg": 0.0,
+        "lam_pos": 0.0,
+        "tau_neg": 0.5,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 0,
+        "harm_rate": null,
+        "mean_gain_on_fired": null,
+        "worst_harm": null
+      },
+      "head_info": {
+        "n_neg_events_S2a": 465,
+        "n_neg_magtrain": 465,
+        "n_pos_events_S2a": 43,
+        "n_pos_magtrain": 43,
+        "spike_thr_report": 594.5980833333329,
+        "pos_train_thr": 340.94354166666665,
+        "scarr": {
+          "_n_calib": 6545,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "abstain(no lambda certified)",
+            "n_fire": 373,
+            "lam": 0.0,
+            "lcb_mean_gain": 0.0,
+            "conformal_rank": 337,
+            "branch_base_mae": 38.428361034573285,
+            "harm_budget": 19.214180517286643,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 9.807,
+                "mean_gain": -0.521,
+                "lcb": -0.06662
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 19.748,
+                "mean_gain": -1.7835,
+                "lcb": -0.18
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 29.622,
+                "mean_gain": -3.5919,
+                "lcb": -0.32517
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 39.496,
+                "mean_gain": -5.9446,
+                "lcb": -0.50103
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 49.661,
+                "mean_gain": -8.7061,
+                "lcb": -0.69398
+              }
+            ]
+          },
+          "pos": {
+            "status": "abstain(no lambda certified)",
+            "n_fire": 13,
+            "lam": 0.0,
+            "lcb_mean_gain": 0.0,
+            "conformal_rank": 13,
+            "branch_base_mae": 43.74553853693625,
+            "harm_budget": 21.872769268468126,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 239.954,
+                "mean_gain": -164.6887,
+                "lcb": -0.50857
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 479.908,
+                "mean_gain": -351.7142,
+                "lcb": -1.07569
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 719.863,
+                "mean_gain": -538.7397,
+                "lcb": -1.62854
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 959.817,
+                "mean_gain": -725.7652,
+                "lcb": -2.18762
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 1199.771,
+                "mean_gain": -912.7907,
+                "lcb": -2.74715
+              }
+            ]
+          }
+        }
+      },
+      "seconds": 9.5
+    },
+    "MLP": {
+      "base": {
+        "n": 8728,
+        "mae": 64.67665621582728,
+        "rmse": 346.6897919924007,
+        "rmae": 0.7688047537324801,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.8960441582336707,
+        "mae_on_neg": 52.345903400094144,
+        "bias_on_neg": 50.05565453066011,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2587.2869383160814,
+        "spike_miss_rate": 0.8688524590163934,
+        "tail_rmse": 1538.2098319608542,
+        "mae_on_normal": 46.1442421132661
+      },
+      "bech": {
+        "n": 8728,
+        "mae": 64.23900451208979,
+        "rmse": 346.71407995768425,
+        "rmae": 0.7636024329880419,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.8242870285188593,
+        "mae_on_neg": 48.146875189348165,
+        "bias_on_neg": 45.64290215335996,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2588.1071484156646,
+        "spike_miss_rate": 0.8688524590163934,
+        "tail_rmse": 1538.5024853129119,
+        "mae_on_normal": 46.235863060335454
+      },
+      "dm": {
+        "dm_stat": 6.2012232112099115,
+        "p_value": 2.80129919261185e-10,
+        "mean_gain": 0.4376517037374696
+      },
+      "routing": {
+        "n_fire_neg": 549,
+        "n_fire_pos": 0,
+        "n_total": 8728,
+        "fire_rate": 0.06290100824931255,
+        "lam_neg": 0.25,
+        "lam_pos": 0.0,
+        "tau_neg": 0.5,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 549,
+        "harm_rate": 0.2659380692167577,
+        "mean_gain_on_fired": 6.957785191658715,
+        "worst_harm": 21.407479360957993
+      },
+      "head_info": {
+        "n_neg_events_S2a": 465,
+        "n_neg_magtrain": 465,
+        "n_pos_events_S2a": 43,
+        "n_pos_magtrain": 43,
+        "spike_thr_report": 594.5980833333329,
+        "pos_train_thr": 340.94354166666665,
+        "scarr": {
+          "_n_calib": 6545,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "certified",
+            "n_fire": 333,
+            "lam": 0.25,
+            "lcb_mean_gain": 0.05065,
+            "conformal_rank": 301,
+            "branch_base_mae": 41.160786822699386,
+            "harm_budget": 20.580393411349693,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 12.179,
+                "mean_gain": 2.0227,
+                "lcb": 0.05017
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 24.678,
+                "mean_gain": 2.3695,
+                "lcb": 0.01934
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 37.157,
+                "mean_gain": 1.2233,
+                "lcb": -0.08709
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 49.59,
+                "mean_gain": -1.1398,
+                "lcb": -0.25273
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 62.288,
+                "mean_gain": -4.9027,
+                "lcb": -0.4993
+              }
+            ]
+          },
+          "pos": {
+            "status": "abstain(no lambda certified)",
+            "n_fire": 26,
+            "lam": 0.0,
+            "lcb_mean_gain": 0.0,
+            "conformal_rank": 25,
+            "branch_base_mae": 1322.91378073603,
+            "harm_budget": 661.456890368015,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 224.419,
+                "mean_gain": -56.3527,
+                "lcb": -0.35592
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 448.839,
+                "mean_gain": -117.3257,
+                "lcb": -0.72777
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 673.258,
+                "mean_gain": -178.2986,
+                "lcb": -1.10403
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 897.677,
+                "mean_gain": -239.2716,
+                "lcb": -1.47343
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 1122.096,
+                "mean_gain": -300.2446,
+                "lcb": -1.84546
+              }
+            ]
+          }
+        }
+      },
+      "seconds": 28.7
+    },
+    "LSTM": {
+      "base": {
+        "n": 8728,
+        "mae": 52.18782931641136,
+        "rmse": 347.11500115598744,
+        "rmae": 0.620351354150833,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.8040478380864765,
+        "mae_on_neg": 37.620004468209096,
+        "bias_on_neg": 36.47183046991786,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2746.769817156558,
+        "spike_miss_rate": 1.0,
+        "tail_rmse": 1545.3276489141456,
+        "mae_on_normal": 32.59227843933312
+      },
+      "bech": {
+        "n": 8728,
+        "mae": 52.13583357734898,
+        "rmse": 347.1246519764523,
+        "rmae": 0.6197332861537554,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.7792088316467342,
+        "mae_on_neg": 36.79136027236267,
+        "bias_on_neg": 35.34655197305413,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2746.906695079978,
+        "spike_miss_rate": 1.0,
+        "tail_rmse": 1545.3822911170528,
+        "mae_on_normal": 32.65013699830675
+      },
+      "dm": {
+        "dm_stat": 2.9699697641630984,
+        "p_value": 0.0014891453059143744,
+        "mean_gain": 0.05199573906237244
+      },
+      "routing": {
+        "n_fire_neg": 532,
+        "n_fire_pos": 0,
+        "n_total": 8728,
+        "fire_rate": 0.06095325389550871,
+        "lam_neg": 0.1,
+        "lam_pos": 0.0,
+        "tau_neg": 0.5,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 532,
+        "harm_rate": 0.40225563909774437,
+        "mean_gain_on_fired": 0.8530428769480952,
+        "worst_harm": 5.224745348252
+      },
+      "head_info": {
+        "n_neg_events_S2a": 465,
+        "n_neg_magtrain": 465,
+        "n_pos_events_S2a": 43,
+        "n_pos_magtrain": 43,
+        "spike_thr_report": 594.5980833333329,
+        "pos_train_thr": 340.94354166666665,
+        "scarr": {
+          "_n_calib": 6545,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "certified",
+            "n_fire": 375,
+            "lam": 0.1,
+            "lcb_mean_gain": 0.0055,
+            "conformal_rank": 339,
+            "branch_base_mae": 35.93398924301783,
+            "harm_budget": 17.966994621508913,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 9.39,
+                "mean_gain": 0.7102,
+                "lcb": -0.0053
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 18.781,
+                "mean_gain": 0.713,
+                "lcb": -0.05241
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 28.171,
+                "mean_gain": 0.1211,
+                "lcb": -0.13326
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 37.601,
+                "mean_gain": -1.4395,
+                "lcb": -0.26664
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 47.002,
+                "mean_gain": -4.3793,
+                "lcb": -0.48132
+              }
+            ]
+          },
+          "pos": {
+            "status": "abstain(no lambda certified)",
+            "n_fire": 13,
+            "lam": 0.0,
+            "lcb_mean_gain": 0.0,
+            "conformal_rank": 13,
+            "branch_base_mae": 29.74573747683794,
+            "harm_budget": 14.87286873841897,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 249.495,
+                "mean_gain": -193.6373,
+                "lcb": -0.54357
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 498.989,
+                "mean_gain": -399.792,
+                "lcb": -1.10537
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 748.484,
+                "mean_gain": -605.9467,
+                "lcb": -1.6761
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 997.979,
+                "mean_gain": -812.1013,
+                "lcb": -2.24566
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 1247.474,
+                "mean_gain": -1018.256,
+                "lcb": -2.81869
+              }
+            ]
+          }
+        }
+      },
+      "seconds": 1664.0
+    },
+    "Transformer": {
+      "base": {
+        "n": 8728,
+        "mae": 55.54845474405993,
+        "rmse": 347.4710561374063,
+        "rmae": 0.6602987626202618,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.8353265869365225,
+        "mae_on_neg": 44.26357989429349,
+        "bias_on_neg": 43.45752307414259,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2745.373273559946,
+        "spike_miss_rate": 1.0,
+        "tail_rmse": 1545.0863322967725,
+        "mae_on_normal": 35.52039999655692
+      },
+      "bech": {
+        "n": 8728,
+        "mae": 55.467190547535814,
+        "rmse": 347.4748702873832,
+        "rmae": 0.6593327834826344,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.8012879484820608,
+        "mae_on_neg": 43.267190767532085,
+        "bias_on_neg": 42.163032828974266,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2745.4813327455845,
+        "spike_miss_rate": 1.0,
+        "tail_rmse": 1545.1253146865665,
+        "mae_on_normal": 35.56884451676842
+      },
+      "dm": {
+        "dm_stat": 4.327222461459538,
+        "p_value": 7.550071611017728e-06,
+        "mean_gain": 0.08126419652411687
+      },
+      "routing": {
+        "n_fire_neg": 521,
+        "n_fire_pos": 0,
+        "n_total": 8728,
+        "fire_rate": 0.0596929422548121,
+        "lam_neg": 0.1,
+        "lam_pos": 0.0,
+        "tau_neg": 0.5,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 521,
+        "harm_rate": 0.3646833013435701,
+        "mean_gain_on_fired": 1.3613702634596776,
+        "worst_harm": 7.688665079222176
+      },
+      "head_info": {
+        "n_neg_events_S2a": 465,
+        "n_neg_magtrain": 465,
+        "n_pos_events_S2a": 43,
+        "n_pos_magtrain": 43,
+        "spike_thr_report": 594.5980833333329,
+        "pos_train_thr": 340.94354166666665,
+        "scarr": {
+          "_n_calib": 6545,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "certified",
+            "n_fire": 356,
+            "lam": 0.1,
+            "lcb_mean_gain": 0.00523,
+            "conformal_rank": 322,
+            "branch_base_mae": 37.09647297098395,
+            "harm_budget": 18.548236485491977,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 10.957,
+                "mean_gain": 0.8315,
+                "lcb": -0.01117
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 21.971,
+                "mean_gain": 0.2088,
+                "lcb": -0.09833
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 33.062,
+                "mean_gain": -1.4103,
+                "lcb": -0.24214
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 45.283,
+                "mean_gain": -4.2466,
+                "lcb": -0.45443
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 58.256,
+                "mean_gain": -8.8551,
+                "lcb": -0.7526
+              }
+            ]
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 3
+          }
+        }
+      },
+      "seconds": 27.1
+    },
+    "GBDT": {
+      "base": {
+        "n": 8728,
+        "mae": 69.64677784033334,
+        "rmse": 356.940402029053,
+        "rmae": 0.8278840777902658,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.9724011039558418,
+        "mae_on_neg": 65.54987628533033,
+        "bias_on_neg": 64.23926892316652,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2699.9119260032107,
+        "spike_miss_rate": 0.9016393442622951,
+        "tail_rmse": 1581.8724576360726,
+        "mae_on_normal": 49.06724722718726
+      },
+      "bech": {
+        "n": 8728,
+        "mae": 68.93278982946994,
+        "rmse": 356.8975388154586,
+        "rmae": 0.8193969758128842,
+        "neg_n": 1087,
+        "neg_miss_rate": 0.8969641214351426,
+        "mae_on_neg": 58.85123050683401,
+        "bias_on_neg": 57.447403877436074,
+        "spike_thr": 594.5980833333329,
+        "spike_n": 61,
+        "mae_on_spike": 2700.5317543531996,
+        "spike_miss_rate": 0.9016393442622951,
+        "tail_rmse": 1582.0999728448871,
+        "mae_on_normal": 49.200747368751976
+      },
+      "dm": {
+        "dm_stat": 6.440352125187583,
+        "p_value": 5.959832627411288e-11,
+        "mean_gain": 0.7139880108633908
+      },
+      "routing": {
+        "n_fire_neg": 496,
+        "n_fire_pos": 0,
+        "n_total": 8728,
+        "fire_rate": 0.05682859761686526,
+        "lam_neg": 0.35,
+        "lam_pos": 0.0,
+        "tau_neg": 0.5,
+        "tau_pos": 0.5
+      },
+      "harm": {
+        "n_fired": 496,
+        "harm_rate": 0.25806451612903225,
+        "mean_gain_on_fired": 12.56388580406386,
+        "worst_harm": 30.91952467875764
+      },
+      "head_info": {
+        "n_neg_events_S2a": 465,
+        "n_neg_magtrain": 465,
+        "n_pos_events_S2a": 43,
+        "n_pos_magtrain": 43,
+        "spike_thr_report": 594.5980833333329,
+        "pos_train_thr": 340.94354166666665,
+        "scarr": {
+          "_n_calib": 6545,
+          "_s2b_reused": true,
+          "neg": {
+            "status": "certified",
+            "n_fire": 287,
+            "lam": 0.35,
+            "lcb_mean_gain": 0.23229,
+            "conformal_rank": 260,
+            "branch_base_mae": 50.55836482636278,
+            "harm_budget": 25.27918241318139,
+            "rho": 0.5,
+            "alpha": 0.1,
+            "grid": [
+              {
+                "lam": 0.0,
+                "harm_q": 0.0,
+                "mean_gain": -0.0,
+                "lcb": 0.0
+              },
+              {
+                "lam": 0.2,
+                "harm_q": 13.298,
+                "mean_gain": 5.5865,
+                "lcb": 0.17045
+              },
+              {
+                "lam": 0.4,
+                "harm_q": 27.781,
+                "mean_gain": 8.7805,
+                "lcb": 0.24477
+              },
+              {
+                "lam": 0.6,
+                "harm_q": 42.114,
+                "mean_gain": 9.8723,
+                "lcb": 0.22448
+              },
+              {
+                "lam": 0.8,
+                "harm_q": 56.47,
+                "mean_gain": 8.5515,
+                "lcb": 0.101
+              },
+              {
+                "lam": 1.0,
+                "harm_q": 72.187,
+                "mean_gain": 4.8486,
+                "lcb": -0.1261
+              }
+            ]
+          },
+          "pos": {
+            "status": "abstain(too few calib events)",
+            "n_fire": 6
+          }
+        }
+      },
+      "seconds": 5.1
+    }
+  },
+  "seconds": 1734.6
+}

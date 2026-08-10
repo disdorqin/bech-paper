@@ -1,0 +1,20 @@
+{
+  "GEFCOM14P/Linear": {
+    "M3_shrink": 0.25,
+    "M4_offset": 0.6349271198085837,
+    "M5_maps": {
+      "neg": null,
+      "pos": null
+    },
+    "M7_routing": {
+      "n_fire_neg": 0,
+      "n_fire_pos": 0,
+      "n_total": 5156,
+      "fire_rate": 0.0,
+      "lam_neg": 0.0,
+      "lam_pos": 0.0,
+      "tau_neg": 1.01,
+      "tau_pos": 1.01
+    }
+  }
+}

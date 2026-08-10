@@ -1,0 +1,174 @@
+[
+  {
+    "dataset": "shandong",
+    "backbone": "MLP",
+    "seed": 932,
+    "n_train_S1": 19812,
+    "n_train_S2": 7924,
+    "n_calib_S3": 3962,
+    "n_test_S4": 7926,
+    "base": {
+      "n": 7926,
+      "mae": 130.92465921152137,
+      "rmse": 169.6403651250818,
+      "neg_n": 929,
+      "neg_miss_rate": 0.08288482238966631,
+      "mae_on_neg": 152.1505100529813,
+      "bias_on_neg": -125.79943908534901,
+      "spike_thr": 666.0,
+      "spike_n": 79,
+      "mae_on_spike": 227.00197771525328,
+      "spike_miss_rate": 0.7848101265822784,
+      "tail_rmse": 440.2794607727839,
+      "mae_on_normal": 126.97714206877619,
+      "ep_n_true_episodes": 181,
+      "ep_n_base_episodes": 255,
+      "ep_n_pred_episodes": 255,
+      "ep_base_episode_recall": 0.8839779005524862,
+      "ep_our_episode_recall": 0.8839779005524862,
+      "ep_base_complete_miss": 0.11602209944751381,
+      "ep_our_complete_miss": 0.11602209944751381,
+      "ep_base_false_events": 95,
+      "ep_our_false_events": 95,
+      "ep_base_boundary_mae": 0.91875,
+      "ep_our_boundary_mae": 0.91875
+    },
+    "ours": {
+      "n": 7926,
+      "mae": 111.0301696553802,
+      "rmse": 148.079339567653,
+      "neg_n": 929,
+      "neg_miss_rate": 0.01829924650161464,
+      "mae_on_neg": 24.19367105542409,
+      "bias_on_neg": -3.1959032400693697,
+      "spike_thr": 666.0,
+      "spike_n": 79,
+      "mae_on_spike": 227.00197771525328,
+      "spike_miss_rate": 0.7848101265822784,
+      "tail_rmse": 390.7188672692951,
+      "mae_on_normal": 121.36687598128788,
+      "ep_n_true_episodes": 181,
+      "ep_n_base_episodes": 255,
+      "ep_n_pred_episodes": 274,
+      "ep_base_episode_recall": 0.8839779005524862,
+      "ep_our_episode_recall": 0.8950276243093923,
+      "ep_base_complete_miss": 0.11602209944751381,
+      "ep_our_complete_miss": 0.10497237569060773,
+      "ep_base_false_events": 95,
+      "ep_our_false_events": 112,
+      "ep_base_boundary_mae": 0.91875,
+      "ep_our_boundary_mae": 0.9907407407407407,
+      "fire_rate": 0.19429724955841535,
+      "lam_neg": 1.0,
+      "lam_pos": 0.9
+    },
+    "hch_info": {
+      "spike_thr": 698.8314,
+      "n_neg_events_S2": 1645,
+      "n_pos_events_S2": 79,
+      "scarr": {
+        "_n_calib": 12630,
+        "_s2b_reused": true,
+        "neg": {
+          "status": "certified",
+          "n_fire": 2335,
+          "lam": 1.0,
+          "lcb_mean_gain": 18.35365,
+          "conformal_rank": 2103,
+          "branch_base_mae": 163.6812627024801,
+          "harm_budget": 81.84063135124005,
+          "rho": 0.5,
+          "alpha": 0.1,
+          "grid": [
+            {
+              "lam": 0.0,
+              "harm_q": 0.0,
+              "mean_gain": -0.0,
+              "lcb": 0.0
+            },
+            {
+              "lam": 0.2,
+              "harm_q": 1.417,
+              "mean_gain": 22.9924,
+              "lcb": 3.97241
+            },
+            {
+              "lam": 0.4,
+              "harm_q": 4.368,
+              "mean_gain": 45.7073,
+              "lcb": 7.89035
+            },
+            {
+              "lam": 0.6,
+              "harm_q": 7.99,
+              "mean_gain": 67.9672,
+              "lcb": 11.71927
+            },
+            {
+              "lam": 0.8,
+              "harm_q": 12.345,
+              "mean_gain": 89.5732,
+              "lcb": 15.41775
+            },
+            {
+              "lam": 1.0,
+              "harm_q": 17.913,
+              "mean_gain": 106.9313,
+              "lcb": 18.35365
+            }
+          ]
+        },
+        "pos": {
+          "status": "certified",
+          "n_fire": 12,
+          "lam": 0.9,
+          "lcb_mean_gain": 0.06261,
+          "conformal_rank": 12,
+          "branch_base_mae": 325.4375197752746,
+          "harm_budget": 162.7187598876373,
+          "rho": 0.5,
+          "alpha": 0.1,
+          "grid": [
+            {
+              "lam": 0.0,
+              "harm_q": 0.0,
+              "mean_gain": -0.0,
+              "lcb": 0.0
+            },
+            {
+              "lam": 0.2,
+              "harm_q": 35.149,
+              "mean_gain": 44.0572,
+              "lcb": 0.01726
+            },
+            {
+              "lam": 0.4,
+              "harm_q": 70.297,
+              "mean_gain": 85.9077,
+              "lcb": 0.03332
+            },
+            {
+              "lam": 0.6,
+              "harm_q": 105.446,
+              "mean_gain": 119.724,
+              "lcb": 0.04634
+            },
+            {
+              "lam": 0.8,
+              "harm_q": 140.595,
+              "mean_gain": 152.8102,
+              "lcb": 0.05746
+            },
+            {
+              "lam": 1.0,
+              "harm_q": 175.744,
+              "mean_gain": 185.4903,
+              "lcb": 0.06741
+            }
+          ]
+        }
+      }
+    },
+    "duration_s": 64.9
+  }
+]

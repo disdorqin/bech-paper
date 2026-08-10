@@ -1,0 +1,35 @@
+{
+  "row_count": 7,
+  "counted_count": 5,
+  "csv_roundtrip": true,
+  "per_file": {
+    "End-to-End Object Detection with Transformers": {
+      "exists": true,
+      "sha256_match": true
+    },
+    "ActionFormer: Localizing Moments of Actions with Transformers": {
+      "exists": true,
+      "sha256_match": true
+    },
+    "Levenshtein Transformer": {
+      "exists": true,
+      "sha256_match": true
+    },
+    "Consistent Structured Prediction with Conditional Kernel Mean Embeddings": {
+      "exists": true,
+      "sha256_match": true
+    },
+    "SET: learning to SELECT Temporal Intervals": {
+      "exists": true,
+      "sha256_match": true
+    },
+    "A Tutorial on Hidden Markov Models": {
+      "exists": false,
+      "sha256_match": true
+    },
+    "Conditional Random Fields": {
+      "exists": false,
+      "sha256_match": true
+    }
+  }
+}

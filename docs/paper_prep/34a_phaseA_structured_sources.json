@@ -1,0 +1,157 @@
+[
+  {
+    "id": "DETR-2005.12872",
+    "title": "End-to-End Object Detection with Transformers",
+    "authors": [
+      "Nicolas Carion",
+      "Francisco Massa",
+      "Gabriel Synnaeve",
+      "Nicolas Usunier",
+      "Alexander Kirillov",
+      "Sergey Zagoruyko"
+    ],
+    "canonical_id": "arXiv:2005.12872",
+    "source_url": "https://arxiv.org/pdf/2005.12872",
+    "pdf": "docs/paper_prep/phaseA_sources/DETR_2005.12872.pdf",
+    "sha256": "d4b846bd44896e1d21527f48eddc422c263c9a4f8a3fa4be249750956882698d",
+    "quote": "This optimal assignment is computed efficiently with the Hungarian algorithm, following prior work",
+    "quote_pdf_page": 5,
+    "formula_coordinates": [
+      "Eq. (1), PDF/printed p.5: minimum-cost permutation for bipartite matching",
+      "Eq. (2), PDF/printed p.5: Hungarian classification-plus-box loss"
+    ]
+  },
+  {
+    "id": "ActionFormer-2202.07925",
+    "title": "ActionFormer: Localizing Moments of Actions with Transformers",
+    "authors": [
+      "Chen-Lin Zhang",
+      "Jianxin Wu",
+      "Yin Li"
+    ],
+    "canonical_id": "arXiv:2202.07925",
+    "source_url": "https://arxiv.org/pdf/2202.07925",
+    "pdf": "docs/paper_prep/phaseA_sources/ActionFormer_2202.07925.pdf",
+    "sha256": "921c53502df2855a893af902ccbae17edfa512ff0f771536cd4bcc0a8b4dea0a",
+    "quote": "The key idea is to classify each moment as either one of the action categories or the background, and further regress the distance between this time step and the action's onset and offset.",
+    "quote_pdf_page": 4,
+    "formula_coordinates": [
+      "Eq. (1), printed p.4: sequence labeling output with class scores and onset/offset distances",
+      "Eq. (7), printed p.8: focal classification plus DIoU boundary-regression loss"
+    ]
+  },
+  {
+    "id": "Levenshtein-1905.11006",
+    "title": "Levenshtein Transformer",
+    "authors": [
+      "Jiatao Gu",
+      "Changhan Wang",
+      "Jake Zhao"
+    ],
+    "canonical_id": "arXiv:1905.11006",
+    "source_url": "https://arxiv.org/pdf/1905.11006",
+    "pdf": "docs/paper_prep/phaseA_sources/Levenshtein_1905.11006.pdf",
+    "sha256": "58708bd187877c9ee17f10eecd7a0764222cb05a85446e88c9b6009ebdc783ef",
+    "quote": "The learning algorithm is shown in Algorithm 1. E is the environment and D is denoted as the Levenshtein distance, and we can easily back-track the optimal insertion and deletion operations through dynamic programming.",
+    "quote_pdf_page": 12,
+    "formula_coordinates": [
+      "Eq. (8), printed p.5: expert edit action minimizes distance to the target after applying an edit",
+      "Algorithm 1, printed p.12: joint insertion/deletion learning procedure"
+    ]
+  },
+  {
+    "id": "Ciliberto-1605.07588",
+    "title": "A Consistent Regularization Approach for Structured Prediction",
+    "authors": [
+      "Carlo Ciliberto",
+      "Alessandro Rudi",
+      "Lorenzo Rosasco"
+    ],
+    "canonical_id": "arXiv:1605.07588",
+    "source_url": "https://arxiv.org/pdf/1605.07588",
+    "pdf": "docs/paper_prep/phaseA_sources/Ciliberto_1605.07588.pdf",
+    "sha256": "e11fea756cc4f2b57b54a2b68ad70e0f035ca43b5b891dde4694c5dbd698e779",
+    "quote": "This fact allows to define a (least squares) surrogate loss and cast the problem in a multi-output regularized learning framework.",
+    "quote_pdf_page": 2,
+    "formula_coordinates": [
+      "Eq. (14), printed p.6: structured decoding from a learned surrogate representation",
+      "Eqs. (15)-(16), printed p.6: Fisher consistency and comparison inequality"
+    ]
+  },
+  {
+    "id": "Ciliberto-2002.05424",
+    "title": "A General Framework for Consistent Structured Prediction with Implicit Loss Embeddings",
+    "authors": [
+      "Carlo Ciliberto",
+      "Lorenzo Rosasco",
+      "Alessandro Rudi"
+    ],
+    "canonical_id": "arXiv:2002.05424",
+    "source_url": "https://arxiv.org/pdf/2002.05424",
+    "pdf": "docs/paper_prep/phaseA_sources/Ciliberto_2002.05424.pdf",
+    "sha256": "e964a9a93b83631fbfb56c90a7d45df4f36f76522e20481b107720cb19a9b8e8",
+    "quote": "More precisely it admits an Implicit Loss Embedding (ILE) into a linear (albeit possibly infinite dimensional) space.",
+    "quote_pdf_page": 1,
+    "formula_coordinates": [
+      "Definition 1 and Eq. (15), printed p.6: implicit loss embedding",
+      "Lemma 1 and Eqs. (16)-(17), printed p.7: loss-aware decoding and least-squares surrogate"
+    ]
+  },
+  {
+    "id": "Yuan-1704.04671",
+    "title": "Temporal Action Localization by Structured Maximal Sums",
+    "authors": [
+      "Zehuan Yuan",
+      "Jonathan C. Stroud",
+      "Tong Lu",
+      "Jia Deng"
+    ],
+    "canonical_id": "arXiv:1704.04671",
+    "source_url": "https://arxiv.org/pdf/1704.04671",
+    "pdf": "docs/paper_prep/phaseA_sources/Yuan_1704.04671.pdf",
+    "sha256": "bbce8ac38f094a1bc284a538820ea5e4d4b68f26eda0014cf0d0a30c6e0f834f",
+    "quote": "We pose action localization as a structured prediction over arbitrary-length temporal windows, where each window is scored as the sum of frame-wise classification scores.",
+    "quote_pdf_page": 1,
+    "formula_coordinates": [
+      "Eq. (1), printed p.3: start-middle-end window score and argmax decoding",
+      "Algorithm 1, printed p.4: top-k structured maximal sums",
+      "Section 5.2, printed p.6: video-level structured hinge objectives"
+    ]
+  },
+  {
+    "id": "Rabiner-18626",
+    "title": "A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition",
+    "authors": [
+      "Lawrence R. Rabiner"
+    ],
+    "canonical_id": "DOI:10.1109/5.18626",
+    "source_url": "https://courses.physics.illinois.edu/ece417/fa2017/rabiner89.pdf",
+    "pdf": "docs/paper_prep/phaseA_sources/Rabiner_18626_illinois.pdf",
+    "sha256": "d5cb7e282741d6ace368bab6260acc5eb5a4decbc6b984a7f0f1a73c9c22517c",
+    "quote": "Perhaps the major weakness of conventional HMMs is the modeling of state duration.",
+    "quote_pdf_page": 13,
+    "formula_coordinates": [
+      "Section IV.D, printed p.269: explicit state-duration density",
+      "Eqs. (64)-(70), printed pp.269-270: variable-duration HMM likelihood and recursion"
+    ]
+  },
+  {
+    "id": "CRF-Lafferty-2001",
+    "title": "Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data",
+    "authors": [
+      "John Lafferty",
+      "Andrew McCallum",
+      "Fernando Pereira"
+    ],
+    "canonical_id": "ICML 2001; DOI:10.5555/645530.655813",
+    "source_url": "https://www.cs.columbia.edu/~jebara/6772/papers/crf.pdf",
+    "pdf": "docs/paper_prep/phaseA_sources/CRF_Lafferty_2001.pdf",
+    "sha256": "92c13ce790046fef6fbc361f8b9dfcdd3bf73bbd511cf063036bceddb7247b4a",
+    "quote": "We present conditional random fields, a framework for building probabilistic models to segment and label sequence data.",
+    "quote_pdf_page": 1,
+    "formula_coordinates": [
+      "Section 3, PDF p.3: CRF Markov-property definition",
+      "Sections 3-4, PDF pp.3-4: conditional sequence distribution and log-likelihood"
+    ]
+  }
+]
