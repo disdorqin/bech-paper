@@ -187,11 +187,13 @@ class HurdleCorrectionHead:
         self._calib_extra = None
 
     # -------------------------------------------------------- fit (S2) ------
-    def fit(self, Z: np.ndarray, yhat: np.ndarray, y: np.ndarray):
+    def fit(self, Z: np.ndarray, yhat: np.ndarray, y: np.ndarray,
+            spike_thr: float | None = None):
         n = len(y)
         cut = int(n * 0.75)
         a, b = np.arange(cut), np.arange(cut, n)
-        spike_thr = float(np.quantile(y, self.pos_q))
+        if spike_thr is None:
+            spike_thr = float(np.quantile(y, self.pos_q))
         self.info["spike_thr"] = spike_thr
 
         lab = {
