@@ -133,9 +133,14 @@ class DailyEpisodeDataset(Dataset):
         mask = np.zeros((24, max(self.n_exog, 1)), dtype=np.float32)
         if self.n_exog > 0:
             raw = self.exog_fc[ixs]
-            exog[:, :self.n_exog, 0] = raw
-            exog[:, :self.n_exog, 1] = 1.0
-            mask[:, :self.n_exog] = 1.0
+            for j in range(self.n_exog):
+                col = raw[:, j]
+                c_mean = np.nanmean(col) if not np.all(np.isnan(col)) else 0.0
+                c_std = np.nanstd(col) if not np.all(np.isnan(col)) else 1.0
+                exog[:, j, 0] = np.nan_to_num((col - c_mean) / max(c_std, 1e-8), nan=0.0)
+                exog[:, j, 1] = float(j + 1)  # variable type id
+                exog[:, j, 2] = 1.0  # availability flag
+                mask[:, j] = 1.0
         else:
             mask[:, 0] = 1.0
 
