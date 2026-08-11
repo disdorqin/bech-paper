@@ -41,3 +41,4 @@ data/raw/ts_benchmarks/traffic.csv
 data/raw/ts_benchmarks/electricity.csv
 # 嵌入的 git 仓库
 experiments/07-route-e/peers/PIR/
+experiments/07-route-e/peers/vendor/

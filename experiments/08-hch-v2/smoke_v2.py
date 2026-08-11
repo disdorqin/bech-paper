@@ -16,6 +16,7 @@ import torch.nn.functional as F
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "experiments" / "07-route-e" / "peers"))
 
 from common import load_dataset, load_shandong, build_tabular, assert_no_leakage, \
     four_segment_split, evaluate, weekly_naive
@@ -24,6 +25,7 @@ from hch_v2_data import DailyEpisodeBatch, build_dataloaders, build_blocked_s2_l
 from hch_v2 import HCHV2, HCHV2Config
 from baselines_v2 import Identity, ResidualL1, QuantileResidualLGBM
 from selective_hurdle import build_corrector_features
+from official_adapters import DeltaAdapterOfficial, PIROfficial
 
 EPS = 1e-8
 DEVICE = torch.device("cpu")
@@ -239,6 +241,20 @@ def run_one_scenario(ds_key, bb_name, seed=0):
     qr_pred = qr.predict(Z_s4, yhat_s4)
     results.append(eval_method("QuantileResidualLGBM", qr_pred, y_true_flat,
                                naive, yhat_s4, neg_thr, spike_thr))
+
+    # delta-Adapter (Official: Anoise/Adapter@0add06e, Ada-Y output-side)
+    da = DeltaAdapterOfficial(epochs=30, seed=seed)
+    da.fit(None, yhat_s2, y_s2)
+    da_pred = da.predict(None, yhat_s4)
+    results.append(eval_method("delta-Adapter", da_pred, y_true_flat, naive,
+                               yhat_s4, neg_thr, spike_thr))
+
+    # PIR (Official: ustc-time-series/PIR@fc372bb, simplified w/o retrieval)
+    pir = PIROfficial(epochs=30, seed=seed)
+    pir.fit(None, yhat_s2, y_s2)
+    pir_pred = pir.predict(None, yhat_s4)
+    results.append(eval_method("PIR", pir_pred, y_true_flat, naive,
+                               yhat_s4, neg_thr, spike_thr))
 
     # --- HCH v2 with OOF cross-fitting protocol (§5.1, §8.3) ---
     p_mean = loaders["price_mean"]
