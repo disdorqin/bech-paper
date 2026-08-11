@@ -220,3 +220,44 @@ def build_dataloaders(
     loaders["price_mean"] = p_mean
     loaders["price_std"] = p_std
     return loaders
+
+
+def build_blocked_s2_loaders(
+    ds: dict,
+    host_pred: np.ndarray,
+    batch_size: int = 32,
+    n_blocks: int = 5,
+) -> list:
+    """Split S2 dates into n_blocks for blocked forward cross-fitting (§5.1).
+
+    Returns list of DataLoaders, one per block, in chronological order
+    with shuffle=False. Each block's dataset uses its own date-indexing
+    for OOF generation.
+    """
+    splits = date_based_split(ds)
+
+    s1_dates = splits["S1"]
+    s1_mask = np.array([str(d) in s1_dates for d in ds["ts"].dt.date])
+    price_s1 = ds["price"][s1_mask].astype(np.float32)
+    p_mean = float(price_s1.mean())
+    p_std = float(price_s1.std()) if price_s1.std() > 0 else 1.0
+
+    s2_dates = sorted(splits["S2"])
+    if len(s2_dates) < n_blocks:
+        n_blocks = max(2, len(s2_dates))
+
+    block_size = len(s2_dates) // n_blocks
+    blocks = []
+    for i in range(n_blocks):
+        start = i * block_size
+        end = start + block_size if i < n_blocks - 1 else len(s2_dates)
+        block_dates = set(s2_dates[start:end])
+        dset = DailyEpisodeDataset(ds, host_pred, block_dates,
+                                   price_mean=p_mean, price_std=p_std)
+        loader = torch.utils.data.DataLoader(
+            dset, batch_size=batch_size, shuffle=False,
+            collate_fn=collate_daily, drop_last=False,
+        )
+        blocks.append(loader)
+
+    return blocks, p_mean, p_std

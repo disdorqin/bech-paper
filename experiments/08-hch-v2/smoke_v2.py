@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from common import load_dataset, load_shandong, build_tabular, assert_no_leakage, \
     four_segment_split, evaluate, weekly_naive
 from backbones import make_backbone, needs_seq
-from hch_v2_data import DailyEpisodeDataset, DailyEpisodeBatch, build_dataloaders
+from hch_v2_data import DailyEpisodeBatch, build_dataloaders, build_blocked_s2_loaders
 from hch_v2 import HCHV2, HCHV2Config
 from baselines_v2 import Identity, ResidualL1, QuantileResidualLGBM
 from selective_hurdle import build_corrector_features
@@ -215,7 +215,7 @@ def run_one_scenario(ds_key, bb_name, seed=0):
 
     # --- run all methods ---
     results = []
-    cfg = HCHV2Config(d_model=64, epochs=40, patience=10, lr=1e-3,
+    cfg = HCHV2Config(d_model=48, epochs=30, patience=8, lr=1e-3,
                       cara_eta=0.1, kl_tau=0.2, memory_temperature=0.05,
                       occurrence_loss_weight=1.5, magnitude_loss_weight=1.5,
                       location_loss_weight=0.5)
@@ -240,14 +240,33 @@ def run_one_scenario(ds_key, bb_name, seed=0):
     results.append(eval_method("QuantileResidualLGBM", qr_pred, y_true_flat,
                                naive, yhat_s4, neg_thr, spike_thr))
 
-    # --- HCH v2 ---
+    # --- HCH v2 with OOF cross-fitting protocol (§5.1, §8.3) ---
     p_mean = loaders["price_mean"]
     p_std = loaders["price_std"]
 
     model = HCHV2(cfg).to(DEVICE)
-    train_hchv2(model, loaders["S2"], cfg)
+
+    # Step 1: blocked forward cross-fitting on S2 → OOF keys + gains
+    block_loaders, _, _ = build_blocked_s2_loaders(ds, yhat_full, batch_size=32)
+    n_blocks = len(block_loaders)
+    oof_keys, oof_gains, oof_dates = model.cross_fit_s2(block_loaders, cfg)
+    oof_ok = oof_keys is not None and len(oof_keys) > 0
+
+    # Step 2: train gain-aware key metric on OOF data (§8.3)
+    if oof_ok:
+        model.train_gain_metric(oof_keys, oof_gains, cfg, epochs=15)
+
+    # Step 3: train final Bi-OMC on all S2
+    model.fit_final_biomc(loaders["S2"], cfg)
+
+    # Step 4: build memory from S3 OOF candidates (§5.1 stage 2)
     build_hchv2_memory(model, loaders["S3"])
 
+    # Store OOF metadata
+    oof_info = {"oof_blocks": n_blocks, "oof_entries": len(oof_keys) if oof_ok else 0,
+                "oof_status": "ok" if oof_ok else "limited_oof"}
+
+    # --- S4 evaluation (unchanged) ---
     model.eval()
     hch_all_v2, hch_all_tgt, hch_all_base, hch_all_act = [], [], [], []
     with torch.no_grad():
@@ -285,6 +304,7 @@ def run_one_scenario(ds_key, bb_name, seed=0):
         "touch_rate": hch_touch,
         "harm_rate": hch_harm,
         "memory_entries": len(model.memory.m_keys) if model.memory.m_keys is not None else 0,
+        **oof_info,
     }
     if hch_all_act:
         acts = np.concatenate(hch_all_act)
@@ -327,9 +347,10 @@ def main():
                 if "action_identity" in m:
                     act = f" act=({m['action_identity']:.0%}I/{m.get('action_down',0):.0%}D/{m.get('action_up',0):.0%}U)"
                 if m["method"] == "HCHv2":
+                    oof = f" oof={m.get('oof_status','?')}({m.get('oof_entries',0)})"
                     print(f"  {m['method']:22s} MAE={m['mae']:.4f} Δ={m.get('delta_mae',0):+.4f} "
                           f"touch={m['touch_rate']:.1%} harm={m['harm_rate']:.1%} "
-                          f"mem={m.get('memory_entries',0)}{act}")
+                          f"mem={m.get('memory_entries',0)}{act}{oof}")
                 else:
                     print(f"  {m['method']:22s} MAE={m['mae']:.4f} Δ={m.get('delta_mae',0):+.4f} "
                           f"neg_n={m['neg_n']} neg_mae={m.get('mae_on_neg','?'):.4f} "

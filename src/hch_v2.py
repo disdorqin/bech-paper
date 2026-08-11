@@ -117,6 +117,7 @@ class CAGMMemory(nn.Module):
         self.cand_proj = nn.Sequential(nn.Linear(4, d_model//2), nn.ReLU(),
                                         nn.Linear(d_model//2, d_model//2))
         self.fusion = nn.Linear(d_model + d_model//2, d_model)
+        self.metric_proj = nn.Linear(d_model, d_model)  # §8.3 gain-aware projection
         self.register_buffer("m_keys", None, persistent=False)
         self.register_buffer("m_gains", None, persistent=False)
         self._m_dates = None
@@ -127,7 +128,7 @@ class CAGMMemory(nn.Module):
                         du.mean(1, keepdim=True), du.std(1, keepdim=True)], dim=1)
         ce = self.cand_proj(cf)
         k = self.fusion(torch.cat([self.key_net(zp), ce.detach()], -1))
-        return F.normalize(k, dim=-1)
+        return self.metric_proj(F.normalize(k, dim=-1))
 
     def build(self, keys, gains, dates):
         self.m_keys = F.normalize(keys, dim=-1)
@@ -152,15 +153,16 @@ class DVG(nn.Module):
         self.kl_tau = kl_tau
         self.gate_mode = gate_mode
 
+    def set_mode(self, mode):
+        self.gate_mode = mode
+
     def forward(self, weights, gains):
         if weights is None or gains is None:
             return None
         B, K = weights.shape
         if gains.dim() == 4:
-            H = gains.shape[2]
             g = gains
         elif gains.dim() == 3:
-            H = gains.shape[1]
             g = gains.unsqueeze(0)
             weights = weights[:1]
         else:
@@ -173,8 +175,10 @@ class DVG(nn.Module):
         if self.gate_mode == "soft_hard":
             ch = torch.argmax(ce, dim=-1)
             am = F.one_hot(ch, 3).float()
-            return {"action_prob": probs, "chosen_action": ch, "action_value": ce, "action_mask": am}
-        return {"action_prob": probs, "chosen_action": None, "action_value": ce, "action_mask": probs}
+            return {"action_prob": probs, "chosen_action": ch,
+                    "action_value": ce, "action_mask": am}
+        return {"action_prob": probs, "chosen_action": None,
+                "action_value": ce, "action_mask": probs}
 
 
 class HCHV2(nn.Module):
@@ -226,3 +230,192 @@ class HCHV2(nn.Module):
                         "action_prob": gate.get("action_prob"),
                         "chosen_action": gate.get("chosen_action")})
         return out
+
+    # ============================================ §5.1 cross-fitting =====
+    def cross_fit_s2(self, block_loaders, cfg):
+        """Blocked forward cross-fitting on S2.
+
+        For each block i: train temp Bi-OMC on blocks 0..i-1,
+        generate OOF candidates/keys/gains on block i.
+        Returns (oof_keys, oof_gains, oof_dates) for gain-aware metric training.
+        """
+        oof_keys, oof_gains, oof_dates = [], [], []
+        cum_blocks = []
+
+        for i, loader in enumerate(block_loaders):
+            if i == 0:
+                # first block: no previous data, skip OOF
+                cum_blocks.append(loader)
+                continue
+
+            # train temp model on all previous blocks
+            self.train()
+            opt = torch.optim.AdamW(self.parameters(), lr=cfg.lr, weight_decay=1e-4)
+            best, best_state, patience = float("inf"), None, 0
+
+            for ep in range(cfg.epochs // 2):  # fewer epochs per block
+                total = 0.0
+                for prev_loader in cum_blocks:
+                    for batch in prev_loader:
+                        batch = _to_device(batch)
+                        z, sr, sz = self.encode(batch)
+                        cand = self.biomc(z)
+                        loss = _candidate_loss(cand, batch.target, batch.host_pred, cfg)
+                        opt.zero_grad()
+                        loss.backward()
+                        torch.nn.utils.clip_grad_norm_(self.parameters(), 1.0)
+                        opt.step()
+                        total += loss.item()
+                avg = total / max(sum(len(l) for l in cum_blocks), 1)
+                if avg < best - 1e-5:
+                    best, patience = avg, 0
+                    best_state = {k: v.clone() for k, v in self.state_dict().items()}
+                else:
+                    patience += 1
+                    if patience >= cfg.patience // 2:
+                        break
+            if best_state:
+                self.load_state_dict(best_state)
+
+            self.eval()
+            with torch.no_grad():
+                for batch in loader:
+                    batch = _to_device(batch)
+                    z, sr, sz = self.encode(batch)
+                    cand = self.biomc(z)
+                    dk = self.memory.encode_key(
+                        z, cand["delta_down"].squeeze(-1), cand["delta_up"].squeeze(-1),
+                    )
+                    base_ae = (batch.target.squeeze(-1) - batch.host_pred.squeeze(-1)).abs()
+                    down_ae = (batch.target.squeeze(-1) - cand["y_down"].squeeze(-1)).abs()
+                    up_ae = (batch.target.squeeze(-1) - cand["y_up"].squeeze(-1)).abs()
+                    g = torch.stack([torch.zeros_like(base_ae), base_ae - down_ae,
+                                     base_ae - up_ae], dim=-1)
+                    oof_keys.append(dk.cpu())
+                    oof_gains.append(g.cpu())
+                    if hasattr(batch, "date_ids") and isinstance(batch.date_ids, list):
+                        oof_dates.extend(batch.date_ids)
+
+            cum_blocks.append(loader)
+
+        if oof_keys:
+            return torch.cat(oof_keys), torch.cat(oof_gains), oof_dates
+        return None, None, None
+
+    # ============================================ §8.3 gain-aware metric ==
+    def train_gain_metric(self, oof_keys, oof_gains, cfg, epochs=10):
+        """§8.3 Train metric_proj so similar gain profiles yield similar keys.
+
+        Target:  softmax(-|G_i - G_j| / tau) from OOF gains
+        Pred:    softmax(K_i @ K_j^T / tau)  from projected keys
+        Loss:    L2 between target and pred similarity matrices.
+        """
+        if oof_keys is None or len(oof_keys) < 2:
+            return
+
+        n = min(len(oof_keys), 400)
+        idx = torch.randperm(len(oof_keys))[:n]
+        K0 = oof_keys[idx]
+        G = oof_gains[idx]
+        G_flat = G.reshape(n, -1)
+        tau = 0.1
+
+        D_g = torch.cdist(G_flat, G_flat)
+        target = F.softmax(-D_g / tau, dim=-1).detach()
+
+        opt = torch.optim.Adam(self.memory.metric_proj.parameters(), lr=1e-4)
+        for ep in range(epochs):
+            K = self.memory.metric_proj(K0)
+            K = F.normalize(K, dim=-1)
+            sim = torch.mm(K, K.T) / tau
+            pred = F.softmax(sim, dim=-1)
+            loss = F.mse_loss(pred, target)
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+
+    # ============================================ fit final Bi-OMC =======
+    def fit_final_biomc(self, s2_loader, cfg):
+        """Train Bi-OMC on all S2 data (final model)."""
+        self.train()
+        opt = torch.optim.AdamW(self.parameters(), lr=cfg.lr, weight_decay=1e-4)
+        best, best_state, patience = float("inf"), None, 0
+
+        for ep in range(cfg.epochs):
+            total = 0.0
+            for batch in s2_loader:
+                batch = _to_device(batch)
+                z, sr, sz = self.encode(batch)
+                cand = self.biomc(z)
+                loss = _candidate_loss(cand, batch.target, batch.host_pred, cfg)
+                opt.zero_grad()
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.parameters(), 1.0)
+                opt.step()
+                total += loss.item()
+            avg = total / max(len(s2_loader), 1)
+            if avg < best - 1e-5:
+                best, patience = avg, 0
+                best_state = {k: v.clone() for k, v in self.state_dict().items()}
+            else:
+                patience += 1
+                if patience >= cfg.patience:
+                    break
+        if best_state:
+            self.load_state_dict(best_state)
+        return best
+
+
+def _to_device(batch):
+    from hch_v2_data import DailyEpisodeBatch
+    DEV = torch.device("cpu")
+    return DailyEpisodeBatch(
+        host_pred=batch.host_pred.to(DEV),
+        target=batch.target.to(DEV),
+        exog=batch.exog.to(DEV),
+        exog_mask=batch.exog_mask.to(DEV),
+        time_feat=batch.time_feat.to(DEV),
+        date_ids=batch.date_ids,
+    )
+
+
+def _candidate_loss(cand, target, host_pred, cfg):
+    resid = target - host_pred
+    r_d = F.relu(-resid).squeeze(-1)
+    r_u = F.relu(resid).squeeze(-1)
+    o_d = (resid < 0).float().squeeze(-1)
+    o_u = (resid > 0).float().squeeze(-1)
+
+    loss_occ = F.binary_cross_entropy(cand["p_down"].squeeze(-1), o_d) \
+               + F.binary_cross_entropy(cand["p_up"].squeeze(-1), o_u)
+
+    loss_mag = torch.tensor(0.0)
+    n = 0
+    for om, mp, mt in [(o_d > 0.5, cand["m_down"].squeeze(-1), r_d),
+                       (o_u > 0.5, cand["m_up"].squeeze(-1), r_u)]:
+        if om.sum() > 0:
+            loss_mag = loss_mag + F.smooth_l1_loss(mp * om.float(), mt * om.float(),
+                                                    reduction="sum") / om.sum().clamp(min=1)
+            n += 1
+    if n:
+        loss_mag = loss_mag / n
+
+    def _w1(p, q):
+        return (torch.cumsum(p, -1) - torch.cumsum(q, -1)).abs().sum(-1)
+
+    loss_loc = torch.tensor(0.0)
+    eps = 1e-8
+    for r_raw, d_raw in [(r_d, -cand["delta_down"].squeeze(-1)),
+                         (r_u, cand["delta_up"].squeeze(-1))]:
+        rs = r_raw.sum(-1).clamp(min=eps)
+        mask = (rs > eps).float()
+        if mask.sum() == 0:
+            continue
+        ds = d_raw.abs().sum(-1).clamp(min=eps)
+        loss_loc = loss_loc + (_w1(r_raw / rs.unsqueeze(-1),
+                                    d_raw.abs() / ds.unsqueeze(-1))
+                               * mask).sum() / mask.sum().clamp(min=1)
+
+    return (cfg.occurrence_loss_weight * loss_occ
+            + cfg.magnitude_loss_weight * loss_mag
+            + cfg.location_loss_weight * loss_loc)
