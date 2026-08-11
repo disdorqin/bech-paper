@@ -1,40 +1,84 @@
 {
-  "document": "hch_v2_derived_loss_math_design_v0.1_2026-08-11",
+  "document": "hch_v2_derived_loss_math_design_v0.2_2026-08-11",
   "status": "READY_FOR_ARCHITECTURE_REVIEW",
+  "audit_status": "PARTIAL_BLOCKED (4 LAGO datasets, 18 combos; NEM/EPEX/GEFCOM not cached)",
+  "key_revisions": "M1->M0 (skew unstable), W1->W2 (24h dependence dominant), W2 derivation added",
   "based_on": "docs/paper_prep/v2/hch_v2_math_loss_research_dossier_and_prompt_v0.1_2026-08-11.md",
   "output_directory": "experiments/00-data-exploration/math_loss/",
+  "audit_directory": "experiments/00-data-exploration/math_loss/outputs/",
   "files": [
-    {"id": "00", "name": "00_EXECUTIVE_VERDICT.md", "description": "1-page executive verdict: recommended model, risks, go/no-go"},
-    {"id": "01", "name": "01_ASSUMPTIONS.md", "description": "12 assumptions with falsification tests and fallbacks (T1)"},
+    {"id": "00", "name": "00_EXECUTIVE_VERDICT.md", "description": "[UPDATED v0.2] Revised to M0+W2 per audit; A4 falsified, A6->W2"},
+    {"id": "01", "name": "01_ASSUMPTIONS.md", "description": "[UPDATED] 12 assumptions with audit verdicts: A1 confirmed, A4 falsified, A6 falsified"},
     {"id": "02", "name": "02_LITERATURE_AND_CLAIMS.md", "description": "Literature collision assessment and claim boundary (T9)"},
-    {"id": "03", "name": "03_DISTRIBUTION_DERIVATION.md", "description": "Full FS skew-t derivation: density, CDF, NLL, moments, limits, identifiability (T2)"},
-    {"id": "04", "name": "04_PARTIAL_MOMENTS.md", "description": "Directional partial moments M_plus, M_minus; closed-form via E_nu(a); numerical verification (T3)"},
-    {"id": "05", "name": "05_BAYES_DECISION.md", "description": "Bayes action analysis for MSE/MAE/asymmetric loss; candidate comparison; non-collapse proof (T4)"},
-    {"id": "06", "name": "06_STATE_PARAMETERIZATION.md", "description": "Continuous state design; cross-market shared backbone + biases; negative-price transfer (T7)"},
-    {"id": "07", "name": "07_24H_DEPENDENCE.md", "description": "W1 recommendation with W2 upgrade triggers; CAGM relationship (T6)"},
-    {"id": "08", "name": "08_CAGM_DVG_INTERFACE.md", "description": "Risk decomposition; tensor API; loss functions; non-duplicative design (T8)"},
-    {"id": "09", "name": "09_NUMERICAL_IMPLEMENTATION.md", "description": "Stable computation primitives; NLL/CDF/partial moments; gradient safety; initialization (T10)"},
-    {"id": "10", "name": "10_TESTS.md", "description": "14 unit tests (U1-U14) + 4 sanity tests + 4 falsification tests (T10)"},
-    {"id": "11", "name": "11_ABLATION.md", "description": "6-ablation ladder; diagnostic panel; macro/micro averaging; multiplicity handling"},
-    {"id": "12", "name": "12_RISK_REGISTER.md", "description": "12 numbered risks with severity, reviewer quotes, mitigation"},
+    {"id": "03", "name": "03_DISTRIBUTION_DERIVATION.md", "description": "Full FS skew-t derivation (T2). Note: M1 deferred, M0+W2 recommended"},
+    {"id": "04", "name": "04_PARTIAL_MOMENTS.md", "description": "Directional partial moments; closed-form E_nu(a) (T3)"},
+    {"id": "05", "name": "05_BAYES_DECISION.md", "description": "Bayes action analysis; non-collapse proof (T4)"},
+    {"id": "06", "name": "06_STATE_PARAMETERIZATION.md", "description": "Continuous state design; cross-market (T7)"},
+    {"id": "07", "name": "07_24H_DEPENDENCE.md", "description": "[UPDATED] W2 mandatory; day-level latent scale derivation (T6)"},
+    {"id": "08", "name": "08_CAGM_DVG_INTERFACE.md", "description": "Risk decomposition; tensor API (T8)"},
+    {"id": "09", "name": "09_NUMERICAL_IMPLEMENTATION.md", "description": "Stable NLL/CDF/partial moments; need PyTorch betainc (T10)"},
+    {"id": "10", "name": "10_TESTS.md", "description": "14 unit tests + sanity + falsification (T10)"},
+    {"id": "11", "name": "11_ABLATION.md", "description": "6-ablation ladder; diagnostic panel"},
+    {"id": "12", "name": "12_RISK_REGISTER.md", "description": "12 risks; top-3 kill risks identified"},
     {"id": "13", "name": "13_THEOREMS.md", "description": "5 propositions: normalization, non-collapse, limits, partial moments, composite likelihood"},
-    {"id": "14", "name": "14_IMPLEMENTATION_CONTRACT.md", "description": "Unique design; architecture params; checkpoint order; freeze contract"},
-    {"id": "15", "name": "15_ALLOWED_AND_FORBIDDEN_CLAIMS.md", "description": "10 allowed claims + forbiddens + caveats + contribution framing"}
+    {"id": "14", "name": "14_IMPLEMENTATION_CONTRACT.md", "description": "[Needs update: W2 not reflected in contract yet]"},
+    {"id": "15", "name": "15_ALLOWED_AND_FORBIDDEN_CLAIMS.md", "description": "10 allowed + forbiddens + caveats"}
+  ],
+  "audit_outputs": [
+    {"name": "outputs/00_EXECUTIVE_EVIDENCE_VERDICT.md", "description": "Audit verdict: A1 confirmed, A4/A6 falsified"},
+    {"name": "outputs/02_RESIDUAL_GEOMETRY.csv", "description": "S2/S3 residual stats for 18 combos"},
+    {"name": "outputs/02b_TAIL_STABILITY.csv", "description": "S2->S3 skew/kurtosis stability + outlier sensitivity"},
+    {"name": "outputs/03_OCCURRENCE_MAGNITUDE.csv", "description": "pi_pm, m_pm per host_pred bin"},
+    {"name": "outputs/04_DAY_DEPENDENCE.csv", "description": "24h corr matrix eigenvalues, ACF"},
+    {"name": "outputs/05_DISTRIBUTION_FIT.csv", "description": "Normal/Laplace/Student-t MLE on S2, NLL on S3"},
+    {"name": "outputs/06_CANDIDATE_ACTIONS.csv", "description": "7 candidate types compared on S3"}
+  ],
+  "gaps": [
+    {
+      "id": "G1",
+      "severity": "MEDIUM",
+      "description": "Candidate actions computed from S3 (oracle upper bound), not S2-fitted/S3-evaluated",
+      "fix": "Recompute candidates using S2-fitted bin means; evaluate on S3"
+    },
+    {
+      "id": "G2",
+      "severity": "MEDIUM",
+      "description": "W2 derivation added but implementation contract (14_IMPLEMENTATION_CONTRACT.md) still references M1+W1",
+      "fix": "Update implementation contract to M0+W2"
+    },
+    {
+      "id": "G3",
+      "severity": "LOW",
+      "description": "A5 (outlier sensitivity) computed in audit csv but not summarized into a clear pass/fail",
+      "fix": "Compute nu stability metric after removing top-3 residual days"
+    },
+    {
+      "id": "G4",
+      "severity": "HIGH",
+      "description": "Missing markets: NEM_SA1 (24.6% neg), DE_EPEX (3.6% neg), GEFCOM14P, Shandong not cached",
+      "fix": "Run host_cache.py --dataset NEM_SA1,DE_EPEX,GEFCOM14P to generate predictions"
+    },
+    {
+      "id": "G5",
+      "severity": "MEDIUM",
+      "description": "FS skew-t (M1) not implemented in audit — only Normal, Laplace, Student-t (M0)",
+      "fix": "Implement FS skew-t MLE in audit_utils.py; acceptable to defer since M1 deferred"
+    }
   ],
   "blockers": [
-    "Empirical S2/S3 audit not yet executed (assumptions A2, A4, A5, A6, A7, A8 need verification)",
-    "Student-t CDF/partial-moment implementations (betainc, lgamma) need PyTorch-compatible versions",
-    "Existing HCH v2 code repair must complete before distribution head can be integrated"
+    "G4 (missing markets): NEM/EPEX host_cache needed for negative-price market evidence",
+    "G1 (oracle candidates): S3 candidates should be S2-fitted for proper evaluation",
+    "Student-t CDF/betainc needs PyTorch-compatible implementation for distribution head deployment"
   ],
   "next_steps": [
-    "1. Architecture review: check derivations, claims, and risk register",
-    "2. Empirical audit: run data audit per hch_v2_math_evidence_data_audit_prompt_v0.1.md",
-    "3. Verify/falsify assumptions A2-A8 with S2/S3 evidence",
-    "4. If assumptions pass: implement fs_skewt.py per Section 10 + contract Section 14",
-    "5. Run unit tests U1-U14 + S1-S4 on synthetic data",
-    "6. Train M0 + M1 on S2 residuals; run ablation A0",
-    "7. If M1 > M0: integrate distribution head with existing CAGM-DVG pipeline",
-    "8. S3 calibration and end-to-end smoke",
-    "9. S4 evaluation only after freeze verified"
+    "1. Architecture review: check revised M0+W2 recommendation",
+    "2. Run host_cache.py for NEM_SA1, DE_EPEX, GEFCOM14P",
+    "3. Re-run audit on NEM/EPEX for negative-price evidence",
+    "4. Update 14_IMPLEMENTATION_CONTRACT.md to M0+W2 spec",
+    "5. Implement M0+W2 distribution head in PyTorch",
+    "6. Run unit tests U1-U14",
+    "7. Train M0+W2 on S2; run ablation (M0 vs Normal vs Laplace)",
+    "8. Integrate distribution head with existing CAGM-DVG pipeline",
+    "9. S4 evaluation only after all freeze gates pass"
   ]
 }

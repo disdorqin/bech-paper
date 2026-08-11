@@ -1,6 +1,19 @@
 # 24-Hour Dependence Decision
 
 > Part of HCH v2 Derived Loss Math Design v0.1
+> **UPDATED 2026-08-11: Audit evidence forces W2 over W1**
+
+## 8.0 Audit Evidence (18 combos, 4 LAGO datasets x 5 backbones)
+
+| Diagnostic | Observed Range | W1 Threshold | Result |
+|---|---|---|---|
+| Effective rank | **2–5 / 24** | >20 | ❌ W1 fails |
+| First eigenvalue ratio | **82–96%** | <40% | ❌ W1 fails |
+| Max off-diagonal corr | **0.89–0.99** | <0.3 | ❌ W1 fails |
+| ACF lag1 | 0.56–0.78 | <0.3 | ❌ W1 fails |
+
+**Decision: W2 is mandatory.** All 18 combinations show strong day-level dependence.
+Hourly conditional independence given `Z` is empirically false.
 
 ## 8.1 The Three Options
 
@@ -10,69 +23,91 @@
 | **W2** | Shared day-level latent scale/skew; low-rank multivariate-t | Medium | Additional parameters; harder optimization |
 | **W3** | Copula / energy score / path likelihood | High | Sample-inefficient; fragile to misspecification |
 
-## 8.2 Recommendation: W1 with Guarded Upgrade Path
+## 8.2 Recommendation: W2 (was W1 before audit)
 
-**Recommend W1 as default.** Rationale:
+**Flip from W1 to W2.** The audit shows that W1's conditional independence assumption
+is violated on every tested combination. The within-day dependence is not weak residual
+correlation — it is a dominant low-rank structure (1-2 factors explain >80% of variance).
 
-1. **Composite likelihood is defensible**: Under assumption A2 (conditional
-   independence given `Z`), `L_day = -sum_h log f(R_h | Z_h)` is a valid
-   composite likelihood. It produces consistent parameter estimates even if
-   residual hours are not fully independent, as long as the marginal
-   specification of each `f(R_h | Z_h)` is correct (Varin et al. 2011).
+## 8.3 W2 Implementation
 
-2. **Encoder absorbs short-range dependence**: The CAGM day-key encoder and
-   the residual-lag features in `Z_t` (lags of 24h, 48h, 168h) provide
-   sufficient conditioning for most hour-to-hour dependence.
+### 8.3.1 Day-Level Latent Scale Model
 
-3. **Empirical evidence direction**: The dossier's residual exploration
-   found excess kurtosis of ~10.3 (consistent with Student-t) and skewness
-   of ~0.63 (moderate). These are marginal statistics; joint dependence
-   may still exist but is second-order relative to the marginal heavy tails.
+Add a shared day-level latent variable `eta_d` with prior `eta_d ~ N(0, 1)` that modulates
+the scale of all 24 hourly residuals:
 
-### 8.2.1 When W1 Is Sufficient
+```
+R_{d,h} | eta_d ~ Student-t(mu_h, sigma_h * exp(alpha * eta_d), nu)
+```
 
-W1 is sufficient when the following diagnostics pass:
+where:
+- `mu_h = g_mu(Z_{d,h})` — hour-specific location
+- `sigma_h = g_sigma(Z_{d,h})` — hour-specific base scale
+- `nu = g_nu(Z_{d,h})` — shared degrees of freedom
+- `alpha` — learnable scalar controlling how much the daily latent affects the scale
+- `eta_d ~ N(0, 1)` — per-day random effect
 
-| Diagnostic | Criterion | Status |
+**Justification**: A single scale factor captures "good days" (small residuals across all
+hours) vs "bad days" (large residuals). The low effective rank (2-5/24) and dominant first
+eigenvalue (82-96%) suggest most day-level variation is explained by a shared scale factor.
+
+### 8.3.2 Marginal Likelihood
+
+The day-level NLL requires marginalizing out `eta_d`:
+
+```
+L_day = -log integral_{-inf}^{inf} [prod_{h=1}^{24} f_t(R_{d,h} | mu_h, sigma_h*exp(alpha*eta), nu)] * phi(eta) d_eta
+```
+
+where `phi` is the standard normal density.
+
+### 8.3.3 Gauss-Hermite Quadrature
+
+Approximate the integral with `K` quadrature nodes:
+
+```
+L_day ≈ -log [sum_{k=1}^{K} w_k * prod_{h=1}^{24} f_t(R_{d,h} | mu_h, sigma_h*exp(alpha*eta_k), nu)]
+```
+
+where `(eta_k, w_k)_{k=1}^{K}` are Gauss-Hermite nodes and weights.
+
+**Recommended K = 7**: sufficient for normal prior; cost = 7x forward pass per day.
+
+**Log-sum-exp trick for stability**:
+```
+log_integral = log_sum_exp_{k=1}^{K} [log(w_k) + sum_{h=1}^{24} log f_t(R_{d,h} | ...)]
+L_day = -log_integral
+```
+
+### 8.3.4 Training Procedure
+
+1. Standardize `eta_d` to have unit variance across days (batch)
+2. For each training step, draw K quadrature nodes, compute all 24xK likelihoods
+3. Marginalize per day, backprop through the distribution parameters and alpha
+4. alpha initialized at 0 (no day-level effect), learned from data
+
+### 8.3.5 Gradient Path
+
+The gradient flows through `alpha`, `mu_h`, `sigma_h`, and `nu` via the log-sum-exp:
+```
+dL/dtheta = sum_d [1/Z_d * sum_k w_k * S_{d,k} * d/dtheta log S_{d,k}]
+```
+where `S_{d,k} = prod_h f_t(R_{d,h} | ...)` and `Z_d = sum_k w_k * S_{d,k}`.
+
+This is differentiable and standard for importance-weighted marginalization.
+
+### 8.3.6 Computational Cost
+
+| Component | Without W2 | With W2 (K=7) |
 |---|---|---|
-| Day-level NLL vs 24*hourly NLL | Difference < 1% of day-level NLL (S2) | Needs S2 audit |
-| 24x24 residual correlation | Max off-diagonal |corr| < 0.3 after conditioning on Z (S2) | Needs S2 audit |
-| Eigenvalue spectrum | Effective rank > 20 (S2 24x24 corr matrix) | Needs S2 audit |
-| S2-to-S3 stability | Above diagnostics stable across splits | Needs S2 audit |
+| Forward pass per day | 1x | 7x |
+| Memory per day | 24 hourly params | 24 x 7 = 168 hourly params |
+| Gradient computation | standard | log-sum-exp over 7 nodes |
 
-### 8.2.2 W2 Trigger Conditions
+For S2 with ~400 days, W2 adds ~7x compute — acceptable (~2 min extra training).
+For inference (S3/S4), use `eta=0` (prior mode) or MC with K=3.
 
-Upgrade to W2 if ANY of:
-
-1. Day-level NLL / 24 consistently differs from mean hourly NLL by > 2 SE
-   (joint dependence matters at the likelihood level)
-2. 24x24 residual correlation has first eigenvalue explaining > 40% variance
-   (strong common factor across hours)
-3. Tail events cluster at day level: P(tail event at h+1 | tail event at h)
-   is significantly > unconditional rate
-
-### 8.2.3 W2 Design (if needed)
-
-Add a shared day-level latent variable `eta_d ~ N(0, 1)` (or `t_kappa`) that
-scales or shifts all 24 hours:
-
-```
-R_{d,h} | eta_d ~ FS-t(mu_h + beta * eta_d, sigma_h * exp(gamma * eta_d), nu, gamma_skew)
-```
-
-The day-level NLL with marginalization:
-
-```
--log f(R_d) = -log integral prod_h f(R_{d,h} | eta) p(eta) d_eta
-```
-
-This integral can be approximated by Gauss-Hermite quadrature (5-7 nodes)
-for `eta ~ N(0,1)` or by Monte Carlo sampling during training.
-
-**Cost**: ~5x training computation (one forward pass per quadrature node for
-each day). Acceptable for S2/S3-scale data (hundreds of days).
-
-### 8.2.4 Why NOT W3
+## 8.4 Why NOT W1 Anymore
 
 W3 (copula/path likelihood) is rejected because:
 

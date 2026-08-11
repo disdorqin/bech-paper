@@ -1,50 +1,55 @@
 # HCH v2 Loss Math Design — Executive Verdict
 
-> Version: v0.1 | Date: 2026-08-11
-> Status: `READY FOR ARCHITECTURE REVIEW`
+> Version: v0.2 | Date: 2026-08-11 (updated with audit evidence)
+> Status: `READY FOR ARCHITECTURE REVIEW` (audit-backed revision)
 > Based on: `hch_v2_math_loss_research_dossier_and_prompt_v0.1_2026-08-11.md`
+> Audit: `outputs/00_EXECUTIVE_EVIDENCE_VERDICT.md` (18 combos, 4 datasets x 5 backbones)
 
 ---
 
-## 1.1 Recommended Minimal Model
+## 1.1 Recommended Minimal Model [REVISED per audit]
 
-**M1: State-conditional Fernandez-Steel skew-t (FS-ST)** with shared backbone:
+**M0: State-conditional symmetric Student-t** with **W2 day-level latent scale**:
 
-- Network `g_theta(Z)` outputs `(mu, log_sigma, log_nu_tilde, log_gamma)`
-- `nu = 2 + softplus(nu_tilde)` and `gamma` in R+ controls skew
-- Both Up/Down candidates from same conditional distribution via partial-moment decomposition
-- Training: NLL of FS skew-t density; gradient detached to candidate action computation
+- Network `g_theta(Z)` outputs `(mu, log_sigma, log_nu_tilde)`, with `nu = 2 + softplus(nu_tilde)`
+- Both Up/Down candidates from same distribution via partial-moment decomposition
+- **W2**: add day-level random scale factor `eta_d ~ N(0,1)` for 24h joint dependence
+- Training: NLL of symmetric Student-t (hourly) + day-level latent marginalization
+- M1 (FS skew-t) is deferred: audit found S2->S3 skew instability (median |shift| = 3.37)
 
-## 1.2 Is Asymmetric Student-t Really Needed?
+## 1.2 Distribution Choice: Audit Evidence
 
-**Yes, with precise scope.** Symmetric Student-t (M0) handles heavy tails (kurtosis median ~10.3)
-but cannot model directional asymmetry (skewness median ~0.63, peaks of 12.27 for NEM).
-The asymmetry is NOT universal -- it is host-dependent and market-dependent.
+**S2/S3 audit on 18 combos (4 LAGO datasets x 5 backbones):**
 
-M1 value proposition:
-1. Single NLL generates both occurrence probability `pi_pm(Z)` and conditional magnitude
-   `m_pm(Z)` from same density, eliminating separate classification + regression heads
-2. `gamma` enables different Up/Down tail behavior while sharing `nu` (natural partial-pooling)
-3. `gamma -> 1` degrades to symmetric t; `nu -> inf` to skew-normal: clean nested ablation
+| Finding | Evidence | Implication |
+|---|---|---|
+| Heavy tails confirmed | Student-t NLL < Normal NLL: **17/18**; nu median 7.0, range [3,15] | M0 validated |
+| Student-t vs Laplace | t better: 12/18 (CI excludes 0) | t over Laplace |
+| **Skew NOT stable** | S2->S3 skew shift median **3.37**, max 7.5 | **M1 deferred**; gamma won't generalize |
+| **24h dependence strong** | Effective rank 2-5/24, first eval 82-96%, max corr 0.89-0.99 | **W2 required**; hourly NLL not enough |
+| Partial moment viable | harm_rate ~10% on LAGO_BE vs ~17-22% for side-cond-mean | Keep M_pm candidate |
 
-## 1.3 Maximum Mathematical Risks
+## 1.3 Maximum Mathematical Risks [UNCHANGED + new]
 
-1. **Identifiability**: Neural net estimating `mu, sigma, nu, gamma` simultaneously may be
-   practically underdetermined. `mu(Z)` vs `gamma(Z)` can produce similar quantile shifts.
+1. **Identifiability**: Neural net estimating `mu, sigma, nu` simultaneously may be
+   practically underdetermined — but removing gamma helps.
 2. **Partial moment shrinkage**: `M_pm(Z) = pi_pm * m_pm` doubles the shrinkage. For rare
    events (pi ~ 0.01), correction collapses near-zero regardless of true magnitude.
 3. **nu near 2**: When tails are extremely heavy, `nu` approaches moment-existence boundary,
    causing gradient explosion in NLL.
+4. **[NEW] S2->S3 skew instability**: Asymmetry learned on S2 does not hold on S3. Even if M1
+   eventually needed, it requires market-specific gamma or stronger regularization.
 
-## 1.4 Whether to Proceed
+## 1.4 Whether to Proceed [REVISED]
 
-**Proceed with explicit guardrails:**
-- Implement M0 first; add M1 only after M0 passes unit tests
-- Compare `M_pm` against side-conditional mean; if shrinkage dominates, switch to
-  `sgn(z) * m_|z|` or calibrated quantile action
-- Build S2/S3 diagnostics for identifiability failure and `nu` boundary hits
+**Proceed with revised plan:**
+- Implement **M0 + W2**: symmetric Student-t with day-level latent scale
+- Defer M1 until: (a) 24h dependence is addressed by W2, (b) skew-stability issue is resolved
+  via either per-market gamma or hierarchical prior
+- Compare `M_pm` against side-conditional mean; audit shows M_pm has lower harm_rate
+- Build S2/S3 diagnostics for identifiability failure, nu boundary hits, and W2 necessity
 
-## 1.5 Core Differentiability Claim (Tentative)
+## 1.5 Core Differentiability Claim [UNCHANGED]
 
 > Existing heavy-tail likelihoods primarily target direct probabilistic forecasts. This
   project converts state-conditional heavy-tail residual distributions into directional
@@ -53,18 +58,11 @@ M1 value proposition:
   "distribution-derived bidirectional candidates + episodic action-value routing" --
   NOT from Student-t or skew-t distributions themselves.
 
-**Status**: This claim is **mathematically defensible** but requires the empirical evidence
-audit to confirm that the FS skew-t partial-moment candidates are materially different from
-separate classifiers + regressors.
+**Status**: Mathematically defensible; audit confirms heavy tails (17/18) and shows
+partial-moment candidates have favorable harm profile.
 
 ## 1.6 Overall Status
 
-`READY FOR ARCHITECTURE REVIEW` -- 14 sections complete. The following are complete:
-derivations (FS skew-t density, CDF, NLL, moments, partial moments for threshold=0),
-Bayes action analysis, identifiability diagnosis, 24h dependence recommendation (W1),
-CAGM-DVG risk decomposition, numerical implementation pseudocode, unit tests,
-falsification tests, ablation plan, risk register, theorem/proposition set,
-implementation contract, and allowed/forbidden claims.
-
-**Input needed from empirical audit**: confirmation of A2, A4, A5, A6, A7, A8 from the
-assumptions table before finalizing M1 over M0.
+`READY FOR ARCHITECTURE REVIEW` — 14 sections complete, **revised per audit evidence**.
+Key revisions: M0 over M1 (skew unstable), W2 over W1 (24h dependence strong).
+Next step: architecture review → implement M0+W2 → retest with NEM/EPEX/GEFCOM data.
