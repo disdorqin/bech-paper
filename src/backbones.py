@@ -19,13 +19,14 @@ import os
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from sklearn.linear_model import Ridge
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 
 torch.set_num_threads(int(os.environ.get("BECH_TORCH_THREADS", "4")))
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-BACKBONES = ("Linear", "MLP", "LSTM", "Transformer", "GBDT")
+BACKBONES = ("Linear", "MLP", "LSTM", "Transformer", "GBDT", "TCN", "PatchTST")
 
 
 # ------------------------------------------------------------- scikit-learn --
@@ -106,6 +107,72 @@ class _SeqTransformer(nn.Module):
         return self.head(torch.cat([z, stat], dim=1)).squeeze(-1)
 
 
+class _TCN(nn.Module):
+    """Causal Temporal Convolutional Network with dilated convolutions."""
+
+    def __init__(self, n_static: int, seq_len: int, hidden: int = 64,
+                 kernel_size: int = 3, dropout: float = 0.1):
+        super().__init__()
+        self.convs = nn.ModuleList()
+        dilations = [1, 2, 4, 8]
+        ch_in = 1
+        for d in dilations:
+            self.convs.append(nn.Conv1d(ch_in, hidden, kernel_size,
+                                        dilation=d, padding=0))
+            ch_in = hidden
+        self.dropout = nn.Dropout(dropout)
+        self.head = nn.Sequential(nn.Linear(hidden + n_static, 64), nn.ReLU(),
+                                  nn.Linear(64, 1))
+
+    def forward(self, seq, stat):
+        x = seq.unsqueeze(1)
+        for i, conv in enumerate(self.convs):
+            d = [1, 2, 4, 8][i]
+            pad = (conv.kernel_size[0] - 1) * d
+            x = F.pad(x, (pad, 0))
+            x = self.dropout(F.relu(conv(x)))
+        x = x.mean(dim=-1)
+        return self.head(torch.cat([x, stat], dim=1)).squeeze(-1)
+
+
+class _PatchTST(nn.Module):
+    """PatchTST: patching + channel-independent Transformer encoder."""
+
+    def __init__(self, n_static: int, seq_len: int, patch_len: int = 16,
+                 stride: int = 8, d_model: int = 128, nhead: int = 4,
+                 layers: int = 3, dropout: float = 0.1):
+        super().__init__()
+        self.patch_len = patch_len
+        self.stride = stride
+        self.n_patches = (seq_len - patch_len) // stride + 1
+
+        self.patch_embed = nn.Linear(patch_len, d_model)
+        self.pos_embed = nn.Parameter(torch.zeros(1, self.n_patches, d_model))
+        self.in_dropout = nn.Dropout(dropout)
+
+        enc_layer = nn.TransformerEncoderLayer(
+            d_model, nhead, dim_feedforward=256, dropout=dropout,
+            batch_first=True, norm_first=True,
+        )
+        self.encoder = nn.TransformerEncoder(enc_layer, layers)
+
+        self.head = nn.Sequential(
+            nn.Linear(d_model + n_static, 128), nn.ReLU(),
+            nn.Linear(128, 1),
+        )
+
+    def forward(self, seq, stat):
+        B = seq.shape[0]
+        patches = seq.unfold(1, self.patch_len, self.stride)
+        patches = patches.contiguous()
+        x = self.patch_embed(patches)
+        x = x + self.pos_embed
+        x = self.in_dropout(x)
+        x = self.encoder(x)
+        x = x.mean(dim=1)
+        return self.head(torch.cat([x, stat], dim=1)).squeeze(-1)
+
+
 class _Torch:
     def __init__(self, kind: str, seed: int = 0, epochs: int = 40, bs: int = 256):
         self.kind, self.seed, self.epochs, self.bs = kind, seed, epochs, bs
@@ -134,6 +201,10 @@ class _Torch:
         tr, va = idx[:cut], idx[cut:]
         if self.kind == "LSTM":
             self.m = _SeqLSTM(X.shape[1]).to(DEVICE)
+        elif self.kind == "TCN":
+            self.m = _TCN(X.shape[1], seq.shape[1]).to(DEVICE)
+        elif self.kind == "PatchTST":
+            self.m = _PatchTST(X.shape[1], seq.shape[1]).to(DEVICE)
         else:
             self.m = _SeqTransformer(X.shape[1], seq.shape[1]).to(DEVICE)
         opt = torch.optim.AdamW(self.m.parameters(), lr=1e-3, weight_decay=1e-4)
@@ -181,10 +252,10 @@ def make_backbone(name: str, seed: int = 0):
         return _Sk(name, seed)
     if name == "GBDT":
         return _GBDT(seed)
-    if name in ("LSTM", "Transformer"):
+    if name in ("LSTM", "Transformer", "TCN", "PatchTST"):
         return _Torch(name, seed)
     raise KeyError(name)
 
 
 def needs_seq(name: str) -> bool:
-    return name in ("LSTM", "Transformer")
+    return name in ("LSTM", "Transformer", "TCN", "PatchTST")
