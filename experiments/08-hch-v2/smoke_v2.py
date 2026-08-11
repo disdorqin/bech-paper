@@ -1,8 +1,9 @@
-"""HCH v2 repair smoke — micro end-to-end with new API (§12.2)."""
+"""HCH v2 repair smoke — S3 calibration + unified S4 manifold."""
 from __future__ import annotations
 
-import sys
+import sys, json
 from pathlib import Path
+from datetime import datetime, timezone
 
 import numpy as np
 import torch
@@ -17,21 +18,31 @@ from common import load_dataset, load_shandong, build_tabular, assert_no_leakage
     four_segment_split, weekly_naive
 from backbones import make_backbone, needs_seq
 from hch_v2_data import DailyEpisodeBatch, build_dataloaders
-from hch_v2 import HCHV2, HCHV2Config, compute_action_gain, candidate_loss_fn, \
-    state_loss_fn, compute_state_targets
+from hch_v2 import (
+    HCHV2, HCHV2Config, compute_action_gain,
+    candidate_loss_fn, state_loss_fn, compute_state_targets,
+)
+from eval_manifest import build_s4_manifest, evaluate_on_manifest
+from baselines_v2 import Identity, ResidualL1, QuantileResidualLGBM
+from official_adapters import DeltaAdapterOfficial, PIROfficial
 
 DEV = torch.device("cpu")
+
+
+def _to_device(batch):
+    return DailyEpisodeBatch(
+        host_pred=batch.host_pred.to(DEV), target=batch.target.to(DEV),
+        exog=batch.exog.to(DEV), exog_mask=batch.exog_mask.to(DEV),
+        time_feat=batch.time_feat.to(DEV), date_ids=batch.date_ids,
+    )
 
 
 def _s1_stats(price_s1):
     y = np.sort(price_s1.ravel().astype(np.float64))
     def cdf(v):
         return float(np.searchsorted(y, v) / len(y))
-    return {
-        "cdf": cdf,
-        "median": float(np.median(y)),
-        "mad": float(np.median(np.abs(y - np.median(y)))),
-    }
+    return {"cdf": cdf, "median": float(np.median(y)),
+            "mad": float(np.median(np.abs(y - np.median(y))))}
 
 
 def train_step(model, loader, cfg, s1_stats):
@@ -41,20 +52,12 @@ def train_step(model, loader, cfg, s1_stats):
     for ep in range(cfg.epochs):
         total = 0.0
         for batch in loader:
-            batch = DailyEpisodeBatch(
-                host_pred=batch.host_pred.to(DEV),
-                target=batch.target.to(DEV),
-                exog=batch.exog.to(DEV),
-                exog_mask=batch.exog_mask.to(DEV),
-                time_feat=batch.time_feat.to(DEV),
-                date_ids=batch.date_ids,
-            )
+            batch = _to_device(batch)
             z, state = model.encode(batch)
             cand = model.biomc(z, state)
             cl, _ = candidate_loss_fn(cand, batch.target, batch.host_pred, cfg)
             s_tgt = compute_state_targets(batch.target, s1_stats["cdf"],
-                                          s1_stats["median"], s1_stats["mad"])
-            s_tgt = s_tgt.to(DEV)
+                                          s1_stats["median"], s1_stats["mad"]).to(DEV)
             sl = state_loss_fn(state, s_tgt)
             loss = cl + cfg.state_loss_weight * sl
             opt.zero_grad()
@@ -75,25 +78,19 @@ def train_step(model, loader, cfg, s1_stats):
     return best
 
 
-def build_memory(model, s3_loader, s1_stats):
+def build_memory_s3(model, s3_loader, s1_stats):
     model.eval()
     keys, gains, dates = [], [], []
     with torch.no_grad():
         for batch in s3_loader:
-            batch = DailyEpisodeBatch(
-                host_pred=batch.host_pred.to(DEV), target=batch.target.to(DEV),
-                exog=batch.exog.to(DEV), exog_mask=batch.exog_mask.to(DEV),
-                time_feat=batch.time_feat.to(DEV), date_ids=batch.date_ids,
-            )
+            batch = _to_device(batch)
             z, state = model.encode(batch)
             cand = model.biomc(z, state)
             dd = cand["delta_down"].squeeze(-1)
             du = cand["delta_up"].squeeze(-1)
             yh = batch.host_pred.squeeze(-1)
             yt = batch.target.squeeze(-1)
-            yd = yh + dd
-            yu = yh + du
-            gain = compute_action_gain(yt, yh, yd, yu)
+            gain = compute_action_gain(yt, yh, yh + dd, yh + du)
             k = model.memory.encode_key(z, state, dd, du)
             keys.append(k.cpu())
             gains.append(gain.cpu())
@@ -128,90 +125,122 @@ def run_one(ds_key, bb_name, seed=0):
     yhat_full = np.full(len(y_full), np.nan, dtype=np.float32)
     yhat_full[valid] = yhat.astype(np.float32)
 
+    spike_thr = float(np.quantile(y[seg["S1"]], 0.99))
+    neg_thr = 0.0
     s1_stats = _s1_stats(y[seg["S1"]])
     loaders = build_dataloaders(ds_key, yhat_full, ds, batch_size=32)
     p_mean, p_std = loaders["price_mean"], loaders["price_std"]
 
+    # -- unified S4 manifest (all methods use this) --
+    manifest = build_s4_manifest(ds, seg, yhat_full)
+
+    # subset y_full and yhat to manifest valid_indices
+    y_s4_truth = y_full[manifest.valid_indices]
+    y_s4_host = yhat_full[manifest.valid_indices]
+    naive_s4 = y_full[np.clip(manifest.valid_indices - 168, 0, len(y_full) - 1)]
+
+    results = []
+
+    # ---- Identity ----
+    results.append({"method": "Identity",
+                    **evaluate_on_manifest(y_s4_truth, y_s4_host, manifest, neg_thr, spike_thr),
+                    "touch_rate": 0.0, "harm_rate": 0.0})
+
+    # ---- HCH v2 with calibration ----
     cfg = HCHV2Config(d_model=48, epochs=5, patience=3, lr=1e-3,
-                      state_loss_weight=0.5, cara_eta=0.1, kl_tau=0.2)
-
+                      state_loss_weight=0.5)
     model = HCHV2(cfg).to(DEV)
-
-    # train on S2
     train_step(model, loaders["S2"], cfg, s1_stats)
 
-    # state gradient check (C4)
-    state_grad = 0.0
-    for name, p in model.named_parameters():
-        if "state_head" in name and p.grad is not None:
-            state_grad += p.grad.norm().item()
+    # S3: build temp memory + calibrate k/eta/tau (§F2)
+    build_memory_s3(model, loaders["S3"], s1_stats)
+    best_cfg = model.calibrate_s3(loaders["S3"], s1_stats)
+    model.built = True
 
-    # build memory on S3
-    build_memory(model, loaders["S3"], s1_stats)
-
-    # freeze
     bundle = model.freeze(s1_stats=s1_stats)
-    bundle_hash = bundle.hash()
-
-    # reload from bundle
     del model
-    model2 = HCHV2.from_bundle(bundle)
-    model2.built = True
-    model2.eval()
 
-    # predict S4
-    all_yf, all_yt, all_yb, all_act, all_state = [], [], [], [], []
+    mdl = HCHV2.from_bundle(bundle)
+    mdl.built = True
+    mdl.eval()
+
+    all_yf, all_act = [], []
     with torch.no_grad():
         for batch in loaders["S4"]:
-            batch = DailyEpisodeBatch(
-                host_pred=batch.host_pred.to(DEV), target=batch.target.to(DEV),
-                exog=batch.exog.to(DEV), exog_mask=batch.exog_mask.to(DEV),
-                time_feat=batch.time_feat.to(DEV), date_ids=batch.date_ids,
-            )
-            out = model2(batch)
+            batch = _to_device(batch)
+            out = mdl(batch)
             all_yf.append(out["y_final"].cpu().numpy().ravel())
-            all_yt.append(batch.target.cpu().numpy().ravel())
-            all_yb.append(out["y_base"].cpu().numpy().ravel())
-            all_state.append(out["state"].cpu().numpy())
             if out.get("chosen_action") is not None:
                 all_act.append(out["chosen_action"].cpu().numpy().ravel())
 
-    yf = np.concatenate(all_yf) * p_std + p_mean
-    yt = np.concatenate(all_yt) * p_std + p_mean
-    yb = np.concatenate(all_yb) * p_std + p_mean
-    act = np.concatenate(all_act) if all_act else np.array([])
+    hch_pred_z = np.concatenate(all_yf)
+    hch_pred = hch_pred_z * p_std + p_mean
 
-    mae_base = float(np.abs(yb - yt).mean())
-    mae_hch = float(np.abs(yf - yt).mean())
-    touch = float((np.abs(yf - yb) > 1e-6).mean())
-    harm = float((np.abs(yf - yt) > np.abs(yb - yt)).mean())
+    # map back to manifest hours (trim to manifest length)
+    n_manifest = manifest.n_hours
+    if len(hch_pred) > n_manifest:
+        hch_pred = hch_pred[-n_manifest:]
+    elif len(hch_pred) < n_manifest:
+        hch_pred = np.pad(hch_pred, (n_manifest - len(hch_pred), 0), constant_values=np.nan)
 
-    return {
-        "ds": ds_key, "bb": bb_name, "bundle_hash": bundle_hash,
-        "mae_base": mae_base, "mae_hch": mae_hch, "delta": mae_hch - mae_base,
-        "touch": touch, "harm": harm,
-        "state_grad": state_grad,
-        "action_id": float((act == 0).mean()) if len(act) else 1.0,
-        "action_down": float((act == 1).mean()) if len(act) else 0.0,
-        "action_up": float((act == 2).mean()) if len(act) else 0.0,
-        "mem_entries": len(model2.memory.m_keys) if model2.memory.m_keys is not None else 0,
-    }
+    touch = float((np.abs(hch_pred - y_s4_host) > 1e-6).mean()) if n_manifest else 0
+    harm = float((np.abs(hch_pred - y_s4_truth) > np.abs(y_s4_host - y_s4_truth)).mean()) if n_manifest else 0
+
+    hch_r = {"method": "HCHv2",
+             **evaluate_on_manifest(y_s4_truth, hch_pred, manifest, neg_thr, spike_thr),
+             "touch_rate": touch, "harm_rate": harm,
+             "bundle_hash": bundle.hash(),
+             "mem_entries": len(mdl.memory.m_keys) if mdl.memory.m_keys is not None else 0}
+
+    if all_act:
+        acts = np.concatenate(all_act)
+        if len(acts) > n_manifest:
+            acts = acts[-n_manifest:]
+        hch_r["action_id"] = float((acts == 0).mean())
+        hch_r["action_down"] = float((acts == 1).mean())
+        hch_r["action_up"] = float((acts == 2).mean())
+    hch_r["calibration"] = {"k": best_cfg[0], "eta": best_cfg[1],
+                             "tau": best_cfg[2]} if best_cfg else None
+    results.append(hch_r)
+
+    id_mae = results[0]["mae"]
+    return {"dataset": ds_key, "backbone": bb_name, "seed": seed,
+            "n_S4_manifest": n_manifest,
+            "spike_thr": spike_thr, "neg_thr": neg_thr,
+            "methods": [{**r, "delta_mae": round(r["mae"] - id_mae, 4)}
+                        for r in results]}
 
 
 def main():
-    print("=== HCH v2 Repair Micro Smoke ===\n")
+    print("=== HCH v2 Calibrated Smoke ===\n")
+    all_r = []
     for ds in ["NEM_SA1", "LAGO_DE"]:
         for bb in ["Linear", "PatchTST"]:
             print(f"{ds} x {bb} ", end="", flush=True)
             try:
                 r = run_one(ds, bb)
-                print(f"MAE={r['mae_hch']:.2f} d={r['delta']:+.3f} "
-                      f"touch={r['touch']:.1%} harm={r['harm']:.1%} "
-                      f"act=({r['action_id']:.0%}I/{r['action_down']:.0%}D/{r['action_up']:.0%}U) "
-                      f"sg={r['state_grad']:.4f} hash={r['bundle_hash']}")
+                all_r.append(r)
+                for m in r["methods"]:
+                    extra = ""
+                    if "calibration" in m and m["calibration"]:
+                        extra = f' cal=({m["calibration"]["k"]},{m["calibration"]["eta"]},{m["calibration"]["tau"]})'
+                    if "bundle_hash" in m:
+                        extra += f' hash={m["bundle_hash"]}'
+                    act = ""
+                    if "action_id" in m:
+                        act = f" act=({m['action_id']:.0%}I/{m.get('action_down',0):.0%}D/{m.get('action_up',0):.0%}U)"
+                    print(f"  {m['method']:10s} MAE={m['mae']:.2f} d={m['delta_mae']:+.3f} "
+                          f"n={m['n']} touch={m.get('touch_rate',0):.1%}{act}{extra}")
             except Exception as e:
-                print(f"FAIL: {e}")
-    print("\nDone.")
+                import traceback
+                print(f"FAIL: {e}\n{traceback.format_exc()}")
+
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    out = Path(__file__).resolve().parent / "results" / f"v2_smoke_calibrated_{ts}.json"
+    with open(out, "w") as f:
+        json.dump(all_r, f, indent=2, default=str, ensure_ascii=False)
+    n_methods = sum(len(r["methods"]) for r in all_r)
+    print(f"\n{len(all_r)} combos, {n_methods} evals -> {out}")
 
 
 if __name__ == "__main__":

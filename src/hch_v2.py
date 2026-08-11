@@ -244,7 +244,7 @@ class DVG(nn.Module):
     def set_mode(self, mode):
         self.gate_mode = mode
 
-    def calibrate(self, eta, tau, k, mode):
+    def calibrate(self, eta, tau, mode):
         """§F2: set parameters calibrated on S3."""
         self.cara_eta = eta
         self.kl_tau = tau
@@ -464,6 +464,75 @@ class HCHV2(nn.Module):
         b.commit = commit
         return b
 
+    def calibrate_s3(self, s3_loader, s1_stats):
+        """§F2: S3 leave-one-day-out grid search over k/eta/tau."""
+        self.eval()
+        K_grid = [5, 10, 15, 20]
+        ETA_grid = [0.1, 0.5, 1.0, 2.0]
+        TAU_grid = [0.2, 0.5, 1.0]
+
+        all_keys, all_gains, all_dates = [], [], []
+        with torch.no_grad():
+            for batch in s3_loader:
+                batch = _to_device(batch)
+                z, state = self.encode(batch)
+                cand = self.biomc(z, state)
+                dd = cand["delta_down"].squeeze(-1)
+                du = cand["delta_up"].squeeze(-1)
+                yh = batch.host_pred.squeeze(-1)
+                yt = batch.target.squeeze(-1)
+                gain = compute_action_gain(yt, yh, yh + dd, yh + du)
+                k_raw = self.memory.encode_raw(z, state, dd, du)
+                all_keys.append(k_raw.cpu())
+                all_gains.append(gain.cpu())
+                if isinstance(batch.date_ids, list):
+                    all_dates.extend(batch.date_ids)
+
+        keys_pool = torch.cat(all_keys)
+        gains_pool = torch.cat(all_gains)
+        n_days = len(keys_pool)
+        if n_days < 5:
+            return
+
+        best_score, best_cfg = -float("inf"), None
+        for K in K_grid:
+            self.memory.memory_k = K
+            for eta in ETA_grid:
+                self.dvg.cara_eta = eta
+                for tau in TAU_grid:
+                    self.dvg.kl_tau = tau
+                    pos_gains = []
+                    for i in range(n_days):
+                        excl = torch.tensor([[i]])
+                        q = self.memory.project_metric(keys_pool[i:i + 1])
+                        mem_bak = self.memory.m_keys, self.memory.m_gains
+                        self.memory.m_keys = F.normalize(self.memory.project_metric(keys_pool), dim=-1)
+                        self.memory.m_gains = gains_pool
+                        w, g, _ = self.memory.retrieve(q, exclude_idx=excl)
+                        self.memory.m_keys, self.memory.m_gains = mem_bak
+                        if w is None:
+                            continue
+                        gate = self.dvg(w, g)
+                        if gate is None:
+                            continue
+                        ce = gate["action_value"]
+                        best_a = ce.argmax(dim=-1)
+                        gain_i = g[0, :, :, :].mean(dim=0)
+                        chosen_gain = gain_i[range(24), best_a[0]].mean().item()
+                        pos_gains.append(chosen_gain)
+                    if pos_gains:
+                        score = np.mean([g for g in pos_gains if g > 0]) if any(g > 0 for g in pos_gains) else 0.0
+                        if score > best_score:
+                            best_score = score
+                            best_cfg = (K, eta, tau, self.dvg.gate_mode)
+
+        self.config.memory_k = best_cfg[0]
+        self.dvg.cara_eta = best_cfg[1]
+        self.dvg.kl_tau = best_cfg[2]
+        self.dvg.gate_mode = best_cfg[3]
+        self.memory.memory_k = best_cfg[0]
+        return best_cfg
+
     @classmethod
     def from_bundle(cls, bundle: HCHV2Bundle) -> "HCHV2":
         model = cls(bundle.config)
@@ -477,3 +546,12 @@ class HCHV2(nn.Module):
         for p in model.parameters():
             p.requires_grad = False
         return model
+
+
+def _to_device(batch):
+    from hch_v2_data import DailyEpisodeBatch
+    return DailyEpisodeBatch(
+        host_pred=batch.host_pred, target=batch.target,
+        exog=batch.exog, exog_mask=batch.exog_mask,
+        time_feat=batch.time_feat, date_ids=batch.date_ids,
+    )
