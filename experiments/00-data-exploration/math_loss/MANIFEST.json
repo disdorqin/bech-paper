@@ -1,0 +1,40 @@
+{
+  "document": "hch_v2_derived_loss_math_design_v0.1_2026-08-11",
+  "status": "READY_FOR_ARCHITECTURE_REVIEW",
+  "based_on": "docs/paper_prep/v2/hch_v2_math_loss_research_dossier_and_prompt_v0.1_2026-08-11.md",
+  "output_directory": "experiments/00-data-exploration/math_loss/",
+  "files": [
+    {"id": "00", "name": "00_EXECUTIVE_VERDICT.md", "description": "1-page executive verdict: recommended model, risks, go/no-go"},
+    {"id": "01", "name": "01_ASSUMPTIONS.md", "description": "12 assumptions with falsification tests and fallbacks (T1)"},
+    {"id": "02", "name": "02_LITERATURE_AND_CLAIMS.md", "description": "Literature collision assessment and claim boundary (T9)"},
+    {"id": "03", "name": "03_DISTRIBUTION_DERIVATION.md", "description": "Full FS skew-t derivation: density, CDF, NLL, moments, limits, identifiability (T2)"},
+    {"id": "04", "name": "04_PARTIAL_MOMENTS.md", "description": "Directional partial moments M_plus, M_minus; closed-form via E_nu(a); numerical verification (T3)"},
+    {"id": "05", "name": "05_BAYES_DECISION.md", "description": "Bayes action analysis for MSE/MAE/asymmetric loss; candidate comparison; non-collapse proof (T4)"},
+    {"id": "06", "name": "06_STATE_PARAMETERIZATION.md", "description": "Continuous state design; cross-market shared backbone + biases; negative-price transfer (T7)"},
+    {"id": "07", "name": "07_24H_DEPENDENCE.md", "description": "W1 recommendation with W2 upgrade triggers; CAGM relationship (T6)"},
+    {"id": "08", "name": "08_CAGM_DVG_INTERFACE.md", "description": "Risk decomposition; tensor API; loss functions; non-duplicative design (T8)"},
+    {"id": "09", "name": "09_NUMERICAL_IMPLEMENTATION.md", "description": "Stable computation primitives; NLL/CDF/partial moments; gradient safety; initialization (T10)"},
+    {"id": "10", "name": "10_TESTS.md", "description": "14 unit tests (U1-U14) + 4 sanity tests + 4 falsification tests (T10)"},
+    {"id": "11", "name": "11_ABLATION.md", "description": "6-ablation ladder; diagnostic panel; macro/micro averaging; multiplicity handling"},
+    {"id": "12", "name": "12_RISK_REGISTER.md", "description": "12 numbered risks with severity, reviewer quotes, mitigation"},
+    {"id": "13", "name": "13_THEOREMS.md", "description": "5 propositions: normalization, non-collapse, limits, partial moments, composite likelihood"},
+    {"id": "14", "name": "14_IMPLEMENTATION_CONTRACT.md", "description": "Unique design; architecture params; checkpoint order; freeze contract"},
+    {"id": "15", "name": "15_ALLOWED_AND_FORBIDDEN_CLAIMS.md", "description": "10 allowed claims + forbiddens + caveats + contribution framing"}
+  ],
+  "blockers": [
+    "Empirical S2/S3 audit not yet executed (assumptions A2, A4, A5, A6, A7, A8 need verification)",
+    "Student-t CDF/partial-moment implementations (betainc, lgamma) need PyTorch-compatible versions",
+    "Existing HCH v2 code repair must complete before distribution head can be integrated"
+  ],
+  "next_steps": [
+    "1. Architecture review: check derivations, claims, and risk register",
+    "2. Empirical audit: run data audit per hch_v2_math_evidence_data_audit_prompt_v0.1.md",
+    "3. Verify/falsify assumptions A2-A8 with S2/S3 evidence",
+    "4. If assumptions pass: implement fs_skewt.py per Section 10 + contract Section 14",
+    "5. Run unit tests U1-U14 + S1-S4 on synthetic data",
+    "6. Train M0 + M1 on S2 residuals; run ablation A0",
+    "7. If M1 > M0: integrate distribution head with existing CAGM-DVG pipeline",
+    "8. S3 calibration and end-to-end smoke",
+    "9. S4 evaluation only after freeze verified"
+  ]
+}
