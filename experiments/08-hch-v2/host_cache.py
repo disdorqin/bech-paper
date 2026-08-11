@@ -84,7 +84,11 @@ def cache_one(ds_key: str, bb_name: str) -> dict:
     cache_dir = CACHE_ROOT / ds_key / bb_name
     cache_dir.mkdir(parents=True, exist_ok=True)
 
-    np.save(cache_dir / "pred.npy", yhat.astype(np.float32))
+    yhat_full_arr = np.full(len(y_full), np.nan, dtype=np.float32)
+    yhat_full_arr[valid] = yhat.astype(np.float32)
+
+    np.save(cache_dir / "pred_full.npy", yhat_full_arr)  # full-length with NaN warmup
+    np.save(cache_dir / "pred.npy", yhat.astype(np.float32))  # valid-only
     np.save(cache_dir / "y.npy", y.astype(np.float32))
     np.save(cache_dir / "valid.npy", valid.astype(np.int32))
 
@@ -116,14 +120,34 @@ def cache_one(ds_key: str, bb_name: str) -> dict:
 
 
 def main():
-    datasets = list(DATASETS.keys()) + ["shandong_DA", "shandong_RT"]
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", type=str, default=None, help="single dataset or all")
+    ap.add_argument("--backbone", type=str, default=None, help="single backbone or all")
+    ap.add_argument("--resume", action="store_true")
+    args = ap.parse_args()
+
+    if args.dataset:
+        datasets = [args.dataset]
+    else:
+        datasets = list(DATASETS.keys()) + ["shandong_DA", "shandong_RT"]
+
+    if args.backbone:
+        backbones = [args.backbone]
+    else:
+        backbones = list(V2_BACKBONES)
+
     records = []
 
-    total = len(datasets) * len(V2_BACKBONES)
+    total = len(datasets) * len(backbones)
     done = 0
     for ds_key in datasets:
-        for bb_name in V2_BACKBONES:
+        for bb_name in backbones:
             done += 1
+            cache_dir = CACHE_ROOT / ds_key / bb_name
+            if args.resume and (cache_dir / "pred_full.npy").exists():
+                print(f"[{done}/{total}] {ds_key} x {bb_name} SKIP (cached)")
+                continue
             print(f"[{done}/{total}] {ds_key} x {bb_name} ", end="", flush=True)
             try:
                 rec = cache_one(ds_key, bb_name)

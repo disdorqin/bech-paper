@@ -183,7 +183,7 @@ class CAGMMemory(nn.Module):
         return F.normalize(self.metric_proj(k), dim=-1)
 
     def encode_raw(self, z, state, dd, du):
-        """Raw key without metric projection (§E2)."""
+        """Pre-projection key for unified metric space (§E2)."""
         zp = z.mean(dim=1)
         sp = state.mean(dim=1)
         zp = torch.cat([zp, sp], dim=-1)
@@ -191,7 +191,7 @@ class CAGMMemory(nn.Module):
                         du.mean(1, keepdim=True), du.std(1, keepdim=True)], dim=1)
         ce = self.cand_proj(cf)
         k = self.fusion(torch.cat([self.key_net(zp), ce.detach()], -1))
-        return F.normalize(k, dim=-1)
+        return k  # unnormalized, pre-projection
 
     def project_metric(self, raw_keys):
         """Apply metric projection exactly once (§E2)."""
