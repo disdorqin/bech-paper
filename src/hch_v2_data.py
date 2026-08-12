@@ -293,8 +293,13 @@ def build_dataloaders(
     ds: dict,
     batch_size: int = 32,
     include_target_s4: bool = False,
+    exp_manifest=None,
 ) -> dict:
     splits = date_based_split(ds)
+    if exp_manifest is not None:
+        splits = {seg: exp_manifest.dates_in_split(seg)
+                  for seg in ("S1", "S2", "S3", "S4")}
+        split_hash = exp_manifest.split_hash
 
     s1_dates = splits["S1"]
     s1_mask = np.array([str(d) in s1_dates for d in ds["ts"].dt.date])
@@ -326,6 +331,8 @@ def build_dataloaders(
     loaders["price_std"] = p_std
     loaders["exog_scalers"] = exog_scalers
     loaders["splits"] = splits
+    if exp_manifest is not None:
+        loaders["split_hash"] = exp_manifest.split_hash
     return loaders
 
 

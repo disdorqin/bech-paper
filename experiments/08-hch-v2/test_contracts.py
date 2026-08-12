@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "experiments" / "07-route-e" / "peers"))
 
-from common import load_dataset, build_tabular, assert_no_leakage, four_segment_split
+from common import load_dataset, build_tabular, assert_no_leakage
 from backbones import make_backbone
 from hch_v2_data import DailyEpisodeBatch, build_dataloaders
 from hch_v2 import (
@@ -21,7 +21,7 @@ from hch_v2 import (
     build_candidates, compute_action_gain,
     candidate_loss_fn, state_loss_fn, compute_state_targets,
 )
-from eval_manifest import build_s4_manifest
+from eval_manifest import ExperimentManifest, build_s4_manifest
 
 DEV = torch.device("cpu")
 TESTS = []
@@ -48,25 +48,52 @@ def _():
                 if f.endswith(".py"):
                     py_compile.compile(os.path.join(r, f), doraise=True)
 
-@test("02 S1-S4 no overlap")
+@test("02 S1-S4 dates disjoint")
 def _():
-    seg = four_segment_split(1000)
-    s = {k: set(v.tolist()) for k, v in seg.items()}
-    for a, b in [("S1", "S2"), ("S2", "S3"), ("S3", "S4")]:
-        assert len(s[a] & s[b]) == 0
+    ds = load_dataset("LAGO_DE")
+    X, y, names, valid = build_tabular(ds)
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
+    s1 = exp.dates_in_split("S1")
+    s2 = exp.dates_in_split("S2")
+    s3 = exp.dates_in_split("S3")
+    s4 = exp.dates_in_split("S4")
+    assert len(s1 & s2) == 0
+    assert len(s2 & s3) == 0
+    assert len(s3 & s4) == 0
+    # verify all dates are assigned
+    all_dates = s1 | s2 | s3 | s4
+    assert len(all_dates) == len(exp.dates)
 
 @test("03 S4 manifest non-empty")
 def _():
     ds = load_dataset("LAGO_DE")
     X, y, names, valid = build_tabular(ds)
-    seg = four_segment_split(len(valid))
     bb = make_backbone("Linear", seed=0)
-    bb.fit(X[seg["S1"]], y[seg["S1"]])
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
+    s1_idx = exp.valid_indices_in_split("S1")
+    bb.fit(X[s1_idx], y[s1_idx])
     yhat = bb.predict(X)
     yhf = np.full(len(ds["price"]), np.nan, np.float32)
     yhf[valid] = yhat.astype(np.float32)
-    m = build_s4_manifest(ds, seg, yhf)
+    m = exp.build_s4_eval_manifest(yhf)
     assert m.n_hours > 0
+
+@test("03b host S1 and HCH S2 date-disjoint")
+def _():
+    ds = load_dataset("LAGO_DE")
+    X, y, names, valid = build_tabular(ds)
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
+    s1_dates = exp.dates_in_split("S1")
+    s2_dates = exp.dates_in_split("S2")
+    assert len(s1_dates & s2_dates) == 0, "S1 and S2 dates must be disjoint"
+
+@test("03c split hash stable for same dataset")
+def _():
+    ds = load_dataset("LAGO_DE")
+    X, y, names, valid = build_tabular(ds)
+    exp1 = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
+    exp2 = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
+    assert exp1.split_hash == exp2.split_hash
 
 @test("04 host_cache CLI deferred")
 def _():
@@ -296,14 +323,16 @@ def _():
 def _():
     ds = load_dataset("LAGO_DE")
     X, y, names, valid = build_tabular(ds)
-    seg = four_segment_split(len(valid))
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
     bb = make_backbone("Linear", 0)
-    bb.fit(X[seg["S1"]], y[seg["S1"]])
+    s1_idx = exp.valid_indices_in_split("S1")
+    bb.fit(X[s1_idx], y[s1_idx])
     yhf = np.full(len(ds["price"]), np.nan, np.float32)
     yhf[valid] = bb.predict(X).astype(np.float32)
-    m = build_s4_manifest(ds, seg, yhf)
+    m = exp.build_s4_eval_manifest(yhf)
     assert m.hash is not None
     assert len(m.timestamps) > 0
+    assert exp.split_hash is not None
 
 
 if __name__ == "__main__":

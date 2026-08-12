@@ -15,16 +15,16 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "experiments" / "07-route-e" / "peers"))
 
 from common import load_dataset, load_shandong, build_tabular, assert_no_leakage, \
-    four_segment_split, weekly_naive
+    weekly_naive
 from backbones import make_backbone, needs_seq
 from hch_v2_data import DailyEpisodeBatch, build_dataloaders
 from hch_v2 import (
     HCHV2, HCHV2Config, compute_action_gain,
     candidate_loss_fn, state_loss_fn, compute_state_targets,
 )
-from eval_manifest import build_s4_manifest, evaluate_on_manifest
+from eval_manifest import ExperimentManifest, evaluate_on_manifest
 from baselines_v2 import Identity, ResidualL1, QuantileResidualLGBM
-from official_adapters import DeltaAdapterOfficial, PIROfficial
+from official_adapters import DeltaAdapterLimited, PIRLimited
 
 DEV = torch.device("cpu")
 
@@ -119,30 +119,34 @@ def run_one(ds_key, bb_name, seed=0):
         load_shandong(price_col="日前电价", encoding="gbk")
     y_full = ds["price"]
     X, y, names, valid = build_tabular(ds)
-    seg = four_segment_split(len(valid))
     assert_no_leakage(ds, X, y, valid, names)
+
+    # -- unified date-first manifest (§3.2 addendum) --
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id=ds_key)
+    s1_indices = exp.valid_indices_in_split("S1")
 
     bb = make_backbone(bb_name, seed=seed)
     if needs_seq(bb_name):
         from common import build_sequences
         sq = build_sequences(ds, valid)
-        bb.fit(X[seg["S1"]], y[seg["S1"]], sq[seg["S1"]])
+        bb.fit(X[s1_indices], y[s1_indices], sq[s1_indices])
         yhat = bb.predict(X, sq)
     else:
-        bb.fit(X[seg["S1"]], y[seg["S1"]])
+        bb.fit(X[s1_indices], y[s1_indices])
         yhat = bb.predict(X)
 
     yhat_full = np.full(len(y_full), np.nan, dtype=np.float32)
     yhat_full[valid] = yhat.astype(np.float32)
 
-    spike_thr = float(np.quantile(y[seg["S1"]], 0.99))
+    spike_thr = float(np.quantile(y[s1_indices], 0.99))
     neg_thr = 0.0
-    s1_stats = _s1_stats(y[seg["S1"]])
-    loaders = build_dataloaders(ds_key, yhat_full, ds, batch_size=32)
+    s1_stats = _s1_stats(y[s1_indices])
+    loaders = build_dataloaders(ds_key, yhat_full, ds, batch_size=32,
+                                exp_manifest=exp)
     p_mean, p_std = loaders["price_mean"], loaders["price_std"]
 
-    # -- unified S4 manifest (all methods use this) --
-    manifest = build_s4_manifest(ds, seg, yhat_full)
+    # -- unified S4 manifest from same ExperimentManifest --
+    manifest = exp.build_s4_eval_manifest(yhat_full)
 
     # subset y_full and yhat to manifest valid_indices
     y_s4_truth = y_full[manifest.valid_indices]

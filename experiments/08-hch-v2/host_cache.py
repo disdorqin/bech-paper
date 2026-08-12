@@ -24,6 +24,7 @@ from common import (
     build_tabular, build_sequences, assert_no_leakage,
     four_segment_split,
 )
+from eval_manifest import ExperimentManifest
 
 SEED = 0
 V2_BACKBONES = ("Linear", "MLP", "LSTM", "TCN", "PatchTST")
@@ -52,18 +53,18 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
 
     X, y, names, valid = build_tabular(ds)
     n = len(valid)
-    seg = four_segment_split(n)
-    s1, s2, s3, s4 = seg["S1"], seg["S2"], seg["S3"], seg["S4"]
-
     assert_no_leakage(ds, X, y, valid, names)
+
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id=ds_key)
+    s1_indices = exp.valid_indices_in_split("S1")
 
     bb = make_backbone(bb_name, seed=seed)
     if needs_seq(bb_name):
         seq_full = build_sequences(ds, valid)
-        bb.fit(X[s1], y[s1], seq_full[s1])
+        bb.fit(X[s1_indices], y[s1_indices], seq_full[s1_indices])
         yhat = bb.predict(X, seq_full)
     else:
-        bb.fit(X[s1], y[s1])
+        bb.fit(X[s1_indices], y[s1_indices])
         yhat = bb.predict(X)
 
     cache_dir = CACHE_ROOT / ds_key / bb_name
@@ -72,12 +73,16 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     yhat_full_arr = np.full(len(y_full), np.nan, dtype=np.float32)
     yhat_full_arr[valid] = yhat.astype(np.float32)
 
-    np.save(cache_dir / "pred_full.npy", yhat_full_arr)  # full-length with NaN warmup
-    np.save(cache_dir / "pred.npy", yhat.astype(np.float32))  # valid-only
+    np.save(cache_dir / "pred_full.npy", yhat_full_arr)
+    np.save(cache_dir / "pred.npy", yhat.astype(np.float32))
     np.save(cache_dir / "y.npy", y.astype(np.float32))
     np.save(cache_dir / "valid.npy", valid.astype(np.int32))
 
-    seg_info = {k: [int(v[0]), int(v[-1])] for k, v in seg.items()}
+    seg_info = {"split_hash": exp.split_hash,
+                "n_S1": int(len(s1_indices)),
+                "n_S2": int(len(exp.valid_indices_in_split("S2"))),
+                "n_S3": int(len(exp.valid_indices_in_split("S3"))),
+                "n_S4": int(len(exp.valid_indices_in_split("S4")))}
     with open(cache_dir / "seg.json", "w") as f:
         json.dump(seg_info, f)
 
@@ -93,10 +98,11 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
         "seed": seed,
         "n_full": n_full,
         "n_valid": n,
-        "n_S1": int(len(s1)),
-        "n_S2": int(len(s2)),
-        "n_S3": int(len(s3)),
-        "n_S4": int(len(s4)),
+        "n_S1": int(len(s1_indices)),
+        "n_S2": int(len(exp.valid_indices_in_split("S2"))),
+        "n_S3": int(len(exp.valid_indices_in_split("S3"))),
+        "n_S4": int(len(exp.valid_indices_in_split("S4"))),
+        "split_hash": exp.split_hash,
         "pred_hash": pred_hash,
         "n_params": n_params,
         "duration_s": round(time.time() - t0, 1),
