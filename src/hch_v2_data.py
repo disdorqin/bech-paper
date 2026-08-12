@@ -124,6 +124,11 @@ class DailyEpisodeDataset(Dataset):
             self.exog_act = np.zeros((len(self.price), 0), dtype=np.float32)
         self.n_exog_act = self.exog_act.shape[1]
 
+        # Scale-free precomputation (P1-3): per-hour host hyperbolic z0 and
+        # per-hour day scale, for the ENTIRE series. Lag context then references
+        # scale-free coordinates rather than dataset/currency-scaled prices.
+        self._precompute_scale_free()
+
         self.dates = []
         excluded = []
         for d in pd.unique(self.ts.dt.date):
@@ -203,20 +208,56 @@ class DailyEpisodeDataset(Dataset):
         )
 
     def _build_lag_context(self, ixs):
+        """Scale-free lag context (P1-3).
+
+        Channels (all scale-free):
+          0: lagged host z0 (24h)
+          1: lagged host z0 (168h)
+          2: lagged hyperbolic residual zY - z0 (24h, legal past target)
+          3: lagged host z0 (48h)
+          4: availability mask (1 if lag24 valid else 0)
+        """
         ctx = np.zeros((24, 5), dtype=np.float32)
         for h in range(24):
             raw_idx = ixs[h]
             lag24 = raw_idx - 24
+            lag48 = raw_idx - 48
             lag168 = raw_idx - 168
-            if lag24 >= 0:
-                ctx[h, 0] = (self.price[lag24] - self.price_mean) / self.price_std
-                ctx[h, 1] = self.host_pred[lag24]
-            if lag168 >= 0:
-                ctx[h, 2] = (self.price[lag168] - self.price_mean) / self.price_std
-            if lag24 >= 0:
-                ctx[h, 3] = self.price[lag24] - self.host_pred[lag24]  # residual lag 24h
-            ctx[h, 4] = float(h)
+            if lag24 >= 0 and np.isfinite(self.z0_host_full[lag24]):
+                ctx[h, 0] = self.z0_host_full[lag24]
+                ctx[h, 4] = 1.0  # available
+            if lag168 >= 0 and np.isfinite(self.z0_host_full[lag168]):
+                ctx[h, 1] = self.z0_host_full[lag168]
+            if lag48 >= 0 and np.isfinite(self.z0_host_full[lag48]):
+                ctx[h, 3] = self.z0_host_full[lag48]
+            if lag24 >= 0 and np.isfinite(self.z0_host_full[lag24]) \
+                    and np.isfinite(self.price[lag24]):
+                s_prev = self.s_day_full[lag24]
+                zY_prev = np.arcsinh(self.price[lag24] / max(s_prev, EPS))
+                ctx[h, 2] = zY_prev - self.z0_host_full[lag24]  # scale-free residual
         return ctx
+
+    def _precompute_scale_free(self):
+        """Compute per-hour z0_host_full and s_day_full for the whole series."""
+        n = len(self.price)
+        self.z0_host_full = np.full(n, np.nan, dtype=np.float64)
+        self.s_day_full = np.full(n, np.nan, dtype=np.float64)
+
+        for d in pd.unique(self.ts.dt.date):
+            mask = self.ts.dt.date == d
+            idxs = np.where(mask.values)[0]
+            if len(idxs) != 24:
+                continue
+            host_day = self.host_pred[idxs]
+            if not np.isfinite(host_day).any():
+                continue
+            # day scale = mean |finite host| (Eq 2)
+            finite = np.isfinite(host_day)
+            s = float(np.mean(np.abs(host_day[finite]))) if finite.any() else 0.0
+            if s <= 0:
+                continue
+            self.s_day_full[idxs] = s
+            self.z0_host_full[idxs] = np.arcsinh(host_day / s)
 
 
 def date_based_split(ds: dict, frac=(0.50, 0.20, 0.10, 0.20)) -> dict[str, set]:

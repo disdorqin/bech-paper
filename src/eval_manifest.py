@@ -48,6 +48,7 @@ class ExperimentManifest:
     s3_m_dates: set = field(default_factory=set)
     s3_c_dates: set = field(default_factory=set)
     excluded_dates: dict = field(default_factory=dict)
+    raw_to_valid_row: dict = field(default_factory=dict)
 
     @staticmethod
     def from_dataset(ds: dict, valid: np.ndarray, dataset_id: str = "",
@@ -117,8 +118,11 @@ class ExperimentManifest:
         }).encode())
         split_hash_val = h.hexdigest()[:16]
 
+        # valid is an ARRAY of raw indices (build_tabular contract), not a bool mask
         valid_arr = np.asarray(valid, dtype=np.int64)
-        valid_indices_arr = np.where(valid_arr)[0].astype(np.int64)
+        valid_indices_arr = valid_arr
+        # raw index -> valid-row position (X/y from build_tabular are valid-rows-only)
+        raw_to_valid_row = {int(raw): pos for pos, raw in enumerate(valid_arr)}
 
         return ExperimentManifest(
             dataset_id=dataset_id,
@@ -132,6 +136,7 @@ class ExperimentManifest:
             s3_m_dates=s3_m_dates,
             s3_c_dates=s3_c_dates,
             excluded_dates=excluded,
+            raw_to_valid_row=raw_to_valid_row,
         )
 
     def date_is(self, date_str: str, split: str) -> bool:
@@ -146,9 +151,14 @@ class ExperimentManifest:
         return self.split_of_date.get(self.dates[di]) == split
 
     def valid_indices_in_split(self, split: str) -> np.ndarray:
-        """Valid-hour raw indices belonging to the given split."""
+        """Valid-hour RAW indices belonging to the given split."""
         mask = np.array([self.raw_idx_is(vi, split) for vi in self.valid_indices])
         return self.valid_indices[mask]
+
+    def valid_row_in_split(self, split: str) -> np.ndarray:
+        """Valid-row POSITIONS (for indexing X/y from build_tabular)."""
+        raw = self.valid_indices_in_split(split)
+        return np.array([self.raw_to_valid_row[int(r)] for r in raw], dtype=np.int64)
 
     def dates_in_split(self, split: str) -> set:
         return {d for d, s in self.split_of_date.items() if s == split}
