@@ -1,0 +1,342 @@
+这一轮文献查重后，我建议正式把数学主线收缩为：
+
+[
+\boxed{\text{真实业务损失}
+\Rightarrow \text{有界相对增益}
+\Rightarrow \text{检索式下置信证书}
+\Rightarrow \text{Identity 安全路由}}
+]
+
+Student-(t)、HMM、Wasserstein、CARA 都不再承担主创新。这样反而更严谨、更少参数，也更容易解释冻结与跨市场。
+
+## 一、统一数学对象：事件级相对增益
+
+对连续事件区间 (I_q)，保留三种动作：
+
+[
+a\in{0,-1,+1},
+]
+
+并定义
+
+[
+\Delta^a_{q,h}
+==============
+
+a,m^a_{q,h}\mathbf 1{h\in I_q},
+\qquad m^a_{q,h}\ge 0,
+]
+
+其中同一事件内方向一致，但逐小时幅度可以不同；Identity 满足 (\Delta^0=0)。
+
+设冻结宿主预测为 (\widehat Y_q^0)，真实结算成本为
+
+[
+C_q(Y_q,\widehat Y_q;\xi_q),
+]
+
+其中 (\xi_q) 包括结算价格、惩罚系数等外生量。动作增益定义为
+
+[
+G_{q,a}
+=======
+
+## C_q(Y_q,\widehat Y_q^0;\xi_q)
+
+C_q(Y_q,\widehat Y_q^0+\Delta_q^a;\xi_q).
+]
+
+于是：
+
+* (G_{q,a}>0)：修正有价值；
+* (G_{q,a}<0)：修正伤害宿主；
+* (G_{q,0}=0)：Identity 是天然锚点。
+
+Bi-OMC 的统一训练目标可以直接写成
+
+[
+\theta^\star
+\in
+\arg\max_\theta
+\mathbb E\left[
+\max{0,G_{q,-}(\theta),G_{q,+}(\theta)}
+\right],
+]
+
+等价于
+
+[
+\arg\min_\theta
+\mathbb E\left[
+\min_{a\in{0,-,+}}
+C_q(Y_q,\widehat Y_q^0+\Delta_q^a(\theta))
+\right].
+]
+
+这意味着 occurrence、magnitude、location 不必各自拥有一种监督语言：
+
+[
+\text{occurrence}=\mathbf 1{G_a>0},\qquad
+\text{magnitude}=|\Delta_a|,
+]
+
+它们都是统一业务增益的派生量。
+
+但要注意：这种 oracle-min/WTA 目标与 Voronoi 候选分工已有成熟理论，因此适合作为基础引理，不宜宣称核心首创。[Stochastic Multiple Choice Learning](https://arxiv.org/abs/1606.07839) 已使用多假设最小损失；后来的研究进一步证明 WTA 解对应条件分布的质心 Voronoi 量化，[ICML 2024](https://proceedings.mlr.press/v235/letzelter24a.html)。
+
+## 二、最值得发展的核心命题：重尾残差在“相对损失”中被消掉
+
+假设业务成本相对于预测改变量满足
+
+[
+\left|
+C_q(y,\widehat y+\delta;\xi)
+----------------------------
+
+C_q(y,\widehat y;\xi)
+\right|
+\le B_q(\delta),
+]
+
+其中 (B_q(\delta)) 是决策前可计算的动作暴露上界。
+
+那么立刻有
+
+[
+|G_{q,a}|\le B_{q,a},
+\qquad
+B_{q,a}:=B_q(\Delta_q^a).
+]
+
+定义归一化增益
+
+[
+X_{q,a}
+=======
+
+\begin{cases}
+G_{q,a}/B_{q,a},&B_{q,a}>0,\
+0,&B_{q,a}=0,
+\end{cases}
+]
+
+则
+
+[
+\boxed{X_{q,a}\in[-1,1]}.
+]
+
+这条结果的价值在于：它不要求残差服从 Student-(t)，甚至不要求残差具有有限方差。
+
+例如 MAE 下，令 (R=Y-\widehat Y^0)，则
+
+[
+G_a=|R|-|R-\Delta_a|,
+]
+
+由反三角不等式，
+
+[
+\big||R|-|R-\Delta_a|\big|
+\le|\Delta_a|.
+]
+
+所以即使 (R) 极端重尾，
+
+[
+\frac{|R|-|R-\Delta_a|}{|\Delta_a|}
+\in[-1,1].
+]
+
+这是一种很干净的“重尾抵消”：我们不建模无限延伸的残差，而估计由有限动作引起的相对变化。
+
+相反，MSE 有
+
+[
+R^2-(R-\Delta)^2=2R\Delta-\Delta^2,
+]
+
+它仍随 (R) 无界。因此，损失选择不是无关紧要的工程决定。预测损失应当事先由业务决策确定，这也符合 Gneiting 关于预测评价与决策目标必须匹配的结论。[Gneiting, 2011](https://www.tandfonline.com/doi/abs/10.1198/jasa.2011.r10138)
+
+对分段线性的结算成本，可能得到
+
+[
+B_{q,a}
+=======
+
+\sum_{h\in I_q}
+\overline p_{q,h}|\Delta^a_{q,h}|,
+]
+
+其中 (\overline p_{q,h}) 是边际结算成本的决策前上界。真实结算公式将决定这一项能否成立。
+
+## 三、CAGM 不再输出“模糊风险分布”，而是提供经验增益证据
+
+把历史事件按冻结键 (K_j) 与查询事件 (K_q) 的距离排序。对动作 (a) 的前 (m) 个邻居定义
+
+[
+\overline X_{q,a,m}
+===================
+
+\frac1m
+\sum_{j\in N_m(q)}X_{j,a}.
+]
+
+这里有一个目前仓库中容易忽略的语义问题：
+
+> 不同历史事件的 Down/Up 幅度不同，因此未经归一化的历史 raw gain 并不是同一个动作对象。
+
+最干净的处理是：历史记忆保存残差与结算原语，在检索到历史事件后，把当前查询候选 (\Delta_q^a) 回放到历史事件上，重新计算反事实增益。
+
+如果数据管线不能回放，次优方案才是：
+
+[
+\text{归一化增益 }X_{j,a}
++
+\text{候选形状进入检索键}.
+]
+
+否则 CAGM 可能是在比较“方向相同但动作剂量完全不同”的收益。
+
+## 四、用一个下置信证书替换 CARA、KL 温度和固定 (k)
+
+设最多考察 (n) 个邻居前缀。假设：
+
+1. 历史事件满足独立或适当的时间分块条件；
+2. 检索只使用结果发生前可见的信息；
+3. 目标事件与检索事件的归一化条件增益差异不超过 (\rho_{q,a,m})。
+
+即
+
+[
+\mu^T_{q,a}
+\ge
+\frac1m\sum_{j\in N_m(q)}\mu_{j,a}
+----------------------------------
+
+\rho_{q,a,m},
+]
+
+其中 (\mu_{j,a}=\mathbb E[X_{j,a}\mid K_j])。
+
+由 (X\in[-1,1]) 和 Hoeffding 不等式，可以同时对两个非零动作及所有 (m) 建立：
+
+[
+\underline Q_{q,a,m}
+====================
+
+B_{q,a}
+\left[
+\overline X_{q,a,m}
+-------------------
+
+## \sqrt{\frac{2\log(2n/\alpha)}{m}}
+
+\rho_{q,a,m}
+\right].
+]
+
+以至少 (1-\alpha) 的概率，
+
+[
+\underline Q_{q,a,m}
+\le
+\mathbb E_T[G_{q,a}\mid K_q]
+]
+
+对全部 (a,m) 同时成立。[Hoeffding, 1963](https://www.tandfonline.com/doi/abs/10.1080/01621459.1963.10500830)
+
+因此可以让证书自己选择邻居数：
+
+[
+\underline Q_{q,a}
+==================
+
+\max_{1\le m\le n}\underline Q_{q,a,m}.
+]
+
+最终路由为
+
+[
+a_q^\star
+=========
+
+\begin{cases}
+\arg\max_{a\in{-,+}}\underline Q_{q,a},
+&
+\max_a\underline Q_{q,a}>0,[2mm]
+0,&\text{otherwise}.
+\end{cases}
+]
+
+这一步同时完成：
+
+* 自动选择有效邻域 (m)，不再调固定 (k)；
+* 不需要 memory temperature；
+* 不需要 CARA 风险厌恶系数 (\eta)；
+* 不需要 DVG softmax 温度；
+* 证据不足时自然回到 Identity。
+
+决策层真正需要用户指定的只有置信水平 (\alpha)。(\rho) 不是“为了赢实验而调的参数”，而是必须公开陈述的跨市场证据边界。
+
+需要严格区分：这个结论保证的是“所选动作的条件期望增益为正”，并不保证每一个具体事件的已实现结算都不亏。
+
+## 五、跨市场部分应当有一个“不可能性命题”
+
+零样本目标市场中，如果不对源—目标关系作任何假设，那么任何有时采取非零动作的方法，都不可能获得普遍无害保证。
+
+证明思路很简单：构造两个目标市场，它们具有完全相同的源数据和目标侧可观测特征，但在一个市场中 Down 的条件增益为正，在另一个市场中为负。算法无法区分二者，因此采取相同动作，必然至少伤害其中一个。
+
+所以：
+
+[
+\boxed{\text{无跨市场关系假设的普遍零样本安全}
+\Longrightarrow
+\text{永远 Identity}}
+]
+
+这不是我们的缺陷，而是需要写进论文的证据边界。已有域适应理论同样表明，仅有源域低误差或表示不变性不足以保证目标域性能，条件偏移和支持覆盖是不可绕开的。[Zhao et al., ICML 2019](https://proceedings.mlr.press/v97/zhao19a.html)、[Johansson et al., AISTATS 2019](https://proceedings.mlr.press/v89/johansson19a.html)
+
+若希望把 CAGM 距离正式纳入假设，可以进一步令
+
+[
+\rho_{q,a,m}
+============
+
+\frac1m\sum_{j\in N_m(q)}
+\left[
+L_a d(K_q,K_j)+\Gamma_{S_j\rightarrow T,a}
+\right].
+]
+
+距离大时，证书自然下降并退回 Identity；但零样本下的 (\Gamma_{S\to T,a}) 仍只能由跨市场元假设或留一市场验证约束，不能凭目标无标签数据凭空识别。
+
+## 六、文献碰撞后，应当怎样调整现有设计
+
+| 当前部分                        | 文献判断                                         | 建议地位                        |
+| --------------------------- | -------------------------------------------- | --------------------------- |
+| WTA/soft-min/三候选            | 已有成熟 MCL 与量化理论                               | 保留为候选生成基础，不宣称核心创新           |
+| Identity fallback           | 与 reject option、safe policy improvement 思想碰撞 | 保留，但创新落在“什么证据允许离开 Identity” |
+| Student-(t)/HMM/Wasserstein | 增加假设和估计负担                                    | 从主线删除，最多作为诊断或消融             |
+| CARA/KL-DRO                 | 是经典风险偏好或鲁棒优化工具                               | 降为可选敏感性分析，不承担统计安全           |
+| 固定 (k,\eta,\tau)            | 增加跨市场冻结负担                                    | 用同时有效的下置信证书替代               |
+| raw action gain memory      | 存在候选剂量语义错位                                   | 改为当前候选回放，或归一化并加入候选形状        |
+| 冻结宿主后的修正                    | 已有近期直接竞争工作                                   | 不能单独作为创新点                   |
+
+冻结后残差修正、有界修正本身也已有明显碰撞，例如 [CRC](https://arxiv.org/abs/2512.22428) 和 [δ-Adapter](https://arxiv.org/abs/2601.20280)。安全地回退基线同样与 [High Confidence Policy Improvement](https://proceedings.mlr.press/v37/thomas15.html) 和 [SPIBB](https://proceedings.mlr.press/v97/laroche19a.html) 接近。
+
+因此目前最有希望的创新表述应当是：
+
+> 对冻结预测器的事件级双向修正，利用业务损失差的动作诱导有界性，在不建模重尾残差分布的条件下，从相似历史事件构造可自适应选择邻域的跨市场增益下置信证书，并以 Identity 为零增益锚点进行安全路由。
+
+在目前针对性查重中，我没有发现与这整条命题链完全同构的方法；但在正式系统综述完成前，应写成“潜在核心贡献”，暂不使用“首次”。
+
+## 下一步我只需要三个数学事实
+
+请让本地 AI 在不暴露私有行级数据的前提下，诚实回答：
+
+1. 完整写出山东的真实结算成本 (C_I)，列明每个变量的符号、单位、正负方向，以及哪些在修正决策时已知、哪些结算后才知道；同时说明价格、惩罚斜率是否有规则上界或市场限价。
+
+2. 连续事件区间 (I) 是结果发生前由外部规则确定，还是模型同时选择起止点？事件能否重叠？这决定置信证书只校正两个动作，还是还要校正区间搜索的多重选择。
+
+3. 历史数据是否保存了足够的结算原语，使我们能把“今天产生的候选修正曲线”回放到历史事件并重新计算成本？若可以，CAGM 的数学语义会非常干净；若不可以，就必须采用归一化增益和候选形状匹配。

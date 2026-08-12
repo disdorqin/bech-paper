@@ -1,0 +1,499 @@
+你现在负责 HCH-v2 的模块架构设计与代码接口规划。数学研究窗口刚完成一版新的候选主线，我会将完整文档与本提示词一起发送给你。
+
+仓库：
+
+https://github.com/disdorqin/bech-paper
+
+重点目录与文件：
+
+experiments/00-data-exploration/math_loss/
+
+src/hch_v2.py
+
+src/hch_v2_data.py
+
+experiments/08-hch-v2/smoke_v2.py
+
+本轮任务不是立即改代码或跑实验，而是：
+
+读取最新仓库和所附数学文档，审计当前 HCH-v2 架构，然后把新数学方法与现有模块融合成一套逻辑闭合、接口明确、可以在下一阶段实施的架构方案。
+
+一、必须保留的研究约束
+
+宿主预测器始终冻结。HCH-v2 是模型无关的后处理模块，不修改宿主训练过程。
+
+整体主线保持：
+
+[\text{候选生成}\rightarrow\text{历史证据}\rightarrow\text{保守决策}]
+
+分别对应 Bi-OMC、CAGM、DVG，但允许根据新数学重新定义其内部职责。
+
+最终动作仍为：
+
+[{\text{Identity},\text{Down},\text{Up}}.]
+
+Identity 必须是零修正、零收益锚点，不能由网络学习或漂移。
+
+连续事件按区间选择动作。一个被选中的区间内方向一致，但每小时修正幅度可以不同。所有候选区间可以重叠。
+
+研究必须处理尖峰、低价、零价和负电价。不能因为数值方便而对价格加入任意 floor、clipping 或平移经济零点。
+
+标准无 floor sMAPE、SCR、WSCR 和国内 RT/DA 套利只作为评价指标，不进入反向传播。
+
+实验协议暂不展开。本轮不得读取或利用 S4 的真实标签、残差、损失或动作收益。
+
+不得重新引入：
+
+MAE 加多个辅助损失的拼接；
+
+BCE occurrence + Smooth-L1 magnitude；
+
+任意 tail/location/state loss 权重；
+
+为了复杂而增加 Student-t、skew-t、HMM、copula；
+
+未经监督或训练的随机检索 metric；
+
+CARA、KL 半径和多个温度参数的堆叠。
+
+二、新数学主线
+
+数学窗口建议的工作名称为：
+
+Identity-Anchored Hyperbolic CRPS（IAH-CRPS）
+
+它不是最终论文命名，也不能在查重完成前宣称首创。
+
+1. 零保持双曲坐标
+
+冻结宿主预测为 (x^0_{d,h})，真实价格为 (Y_{d,h})。
+
+对每个预测日，以当日宿主预测计算：
+
+[ s_d
+
+\operatorname{Median}{|x^0_{d,h}|:|x^0_{d,h}|>0}.]
+
+然后定义
+
+[ \psi_d(p)
+
+\operatorname{asinh}(p/s_d), \qquad d_d(y,x)
+
+|\psi_d(y)-\psi_d(x)|.]
+
+若全天宿主预测全为零，则不得加入任意 (\varepsilon)；应把该情况显式标记为不可识别并回退 Identity。
+
+该距离满足：
+
+[ 2\tanh\left(\frac{d_d(y,x)}2\right)
+
+\frac{2|y-x|}{\sqrt{s_d^2+y^2}+\sqrt{s_d^2+x^2}},]
+
+因此它被解释为标准 sMAPE 比例几何的零保持、非饱和展开，而不是尺度 MAE。
+
+2. 三原子候选
+
+令
+
+[z^0_{d,h}=\psi_d(x^0_{d,h}),\qquadz^y_{d,h}=\psi_d(Y_{d,h}).]
+
+网络每小时只输出两个非负幅度：
+
+[m^-{d,h}\ge0,\qquadm^+{d,h}\ge0.]
+
+定义
+
+[z^-{d,h}=z^0{d,h}-m^-{d,h},\qquadz^+{d,h}=z^0_{d,h}+m^+_{d,h},]
+
+并逆变换：
+
+[x^\pm_{d,h}=s_d\sinh(z^\pm_{d,h}).]
+
+由单调性自动保证
+
+[x^-{d,h}\le x^0{d,h}\le x^+_{d,h}.]
+
+3. 唯一训练准则
+
+三原子条件分布为
+
+[ \widehat P^\theta_{d,h}
+
+\frac13\left(\delta_{z^-{d,h}}+\delta{z^0_{d,h}}+\delta_{z^+_{d,h}}\right).]
+
+唯一逐时损失为
+
+[ \mathcal L_{d,h}^{\mathrm{IAH}}
+
+\frac13 \left( |z^y-z^-| + |z^y-z^0| + |z^y-z^+| \right)
+
+\frac{2}{9}(m^-+m^+).]
+
+全天目标为
+
+[ \mathcal L(\theta)
+
+\mathbb E_d\left[\frac1H\sum_{h=1}^{H}\mathcal L_{d,h}^{\mathrm{IAH}}\right].]
+
+它是一个完整的三原子 CRPS，不得把其中第二项解释成可独立调权的 repulsion regularizer，也不得为它引入额外系数。
+
+在总体条件分布下，两个方向候选具有解析解：
+
+[ x^{-*}
+
+\min\left{x^0,Q_{Y\mid Z}(1/6)\right},]
+
+[ x^{+*}
+
+\max\left{x^0,Q_{Y\mid Z}(5/6)\right}.]
+
+均匀原子权重不是动作概率；DVG 是否执行动作仍由历史收益证据决定。
+
+4. 同一几何下的动作收益
+
+定义
+
+[ g_{d,h,a}
+
+d_d(Y_{d,h},x^0_{d,h})
+
+d_d(Y_{d,h},x^a_{d,h}).]
+
+它满足精确界：
+
+[|g_{d,h,a}|\lem^a_{d,h}.]
+
+后续 CAGM 和 DVG 必须继续使用该收益语义，不能又切回另一套 MAE gain、sMAPE gain 或状态评分。
+
+5. CAGM 的候选分布距离
+
+建议查询日 (q) 与历史日 (j) 的距离采用：
+
+[ D(q,j)
+
+\frac1{3H}\sum_{h=1}^{H}\sum_{a\in{-,0,+}}|z^a_{q,h}-z^a_{j,h}|.]
+
+这是等权有序三原子分布的逐时 (W_1) 闭式距离，不需要学习 metric 权重或 temperature。
+
+6. 查询剂量历史回放
+
+不得直接使用历史日自身候选对应的 raw gain 评价今天的动作。
+
+对于查询日产生的 (m^a_{q,h})，必须考虑能否在历史日 (j) 上回放：
+
+[ \widetilde z^{q\rightarrow j,I,a}_{h}
+
+z^0_{j,h}+\mathbf 1{h\in I}\operatorname{sgn}(a)m^a_{q,h}.]
+
+然后使用历史真实结果重新计算：
+
+[ g^{q\rightarrow j}_{h,I,a}
+
+|z^y_{j,h}-z^0_{j,h}|
+
+|z^y_{j,h}-\widetilde z^{q\rightarrow j,I,a}_{h}|.]
+
+请重点审计现有数据管线和 memory schema 是否支持这种回放。
+
+7. 连续区间与 DVG
+
+全部区间为
+
+[ \mathcal I_H
+
+{[s,e]:1\le s\le e\le H}.]
+
+区间选择发生在候选训练之后，因此不需要对起止点反向传播。
+
+对区间收益定义：
+
+[ G^{q\rightarrow j}_{I,a}
+
+\sum_{h\in I}g^{q\rightarrow j}_{h,I,a},]
+
+[ B^q_{I,a}
+
+\sum_{h\in I} m^a_{q,h}, \qquad X^{q\rightarrow j}_{I,a}
+
+G^{q\rightarrow j}{I,a}/B^q{I,a}\in[-1,1].]
+
+DVG 候选下界为
+
+[ \underline G_{I,a,k}
+
+B^q_{I,a} \left[ \bar X_{I,a,k}
+
+\sqrt{ \frac{2\log(M/\alpha)}{k} }
+
+\rho_{q,I,a,k}\right].]
+
+只有最大下界严格大于零时才执行对应区间和方向，否则返回 Identity。
+
+(\alpha) 是置信水平；(\rho) 是显式跨市场偏移边界。不得把 (\rho=0) 默认为无条件跨市场安全。
+
+三、你必须完成的仓库审计
+
+请先读取最新提交并记录 commit hash，然后基于真实代码回答：
+
+当前冻结宿主预测、真实标签、标准化预测和原始预测分别从哪里进入 HCH-v2？
+
+当前 loss 是否在中心化后的价格上计算？如果是，怎样增加 raw-price side channel，保证 encoder 可继续使用标准化特征，而数学损失使用原始价格？
+
+当前 Bi-OMC 四个 occurrence/magnitude head 的实际输入、输出和调用位置是什么？哪些可以删除，哪些编码器参数值得保留？
+
+ContinuousStateHead 及其监督目标是否使用真实误差派生量？删除后是否有其他代码依赖？
+
+当前 CAGM 的 key_net、cand_proj、fusion、metric_proj 是否真正收到训练梯度？请用调用图和 loss 路径证明，不能凭名称判断。
+
+当前 memory 保存了哪些量？能否保存：
+
+[(z_j^-,z_j^0,z_j^+,z_j^y,s_j)]
+
+并支持查询剂量回放？
+
+当前历史候选或 memory 是否由 in-sample target 生成？怎样保证候选和检索键是样本外或 prequential 的？
+
+当前 DVG 的 CARA、KL、temperature、softmax 和固定 (k) 分别在哪些文件中使用？删除后有哪些接口和实验脚本需要同步修改？
+
+24 小时共 300 个连续区间、两个方向和全部邻域前缀的时间与显存复杂度是多少？是否可以直接枚举，而不引入新网络？
+
+零样本目标市场中，本方案实际读取了哪些目标侧信息？必须明确披露当日宿主预测尺度 (s_d) 属于逐实例无标签计算，而不是目标标签拟合。
+
+四、需要交付的融合设计文档
+
+请新建但不要覆盖旧文档：
+
+experiments/00-data-exploration/math_loss/hch_v2_iah_crps_architecture_fusion_v0.1_2026-08-12.md
+
+文档至少包含以下部分：
+
+A. Executive decision
+
+明确回答：
+
+新数学方案是否与现有 HCH-v2 主目标兼容；
+
+哪些部分可直接融合；
+
+哪些部分存在数学—代码冲突；
+
+是否达到“可以开始实现”的状态。
+
+状态只能从以下三者选择：
+
+READY_FOR_IMPLEMENTATION_REVIEW
+
+BLOCKED_BY_ARCHITECTURE_CONFLICT
+
+BLOCKED_BY_DATA_CONTRACT
+
+不得使用“效果应该很好”作为 READY 理由。
+
+B. 现状到目标的逐项映射
+
+至少给出表格：
+
+当前对象当前职责新数学对应物保留/重写/删除证据文件
+
+覆盖：
+
+encoder；
+
+Bi-OMC heads；
+
+candidate loss；
+
+state head；
+
+action gain；
+
+CAGM key/metric；
+
+memory schema；
+
+DVG；
+
+配置参数；
+
+smoke/train/inference 路径。
+
+C. 最终数据流
+
+完整写出训练、memory 构建和推理三条数据流，明确每一步：
+
+输入张量；
+
+shape；
+
+原始单位或变换坐标；
+
+是否需要标签；
+
+是否可用于零样本；
+
+哪个模块拥有该变量。
+
+D. 公式到代码接口映射
+
+为以下数学量指定建议函数或类接口：
+
+compute_daily_host_scale
+
+hyperbolic_transform
+
+inverse_hyperbolic_transform
+
+build_ordered_candidates
+
+iah_crps_loss
+
+hyperbolic_action_gain
+
+atom_w1_distance
+
+replay_query_action
+
+enumerate_intervals
+
+compute_simultaneous_lcb
+
+route_or_identity
+
+这里只设计签名、shape、职责和异常条件，不写生产实现。
+
+E. 配置收缩表
+
+列出：
+
+应删除的旧参数；
+
+必须保留的结构参数；
+
+新增的唯一决策参数 (\alpha)；
+
+(\rho) 为什么是证据边界而不是普通超参数；
+
+不得出现的隐式 epsilon、clip 和未披露 scaler。
+
+F. 迁移计划
+
+按以下顺序设计：
+
+raw-price 数据契约；
+
+IAH-CRPS 独立数学单元；
+
+双向候选头；
+
+gain 与有界性测试；
+
+memory schema 与查询回放；
+
+确定性 (W_1) 检索；
+
+区间 LCB 路由；
+
+旧组件兼容层与清理。
+
+每一步列出影响文件、输入输出、回滚方式和验收条件。
+
+G. 测试契约
+
+至少设计以下测试，但本轮不运行实验：
+
+双曲—sMAPE 恒等式数值测试；
+
+单位缩放等变性；
+
+经济零点保持；
+
+Down/Up 顺序约束；
+
+三原子 CRPS 闭式与通式一致；
+
+梯度有限性；
+
+(1/6,5/6) 合成分布恢复；
+
+动作收益界 (|g|\le m)；
+
+三原子 (W_1) 闭式；
+
+查询剂量而非历史剂量回放；
+
+区间内方向一致、逐时幅度不同；
+
+LCB 多重选择校正；
+
+证据不足回退 Identity；
+
+不读取 S4 target；
+
+不在中心化坐标中判断正负价格。
+
+H. 冲突与未决问题清单
+
+尤其审查：
+
+日级 (s_d) 的计算是否会在真实数据中出现不可识别情况；
+
+softplus 无法产生精确零幅度，对理论闭包和实现是否有影响；
+
+固定中央宿主原子但宿主不是条件中位数时，三原子分布应如何准确解释；
+
+(1/6,5/6) 候选作为最终点动作是否可能过强；
+
+CAGM 的时间依赖是否满足 LCB 所需条件；
+
+跨市场 (\rho) 在零样本下如何获得证据；
+
+标准 sMAPE 在 ((0,0)) 的评价约定尚未冻结。
+
+发现问题时不得私自修改公式。请按以下格式记录：
+
+数学命题；
+
+代码或数据冲突；
+
+影响；
+
+最小修改方案；
+
+是否需要返回数学窗口重新裁决。
+
+五、本轮禁止事项
+
+不修改生产代码；
+
+不启动训练；
+
+不读取 S4 的目标值或派生量；
+
+不根据实验效果改变数学定义；
+
+不覆盖旧研究文档；
+
+不把均匀三原子权重解释为动作概率；
+
+不把经验 LCB 写成无假设安全保证；
+
+不因为现有代码方便而退回 MAE 或多损失组合；
+
+不擅自加入 epsilon、floor、clip、learnable scale；
+
+不声称 IAH-CRPS 已经有效或具有首创性；
+
+不提交或推送 GitHub，除非我后续明确授权。
+
+完成融合文档后停止，先把：
+
+状态结论；
+
+最大的三个架构冲突；
+
+建议保留和删除的组件；
+
+文档路径；
+
+回复给我，等待数学窗口和用户共同审查后再进入实现。

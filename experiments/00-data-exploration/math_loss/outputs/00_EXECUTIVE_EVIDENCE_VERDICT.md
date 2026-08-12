@@ -1,5 +1,9 @@
 # Math Evidence Audit — Executive Verdict
-Date: 2026-08-11
+> Date: 2026-08-11 (RE-AUDITED 2026-08-12: CDF/bootstrapping/day-matrix corrected)
+>
+> **NOTE (2026-08-12): 06_CANDIDATE_ACTIONS.csv is INVALID_ORACLE_DIAGNOSTIC.
+> Phase C computed pi/m on S3 itself and used S3 residual sign as gate — not a
+> deployable candidate. All "partial moment viable" conclusions are WITHDRAWN.**
 
 ## Data Scope
 - 4 datasets: LAGO_BE, LAGO_DE, LAGO_FR, LAGO_PJM

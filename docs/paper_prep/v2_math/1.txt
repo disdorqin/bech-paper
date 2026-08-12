@@ -1,0 +1,450 @@
+你纠正得对。刚才我把实验协议推进得太远了。现在把实验、数据集选择和具体网络全部暂时冻结；我的任务只做一件事：
+
+> 在仓库已有的 Identity–Down–Up、Bi-OMC、CAGM、DVG 之间建立一条尽可能短、但数学上闭合的主线。
+
+我们不是单纯追求参数少，而是要求每个数学量只有一个职责，不让多个头、多个损失重复描述同一件事。
+
+## 我建议的唯一主线：Identity 锚定收益原则
+
+整套方法只需要五个基本对象：
+
+[
+R\longrightarrow \Delta_a\longrightarrow G_a
+\longrightarrow \widehat{\mathbb P}(G_a\mid K)
+\longrightarrow V_a.
+]
+
+分别对应：
+
+1. 宿主残差 (R)；
+2. 三个候选动作 (\Delta_a)；
+3. 动作相对 Identity 的收益 (G_a)；
+4. CAGM 检索得到的条件收益分布；
+5. DVG 计算的保守动作价值 (V_a)。
+
+所有部件都围绕同一个 (G_a) 工作，不再各自发明一套状态、概率或风险。
+
+---
+
+## 1. 冻结宿主与三动作
+
+定义宿主残差：
+
+[
+R_{d,h}=Y_{d,h}-\widehat Y^{host}_{d,h}.
+]
+
+动作集合为：
+
+[
+\mathcal A={0,-,+},
+]
+
+[
+\Delta_0=0,\qquad
+\Delta_-\le0,\qquad
+\Delta_+\ge0.
+]
+
+修正后残差：
+
+[
+R^{(a)}=R-\Delta_a.
+]
+
+这里 Identity 永远固定为零，不参与学习。Down、Up 的符号约束消除了普通 mixture/multiple-choice 中的标签交换问题。
+
+## 2. Bi-OMC 不再需要四个 occurrence/magnitude 头
+
+给定一个基础损失 (\ell(R,\Delta))，定义动作收益：
+
+[
+\boxed{
+G_a
+===
+
+\ell(R,0)-\ell(R,\Delta_a)
+}
+]
+
+于是：
+
+* (G_a>0)：动作优于 Identity；
+* (G_a=0)：动作与 Identity 等价；
+* (G_a<0)：动作会造成伤害；
+* (G_0\equiv0)。
+
+这样 occurrence 和 magnitude 都被统一了：
+
+[
+O_a=\mathbf 1{G_a>0},
+\qquad
+M_a=|\Delta_a|.
+]
+
+也就是说，occurrence 不应再表示简单的 (R>0) 或 (R<0)，而应表示：
+
+> 当前方向候选是否真正战胜冻结宿主。
+
+因此从数学上不再需要独立 BCE occurrence loss；幅度也不需要另一套与 occurrence 割裂的目标。
+
+---
+
+## 3. 候选生成只保留一个目标
+
+候选生成器求解：
+
+[
+\boxed{
+\min_{\Delta_-\le0,\Delta_+\ge0}
+\mathbb E!\left[
+\min_{a\in{0,-,+}}
+\ell(R,\Delta_a)
+\mid Z
+\right]
+}
+]
+
+等价地：
+
+[
+\boxed{
+\max_{\Delta_-\le0,\Delta_+\ge0}
+\mathbb E!\left[
+\max{0,G_-,G_+}
+\mid Z
+\right].
+}
+]
+
+这是同一个目标的损失形式和收益形式。
+
+它替代：
+
+* occurrence BCE；
+* magnitude Smooth-L1；
+* 状态切换损失；
+* 位置辅助损失；
+* 若干手调权重；
+* HMM 发射和转移结构。
+
+Identity 被包含在最小值中，因此候选集合具有逐样本 oracle dominance：
+
+[
+\min_a\ell(R,\Delta_a)\le \ell(R,0).
+]
+
+注意：这只保证“集合中存在不差的动作”，不保证推理时一定选对；选择责任属于 CAGM-DVG。
+
+## 4. 一个真正有内容的候选定理
+
+先采用最稳健、最少假设的绝对误差：
+
+[
+\ell(R,\Delta)=|R-\Delta|.
+]
+
+固定某个条件状态 (Z=z)，令：
+
+[
+\delta_-<0<\delta_+.
+]
+
+由于三个动作在实轴上有序，其作用区域必然是：
+
+[
+C_-=
+\left(-\infty,\frac{\delta_-}{2}\right),
+]
+
+[
+C_0=
+\left[
+\frac{\delta_-}{2},
+\frac{\delta_+}{2}
+\right],
+]
+
+[
+C_+=
+\left(\frac{\delta_+}{2},+\infty\right).
+]
+
+因此人口最优候选满足自洽方程：
+
+[
+\boxed{
+\delta_-
+\in
+\operatorname{Median}
+\left(
+R\mid R<\frac{\delta_-}{2},Z=z
+\right)
+}
+]
+
+[
+\boxed{
+\delta_+
+\in
+\operatorname{Median}
+\left(
+R\mid R>\frac{\delta_+}{2},Z=z
+\right).
+}
+]
+
+这比 partial moment 更符合三动作语义：
+
+* Identity 自动占据正常残差区域；
+* Down 自动成为左侧“值得修正区域”的代表动作；
+* Up 自动成为右侧“值得修正区域”的代表动作；
+* 分界点不是手工阈值，而由候选幅度自身决定。
+
+若改用平方损失，条件中位数自然变为条件均值：
+
+[
+\delta_-
+========
+
+E\left[
+R\mid R<\frac{\delta_-}{2},Z
+\right],
+]
+
+[
+\delta_+
+========
+
+E\left[
+R\mid R>\frac{\delta_+}{2},Z
+\right].
+]
+
+所以主理论可以针对一般损失写，L1 与 L2 作为两个推论；不需要先假设 Student-t、skew-t 或有限方差。
+
+### 非坍缩条件
+
+若
+
+[
+P(R>0\mid Z=z)>0,
+]
+
+则存在某个小的 (\delta_+>0)，使正侧一部分样本的损失严格降低，而负侧和正常样本仍可选择 Identity。因此在总体最优且模型可表示的条件下，Up 不会无理由坍缩到零。
+
+Down 同理。若某市场确实没有某一侧的有效残差质量，对应动作坍缩到 Identity 反而是正确结果，而不是训练失败。
+
+---
+
+## 5. CAGM 的数学角色：条件收益经验分布
+
+CAGM 不再被解释为另一套预测器。它只做一件事：通过相似历史日估计动作收益的条件分布。
+
+设查询日 key 为 (K_d)，历史日权重为：
+
+[
+w_{dj}\ge0,\qquad
+\sum_{j<d}w_{dj}=1.
+]
+
+历史 memory 保存的是完整动作收益轨迹：
+
+[
+G_{j,1:24,a}.
+]
+
+于是 CAGM 输出：
+
+[
+\boxed{
+\widehat{\mathbb P}_{d,h,a}
+===========================
+
+\sum_{j<d}w_{dj},
+\delta_{G_{j,h,a}}
+}
+]
+
+其中 (\delta_x) 是位于 (x) 的点质量。
+
+对连续事件区间 (I)，直接使用历史日的联合区间收益：
+
+[
+G_{j,I,a}
+=========
+
+\ell_I^{(0)}-\ell_I^{(a)}.
+]
+
+然后：
+
+[
+\widehat{\mathbb P}_{d,I,a}
+===========================
+
+\sum_{j<d}w_{dj},
+\delta_{G_{j,I,a}}.
+]
+
+这就是 24 小时 episode memory 的数学理由：它保留真实历史日内依赖，不必额外假设 W2 共享尺度、copula 或 HMM。
+
+---
+
+## 6. DVG 只保留一个风险价值算子
+
+仓库原本已有 CARA/risk-adjusted value 思想。这里可以把它收紧成唯一公式：
+
+[
+\boxed{
+V_\eta(G)
+=========
+
+-\frac1\eta
+\log E[e^{-\eta G}],
+\qquad \eta>0.
+}
+]
+
+在 CAGM 的加权经验分布上：
+
+[
+\boxed{
+\widehat V_{d,I,a}
+==================
+
+-\frac1\eta
+\log
+\left(
+\sum_{j<d}
+w_{dj}e^{-\eta G_{j,I,a}}
+\right).
+}
+]
+
+它只有一个真正有意义的风险参数 (\eta)，而不是若干均值、方差、tail score 和阈值权重。
+
+当 (\eta\to0)：
+
+[
+V_\eta(G)
+=========
+
+E[G]
+-\frac{\eta}{2}\operatorname{Var}(G)
++O(\eta^2).
+]
+
+所以常见的“均值减风险惩罚”只是它的二阶近似，不需要再另外堆一个 variance loss。
+
+由 Jensen 不等式：
+
+[
+V_\eta(G)\le E[G].
+]
+
+因此：
+
+[
+\boxed{
+V_\eta(G)>0
+\quad\Longrightarrow\quad
+E[G]>0.
+}
+]
+
+这给 DVG 一个很清楚的解释：
+
+> 只有当一个动作在风险厌恶意义下仍具有正确定性等价收益时，才允许它战胜 Identity。
+
+最终决策：
+
+[
+a^*
+===
+
+\begin{cases}
+\arg\max_{a\in{-,+}}\widehat V_a,
+&
+\max(\widehat V_-,\widehat V_+)>0,
+[4pt]
+0,
+&
+\text{otherwise}.
+\end{cases}
+]
+
+由于：
+
+[
+V_\eta(G_0)=0,
+]
+
+安全阈值天然就是零，不需要再学习一个任意 gate threshold。
+
+---
+
+## 7. 跨市场冻结只需增加一个误差半径
+
+如果未来能够建立：
+
+[
+\left|
+\widehat V_{S,a}(W)-V_{T,a}(W)
+\right|
+\le b_a(W),
+]
+
+其中 (S) 为源市场，(T) 为目标市场，则采用：
+
+[
+\widehat V_{S,a}(W)-b_a(W)>0
+]
+
+才执行动作。
+
+于是：
+
+[
+V_{T,a}(W)>0
+\quad\Longrightarrow\quad
+E_T[G_a\mid W]>0.
+]
+
+这把跨市场冻结、安全回退和 DVG 统一到了同一条不等式中。以后需要研究的是如何构造 (b_a(W))，而不是再增加一个“domain gate”。
+
+---
+
+## 8. 复杂度被怎样真正减少
+
+| 旧数学对象                  | 新解释                    |
+| ---------------------- | ---------------------- |
+| occurrence head        | (\mathbf 1{G_a>0})     |
+| magnitude head         | 唯一候选 (\Delta_a)        |
+| BCE + Smooth-L1 + 多项权重 | 一个 Identity 锚定最小损失     |
+| HMM/状态转移               | 连续信息只进入条件变量 (Z,K)      |
+| Student-t/skew-t 参数    | 降为残差诊断，不进入主方法          |
+| W2 日级潜变量               | CAGM 直接保存联合日收益轨迹       |
+| 多个风险特征与权重              | 一个 CARA 确定性等价 (V_\eta) |
+| 学习 gate threshold      | Identity 固定价值零         |
+| 跨市场新 gate              | 一个价值偏移半径 (b_a)         |
+
+网络用 Transformer、MLP 还是其他编码器，只是实现 (Z\mapsto\Delta_\pm) 和 (K\mapsto w) 的方式，不属于数学创新，也不影响这套推导。
+
+## 最核心的论文表达
+
+整套方法可以收敛成一句话：
+
+> HCH 将冻结宿主的后处理表示为一个 Identity 锚定的有限动作决策问题：Bi-OMC 学习覆盖残差两侧的有序候选，CAGM 通过相似历史日构造动作收益的条件经验分布，DVG 对该分布施加风险厌恶确定性等价，并仅在其价值严格高于 Identity 时执行修正。
+
+这条线比 HMM、skew-t、partial moments 和多损失叠加更符合仓库现有直觉，也更容易形成真正连贯的定理组。
+
+下一步数学工作应只做五个命题：
+
+1. Identity 锚定候选的 oracle dominance；
+2. 双向候选的非坍缩条件；
+3. L1/L2 下自洽截尾中位数/均值方程；
+4. CARA 正价值蕴含正期望收益；
+5. 带跨市场价值误差半径的安全回退定理。
+
+在这五个命题没有写严谨之前，不再引入任何新分布、状态或损失参数。

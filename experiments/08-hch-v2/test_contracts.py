@@ -95,9 +95,15 @@ def _():
     exp2 = ExperimentManifest.from_dataset(ds, valid, dataset_id="LAGO_DE")
     assert exp1.split_hash == exp2.split_hash
 
-@test("04 host_cache CLI deferred")
+@test("04 host_cache CLI works")
 def _():
-    pass  # CLI fixed, full cache deferred
+    import subprocess
+    r = subprocess.run(
+        ["python", str(ROOT / "experiments" / "08-hch-v2" / "host_cache.py"), "--help"],
+        capture_output=True, text=True, timeout=30,
+    )
+    assert r.returncode == 0, f"host_cache --help failed: {r.stderr}"
+    assert "--dataset" in r.stdout and "--backbone" in r.stdout
 
 @test("05 candidate uses host baseline")
 def _():
