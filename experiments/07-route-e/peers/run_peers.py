@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT / "experiments" / "07-route-e"))
 
 from backbones import make_backbone, DEVICE
 from common import four_segment_split, evaluate, episode_metrics
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 
 from peers.base import Identity
 from peers.quantile import QuantileCorrection

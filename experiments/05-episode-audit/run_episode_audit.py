@@ -22,7 +22,7 @@ sys.path.insert(0, SRC)
 
 import backbones as B  # noqa: E402
 import common as C  # noqa: E402
-from bech import BECH, build_corrector_features  # noqa: E402
+from _legacy.bech import BECH, build_corrector_features  # noqa: E402
 
 # The repository was reorganized after the original Phase-3 scripts were run;
 # keep this audit scoped to the current documented data location.

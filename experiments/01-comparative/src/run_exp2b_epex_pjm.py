@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT / "experiments" / "01-comparative" / "src"))
 import numpy as np
 from common import load_dataset, build_tabular, four_segment_split
 from backbones import make_backbone
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 from metrics import all_metrics, summary_table
 from quantile import QuantileCorrection
 from vahedi_style import VahediStyle

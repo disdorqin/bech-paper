@@ -42,7 +42,7 @@ from common import (
     evaluate,
     weekly_naive,
 )
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 
 from base import Identity
 from quantile import QuantileCorrection

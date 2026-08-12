@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 from common import load_dataset, build_tabular, build_sequences, four_segment_split
 from backbones import make_backbone, needs_seq
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 from metrics import all_metrics, summary_table
 from quantile import QuantileCorrection
 from crc_impl import CRC

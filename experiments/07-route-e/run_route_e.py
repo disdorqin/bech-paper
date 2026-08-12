@@ -32,7 +32,7 @@ from common import (
     four_segment_split, evaluate, weekly_naive,
     episode_metrics,
 )
-from selective_hurdle import (
+from _legacy.selective_hurdle import (
     HurdleCorrectionHead,
     build_corrector_features,
 )

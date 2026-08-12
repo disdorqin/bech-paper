@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from backbones import BACKBONES, make_backbone, needs_seq
 from common import load_shandong, build_tabular, build_sequences, four_segment_split, assert_no_leakage, episode_metrics
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 from metrics import all_metrics, summary_table
 
 # Import baselines

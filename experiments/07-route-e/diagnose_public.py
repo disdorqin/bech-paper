@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 import numpy as np
 from common import load_dataset, build_tabular, four_segment_split
 from backbones import make_backbone
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 
 for ds_key in ["LAGO_DE", "LAGO_BE", "LAGO_FR", "GEFCOM14P"]:
     print(f"\n{'='*60}")

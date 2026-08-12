@@ -24,7 +24,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C                                    # noqa: E402
 import backbones as B                                 # noqa: E402
-from bech import BECH, build_corrector_features, harm_stats   # noqa: E402
+from _legacy.bech import BECH, build_corrector_features, harm_stats   # noqa: E402
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 RESDIR = os.path.join(OUT, "results")

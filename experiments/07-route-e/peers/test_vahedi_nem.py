@@ -6,7 +6,7 @@ sys.path.insert(0, "experiments/07-route-e")
 import numpy as np
 from common import load_dataset, build_tabular, four_segment_split, evaluate, episode_metrics
 from backbones import make_backbone
-from selective_hurdle import HurdleCorrectionHead, build_corrector_features
+from _legacy.selective_hurdle import HurdleCorrectionHead, build_corrector_features
 
 spec = importlib.util.spec_from_file_location(
     "vahedi_style", "experiments/07-route-e/peers/vahedi_style.py"
