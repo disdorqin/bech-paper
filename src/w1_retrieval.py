@@ -176,12 +176,15 @@ class CAGMAtomMemory:
             distances[i] = day_w1_distance(q_w, q_m, d_w, d_m, q_valid, self.valid_mask[i])
         return distances
 
-    def get_neighbors(self, distances: np.ndarray, k: int) -> list[int]:
-        """Return indices of k nearest neighbors (excluding self if distance=0)."""
+    def get_neighbors(self, distances: np.ndarray, k: int,
+                       exclude_self: bool = True) -> list[int]:
+        """Return indices of k nearest neighbors, excluding self (distance=0)."""
         order = np.argsort(distances)
         neighbors = []
         for idx in order:
             if distances[idx] < float("inf") and len(neighbors) < k:
+                if exclude_self and distances[idx] < 1e-14:
+                    continue
                 neighbors.append(int(idx))
         return neighbors
 
