@@ -6,6 +6,13 @@ Core: Bi-OMC + CAGM + DVG with unified semantics.
   - Gain: relative to Identity, computed from saved candidates (§B3)
   - DVG: S3 leave-one-day-out calibration (§F2)
   - Keys: single encoder, single metric projection (§E1-E2)
+
+LEGACY WARNINGS (2026-08-12 re-audit):
+  legacy_CAGM_DVG: key_net/metric_proj/cand_proj/fusion never trained;
+    S3 calibration uses neighbor-average gain, not held-out realized gain.
+  legacy_state_head: uses raw S1 CDF for normalized target.
+  legacy_calibration: eta/tau/k not reliably persisted in bundle.
+  DO NOT use in formal/half-exp runner until IAH math gate clears.
 """
 from __future__ import annotations
 
@@ -275,6 +282,24 @@ class DVG(nn.Module):
                 "action_value": ce, "action_mask": probs}
 
 
+# ======================== Legacy quarantine ==================================
+LEGACY_UNTRAINED = {
+    "CAGM_DVG": True,
+    "state_head": True,
+    "calibration": True,
+}
+
+
+def require_not_legacy(runner_name: str = "unknown"):
+    """Gate: refuse formal/half-exp runners to use legacy HCH v2."""
+    for comp, flag in LEGACY_UNTRAINED.items():
+        if flag:
+            raise RuntimeError(
+                f"[{runner_name}] HCH v2 component '{comp}' is legacy_unvalidated. "
+                f"Wait for IAH math gate clearance before formal use."
+            )
+
+
 # ======================== state loss (§C2) ==================================
 def state_loss_fn(s_pred, s_target):
     """MSE on continuous rank/scale targets."""
@@ -342,7 +367,7 @@ def candidate_loss_fn(cand, target, host_pred, cfg):
 
 # ======================== §G freeze bundle ==================================
 class HCHV2Bundle:
-    """Persistable bundle for freeze/reload (§G1-G3)."""
+    """Persistable bundle for freeze/reload. Covers all decision state (§G1-G3 addendum)."""
 
     def __init__(self):
         self.config = None
@@ -351,6 +376,10 @@ class HCHV2Bundle:
         self.memory_gains = None
         self.memory_dates = None
         self.s1_stats = None
+        self.calibration_params = None
+        self.exog_scalers = None
+        self.split_hash = None
+        self.data_hash = None
         self.commit = None
         self.extra = {}
 
@@ -362,6 +391,10 @@ class HCHV2Bundle:
             "memory_gains": self.memory_gains,
             "memory_dates": self.memory_dates,
             "s1_stats": self.s1_stats,
+            "calibration_params": self.calibration_params,
+            "exog_scalers": self.exog_scalers,
+            "split_hash": self.split_hash,
+            "data_hash": self.data_hash,
             "commit": self.commit,
             "extra": self.extra,
         }, path)
@@ -370,20 +403,37 @@ class HCHV2Bundle:
     def load(path):
         data = torch.load(path, map_location="cpu", weights_only=False)
         b = HCHV2Bundle()
-        b.config = data["config"]
-        b.model_state = data["model_state"]
-        b.memory_keys = data["memory_keys"]
-        b.memory_gains = data["memory_gains"]
-        b.memory_dates = data["memory_dates"]
-        b.s1_stats = data["s1_stats"]
-        b.commit = data["commit"]
+        b.config = data.get("config")
+        b.model_state = data.get("model_state")
+        b.memory_keys = data.get("memory_keys")
+        b.memory_gains = data.get("memory_gains")
+        b.memory_dates = data.get("memory_dates")
+        b.s1_stats = data.get("s1_stats")
+        b.calibration_params = data.get("calibration_params")
+        b.exog_scalers = data.get("exog_scalers")
+        b.split_hash = data.get("split_hash")
+        b.data_hash = data.get("data_hash")
+        b.commit = data.get("commit")
         b.extra = data.get("extra", {})
         return b
 
     def hash(self):
         h = hashlib.sha256()
-        for k in sorted(self.model_state.keys()):
-            h.update(self.model_state[k].cpu().numpy().tobytes())
+        if self.model_state:
+            for k in sorted(self.model_state.keys()):
+                h.update(self.model_state[k].cpu().numpy().tobytes())
+        if self.memory_keys is not None:
+            h.update(self.memory_keys.cpu().numpy().tobytes())
+        if self.memory_gains is not None:
+            h.update(self.memory_gains.cpu().numpy().tobytes())
+        if self.memory_dates:
+            h.update(str(self.memory_dates).encode())
+        if self.calibration_params:
+            h.update(str(self.calibration_params).encode())
+        if self.exog_scalers:
+            h.update(str(self.exog_scalers).encode())
+        if self.split_hash:
+            h.update(self.split_hash.encode())
         return h.hexdigest()[:16]
 
 
@@ -446,7 +496,8 @@ class HCHV2(nn.Module):
         return out
 
     # ======================== freeze API (§G2) ==============================
-    def freeze(self, s1_stats=None, commit=None) -> HCHV2Bundle:
+    def freeze(self, s1_stats=None, calibration_params=None, exog_scalers=None,
+               split_hash=None, commit=None) -> HCHV2Bundle:
         self.eval()
         for p in self.parameters():
             p.requires_grad = False
@@ -461,6 +512,9 @@ class HCHV2(nn.Module):
             b.memory_gains = self.memory.m_gains.clone()
             b.memory_dates = list(self.memory._m_dates) if self.memory._m_dates else []
         b.s1_stats = s1_stats
+        b.calibration_params = calibration_params
+        b.exog_scalers = exog_scalers
+        b.split_hash = split_hash
         b.commit = commit
         return b
 

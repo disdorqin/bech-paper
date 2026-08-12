@@ -26,25 +26,10 @@ from common import (
 )
 
 SEED = 0
-    V2_BACKBONES = ("Linear", "MLP", "LSTM", "TCN", "PatchTST")
-    HERE = Path(__file__).resolve().parent
-    CACHE_ROOT = HERE / "results" / "cache"
-    CACHE_ROOT.mkdir(parents=True, exist_ok=True)
-
-    import argparse
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--resume", action="store_true",
-                   help="skip already-cached combos")
-    ap.add_argument("--backbone", type=str, default=None,
-                   help="single backbone name")
-    ap.add_argument("--dataset", type=str, default=None,
-                   help="single dataset key")
-    args = ap.parse_args()
-
-    if args.backbone:
-        backbones = [args.backbone]
-    else:
-        backbones = list(V2_BACKBONES)
+V2_BACKBONES = ("Linear", "MLP", "LSTM", "TCN", "PatchTST")
+HERE = Path(__file__).resolve().parent
+CACHE_ROOT = HERE / "results" / "cache"
+CACHE_ROOT.mkdir(parents=True, exist_ok=True)
 
 
 def _load_ds(key: str) -> dict:
@@ -59,7 +44,7 @@ def _hash_array(arr: np.ndarray) -> str:
     return hashlib.sha256(arr.tobytes()).hexdigest()[:16]
 
 
-def cache_one(ds_key: str, bb_name: str) -> dict:
+def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     t0 = time.time()
     ds = _load_ds(ds_key)
     y_full = ds["price"]
@@ -72,7 +57,7 @@ def cache_one(ds_key: str, bb_name: str) -> dict:
 
     assert_no_leakage(ds, X, y, valid, names)
 
-    bb = make_backbone(bb_name, seed=SEED)
+    bb = make_backbone(bb_name, seed=seed)
     if needs_seq(bb_name):
         seq_full = build_sequences(ds, valid)
         bb.fit(X[s1], y[s1], seq_full[s1])
@@ -105,7 +90,7 @@ def cache_one(ds_key: str, bb_name: str) -> dict:
     record = {
         "dataset": ds_key,
         "backbone": bb_name,
-        "seed": SEED,
+        "seed": seed,
         "n_full": n_full,
         "n_valid": n,
         "n_S1": int(len(s1)),
@@ -125,7 +110,10 @@ def main():
     ap.add_argument("--dataset", type=str, default=None, help="single dataset or all")
     ap.add_argument("--backbone", type=str, default=None, help="single backbone or all")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--seed", type=int, default=SEED)
     args = ap.parse_args()
+
+    seed = args.seed
 
     if args.dataset:
         datasets = [args.dataset]
@@ -150,14 +138,14 @@ def main():
                 continue
             print(f"[{done}/{total}] {ds_key} x {bb_name} ", end="", flush=True)
             try:
-                rec = cache_one(ds_key, bb_name)
+                rec = cache_one(ds_key, bb_name, seed=seed)
                 records.append(rec)
                 print(f"OK ({rec['duration_s']}s)")
             except Exception as e:
                 print(f"FAILED: {e}")
                 records.append({
                     "dataset": ds_key, "backbone": bb_name,
-                    "seed": SEED, "error": str(e),
+                    "seed": seed, "error": str(e),
                 })
 
     out = HERE / "results" / "host_cache_manifest.csv"

@@ -1,10 +1,11 @@
-"""HCH v2 baselines — Residual-L1, QuantileResidual-LGBM.
+"""HCH v2 baselines — Identity, Residual-L1, QuantileResidual-LGBM.
 
 Per spec §9:
   Residual-L1: LightGBM L1 on residuals, no selectivity gate
   QuantileResidual-LGBM: q=0.1/0.5/0.9, S3-frozen width cutoff
 
-Official PIR / delta-Adapter require external repos (see official_adapters.py stub).
+PIR / delta-Adapter: limited_reimplementation (see official_adapters.py).
+Labels MUST include implementation_status per addendum §11.
 """
 from __future__ import annotations
 

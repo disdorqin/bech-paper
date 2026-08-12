@@ -2,20 +2,19 @@
 
 > 科研项目 · 论文：*A Model-Agnostic Budgeted Correction Head for Extreme Electricity Prices*
 
-## 当前研究状态（2026-08-09）
+## 当前研究状态（2026-08-12）
 
-项目已从 Phase B 创新审计转为 **Route-E 应用论文**路线。Phase B 判 `NO-GO`（见 `docs/paper_prep/37_PhaseB_commander_verdict.md`）。
+项目处于 **FOUNDATION REPAIR** 阶段。HCH v2 原型代码存在多项基础契约问题，正按
+`docs/paper_prep/v2/hch_v2_latest_repo_reaudit_and_foundation_repair_addendum_v0.1_2026-08-12.md`
+执行修复。下半部分 IAH-CRPS 数学方案在交叉裁决中。
 
-当前主线：**Hurdle Correction Head (HCH)** — 冻结基座 + Bi-Hurdle 选择性极端电价校正。
+## v2 当前 canonical docs 指针
 
-## 入口文档（阅读顺序）
-
-1. `AGENTS.md` (本文件)
-2. `docs/paper_info/README.md` — 论文全局信息（数据集/基线/引用）
-3. `docs/paper_info/peer_reproduction_log.md` — 同行基线复现记录
-4. `docs/paper_prep/38_RouteE_experiment_design.md` — 实验设计
-5. `docs/paper_prep/37_PhaseB_commander_verdict.md` — Phase B 裁决
-6. `experiments/07-route-e/peers/` — 同行基线代码
+1. `docs/paper_prep/v2/hch_v2_latest_repo_reaudit_and_foundation_repair_addendum_v0.1_2026-08-12.md` — **最新仓库复审**
+2. `docs/paper_prep/v2/hch_v2_math_loss_research_dossier_and_prompt_v0.1_2026-08-11.md` — 损失数学研究
+3. `experiments/00-data-exploration/math_loss/` — 数学设计 + 审计输出
+4. `docs/paper_prep/v2/hch_v2_code_repair_and_acceptance_spec_v0.2_2026-08-11.md` — 代码修复规范 (已被 addendum 取代)
+5. `docs/paper_prep/v2/hch_v2_freeze_half_exp_and_diagnostic_protocol_v0.1_2026-08-11.md` — 冻结/Half-Exp 协议 (HOLD)
 
 ## 文件夹公约
 
@@ -84,29 +83,28 @@ solar_leak_price_model/
 - 外生只用日前可得预测值；尖峰阈值取自 S1 p99
 - 建表后 `assert_no_leakage`；校正特征矩阵 Z 独立泄露审计（`max|corr(Z_j, y_t)| < 0.3`）
 
-## 五个基座
+## 五个基座（v2 扩展中）
 
-| 基座 | 类型 | 归纳偏置 |
-|---|---|---|
-| Linear | Ridge 回归 | 线性 |
-| MLP | sklearn MLPRegressor | 浅层非线性 |
-| LSTM | PyTorch 单层 LSTM | 循环/时序记忆 |
-| Transformer | PyTorch 小Transformer | 自注意力 |
-| GBDT | LightGBM | 提升树 |
+| 基座 | 类型 | 归纳偏置 | v2 状态 |
+|---|---|---|---|
+| Linear | Ridge 回归 | 线性 | ✅ |
+| MLP | sklearn MLPRegressor | 浅层非线性 | ✅ |
+| LSTM | PyTorch 单层 LSTM | 循环/时序记忆 | ✅ |
+| TCN | PyTorch 时序卷积 | 长距离时序依赖 | ✅ (v2) |
+| PatchTST | PyTorch PatchTST | 通道独立 + patch | ✅ (v2) |
 
-**注意**：这五个是自建轻量实现，用来提供异构误差结构检验基座无关性，**不代表 SOTA 精度**。
+## 同行基线（固定方法集合 v2）
 
-## 同行基线（Route-E 应用论文）
+| # | 基线 | 实现状态 | 角色 |
+|---|---|---|---|
+| B0 | Identity | ✅ | 冻结宿主 |
+| B1 | Residual-L1 | ✅ | L1 残差校正 |
+| B2 | QuantileResidual-LGBM | ✅ | 分位残差校正 |
+| B3 | **PIR** | `limited_reimplementation` | 实例感知后处理 |
+| B4 | **δ-Adapter Ada-Y** | `limited_reimplementation` | 轻量 adapter |
+| B5 | HCH v2 | `legacy_unvalidated` | 本项目（等待 IAH 融合） |
 
-| # | 基线 | 论文 | 角色 | 状态 |
-|---|---|---|---|---|
-| B1 | **Quantile Correction** | 经典方法 | 统计基线 | ✅ |
-| B2 | **Vahedi 2026** | IEEE ICCE | 负价预测基线 | ✅ |
-| B3 | **PIR** | NeurIPS 2025 | 实例感知后处理 | ⏳ 待复现 |
-| B4 | **CRC** | arXiv:2512.22428 | 安全残差校正 | ⚠️ 方法论 |
-| B5 | **SpikeReg** | AAAI 2026 WS | 尖峰感知 | ⏳ 待深入 |
-
-详细复现记录见 `docs/paper_info/peer_reproduction_report.md`
+山东角色：**私有真实场景外部验证**，不作为公开可复现主证据。
 
 ## 已有数据集
 

@@ -1,4 +1,8 @@
-"""Official baseline adapters for HCH v2.
+"""Baseline adapters for HCH v2 — limited reimplementations.
+
+implementation_status:
+  delta-Adapter: limited_reimplementation (adapted sample count, normalization, training)
+  PIR:           limited_reimplementation (no official retrieval, adapted refiner)
 
 Sources:
   δ-Adapter: Anoise/Adapter @ 0add06e — PostY architecture from exp_decom9_post_y.py
@@ -43,7 +47,7 @@ class PostY(nn.Module):
         return self.fc3(x)
 
 
-class DeltaAdapterOfficial:
+class DeltaAdapterLimited:
     """δ-Adapter Ada-Y official implementation adapter.
 
     Trains a PostY MLP on S2 (backbone predictions → corrected predictions).
@@ -181,7 +185,7 @@ class Refiner(nn.Module):
         return self.head(z).squeeze(-1)
 
 
-class PIROfficial:
+class PIRLimited:
     """PIR simplified official adapter.
 
     Architecture extracted from vendor/PIR/models/PIR.py.

@@ -12,39 +12,40 @@ EPS = 1e-10
 def day_block_bootstrap(values: np.ndarray, day_ids: np.ndarray,
                         n_boot: int = 2000, seed: int = 0, alpha: float = 0.05):
     """Day-block bootstrap CI for mean of `values`.
+    Each bootstrap sample draws n_days with replacement, then concatenates
+    all values from each drawn day, preserving multiplicity.
     Returns (lower, mean, upper) at (alpha/2, 0.5, 1-alpha/2).
     """
     rng = np.random.default_rng(seed)
     unique_days = np.unique(day_ids)
     n_days = len(unique_days)
-    if n_days < 10:
+    if n_days < 5:
         return None, float(np.mean(values)), None
 
     m = np.zeros(n_boot)
     for b in range(n_boot):
         sampled = rng.choice(unique_days, size=n_days, replace=True)
-        mask = np.isin(day_ids, sampled)
-        m[b] = np.mean(values[mask]) if mask.sum() > 0 else np.nan
-    m = m[~np.isnan(m)]
+        vals = [values[day_ids == d] for d in sampled]
+        m[b] = np.mean(np.concatenate(vals))
     lo = np.quantile(m, alpha / 2)
     hi = np.quantile(m, 1 - alpha / 2)
     return float(lo), float(np.mean(values)), float(hi)
 
 
 def day_block_bootstrap_diff(v1, day1, v2, day2, n_boot=2000, seed=0, alpha=0.05):
-    """Block bootstrap CI for mean(v1 - v2), assuming same-day alignment not required."""
+    """Block bootstrap CI for mean(v1 - v2), paired on resampled day sets."""
     rng = np.random.default_rng(seed)
     d1u = np.unique(day1)
     d2u = np.unique(day2)
-    if len(d1u) < 10 or len(d2u) < 10:
+    if len(d1u) < 5 or len(d2u) < 5:
         return None, float(np.mean(v1) - np.mean(v2)), None
     m = np.zeros(n_boot)
     for b in range(n_boot):
         s1 = rng.choice(d1u, size=len(d1u), replace=True)
         s2 = rng.choice(d2u, size=len(d2u), replace=True)
-        m1 = np.mean(v1[np.isin(day1, s1)])
-        m2 = np.mean(v2[np.isin(day2, s2)])
-        m[b] = m1 - m2
+        vals1 = [v1[day1 == d] for d in s1]
+        vals2 = [v2[day2 == d] for d in s2]
+        m[b] = np.mean(np.concatenate(vals1)) - np.mean(np.concatenate(vals2))
     lo = np.quantile(m, alpha / 2)
     hi = np.quantile(m, 1 - alpha / 2)
     return float(lo), float(np.mean(v1) - np.mean(v2)), float(hi)
@@ -63,10 +64,15 @@ def student_t_pdf(x: np.ndarray, nu: float) -> np.ndarray:
 
 
 def student_t_cdf(x: np.ndarray, nu: float) -> np.ndarray:
-    """CDF of standard Student-t using regularized incomplete beta."""
+    """CDF of standard Student-t using regularized incomplete beta.
+    F_nu(x) = { 0.5 * I_{nu/(nu+x^2)}(nu/2, 1/2)              for x < 0
+              { 1.0 - 0.5 * I_{nu/(nu+x^2)}(nu/2, 1/2)         for x >= 0
+    Matches scipy.stats.t.cdf (stdtr).
+    """
     ratio = nu / (nu + x * x)
     I_x = special.betainc(nu / 2, 0.5, ratio)
-    return 0.5 + 0.5 * np.sign(x) * I_x
+    result = np.where(x >= 0, 1.0 - 0.5 * I_x, 0.5 * I_x)
+    return result
 
 
 def fit_student_t_mle(data: np.ndarray) -> dict:
@@ -205,60 +211,74 @@ def occ_magnitude_by_bins(r_s2, day_s2, yhat_s2, n_bins=10):
 
 
 def day_dependence(r_s2, day_s2, hour_s2) -> dict:
-    """Compute 24h within-day residual dependence diagnostics."""
+    """Compute 24h within-day residual dependence diagnostics.
+    Uses real date pivot, hour-wise centering, proper covariance eigenvalues.
+    """
     r = r_s2[np.isfinite(r_s2)]
     d = day_s2[np.isfinite(r_s2)]
     h = hour_s2[np.isfinite(r_s2)]
-    if len(r) < 24 * 5:
+    unique_days = np.unique(d)
+    if len(unique_days) < 5:
         return {"status": "INSUFFICIENT_SAMPLE"}
 
     out = {}
-    # Hourly residual correlation matrix (24x24)
-    unique_days = np.unique(d)
-    mat = np.zeros((24, 24))
-    counts = np.zeros((24, 24))
+
+    # Pivot to day x hour matrix (only complete 24h days)
+    day_hour_mat = []
     for dd in unique_days:
         dm = d == dd
         if dm.sum() != 24:
             continue
-        rh = r[dm]
-        hh = h[dm].astype(int)
-        for i in range(24):
-            for j in range(24):
-                mat[hh[i], hh[j]] += rh[i] * rh[j]
-                counts[hh[i], hh[j]] += 1
-    with np.errstate(divide='ignore', invalid='ignore'):
-        mat = mat / counts
+        sort_idx = np.argsort(h[dm])
+        day_hour_mat.append(r[dm][sort_idx])
+    if len(day_hour_mat) < 5:
+        return {"status": "INSUFFICIENT_SAMPLE"}
+    mat = np.stack(day_hour_mat)  # [n_days, 24]
 
-    # Eigenvalue spectrum of 24x24 residual correlation
-    u, s, vt = np.linalg.svd(mat, full_matrices=False)
-    evals = s ** 2
-    evals = evals / evals.sum() if evals.sum() > 0 else np.zeros_like(evals)
-    out["effective_rank"] = float((evals > 0.01).sum())
-    out["first_eval_ratio"] = float(evals[0]) if len(evals) > 0 else 0.0
-    out["top3_eval_ratio"] = float(evals[:3].sum()) if len(evals) >= 3 else 0.0
+    # Hour-wise centering
+    hour_means = mat.mean(axis=0)
+    mat_centered = mat - hour_means
 
-    # Max off-diagonal correlation
-    corr = mat / (np.sqrt(np.diag(mat)[:, None] * np.diag(mat)[None, :]) + EPS)
+    # Covariance matrix 24x24
+    cov = (mat_centered.T @ mat_centered) / (len(mat) - 1)
+
+    # Correlation matrix
+    hour_stds = np.sqrt(np.diag(cov)) + EPS
+    corr = cov / (hour_stds[:, None] * hour_stds[None, :])
+
+    # Eigenvalues of correlation matrix (proper: use eigvalsh on symmetric corr)
+    evals = np.linalg.eigvalsh(corr)
+    # Sort descending
+    evals = np.sort(evals)[::-1]
+    total_var = evals.sum()
+    if total_var < EPS:
+        return {"status": "SINGULAR"}
+
+    out["participation_ratio"] = float(evals.sum()**2 / (evals**2).sum())  # effective rank
+    out["first_eval_ratio"] = float(evals[0] / total_var)
+    out["top3_eval_ratio"] = float(evals[:3].sum() / total_var)
     offdiag = corr[~np.eye(24, dtype=bool)]
-    out["max_offdiag_corr"] = float(np.max(np.abs(offdiag))) if len(offdiag) > 0 else 0.0
+    out["max_offdiag_corr"] = float(np.max(np.abs(offdiag)))
 
-    # Day-level residual ACF (up to lag 6 hours)
+    # Also report abs-residual and squared-residual dependence
+    mat_abs = np.abs(mat); mat_abs_centered = mat_abs - mat_abs.mean(axis=0)
+    cov_abs = (mat_abs_centered.T @ mat_abs_centered) / (len(mat_abs) - 1)
+    corr_abs = cov_abs / (np.sqrt(np.diag(cov_abs))[:, None] * np.sqrt(np.diag(cov_abs))[None, :] + EPS)
+    offdiag_abs = corr_abs[~np.eye(24, dtype=bool)]
+    out["max_offdiag_corr_abs"] = float(np.max(np.abs(offdiag_abs)))
+
+    # ACF of residuals within each day
     acf_vals = []
-    for dd in unique_days:
-        dm = d == dd
-        if dm.sum() != 24:
-            continue
-        rh = r[dm]
+    for row in mat:
         for lag in range(1, 7):
-            if len(rh) > lag:
-                c = np.corrcoef(rh[:len(rh) - lag], rh[lag:])[0, 1]
+            if len(row) > lag:
+                c = np.corrcoef(row[:len(row) - lag], row[lag:])[0, 1]
                 if not np.isnan(c):
                     acf_vals.append((lag, float(c)))
-    if acf_vals:
-        for lag in range(1, 7):
-            vals = [v for l, v in acf_vals if l == lag]
-            out[f"acf_lag{lag}"] = float(np.median(vals)) if vals else np.nan
+    for lag in range(1, 7):
+        vals = [v for l, v in acf_vals if l == lag]
+        out[f"acf_lag{lag}"] = float(np.median(vals)) if vals else np.nan
+
     return out
 
 

@@ -67,8 +67,8 @@ def run_phase_b(ds_key: str, bb_name: str, data: dict):
     s2_s, s2_e = seg["S2"][0], seg["S2"][1] + 1
     s3_s, s3_e = seg["S3"][0], seg["S3"][1] + 1
 
-    r_s2 = pred[s2_s:s2_e] - y[s2_s:s2_e]
-    r_s3 = pred[s3_s:s3_e] - y[s3_s:s3_e]
+    r_s2 = y[s2_s:s2_e] - pred[s2_s:s2_e]  # r = y - host_pred
+    r_s3 = y[s3_s:s3_e] - pred[s3_s:s3_e]
     day_s2, hour_s2 = get_day_and_hour(len(r_s2))
     day_s3, hour_s3 = get_day_and_hour(len(r_s3))
 
@@ -90,8 +90,8 @@ def run_phase_b_tail(ds_key: str, bb_name: str, data: dict) -> dict:
     seg = data["seg"]
     s2_s = seg["S2"][0]; s2_e = seg["S2"][1] + 1
     s3_s = seg["S3"][0]; s3_e = seg["S3"][1] + 1
-    r_s2 = pred[s2_s:s2_e] - y[s2_s:s2_e]
-    r_s3 = pred[s3_s:s3_e] - y[s3_s:s3_e]
+    r_s2 = y[s2_s:s2_e] - pred[s2_s:s2_e]  # r = y - host_pred
+    r_s3 = y[s3_s:s3_e] - pred[s3_s:s3_e]
     day_s2, _ = get_day_and_hour(len(r_s2))
     day_s3, _ = get_day_and_hour(len(r_s3))
 
@@ -142,8 +142,8 @@ def run_phase_b_dist(ds_key: str, bb_name: str, data: dict) -> dict:
     seg = data["seg"]
     s2_s = seg["S2"][0]; s2_e = seg["S2"][1] + 1
     s3_s = seg["S3"][0]; s3_e = seg["S3"][1] + 1
-    r_s2 = pred[s2_s:s2_e] - y[s2_s:s2_e]
-    r_s3 = pred[s3_s:s3_e] - y[s3_s:s3_e]
+    r_s2 = y[s2_s:s2_e] - pred[s2_s:s2_e]  # r = y - host_pred
+    r_s3 = y[s3_s:s3_e] - pred[s3_s:s3_e]
     day_s2, _ = get_day_and_hour(len(r_s2))
     day_s3, _ = get_day_and_hour(len(r_s3))
 

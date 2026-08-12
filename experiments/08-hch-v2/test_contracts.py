@@ -35,13 +35,18 @@ def test(name):
 
 
 # ================================= tests ====================================
-@test("01 py_compile src")
+@test("01 py_compile all active src + experiments")
 def _():
     import py_compile
-    for r, _, fs in os.walk(str(ROOT / "src")):
-        for f in fs:
-            if f.endswith(".py"):
-                py_compile.compile(os.path.join(r, f), doraise=True)
+    for base_str in ["src", "experiments/08-hch-v2", "experiments/00-data-exploration/math_loss",
+                     "experiments/07-route-e/peers"]:
+        base = ROOT / Path(base_str)
+        if not base.exists():
+            continue
+        for r, _, fs in os.walk(str(base)):
+            for f in fs:
+                if f.endswith(".py"):
+                    py_compile.compile(os.path.join(r, f), doraise=True)
 
 @test("02 S1-S4 no overlap")
 def _():
@@ -221,9 +226,9 @@ def _():
 @test("20 baseline labels distinct")
 def _():
     from baselines_v2 import Identity, ResidualL1, QuantileResidualLGBM
-    from official_adapters import DeltaAdapterOfficial, PIROfficial
+    from official_adapters import DeltaAdapterLimited, PIRLimited
     names = [Identity().name, ResidualL1().name, QuantileResidualLGBM().name,
-             DeltaAdapterOfficial().name, PIROfficial().name]
+             DeltaAdapterLimited().name, PIRLimited().name]
     assert set(names) == {"Identity", "ResidualL1", "QuantileResidualLGBM",
                           "delta-Adapter", "PIR"}
 
