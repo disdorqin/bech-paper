@@ -18,6 +18,9 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 
+# P1-9: day-length policy is explicit. 23/25-hour days are excluded and recorded.
+DAY_LENGTH_PROTOCOL = "COMPLETE_24H_ONLY"
+
 
 @dataclass
 class ExperimentManifest:

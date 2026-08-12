@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+from typing import Optional
 
 
 def w1_3atom(w_minus_a: float, w_zero_a: float, w_plus_a: float,
@@ -134,17 +135,29 @@ class CAGMAtomMemory:
         self.valid_mask: list[np.ndarray] = []  # [H] boolean
 
     def add_day(self, date: str, candidate: dict, target_zY: np.ndarray):
-        """Store one day's residual atom measures."""
+        """Store ONE day's residual atom measures (P1-10).
+
+        Enforces single-day semantics: any leading batch dimension must be 1.
+        Do not rely on .squeeze() to infer single-day.
+        """
+        def _flatten_one_day(t, name):
+            a = t.detach().cpu().numpy()
+            if a.ndim >= 2 and a.shape[0] != 1:
+                raise ValueError(
+                    f"add_day({name}) expects batch size 1, got {a.shape[0]}. "
+                    f"Iterate days explicitly.")
+            return a.reshape(-1)
+
         self.dates.append(date)
-        self.z0.append(candidate["z0"].detach().cpu().numpy().squeeze())
-        self.w_minus.append(candidate["w_minus"].detach().cpu().numpy().squeeze())
-        self.w_zero.append(candidate["w_zero"].detach().cpu().numpy().squeeze())
-        self.w_plus.append(candidate["w_plus"].detach().cpu().numpy().squeeze())
-        self.m_minus.append(candidate["m_minus"].detach().cpu().numpy().squeeze())
-        self.m_plus.append(candidate["m_plus"].detach().cpu().numpy().squeeze())
-        self.target_zY.append(target_zY)
+        self.z0.append(_flatten_one_day(candidate["z0"], "z0"))
+        self.w_minus.append(_flatten_one_day(candidate["w_minus"], "w_minus"))
+        self.w_zero.append(_flatten_one_day(candidate["w_zero"], "w_zero"))
+        self.w_plus.append(_flatten_one_day(candidate["w_plus"], "w_plus"))
+        self.m_minus.append(_flatten_one_day(candidate["m_minus"], "m_minus"))
+        self.m_plus.append(_flatten_one_day(candidate["m_plus"], "m_plus"))
+        self.target_zY.append(np.asarray(target_zY).reshape(-1))
         self.valid_mask.append(
-            candidate["valid_mask"].detach().cpu().numpy().squeeze().astype(bool)
+            _flatten_one_day(candidate["valid_mask"], "valid_mask").astype(bool)
         )
 
     def __len__(self):
@@ -177,13 +190,18 @@ class CAGMAtomMemory:
         return distances
 
     def get_neighbors(self, distances: np.ndarray, k: int,
-                       exclude_self: bool = True) -> list[int]:
-        """Return indices of k nearest neighbors, excluding self (distance=0)."""
+                      exclude_idx: Optional[int] = None) -> list[int]:
+        """Return indices of k nearest neighbors.
+
+        Self-exclusion is ID-based (exclude_idx), NOT distance-based (P1-2).
+        Two distinct days may legitimately have identical atom measures and
+        W1=0; they remain valid perfect neighbors.
+        """
         order = np.argsort(distances)
         neighbors = []
         for idx in order:
             if distances[idx] < float("inf") and len(neighbors) < k:
-                if exclude_self and distances[idx] < 1e-14:
+                if exclude_idx is not None and int(idx) == int(exclude_idx):
                     continue
                 neighbors.append(int(idx))
         return neighbors

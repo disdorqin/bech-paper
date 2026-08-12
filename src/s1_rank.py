@@ -69,19 +69,19 @@ class S1RankReference:
 
     @staticmethod
     def _interpolate_rank(values: np.ndarray, pool: np.ndarray) -> np.ndarray:
-        """Continuous mid-rank: fraction of pool values <= each value.
-        Linear interpolation between adjacent pool values.
+        """Tie-aware empirical mid-rank (P1-1).
+
+        mid_rank(v) = (count(pool < v) + 0.5 * count(pool == v)) / n
+
+        This is the standard empirical mid-rank convention. A pool of identical
+        values maps the identical query exactly to 0.5. No fake epsilon ordering
+        within ties. Off-grid values fall back to the step fraction lt/n.
         """
         n = len(pool)
         if n == 0:
             return np.full_like(values, 0.5)
-        idx = np.searchsorted(pool, values, side='right')
-        # Linear interpolation
-        lo = np.clip(idx - 1, 0, n - 1)
-        hi = np.clip(idx, 0, n - 1)
-        frac = np.where(idx < n,
-                        (values - pool[lo]) / np.maximum(pool[hi] - pool[lo], 1e-12),
-                        0.0)
-        frac = np.clip(frac, 0.0, 1.0)
-        rank = (idx + frac) / (n + 1)
+        lt = np.searchsorted(pool, values, side='left')   # count strictly < v
+        ge = np.searchsorted(pool, values, side='right')  # count <= v
+        eq = ge - lt                                      # count == v (ties)
+        rank = (lt + 0.5 * eq) / n
         return np.clip(rank, 0.0, 1.0)
