@@ -17,6 +17,7 @@ import torch.nn as nn
 from iah_candidate import IAHCandidateHead
 from iah_crps_loss import iah_crps_loss
 from s1_rank import S1RankReference
+from hch_v2_context import compute_domain_descriptors
 from w1_retrieval import CAGMAtomMemory
 from query_replay import full_replay_chain, estimate_realized_A
 from double_event import double_event_proposal
@@ -47,6 +48,7 @@ class HCHV2UniversalPipeline:
         self.s1_rank_ref: Optional[S1RankReference] = None
         self.memory: Optional[CAGMAtomMemory] = None
         self.dvg: Optional[DGVSplitConformal] = None
+        self._domain_det: Optional[np.ndarray] = None
 
     # ------------------------------------------------------------- S1 ----
     def fit_s1_reference(self, s1_host_z0: np.ndarray,
@@ -54,6 +56,18 @@ class HCHV2UniversalPipeline:
         """Build local S1 rank reference from S1 host hyperbolic coordinates."""
         self.s1_rank_ref = S1RankReference(s1_host_z0, s1_hours)
         return self.s1_rank_ref
+
+    def fit_s1_signature(self, s1_z0: np.ndarray,
+                         s1_hours: Optional[np.ndarray] = None) -> np.ndarray:
+        """Estimate and freeze the DataSignature domain descriptors from S1.
+
+        Descriptors are domain-level stable geometry, computed once over the S1
+        host z0 pool and frozen into the candidate head's signature buffer.
+        """
+        det = compute_domain_descriptors(s1_z0, s1_hours)
+        self.candidate_head.core_encoder.signature.set_domain_descriptors(det)
+        self._domain_det = det
+        return det
 
     # ------------------------------------------------------------- S2 ----
     def train_candidate_s2(self, s2_batches, epochs: int = 30,
@@ -174,6 +188,11 @@ class HCHV2UniversalPipeline:
                          "d_value": self.d_value,
                          "seed": self.seed}
         b.source_datasets = [dataset_id] if dataset_id else []
+        if self._domain_det is not None:
+            b.data_signature_spec = {
+                "det": self._domain_det.tolist(),
+                "version": "domain-det-v1",
+            }
         if self.s1_rank_ref is not None:
             b.s1_rank_ref = self.s1_rank_ref.freeze()
         if self.memory is not None:
@@ -221,6 +240,11 @@ class HCHV2UniversalPipeline:
 
         if bundle.s1_rank_ref is not None:
             pipe.s1_rank_ref = S1RankReference.from_frozen(bundle.s1_rank_ref)
+
+        if bundle.data_signature_spec:
+            det = np.asarray(bundle.data_signature_spec["det"], dtype=np.float64)
+            pipe.candidate_head.core_encoder.signature.set_domain_descriptors(det)
+            pipe._domain_det = det
 
         if bundle.atom_memory is not None:
             mem = CAGMAtomMemory()

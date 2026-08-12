@@ -104,11 +104,22 @@ def _():
     assert out.shape == (B, H, d_model)
     assert torch.isfinite(out).all()
 
-    # Data Signature deterministic descriptors are scale-free (finite, correct dim)
+    # Data Signature: frozen domain descriptors, NOT per-day quantile
     sig = DataSignature(d_model, 8)
-    det = sig.compute_deterministic(z0)
-    assert det.shape == (B, 8)
+    det = sig.compute_deterministic()
+    assert det.shape == (8,)
     assert torch.isfinite(det).all()
+    # default frozen descriptors are zero until set_domain_descriptors
+    assert (det == 0).all()
+
+    # set domain descriptors and verify they are frozen
+    from hch_v2_context import compute_domain_descriptors
+    s1_z0 = np.random.randn(500) * 0.5 + 0.1
+    ddet = compute_domain_descriptors(s1_z0)
+    assert ddet.shape == (8,)
+    sig.set_domain_descriptors(ddet)
+    assert torch.allclose(sig.compute_deterministic(),
+                          torch.tensor(ddet, dtype=torch.float32), atol=1e-6)
 
 
 @test("optional branch zero-init preserves near-core output")

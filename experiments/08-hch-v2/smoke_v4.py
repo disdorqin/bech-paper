@@ -157,6 +157,7 @@ def run(dataset_key="LAGO_DE", backbone="Linear", seed=0,
     pipe = HCHV2UniversalPipeline(d_core_context=13, d_model=32,
                                   alpha=alpha, k=None, seed=seed)
     pipe.fit_s1_reference(s1_z0, s1_hours)
+    pipe.fit_s1_signature(s1_z0, s1_hours)
 
     # ---- S2 training ----
     s2_batches = []

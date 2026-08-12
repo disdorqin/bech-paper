@@ -25,11 +25,44 @@ import torch.nn.functional as F
 
 
 # ============================ Data Signature =================================
+def compute_domain_descriptors(s1_z0: np.ndarray,
+                               s1_hours: np.ndarray | None = None) -> np.ndarray:
+    """Estimate DOMAIN-level stable descriptors from S1 host z0 (frozen).
+
+    These describe the stable geometry of the series (distribution/dynamics),
+    computed once over the entire S1 host prediction pool — NOT per-day.
+    Only S1 host predictions (pre-outcome) are used; no target, no S2/S3/S4.
+
+    Returns [d_det] = 8: q25/q50/q75/iqr/mean_abs/flips/pos_mass/lag1.
+    """
+    z = np.asarray(s1_z0, dtype=np.float64).ravel()
+    z = z[np.isfinite(z)]
+    if len(z) == 0:
+        return np.zeros(8, dtype=np.float64)
+
+    q25 = float(np.quantile(z, 0.25))
+    q50 = float(np.quantile(z, 0.50))
+    q75 = float(np.quantile(z, 0.75))
+    iqr = q75 - q25
+    mean_abs = float(np.mean(np.abs(z)))
+
+    signs = (z > 0).astype(np.float64)
+    flips = float(np.mean(signs[1:] != signs[:-1])) if len(z) > 1 else 0.0
+    pos_mass = float(np.mean(z > 0))
+
+    zc = z - z.mean()
+    ss = float((zc ** 2).sum())
+    lag1 = float((zc[:-1] * zc[1:]).sum() / ss) if (len(z) > 1 and ss > 1e-8) else 0.0
+
+    return np.array([q25, q50, q75, iqr, mean_abs, flips, pos_mass, lag1],
+                    dtype=np.float64)
+
+
 class DataSignature(nn.Module):
     """Lightweight data-conditioned interface (P1-7).
 
-    Combines stable human-designed geometry (deterministic descriptors) with a
-    small learned pooled representation, then emits FiLM modulation (gamma, beta).
+    Deterministic descriptors are DOMAIN-level, estimated once on S1 and frozen
+    in `domain_det` buffer. The learned part (Pool(E_core)) remains per-day.
     """
 
     def __init__(self, d_core: int, d_det: int, d_sig: int = 32):
@@ -41,53 +74,32 @@ class DataSignature(nn.Module):
             nn.ReLU(),
         )
         self.mod_head = nn.Linear(d_det + d_sig, 2 * d_core)  # gamma + beta
+        # frozen domain descriptors (S1), zero until set_domain_descriptors
+        self.register_buffer("domain_det", torch.zeros(d_det))
 
-    def compute_deterministic(self, z0: torch.Tensor,
-                              avail_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """Deterministic scale-free distribution/dynamics descriptors per day.
+    def set_domain_descriptors(self, det: np.ndarray):
+        """Write S1-estimated domain descriptors into the frozen buffer."""
+        det = np.asarray(det, dtype=np.float64).reshape(-1)
+        assert det.shape[0] == self.d_det, \
+            f"descriptor dim mismatch: {det.shape[0]} != {self.d_det}"
+        self.domain_det.copy_(torch.tensor(det, dtype=torch.float32))
 
-        Args:
-            z0: [B, H] hyperbolic coordinates
-        Returns:
-            [B, d_det] deterministic descriptor vector
-        """
-        B, H = z0.shape
-        # Distribution descriptors (scale-free)
-        q25 = torch.quantile(z0, 0.25, dim=1)
-        q50 = torch.quantile(z0, 0.50, dim=1)
-        q75 = torch.quantile(z0, 0.75, dim=1)
-        iqr = q75 - q25
-        mean_abs = z0.abs().mean(dim=1)
-        # zero-crossing rate (sign flips)
-        signs = (z0 > 0).float()
-        flips = (signs[:, 1:] != signs[:, :-1]).float().sum(dim=1) / max(H - 1, 1)
-        # tail asymmetry proxy: mean of positive vs negative mass
-        pos_mass = (z0 > 0).float().mean(dim=1)
-        # dynamics: lag-1 autocorrelation
-        zc = z0 - z0.mean(dim=1, keepdim=True)
-        lag1 = (zc[:, :-1] * zc[:, 1:]).sum(dim=1) / (
-            (zc ** 2).sum(dim=1).clamp(min=1e-8))
-        det = torch.stack([q25, q50, q75, iqr, mean_abs, flips, pos_mass, lag1],
-                          dim=1)  # [B, 8]
-        det = torch.nan_to_num(det, nan=0.0, posinf=0.0, neginf=0.0)
-        return det
+    def compute_deterministic(self, z0=None, avail_mask=None) -> torch.Tensor:
+        """Return the FROZEN domain descriptors (no per-day quantile)."""
+        return self.domain_det
 
-    def forward(self, core_hidden: torch.Tensor, z0: torch.Tensor) -> tuple:
+    def forward(self, core_hidden: torch.Tensor) -> tuple:
         """Emit FiLM modulation (gamma, beta) for the core hidden states.
 
-        Args:
-            core_hidden: [B, H, d_core] encoded core representation
-            z0: [B, H] hyperbolic coordinates (for deterministic descriptors)
-        Returns:
-            (gamma [B,H,d_core], beta [B,H,d_core])
+        sig = cat([domain_det (frozen S1), learned_proj(core_hidden.mean) (per-day)]).
         """
         B, H, d = core_hidden.shape
-        det = self.compute_deterministic(z0)  # [B, d_det]
-        learned = self.learned_proj(core_hidden.mean(dim=1))  # [B, d_sig]
-        sig = torch.cat([det, learned], dim=1)  # [B, d_det + d_sig]
-        mod = self.mod_head(sig)  # [B, 2*d_core]
-        gamma = mod[:, :d].unsqueeze(1)  # [B, 1, d]
-        beta = mod[:, d:].unsqueeze(1)   # [B, 1, d]
+        det = self.domain_det.unsqueeze(0).expand(B, -1)      # [B, d_det] frozen
+        learned = self.learned_proj(core_hidden.mean(dim=1))  # [B, d_sig] per-day
+        sig = torch.cat([det, learned], dim=1)                # [B, d_det + d_sig]
+        mod = self.mod_head(sig)                              # [B, 2*d_core]
+        gamma = mod[:, :d].unsqueeze(1)                       # [B, 1, d]
+        beta = mod[:, d:].unsqueeze(1)                        # [B, 1, d]
         return gamma, beta
 
 
@@ -111,8 +123,7 @@ class CoreContextEncoder(nn.Module):
         Returns: [B, H, d_model] FiLM-modulated core representation.
         """
         h = self.proj(core_input)          # [B, H, d_model]
-        z0 = core_input[..., 0]            # extract z0 for descriptors
-        gamma, beta = self.signature(h, z0)
+        gamma, beta = self.signature(h)    # domain_det (frozen) + learned (per-day)
         h = gamma * h + beta               # FiLM modulation (P1-7)
         return self.norm(h)
 
