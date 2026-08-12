@@ -31,9 +31,19 @@ DEV = torch.device("cpu")
 
 def _to_device(batch):
     return DailyEpisodeBatch(
-        host_pred=batch.host_pred.to(DEV), target=batch.target.to(DEV),
-        exog=batch.exog.to(DEV), exog_mask=batch.exog_mask.to(DEV),
-        time_feat=batch.time_feat.to(DEV), date_ids=batch.date_ids,
+        host_raw=batch.host_raw.to(DEV),
+        host_model=batch.host_model.to(DEV),
+        target_raw=batch.target_raw.to(DEV) if batch.target_raw is not None else None,
+        target_model=batch.target_model.to(DEV) if batch.target_model is not None else None,
+        exog_value=batch.exog_value.to(DEV),
+        exog_type=batch.exog_type.to(DEV),
+        exog_mask=batch.exog_mask.to(DEV),
+        lag_context=batch.lag_context.to(DEV),
+        time_feat=batch.time_feat.to(DEV),
+        market_id=batch.market_id.to(DEV),
+        target_id=batch.target_id.to(DEV),
+        timestamps=batch.timestamps,
+        date_ids=batch.date_ids,
     )
 
 
@@ -55,8 +65,8 @@ def train_step(model, loader, cfg, s1_stats):
             batch = _to_device(batch)
             z, state = model.encode(batch)
             cand = model.biomc(z, state)
-            cl, _ = candidate_loss_fn(cand, batch.target, batch.host_pred, cfg)
-            s_tgt = compute_state_targets(batch.target, s1_stats["cdf"],
+            cl, _ = candidate_loss_fn(cand, batch.target_model, batch.host_model, cfg)
+            s_tgt = compute_state_targets(batch.target_model, s1_stats["cdf"],
                                           s1_stats["median"], s1_stats["mad"]).to(DEV)
             sl = state_loss_fn(state, s_tgt)
             loss = cl + cfg.state_loss_weight * sl
@@ -88,8 +98,8 @@ def build_memory_s3(model, s3_loader, s1_stats):
             cand = model.biomc(z, state)
             dd = cand["delta_down"].squeeze(-1)
             du = cand["delta_up"].squeeze(-1)
-            yh = batch.host_pred.squeeze(-1)
-            yt = batch.target.squeeze(-1)
+            yh = batch.host_model.squeeze(-1)
+            yt = batch.target_model.squeeze(-1)
             gain = compute_action_gain(yt, yh, yh + dd, yh + du)
             k = model.memory.encode_key(z, state, dd, du)
             keys.append(k.cpu())
@@ -176,15 +186,15 @@ def run_one(ds_key, bb_name, seed=0):
     hch_pred_z = np.concatenate(all_yf)
     hch_pred = hch_pred_z * p_std + p_mean
 
-    # map back to manifest hours (trim to manifest length)
     n_manifest = manifest.n_hours
-    if len(hch_pred) > n_manifest:
-        hch_pred = hch_pred[-n_manifest:]
-    elif len(hch_pred) < n_manifest:
-        hch_pred = np.pad(hch_pred, (n_manifest - len(hch_pred), 0), constant_values=np.nan)
+    if len(hch_pred) != n_manifest:
+        raise RuntimeError(
+            f"S4 prediction count {len(hch_pred)} != manifest {n_manifest}. "
+            f"Method output must be keyed, not trim-padded."
+        )
 
-    touch = float((np.abs(hch_pred - y_s4_host) > 1e-6).mean()) if n_manifest else 0
-    harm = float((np.abs(hch_pred - y_s4_truth) > np.abs(y_s4_host - y_s4_truth)).mean()) if n_manifest else 0
+    touch = float((np.abs(hch_pred - y_s4_host) > 1e-6).mean())
+    harm = float((np.abs(hch_pred - y_s4_truth) > np.abs(y_s4_host - y_s4_truth)).mean())
 
     hch_r = {"method": "HCHv2",
              **evaluate_on_manifest(y_s4_truth, hch_pred, manifest, neg_thr, spike_thr),
@@ -194,8 +204,6 @@ def run_one(ds_key, bb_name, seed=0):
 
     if all_act:
         acts = np.concatenate(all_act)
-        if len(acts) > n_manifest:
-            acts = acts[-n_manifest:]
         hch_r["action_id"] = float((acts == 0).mean())
         hch_r["action_down"] = float((acts == 1).mean())
         hch_r["action_up"] = float((acts == 2).mean())

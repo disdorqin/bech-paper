@@ -97,12 +97,25 @@ def _():
 def _():
     cfg = HCHV2Config(d_model=32, epochs=1)
     m = HCHV2(cfg)
-    b = DailyEpisodeBatch(torch.randn(2,24,1), torch.randn(2,24,1),
-                          torch.zeros(2,24,1,3), torch.ones(2,24,1),
-                          torch.randn(2,24,7), ["d1","d2"])
+    B = 2
+    b = DailyEpisodeBatch(
+        host_raw=torch.randn(B, 24, 1),
+        host_model=torch.randn(B, 24, 1),
+        target_raw=torch.randn(B, 24, 1),
+        target_model=torch.randn(B, 24, 1),
+        exog_value=torch.zeros(B, 24, 1, 3),
+        exog_type=torch.zeros(B, 24, 1),
+        exog_mask=torch.ones(B, 24, 1),
+        lag_context=torch.randn(B, 24, 5),
+        time_feat=torch.randn(B, 24, 7),
+        market_id=torch.zeros(B, dtype=torch.long),
+        target_id=torch.zeros(B, dtype=torch.long),
+        timestamps=[],
+        date_ids=["d1", "d2"],
+    )
     z, s = m.encode(b)
     cand = m.biomc(z, s)
-    cl, _ = candidate_loss_fn(cand, b.target, b.host_pred, cfg)
+    cl, _ = candidate_loss_fn(cand, b.target_model, b.host_model, cfg)
     sl = state_loss_fn(s, torch.zeros_like(s))
     (cl + 0.5 * sl).backward()
     sg = sum(p.grad.norm().item() for n, p in m.named_parameters() if "state_head" in n and p.grad is not None)
@@ -113,9 +126,22 @@ def _():
     torch.manual_seed(0)
     cfg = HCHV2Config(d_model=32)
     m = HCHV2(cfg).eval()
-    b = DailyEpisodeBatch(torch.randn(2,24,1), torch.randn(2,24,1),
-                          torch.zeros(2,24,1,3), torch.ones(2,24,1),
-                          torch.randn(2,24,7), ["d1","d2"])
+    B = 2
+    b = DailyEpisodeBatch(
+        host_raw=torch.randn(B, 24, 1),
+        host_model=torch.randn(B, 24, 1),
+        target_raw=torch.randn(B, 24, 1),
+        target_model=torch.randn(B, 24, 1),
+        exog_value=torch.zeros(B, 24, 1, 3),
+        exog_type=torch.zeros(B, 24, 1),
+        exog_mask=torch.ones(B, 24, 1),
+        lag_context=torch.randn(B, 24, 5),
+        time_feat=torch.randn(B, 24, 7),
+        market_id=torch.zeros(B, dtype=torch.long),
+        target_id=torch.zeros(B, dtype=torch.long),
+        timestamps=[],
+        date_ids=["d1", "d2"],
+    )
     with torch.no_grad():
         z, s0 = m.encode(b)
         c0 = m.biomc(z, s0)
@@ -162,9 +188,22 @@ def _():
 def _():
     cfg = HCHV2Config(d_model=32)
     m = HCHV2(cfg).eval()
-    b = DailyEpisodeBatch(torch.randn(2,24,1), torch.randn(2,24,1),
-                          torch.zeros(2,24,1,3), torch.ones(2,24,1),
-                          torch.randn(2,24,7), ["d1","d2"])
+    B = 2
+    b = DailyEpisodeBatch(
+        host_raw=torch.randn(B, 24, 1),
+        host_model=torch.randn(B, 24, 1),
+        target_raw=torch.randn(B, 24, 1),
+        target_model=torch.randn(B, 24, 1),
+        exog_value=torch.zeros(B, 24, 1, 3),
+        exog_type=torch.zeros(B, 24, 1),
+        exog_mask=torch.ones(B, 24, 1),
+        lag_context=torch.randn(B, 24, 5),
+        time_feat=torch.randn(B, 24, 7),
+        market_id=torch.zeros(B, dtype=torch.long),
+        target_id=torch.zeros(B, dtype=torch.long),
+        timestamps=[],
+        date_ids=["d1", "d2"],
+    )
     with torch.no_grad():
         o = m(b)
     assert "y_base" in o and "y_down" in o and "y_up" in o
@@ -204,9 +243,22 @@ def _():
 @test("18 predict_s4 no y_true in output")
 def _():
     m = HCHV2(HCHV2Config(d_model=32)).eval()
-    b = DailyEpisodeBatch(torch.randn(2,24,1), torch.randn(2,24,1),
-                          torch.zeros(2,24,1,3), torch.ones(2,24,1),
-                          torch.randn(2,24,7), ["d1","d2"])
+    B = 2
+    b = DailyEpisodeBatch(
+        host_raw=torch.randn(B, 24, 1),
+        host_model=torch.randn(B, 24, 1),
+        target_raw=None,
+        target_model=None,
+        exog_value=torch.zeros(B, 24, 1, 3),
+        exog_type=torch.zeros(B, 24, 1),
+        exog_mask=torch.ones(B, 24, 1),
+        lag_context=torch.randn(B, 24, 5),
+        time_feat=torch.randn(B, 24, 7),
+        market_id=torch.zeros(B, dtype=torch.long),
+        target_id=torch.zeros(B, dtype=torch.long),
+        timestamps=[],
+        date_ids=["d1", "d2"],
+    )
     with torch.no_grad():
         o = m(b)
     assert "y_final" in o

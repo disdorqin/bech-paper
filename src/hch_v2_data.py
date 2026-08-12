@@ -196,8 +196,8 @@ class DailyEpisodeDataset(Dataset):
             exog_mask=torch.tensor(exog_mask, dtype=torch.float32),
             lag_context=torch.tensor(lag_ctx, dtype=torch.float32),
             time_feat=torch.tensor(time_feat, dtype=torch.float32),
-            market_id=torch.tensor([self.market_id] * 24, dtype=torch.long),
-            target_id=torch.tensor([self.target_id] * 24, dtype=torch.long),
+            market_id=torch.tensor([self.market_id], dtype=torch.long),
+            target_id=torch.tensor([self.target_id], dtype=torch.long),
             timestamps=self._date_timestamps.get(d, []),
             date_ids=d,
         )
@@ -280,8 +280,8 @@ def collate_daily(batches: list[DailyEpisodeBatch]) -> DailyEpisodeBatch:
         exog_mask=pad_exog("exog_mask"),
         lag_context=torch.stack([b.lag_context for b in batches]),
         time_feat=torch.stack([b.time_feat for b in batches]),
-        market_id=torch.stack([b.market_id[:1].expand(24) for b in batches]),
-        target_id=torch.stack([b.target_id[:1].expand(24) for b in batches]),
+        market_id=torch.stack([b.market_id[:1] for b in batches]),
+        target_id=torch.stack([b.target_id[:1] for b in batches]),
         timestamps=[b.timestamps for b in batches],
         date_ids=[b.date_ids for b in batches],
     )

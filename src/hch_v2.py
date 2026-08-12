@@ -456,13 +456,14 @@ class HCHV2(nn.Module):
         self.built = False
 
     def encode(self, batch):
-        h = self.tok_enc(batch.host_pred, batch.time_feat, batch.exog, batch.exog_mask)
+        h = self.tok_enc(batch.host_model, batch.time_feat,
+                         batch.exog_value, batch.exog_mask, batch.exog_type)
         z = self.day_enc(h)
         state = self.state_head(z)
         return z, state
 
     def forward(self, batch):
-        yhat = batch.host_pred.squeeze(-1)  # [B, H]
+        yhat = batch.host_model.squeeze(-1)  # [B, H] normalized host prediction
         z, state = self.encode(batch)
         cand = self.biomc(z, state)
 
@@ -533,8 +534,8 @@ class HCHV2(nn.Module):
                 cand = self.biomc(z, state)
                 dd = cand["delta_down"].squeeze(-1)
                 du = cand["delta_up"].squeeze(-1)
-                yh = batch.host_pred.squeeze(-1)
-                yt = batch.target.squeeze(-1)
+                yh = batch.host_model.squeeze(-1)
+                yt = batch.target_model.squeeze(-1)
                 gain = compute_action_gain(yt, yh, yh + dd, yh + du)
                 k_raw = self.memory.encode_raw(z, state, dd, du)
                 all_keys.append(k_raw.cpu())
@@ -605,7 +606,17 @@ class HCHV2(nn.Module):
 def _to_device(batch):
     from hch_v2_data import DailyEpisodeBatch
     return DailyEpisodeBatch(
-        host_pred=batch.host_pred, target=batch.target,
-        exog=batch.exog, exog_mask=batch.exog_mask,
-        time_feat=batch.time_feat, date_ids=batch.date_ids,
+        host_raw=batch.host_raw,
+        host_model=batch.host_model,
+        target_raw=batch.target_raw,
+        target_model=batch.target_model,
+        exog_value=batch.exog_value,
+        exog_type=batch.exog_type,
+        exog_mask=batch.exog_mask,
+        lag_context=batch.lag_context,
+        time_feat=batch.time_feat,
+        market_id=batch.market_id,
+        target_id=batch.target_id,
+        timestamps=batch.timestamps,
+        date_ids=batch.date_ids,
     )
