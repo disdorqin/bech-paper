@@ -42,27 +42,35 @@ class ExperimentManifest:
     valid_indices: np.ndarray
     valid_to_raw: np.ndarray
     split_hash: str = ""
+    s3_m_dates: set = field(default_factory=set)
+    s3_c_dates: set = field(default_factory=set)
+    excluded_dates: dict = field(default_factory=dict)
 
     @staticmethod
     def from_dataset(ds: dict, valid: np.ndarray, dataset_id: str = "",
-                     frac=(0.50, 0.20, 0.10, 0.20)) -> "ExperimentManifest":
+                     frac=(0.50, 0.20, 0.10, 0.20),
+                     s3m_frac: float = 0.50) -> "ExperimentManifest":
         """Build from raw dataset dict + valid index array.
 
         1. Extract all unique calendar dates from ts.
-        2. Exclude 23/25h dates.
+        2. Exclude 23/25h dates (recorded in excluded_dates).
         3. Split complete dates S1/S2/S3/S4 chronologically.
-        4. Map each raw index to its date and split.
-        5. Compute split hash.
+        4. Nest-split S3 into S3-M (memory prefix) and S3-C (calibration suffix).
+        5. Map each raw index to its date and split.
+        6. Compute split hash (includes nested S3 split).
         """
         ts = ds["ts"]
         n_total = len(ts)
 
         # Step 1-2: unique dates, exclude non-24h
         all_dates = []
+        excluded = {}
         for d in pd.unique(ts.dt.date):
             n_h = (ts.dt.date == d).sum()
             if n_h == 24:
                 all_dates.append(d)
+            else:
+                excluded[str(d)] = int(n_h)
         all_dates = sorted(all_dates)
         date_strs = [str(d) for d in all_dates]
         n_dates = len(date_strs)
@@ -82,20 +90,30 @@ class ExperimentManifest:
             else:
                 split_of_date[d] = "S4"
 
-        # Step 4: map raw indices to dates
+        # Step 4: nested S3 -> S3-M (memory prefix) / S3-C (calibration suffix)
+        s3_dates = [d for d in date_strs if split_of_date[d] == "S3"]
+        n_s3 = len(s3_dates)
+        n_s3m = int(n_s3 * s3m_frac)
+        s3_m_dates = set(s3_dates[:n_s3m])
+        s3_c_dates = set(s3_dates[n_s3m:])
+
+        # Step 5: map raw indices to dates
         raw_to_date = np.full(n_total, -1, dtype=np.int32)
         date_to_idx = {d: i for i, d in enumerate(date_strs)}
         for i in range(n_total):
             d_str = str(ts.iloc[i].date())
             raw_to_date[i] = date_to_idx.get(d_str, -1)
 
-        # Step 5: split hash
+        # Step 6: split hash (includes nested S3 split)
         h = hashlib.sha256()
         h.update(dataset_id.encode())
         h.update(json.dumps({d: split_of_date.get(d, "?") for d in date_strs}).encode())
+        h.update(json.dumps({
+            "s3m": sorted(s3_m_dates), "s3c": sorted(s3_c_dates),
+            "excluded": excluded,
+        }).encode())
         split_hash_val = h.hexdigest()[:16]
 
-        # valid mapping (for host_cache compatibility)
         valid_arr = np.asarray(valid, dtype=np.int64)
         valid_indices_arr = np.where(valid_arr)[0].astype(np.int64)
 
@@ -108,6 +126,9 @@ class ExperimentManifest:
             valid_indices=valid_indices_arr,
             valid_to_raw=valid_indices_arr,
             split_hash=split_hash_val,
+            s3_m_dates=s3_m_dates,
+            s3_c_dates=s3_c_dates,
+            excluded_dates=excluded,
         )
 
     def date_is(self, date_str: str, split: str) -> bool:
@@ -128,6 +149,26 @@ class ExperimentManifest:
 
     def dates_in_split(self, split: str) -> set:
         return {d for d, s in self.split_of_date.items() if s == split}
+
+    def dates_in_s3m(self) -> set:
+        return self.s3_m_dates
+
+    def dates_in_s3c(self) -> set:
+        return self.s3_c_dates
+
+    def assert_s3_disjoint(self) -> bool:
+        """Verify S1/S2/S3-M/S3-C/S4 are pairwise disjoint."""
+        s1 = self.dates_in_split("S1")
+        s2 = self.dates_in_split("S2")
+        s4 = self.dates_in_split("S4")
+        groups = {"S1": s1, "S2": s2, "S3-M": self.s3_m_dates,
+                  "S3-C": self.s3_c_dates, "S4": s4}
+        names = list(groups.keys())
+        for i in range(len(names)):
+            for j in range(i + 1, len(names)):
+                if groups[names[i]] & groups[names[j]]:
+                    return False
+        return True
 
     def build_s4_eval_manifest(self, yhat_full: np.ndarray) -> EvaluationManifest:
         """Build S4 evaluation manifest from this split authority.

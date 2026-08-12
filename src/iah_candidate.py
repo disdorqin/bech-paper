@@ -38,24 +38,43 @@ class IAHCandidateHead(nn.Module):
         self.mass_head = nn.Linear(d_hidden, 2)   # l_minus, l_plus
         self.shift_head = nn.Linear(d_hidden, 2)  # r_minus, r_plus
 
-    def _compute_scale(self, host_raw: torch.Tensor) -> torch.Tensor:
-        """s_d = mean(|host_raw|) over valid hours per day (Eq 2).
-        Returns s=0 for days with no finite host values.
+    def _compute_scale(self, host_raw: torch.Tensor,
+                       valid_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+        """s_d = mean(|host_raw|) over VALID AND FINITE hours per day (Eq 2).
+
+        Returns s=0 for days with no valid+finite host value (SCALE_UNIDENTIFIED).
         """
         host_abs = host_raw.squeeze(-1).abs()  # [B, H]
         finite_mask = torch.isfinite(host_abs)
-        valid_count = finite_mask.sum(dim=1).clamp(min=1)  # [B]
-        finite_sum = torch.where(finite_mask, host_abs,
+
+        if valid_mask is None:
+            eff_mask = finite_mask
+        else:
+            vm = valid_mask.to(host_raw.device)
+            if vm.dim() == 3:
+                vm = vm.squeeze(-1)  # [B, H]
+            eff_mask = finite_mask & (vm > 0.5)
+
+        valid_count = eff_mask.sum(dim=1)  # [B]
+        finite_sum = torch.where(eff_mask, host_abs,
                                  torch.zeros_like(host_abs)).sum(dim=1)  # [B]
-        return finite_sum / valid_count  # [B]
+        # If no valid+finite hour, s=0 (not 0/0). Avoid div-by-zero via masked divide.
+        s = torch.where(valid_count > 0, finite_sum / valid_count.clamp(min=1),
+                        torch.zeros_like(finite_sum))
+        return s
 
     def forward(self, host_raw: torch.Tensor, context: torch.Tensor,
                 valid_mask: Optional[torch.Tensor] = None):
         B, H, _ = host_raw.shape
-        s = self._compute_scale(host_raw)  # [B]
+        s = self._compute_scale(host_raw, valid_mask)  # [B]
 
-        # Check SCALE_UNIDENTIFIED
+        # SCALE_UNIDENTIFIED iff no valid+finite hour or s == 0
         scale_valid = (s > 0).float()  # [B]
+
+        # Implementation masking (NOT a modified scale definition): a dummy safe
+        # denominator only for the asinh/sinh computations. Its value can never
+        # change the mathematical output because scale-invalid days have their
+        # candidate output overwritten to Identity below.
         s_safe = s.clamp(min=1e-12)
 
         # Hyperbolic coordinates (float64 for asinh/sinh stability)

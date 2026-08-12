@@ -75,3 +75,97 @@ def verify_gain_bound(pi_query: np.ndarray, g: np.ndarray,
     g_valid = g[valid.astype(bool)]
     pi_valid = pi_query[valid.astype(bool)]
     return bool((np.abs(g_valid) <= np.abs(pi_valid) + 1e-10).all())
+
+
+def build_directional_gains(memory, neighbor_indices: list[int],
+                            m_minus_q: np.ndarray, m_plus_q: np.ndarray) -> dict:
+    """Estimate per-hour directional gains g_hat (Eq 23).
+
+    Replays the FULL Down dose (−m⁻_q) and FULL Up dose (+m⁺_q) on each
+    neighbor, then averages per hour.
+
+    Args:
+        memory: CAGMAtomMemory
+        neighbor_indices: retrieved neighbor indices
+        m_minus_q: [H] query Down dose
+        m_plus_q:  [H] query Up dose
+
+    Returns:
+        {"g_hat_down": [H], "g_hat_up": [H]}
+    """
+    H = len(m_minus_q)
+    g_down_accum = np.zeros(H, dtype=np.float64)
+    g_up_accum = np.zeros(H, dtype=np.float64)
+    n = 0
+
+    for idx in neighbor_indices:
+        z0_j = memory.z0[idx].astype(np.float64)
+        zY_j = memory.target_zY[idx].astype(np.float64)
+        valid_j = memory.valid_mask[idx].astype(bool)
+
+        # Full Down dose
+        r_down = replay_query_dose(z0_j, zY_j, -m_minus_q.astype(np.float64), valid_j)
+        # Full Up dose
+        r_up = replay_query_dose(z0_j, zY_j, m_plus_q.astype(np.float64), valid_j)
+
+        g_down_accum += r_down["g"]
+        g_up_accum += r_up["g"]
+        n += 1
+
+    if n == 0:
+        return {"g_hat_down": np.zeros(H), "g_hat_up": np.zeros(H)}
+
+    return {"g_hat_down": g_down_accum / n, "g_hat_up": g_up_accum / n}
+
+
+def form_final_pi(m_minus_q: np.ndarray, m_plus_q: np.ndarray,
+                  I_down, I_up) -> np.ndarray:
+    """Form final sparse action vector pi_q (Eq 26).
+
+    pi[h] = -m_minus[h] if h in I_down, +m_plus[h] if h in I_up, 0 otherwise.
+    """
+    H = len(m_minus_q)
+    pi = np.zeros(H, dtype=np.float64)
+    if I_down is not None:
+        l, r = I_down
+        for h in range(l, r + 1):
+            pi[h] = -m_minus_q[h]
+    if I_up is not None:
+        l, r = I_up
+        for h in range(l, r + 1):
+            pi[h] = m_plus_q[h]
+    return pi
+
+
+def full_replay_chain(memory, neighbor_indices, m_minus_q, m_plus_q,
+                      proposal_fn) -> dict:
+    """Complete replay chain (P0-5):
+
+    directional replay -> proposal -> final pi_q -> final replay -> A_hat_q
+
+    Args:
+        memory, neighbor_indices: as above
+        m_minus_q, m_plus_q: [H] query doses
+        proposal_fn: callable(g_hat_down, g_hat_up) -> double_event_proposal dict
+
+    Returns:
+        {"g_hat_down", "g_hat_up", "proposal", "pi_q",
+         "A_hat" (from final replay), "per_neighbor_A"}
+    """
+    gains = build_directional_gains(memory, neighbor_indices,
+                                    m_minus_q, m_plus_q)
+    proposal = proposal_fn(gains["g_hat_down"], gains["g_hat_up"])
+    pi_q = form_final_pi(m_minus_q, m_plus_q,
+                         proposal["I_down"], proposal["I_up"])
+
+    # Final replay with the final sparse pi_q (NOT pre-proposal directional gains)
+    value = estimate_action_value(memory, neighbor_indices, pi_q)
+
+    return {
+        "g_hat_down": gains["g_hat_down"],
+        "g_hat_up": gains["g_hat_up"],
+        "proposal": proposal,
+        "pi_q": pi_q,
+        "A_hat": value["A_hat"],
+        "per_neighbor_A": value["per_neighbor_A"],
+    }
