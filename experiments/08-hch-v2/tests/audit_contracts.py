@@ -50,7 +50,7 @@ def assert_true(cond, msg=""):
 
 @test("A01 scale edge-case: all-NaN host -> SCALE_UNIDENTIFIED")
 def _():
-    head = IAHCandidateHead(d_context=16)
+    head = IAHCandidateHead(d_core_context=16)
     host = torch.full((2, 24, 1), float("nan"))
     ctx = torch.randn(2, 24, 16)
     with torch.no_grad():
@@ -63,7 +63,7 @@ def _():
 
 @test("A02 scale edge-case: very small host -> nonzero s, finite z0")
 def _():
-    head = IAHCandidateHead(d_context=16)
+    head = IAHCandidateHead(d_core_context=16)
     host = torch.full((2, 24, 1), 1e-8)
     ctx = torch.randn(2, 24, 16)
     with torch.no_grad():
@@ -74,7 +74,7 @@ def _():
 
 @test("A03 asinh identity: z0(s*c) = asinh(c) independent of scale")
 def _():
-    head = IAHCandidateHead(d_context=16)
+    head = IAHCandidateHead(d_core_context=16)
     for c in [0.1, 1.0, 5.0, 100.0]:
         host = torch.full((1, 24, 1), c)
         ctx = torch.randn(1, 24, 16)
@@ -88,7 +88,7 @@ def _():
 
 @test("A04 ReLU zero shift: identity candidate == host exactly")
 def _():
-    head = IAHCandidateHead(d_context=16)
+    head = IAHCandidateHead(d_core_context=16)
     for p in head.shift_head.parameters():
         p.data.zero_()
     host = torch.tensor([[[30.0]], [[-5.0]], [[0.0]]]).repeat(1, 24, 1)
@@ -103,7 +103,7 @@ def _():
 
 @test("A05 loss gradient flows through mass and shift heads")
 def _():
-    head = IAHCandidateHead(d_context=16)
+    head = IAHCandidateHead(d_core_context=16)
     host = torch.randn(4, 24, 1) * 50 + 40
     target = host + torch.randn(4, 24, 1) * 20
     ctx = torch.randn(4, 24, 16)
@@ -330,7 +330,7 @@ def _():
 
 @test("A22 CRPS: loss >= 0 always")
 def _():
-    head = IAHCandidateHead(d_context=8)
+    head = IAHCandidateHead(d_core_context=8)
     for _ in range(30):
         host = torch.randn(4, 24, 1) * 50 + 40
         target = host + torch.randn(4, 24, 1) * 30
@@ -343,7 +343,7 @@ def _():
 
 @test("A23 CRPS: perfect prediction => loss = 0")
 def _():
-    head = IAHCandidateHead(d_context=8)
+    head = IAHCandidateHead(d_core_context=8)
     for p in head.parameters():
         p.data.zero_()
     host = torch.randn(2, 24, 1) * 30 + 50

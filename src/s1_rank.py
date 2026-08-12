@@ -44,6 +44,24 @@ class S1RankReference:
                 else:
                     self.per_hour_pools[h] = self.global_pool
 
+    def freeze(self) -> dict:
+        """Export full state (including per-hour pools and the use flag)."""
+        return {
+            "global_pool": self.global_pool,
+            "per_hour_pools": {int(k): v for k, v in self.per_hour_pools.items()},
+            "use_per_hour": self.use_per_hour,
+        }
+
+    @staticmethod
+    def from_frozen(state: dict) -> "S1RankReference":
+        """Rebuild from a frozen state, preserving per-hour pools."""
+        ref = S1RankReference.__new__(S1RankReference)
+        ref.global_pool = np.asarray(state["global_pool"], dtype=np.float64)
+        ref.per_hour_pools = {int(k): np.asarray(v, dtype=np.float64)
+                              for k, v in state.get("per_hour_pools", {}).items()}
+        ref.use_per_hour = bool(state.get("use_per_hour", False))
+        return ref
+
     def __call__(self, z0: np.ndarray,
                  hours: Optional[np.ndarray] = None) -> np.ndarray:
         """Compute continuous rank u ∈ [0,1] for each z0 value.

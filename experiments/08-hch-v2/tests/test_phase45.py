@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "src"))
 
 from dvg_calibrate import DGVSplitConformal
-from hch_v2 import require_not_legacy, LEGACY_UNTRAINED
+from _legacy.hch_v2 import require_not_legacy, LEGACY_UNTRAINED
 from eval_manifest import ExperimentManifest
 
 SEED = 0
@@ -141,7 +141,7 @@ def _():
 # ==================== Test 17: Bundle round-trip =============================
 @test("17 bundle round-trip consistent")
 def _():
-    from hch_v2 import HCHV2, HCHV2Config, HCHV2Bundle
+    from _legacy.hch_v2 import HCHV2, HCHV2Config, HCHV2Bundle
 
     m1 = HCHV2(HCHV2Config(d_model=32))
     # Add some calibration data

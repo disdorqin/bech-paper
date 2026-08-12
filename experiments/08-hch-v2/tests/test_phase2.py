@@ -44,7 +44,7 @@ def make_synthetic_day(head, host, ctx):
 @test("09 retrieval key does not depend on target")
 def _():
     torch.manual_seed(SEED)
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
 
     # Build memory with 5 synthetic days (only host+context matters, not target)
     memory = CAGMAtomMemory()

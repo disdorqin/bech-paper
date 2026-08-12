@@ -53,7 +53,7 @@ def _():
         s1_z0.append(np.arcsinh(s1_host[i] / max(s, 1e-12)).ravel())
     s1_z0 = np.concatenate(s1_z0)
 
-    pipe = HCHV2UniversalPipeline(d_context=8, d_hidden=32, alpha=0.10, k=3, seed=SEED)
+    pipe = HCHV2UniversalPipeline(d_core_context=8, d_model=32, alpha=0.10, k=3, seed=SEED)
     pipe.fit_s1_reference(s1_z0)
 
     # ---- S2: train candidate on synthetic S2 batches ----
@@ -101,12 +101,16 @@ def _():
     # select k
     pipe.k = 3
 
-    # ---- S3-C: calibrate ----
+    # ---- S3-C: calibrate (new interface: candidate + target_zY) ----
     s3c_days = []
     for i in range(10):
-        A_hat = float(np.random.randn() * 0.3)
-        A_true = A_hat - float(np.random.randn() * 0.2)
-        s3c_days.append({"A_hat": A_hat, "A_true": A_true})
+        host = torch.tensor(np.random.randn(1, H, 1) * 30 + 80, dtype=torch.float32)
+        ctx = make_context(host)
+        with torch.no_grad():
+            out = pipe.candidate_head(host, ctx)
+        s = float(out["s"][0])
+        zY = np.arcsinh((host[0].numpy() / max(s, 1e-12)))
+        s3c_days.append({"candidate": out, "target_zY": zY})
     q_info = pipe.calibrate_s3c(s3c_days)
     assert q_info["q"] != float("inf")
 
@@ -141,7 +145,7 @@ def _():
         assert not hasattr(p, legacy), f"pipeline exposes legacy symbol {legacy}"
 
     # Legacy guard must exist and be invocable
-    from hch_v2 import require_not_legacy
+    from _legacy.hch_v2 import require_not_legacy
     try:
         require_not_legacy("formal_test")
         assert False, "should raise"

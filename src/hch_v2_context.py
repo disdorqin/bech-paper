@@ -93,7 +93,11 @@ class DataSignature(nn.Module):
 
 # ============================ Core Context Encoder ===========================
 class CoreContextEncoder(nn.Module):
-    """Consumes scale-free core input (P1-4), NOT dataset z-score prices."""
+    """Consumes scale-free core input (P1-4), NOT dataset z-score prices.
+
+    core_input convention: dimension 0 is the host hyperbolic coordinate z0.
+    DataSignature deterministic descriptors are computed from this z0 channel.
+    """
 
     def __init__(self, d_core_in: int, d_model: int = 64, d_sig: int = 32):
         super().__init__()
@@ -102,14 +106,14 @@ class CoreContextEncoder(nn.Module):
         self.signature = DataSignature(d_model, d_det=8, d_sig=d_sig)
         self.norm = nn.LayerNorm(d_model)
 
-    def forward(self, core_input: torch.Tensor, z0: torch.Tensor) -> torch.Tensor:
-        """core_input: [B, H, d_core_in] (z0, u, time, lag_sf concatenated)
-        z0: [B, H] (for deterministic descriptors)
-        Returns: [B, H, d_model] modulated core representation.
+    def forward(self, core_input: torch.Tensor) -> torch.Tensor:
+        """core_input: [B, H, d_core_in], dimension 0 = z0.
+        Returns: [B, H, d_model] FiLM-modulated core representation.
         """
-        h = self.proj(core_input)  # [B, H, d_model]
+        h = self.proj(core_input)          # [B, H, d_model]
+        z0 = core_input[..., 0]            # extract z0 for descriptors
         gamma, beta = self.signature(h, z0)
-        h = gamma * h + beta          # FiLM modulation (P1-7)
+        h = gamma * h + beta               # FiLM modulation (P1-7)
         return self.norm(h)
 
 

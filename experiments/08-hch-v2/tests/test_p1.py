@@ -99,7 +99,8 @@ def _():
     enc = CoreContextEncoder(d_in, d_model)
     core = torch.randn(B, H, d_in)
     z0 = torch.randn(B, H)
-    out = enc(core, z0)
+    core[..., 0] = z0  # dimension 0 is z0 (CoreContextEncoder convention)
+    out = enc(core)
     assert out.shape == (B, H, d_model)
     assert torch.isfinite(out).all()
 

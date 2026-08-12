@@ -41,7 +41,7 @@ def test(name):
 @test("01 scale equivariance — z0/w/m invariant, raw action ×c")
 def _():
     torch.manual_seed(SEED)
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
     B, H = 2, 24
 
     # Create synthetic host and context
@@ -72,7 +72,7 @@ def _():
 @test("02 zero host → SCALE_UNIDENTIFIED → Identity")
 def _():
     torch.manual_seed(SEED)
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
     B, H = 2, 24
 
     host = torch.zeros(B, H, 1)
@@ -96,7 +96,7 @@ def _():
 @test("03 loss invariant to model scaler")
 def _():
     torch.manual_seed(SEED)
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
 
     host = torch.randn(2, 24, 1) * 50 + 100
     target = host + torch.randn(2, 24, 1) * 10
@@ -117,7 +117,7 @@ def _():
 @test("04 mass sums to 1, center logit is 0 (Eq 6)")
 def _():
     torch.manual_seed(SEED)
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
 
     host = torch.randn(2, 24, 1) * 50
     ctx = torch.randn(2, 24, 4)
@@ -138,7 +138,7 @@ def _():
 def _():
     torch.manual_seed(SEED)
     # Create a head where we can manually set shift_head to output zeros
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
 
     # Set shift_head weights to zero
     with torch.no_grad():
@@ -164,7 +164,7 @@ def _():
 @test("06 monotonicity: x_down ≤ x_identity ≤ x_up")
 def _():
     torch.manual_seed(SEED)
-    head = IAHCandidateHead(d_context=4, d_hidden=32).eval()
+    head = IAHCandidateHead(d_core_context=4, d_model=32).eval()
 
     host = torch.randn(4, 24, 1) * 50 + 100
     ctx = torch.randn(4, 24, 4)
