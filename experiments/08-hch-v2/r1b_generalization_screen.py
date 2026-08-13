@@ -235,12 +235,14 @@ def eval_domain(head: nn.Module, dom: EvalDomain, variant: str) -> dict:
     }
 
 
-def train_candidate(variant: str, train_domains: list[EvalDomain]) -> tuple[nn.Module, dict]:
-    torch.manual_seed(SEED)
-    np.random.seed(SEED)
+def train_candidate(variant: str, train_domains: list[EvalDomain],
+                    seed: int = SEED) -> tuple[nn.Module, dict]:
+    """Train a frozen candidate at a given RNG seed (Stage-2C varies seed)."""
+    torch.manual_seed(seed)
+    np.random.seed(seed)
     head = build_head(variant)
     domains = [domain_batches(d) for d in train_domains]
-    trainer = UniversalCoreTrainer(head, seed=SEED)
+    trainer = UniversalCoreTrainer(head, seed=seed)
     report = trainer.train(domains, epochs=EPOCHS, lr=LR, weight_decay=WD,
                            clip=CLIP, patience=PATIENCE)
     head.eval()

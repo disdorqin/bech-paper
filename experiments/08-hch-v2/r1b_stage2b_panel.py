@@ -315,7 +315,7 @@ def main():
 def _build_summary(config, cats, gaps, stops) -> list[str]:
     L = [f"R1B Stage-2B deep-host stress (LSTM/PatchTST) — summary",
          f"date: {config['date']}",
-         f"parent_stage2a: {config.get('parent_stage2a')}",
+         f"parent_stage2a_dir: {config.get('parent_stage2a_dir')}",
          f"git_sha: {config['provenance']['git_sha']} "
          f"(declared {config['provenance']['declared_source_commit']})",
          f"sha256(runner)={config['provenance']['sha256_runner'][:12]}",
