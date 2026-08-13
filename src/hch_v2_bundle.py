@@ -22,18 +22,25 @@ class HCHV2Bundle:
     A parameter-hash match alone is insufficient.
     """
 
-    # ---- Universal package (transferable) ----
+    # ---- Universal package (transferable, P1-3) ----
+    # Shared correction knowledge: core weights, architecture, config,
+    # optimizer/config hash, training code commit, S2T/S2V definition, seed.
     architecture_version: str = "v0.4"
     core_model_state: Optional[dict] = None
     core_config: Optional[dict] = None
-    data_signature_spec: Optional[dict] = None
     iah_coord_version: str = "asinh-v1"
     optional_params: Optional[dict] = None
-    training_provenance: dict = field(default_factory=dict)
-    source_datasets: list = field(default_factory=list)
-    source_hosts: list = field(default_factory=list)
+    training_provenance: dict = field(default_factory=dict)  # seed, opt hash,
+    #                                                          code commit,
+    #                                                          S2T/S2V def
+    source_datasets: list = field(default_factory=list)      # market manifest
+    source_hosts: list = field(default_factory=list)         # host manifest
+    universal_hash: str = ""
 
-    # ---- Local package (target-domain) ----
+    # ---- Local package (target-domain profile, P1-3) ----
+    # Non-transferable per-domain state: deterministic signature, S1 rank
+    # reference, CAGM memory, k, DVG, target/market metadata, split hash.
+    data_signature_spec: Optional[dict] = None
     s1_rank_ref: Optional[dict] = None
     atom_memory: Optional[dict] = None
     memory_dates: list = field(default_factory=list)
@@ -44,10 +51,11 @@ class HCHV2Bundle:
     dvg_alpha: Optional[float] = None
     dvg_errors: list = field(default_factory=list)
     dvg_q: Optional[float] = None
-    local_hashes: dict = field(default_factory=dict)
+    local_hashes: dict = field(default_factory=dict)  # split hash, target meta
     fallback_codes: dict = field(default_factory=dict)
+    local_hash: str = ""
 
-    # ---- Whole-bundle integrity ----
+    # ---- Whole-bundle integrity (round-trip verification only) ----
     bundle_hash: str = ""
 
     # ------------------------------------------------------------------
@@ -63,31 +71,32 @@ class HCHV2Bundle:
         else:
             self._h.update(repr(t).encode())
 
+    def _hash_of(self, *fields) -> str:
+        """Hash exactly the given fields in order (P1-3 package separation)."""
+        h = hashlib.sha256()
+        self._h = h
+        for f in fields:
+            self._hash_tensor(getattr(self, f))
+        return h.hexdigest()[:16]
+
     def compute_hash(self) -> str:
-        """Deep hash covering universal + local + calibration + split."""
-        self._h = hashlib.sha256()
-        self._hash_tensor(self.architecture_version)
-        self._hash_tensor(self.core_model_state)
-        self._hash_tensor(self.core_config)
-        self._hash_tensor(self.data_signature_spec)
-        self._hash_tensor(self.iah_coord_version)
-        self._hash_tensor(self.optional_params)
-        self._hash_tensor(self.training_provenance)
-        self._hash_tensor(self.source_datasets)
-        self._hash_tensor(self.source_hosts)
-        self._hash_tensor(self.s1_rank_ref)
-        self._hash_tensor(self.atom_memory)
-        self._hash_tensor(self.memory_dates)
-        self._hash_tensor(self.memory_timestamps)
-        self._hash_tensor(self.w1_version)
-        self._hash_tensor(self.frozen_k)
-        self._hash_tensor(self.proposal_version)
-        self._hash_tensor(self.dvg_alpha)
-        self._hash_tensor(self.dvg_errors)
-        self._hash_tensor(self.dvg_q)
-        self._hash_tensor(self.local_hashes)
-        self._hash_tensor(self.fallback_codes)
-        self.bundle_hash = self._h.hexdigest()[:16]
+        """Deep hash per package (P1-3) + whole-bundle round-trip hash."""
+        # Universal package: must be stable across local profiles.
+        self.universal_hash = self._hash_of(
+            "architecture_version", "core_model_state", "core_config",
+            "iah_coord_version", "optional_params", "training_provenance",
+            "source_datasets", "source_hosts")
+        # Local package: per-domain state + calibration + split.
+        self.local_hash = self._hash_of(
+            "data_signature_spec", "s1_rank_ref", "atom_memory",
+            "memory_dates", "memory_timestamps", "w1_version", "frozen_k",
+            "proposal_version", "dvg_alpha", "dvg_errors", "dvg_q",
+            "local_hashes", "fallback_codes")
+        # Whole bundle = universal + local (round-trip integrity).
+        h = hashlib.sha256()
+        h.update(self.universal_hash.encode())
+        h.update(self.local_hash.encode())
+        self.bundle_hash = h.hexdigest()[:16]
         return self.bundle_hash
 
     def hash(self) -> str:
@@ -100,12 +109,13 @@ class HCHV2Bundle:
             "architecture_version": self.architecture_version,
             "core_model_state": self.core_model_state,
             "core_config": self.core_config,
-            "data_signature_spec": self.data_signature_spec,
             "iah_coord_version": self.iah_coord_version,
             "optional_params": self.optional_params,
             "training_provenance": self.training_provenance,
             "source_datasets": self.source_datasets,
             "source_hosts": self.source_hosts,
+            "universal_hash": self.universal_hash,
+            "data_signature_spec": self.data_signature_spec,
             "s1_rank_ref": self.s1_rank_ref,
             "atom_memory": self.atom_memory,
             "memory_dates": self.memory_dates,
@@ -118,6 +128,7 @@ class HCHV2Bundle:
             "dvg_q": self.dvg_q,
             "local_hashes": self.local_hashes,
             "fallback_codes": self.fallback_codes,
+            "local_hash": self.local_hash,
             "bundle_hash": self.bundle_hash,
         }, path)
 
@@ -128,12 +139,13 @@ class HCHV2Bundle:
         b.architecture_version = data.get("architecture_version", "v0.4")
         b.core_model_state = data.get("core_model_state")
         b.core_config = data.get("core_config")
-        b.data_signature_spec = data.get("data_signature_spec")
         b.iah_coord_version = data.get("iah_coord_version", "asinh-v1")
         b.optional_params = data.get("optional_params")
         b.training_provenance = data.get("training_provenance", {})
         b.source_datasets = data.get("source_datasets", [])
         b.source_hosts = data.get("source_hosts", [])
+        b.universal_hash = data.get("universal_hash", "")
+        b.data_signature_spec = data.get("data_signature_spec")
         b.s1_rank_ref = data.get("s1_rank_ref")
         b.atom_memory = data.get("atom_memory")
         b.memory_dates = data.get("memory_dates", [])
@@ -146,26 +158,32 @@ class HCHV2Bundle:
         b.dvg_q = data.get("dvg_q")
         b.local_hashes = data.get("local_hashes", {})
         b.fallback_codes = data.get("fallback_codes", {})
+        b.local_hash = data.get("local_hash", "")
         b.bundle_hash = data.get("bundle_hash", "")
         return b
 
     def extract_universal(self) -> dict:
-        """Return the transferable universal sub-package."""
+        """Return the transferable universal sub-package (P1-3).
+
+        Does NOT include the deterministic signature — that lives in the local
+        profile. A universal checkpoint must be shareable across domains.
+        """
         return {
             "architecture_version": self.architecture_version,
             "core_model_state": self.core_model_state,
             "core_config": self.core_config,
-            "data_signature_spec": self.data_signature_spec,
             "iah_coord_version": self.iah_coord_version,
             "optional_params": self.optional_params,
             "training_provenance": self.training_provenance,
             "source_datasets": self.source_datasets,
             "source_hosts": self.source_hosts,
+            "universal_hash": self.universal_hash,
         }
 
     def extract_local(self) -> dict:
-        """Return the target-domain local sub-package."""
+        """Return the target-domain local sub-package (P1-3)."""
         return {
+            "data_signature_spec": self.data_signature_spec,
             "s1_rank_ref": self.s1_rank_ref,
             "atom_memory": self.atom_memory,
             "memory_dates": self.memory_dates,
@@ -178,4 +196,5 @@ class HCHV2Bundle:
             "dvg_q": self.dvg_q,
             "local_hashes": self.local_hashes,
             "fallback_codes": self.fallback_codes,
+            "local_hash": self.local_hash,
         }

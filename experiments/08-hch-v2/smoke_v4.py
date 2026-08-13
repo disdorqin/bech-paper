@@ -134,17 +134,17 @@ def run(dataset_key="LAGO_DE", backbone="Linear", seed=0,
                                           s3m_frac=s3m_frac)
     assert exp.assert_s3_disjoint()
 
-    # frozen Linear backbone on S1
+    # frozen Linear backbone on H0 only (P0-2: S1R must stay out-of-sample)
     bb = make_backbone(backbone, seed=seed)
-    bb.fit(X[exp.valid_row_in_split("S1")], y[exp.valid_row_in_split("S1")])
+    bb.fit(X[exp.valid_row_in_split("H0")], y[exp.valid_row_in_split("H0")])
     yhat_valid = bb.predict(X).astype(np.float32)
     yhat_full = np.full(len(y_full), np.nan, dtype=np.float32)
     yhat_full[valid] = yhat_valid
 
-    # scale-free precompute + S1 rank reference
+    # scale-free precompute + S1 rank reference (S1R only, P0-2: OOS host)
     z0_full, s_full = precompute_scale_free(yhat_full, ts)
     s1_z0, s1_hours = [], []
-    for d in exp.dates_in_split("S1"):
+    for d in exp.dates_in_split("S1R"):
         idxs = np.where((ts.dt.date == pd_date(d)).values)[0]
         if len(idxs) != 24:
             continue
@@ -159,26 +159,43 @@ def run(dataset_key="LAGO_DE", backbone="Linear", seed=0,
     pipe.fit_s1_reference(s1_z0, s1_hours)
     pipe.fit_s1_signature(s1_z0, s1_hours)
 
-    # ---- S2 training ----
-    s2_batches = []
-    for d in sorted(exp.dates_in_split("S2")):
-        idxs = np.where((ts.dt.date == pd_date(d)).values)[0]
-        if len(idxs) != 24:
-            continue
-        host_day = yhat_full[idxs].astype(np.float64)
-        if not np.isfinite(host_day).all():
-            continue
-        hours = ts.iloc[idxs].dt.hour.values
-        ctx = build_core_context(host_day, hours, pipe, z0_full, s_full, y_full, idxs)
-        s2_batches.append((
-            torch.tensor(host_day.reshape(1, 24, 1), dtype=torch.float32),
-            torch.tensor(ctx.reshape(1, 24, -1), dtype=torch.float32),
-            torch.tensor(y_full[idxs].astype(np.float64).reshape(1, 24, 1),
-                         dtype=torch.float32),
-            torch.ones(1, 24),
-        ))
-    loss = pipe.train_candidate_s2(s2_batches, epochs=8, lr=1e-3, patience=4)
-    print(f"S2 training loss: {loss:.4f}")
+    # ---- S2 training (S2T) + S2V checkpoint selection (P0-3) ----
+    # G0-1: pass the frozen S1R descriptor as an explicit forward context
+    # (domain_det 5-tuple), never rely on a mutable buffer, even single-domain.
+    det_broadcast = None
+    if pipe._domain_det is not None:
+        det_b = torch.tensor(np.asarray(pipe._domain_det, dtype=np.float32),
+                             dtype=torch.float32).unsqueeze(0)
+        det_broadcast = det_b  # expanded per-batch below
+
+    def _s2_batches_for(split):
+        batches = []
+        for d in sorted(exp.dates_in_split(split)):
+            idxs = np.where((ts.dt.date == pd_date(d)).values)[0]
+            if len(idxs) != 24:
+                continue
+            host_day = yhat_full[idxs].astype(np.float64)
+            if not np.isfinite(host_day).all():
+                continue
+            hours = ts.iloc[idxs].dt.hour.values
+            ctx = build_core_context(host_day, hours, pipe, z0_full, s_full,
+                                     y_full, idxs)
+            batches.append((
+                torch.tensor(host_day.reshape(1, 24, 1), dtype=torch.float32),
+                torch.tensor(ctx.reshape(1, 24, -1), dtype=torch.float32),
+                torch.tensor(y_full[idxs].astype(np.float64).reshape(1, 24, 1),
+                             dtype=torch.float32),
+                torch.ones(1, 24),
+                det_broadcast.clone(),  # [1, d_det] explicit context (G0-1)
+            ))
+        return batches
+
+    s2_batches = _s2_batches_for("S2T")
+    s2v_batches = _s2_batches_for("S2V")
+    loss = pipe.train_candidate_s2(s2_batches, s2v_batches=s2v_batches,
+                                   epochs=8, lr=1e-3, patience=4)
+    print(f"S2 checkpoint (S2V-selected): {loss:.4f} "
+          f"({len(s2v_batches)} validation days)")
 
     # ---- S3-M: memory prefix + k-validation suffix ----
     s3m_all = sorted(exp.dates_in_s3m())
@@ -234,7 +251,15 @@ def run(dataset_key="LAGO_DE", backbone="Linear", seed=0,
     if s4_hosts:
         batch_host = torch.tensor(np.stack(s4_hosts), dtype=torch.float32)
         batch_ctx = torch.tensor(np.stack(s4_ctxs), dtype=torch.float32)
-        ev = pipe2.predict_s4(batch_host, batch_ctx)
+        # explicit per-domain signature context (P0-1): broadcast the S1R
+        # frozen descriptor to every S4 day in this single-domain smoke.
+        det = pipe2._domain_det
+        domain_det = None
+        if det is not None:
+            det_t = torch.tensor(np.asarray(det, dtype=np.float32),
+                                 dtype=torch.float32)
+            domain_det = det_t.unsqueeze(0).expand(len(s4_hosts), -1)
+        ev = pipe2.predict_s4(batch_host, batch_ctx, domain_det=domain_det)
     else:
         ev = {"final_action": [], "candidate": None}
 

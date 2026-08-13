@@ -50,6 +50,14 @@ class IAHCandidateHead(nn.Module):
                                  if d_value > 0 else None)
         self.mass_head = nn.Linear(d_model, 2)   # l_minus, l_plus
         self.shift_head = nn.Linear(d_model, 2)  # r_minus, r_plus
+        # Atom-collapse guard (verified on LAGO_DE S2): default PyTorch init
+        # (bias=0) leaves the raw pre-activations r- / r+ in the ReLU dead
+        # zone, so m-=m+=0 forever and the candidate degenerates to Identity
+        # (execute_rate=0). A positive bias keeps both ReLU displacement
+        # channels alive at init so the IAH-CRPS gradient (Eq 10) can move m.
+        # weight*0.05 keeps the initial output bias-dominated.
+        nn.init.constant_(self.shift_head.bias, 0.5)
+        self.shift_head.weight.data.mul_(0.05)
 
     def _compute_scale(self, host_raw: torch.Tensor,
                        valid_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
@@ -72,10 +80,13 @@ class IAHCandidateHead(nn.Module):
 
     def forward(self, host_raw: torch.Tensor, core_context: torch.Tensor,
                 valid_mask: Optional[torch.Tensor] = None,
+                domain_det: Optional[torch.Tensor] = None,
                 optional_values: Optional[torch.Tensor] = None,
                 optional_roles: Optional[torch.Tensor] = None,
                 optional_masks: Optional[torch.Tensor] = None) -> dict:
         """host_raw: [B,H,1] raw prices; core_context: [B,H,d_core_context].
+        domain_det: [B,d_det] per-batch Data Signature descriptors (P0-1);
+            None => single-domain frozen buffer.
         optional_*: [B,H,N,F]/[B,H,N] covariate tensors (may be None).
         """
         B, H, _ = host_raw.shape
@@ -95,8 +106,8 @@ class IAHCandidateHead(nn.Module):
         # ---- core input = [z0, core_context] ----
         core_input = torch.cat([z0.unsqueeze(-1), core_context], dim=-1)  # [B,H,D+1]
 
-        # ---- core encoding + DataSignature FiLM ----
-        h_core = self.core_encoder(core_input)  # [B,H,d_model]
+        # ---- core encoding + DataSignature FiLM (P0-1: domain_det context) ----
+        h_core = self.core_encoder(core_input, domain_det)  # [B,H,d_model]
 
         # ---- optional residual (zero-init) ----
         if self.optional_encoder is not None and optional_values is not None:

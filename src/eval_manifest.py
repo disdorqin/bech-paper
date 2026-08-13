@@ -21,6 +21,19 @@ from dataclasses import dataclass, field
 # P1-9: day-length policy is explicit. 23/25-hour days are excluded and recorded.
 DAY_LENGTH_PROTOCOL = "COMPLETE_24H_ONLY"
 
+# P0-2 (master plan §1.2 / protocol §5): chronological host/reference split.
+# Fractions are date-first over COMPLETE days:  H0 40% | S1R 10% | S2T 16% |
+# S2V 4% | S3M 5% | S3C 5% | S4 20%.
+#   H0  fit frozen host only (reads target)
+#   S1R OOS host predictions; builds S1 rank reference + Data Signature only
+#   S2T candidate training (reads target)
+#   S2V candidate validation / checkpoint selection (no gradient)
+#   S3M target-local atom memory
+#   S3C target-local DVG calibration
+#   S4  untouched test
+SPLIT_7 = ("H0", "S1R", "S2T", "S2V", "S3M", "S3C", "S4")
+FRAC_7 = (0.40, 0.10, 0.16, 0.04, 0.05, 0.05, 0.20)
+
 
 @dataclass
 class ExperimentManifest:
@@ -49,19 +62,24 @@ class ExperimentManifest:
     s3_c_dates: set = field(default_factory=set)
     excluded_dates: dict = field(default_factory=dict)
     raw_to_valid_row: dict = field(default_factory=dict)
+    # protocol §5: no-silent-deletion accounting
+    n_original_hours: int = 0
+    n_excluded_dates: int = 0
 
     @staticmethod
     def from_dataset(ds: dict, valid: np.ndarray, dataset_id: str = "",
-                     frac=(0.50, 0.20, 0.10, 0.20),
+                     frac=FRAC_7, s7: bool = True,
                      s3m_frac: float = 0.50) -> "ExperimentManifest":
         """Build from raw dataset dict + valid index array.
 
         1. Extract all unique calendar dates from ts.
         2. Exclude 23/25h dates (recorded in excluded_dates).
-        3. Split complete dates S1/S2/S3/S4 chronologically.
-        4. Nest-split S3 into S3-M (memory prefix) and S3-C (calibration suffix).
-        5. Map each raw index to its date and split.
-        6. Compute split hash (includes nested S3 split).
+        3. Split complete dates chronologically.
+           s7=True  -> 7-segment H0/S1R/S2T/S2V/S3M/S3C/S4 (P0-2, default).
+           s7=False -> legacy 4-segment S1/S2/S3/S4 + nested S3-M/S3-C
+                       (kept so historical experiments keep passing).
+        4. Map each raw index to its date and split.
+        5. Compute split hash (includes all segment boundaries + excluded counts).
         """
         ts = ds["ts"]
         n_total = len(ts)
@@ -79,43 +97,49 @@ class ExperimentManifest:
         date_strs = [str(d) for d in all_dates]
         n_dates = len(date_strs)
 
-        # Step 3: split dates chronologically
-        a = int(n_dates * frac[0])
-        b = a + int(n_dates * frac[1])
-        c = b + int(n_dates * frac[2])
+        # Step 3: chronological date split.
+        # Use float rounding so segment sizes sum to n_dates exactly.
+        if s7:
+            labels = list(SPLIT_7)
+            f = list(frac) if len(frac) == 7 else list(FRAC_7)
+        else:
+            labels = ["S1", "S2", "S3", "S4"]
+            f = list(frac) if len(frac) == 4 else [0.50, 0.20, 0.10, 0.20]
+        cum = np.cumsum(f)
+        counts = [int(round(n_dates * c)) for c in cum]
+        # last segment takes the remainder so totals match exactly
+        counts[-1] = n_dates - sum(counts[:-1])
+        bounds = np.concatenate([[0], counts])
         split_of_date = {}
         for i, d in enumerate(date_strs):
-            if i < a:
-                split_of_date[d] = "S1"
-            elif i < b:
-                split_of_date[d] = "S2"
-            elif i < c:
-                split_of_date[d] = "S3"
-            else:
-                split_of_date[d] = "S4"
+            seg = int(np.searchsorted(bounds, i, side="right") - 1)
+            split_of_date[d] = labels[min(seg, len(labels) - 1)]
 
-        # Step 4: nested S3 -> S3-M (memory prefix) / S3-C (calibration suffix)
-        s3_dates = [d for d in date_strs if split_of_date[d] == "S3"]
-        n_s3 = len(s3_dates)
-        n_s3m = int(n_s3 * s3m_frac)
-        s3_m_dates = set(s3_dates[:n_s3m])
-        s3_c_dates = set(s3_dates[n_s3m:])
+        # Legacy-compatible aggregate view: S1 = H0+S1R, S2 = S2T+S2V,
+        # S3 = S3M+S3C, S4 unchanged. Used only when s7=False is bypassed via
+        # split_of_date_4 below; consumers of the 7-way split read directly.
+        s3_m_dates = {d for d in date_strs if split_of_date[d] == "S3M"}
+        s3_c_dates = {d for d in date_strs if split_of_date[d] == "S3C"}
+        # If caller explicitly used the legacy 4-way (s7=False), nest S3.
+        if not s7:
+            s3_dates = [d for d in date_strs if split_of_date[d] == "S3"]
+            n_s3 = len(s3_dates)
+            n_s3m = int(n_s3 * s3m_frac)
+            s3_m_dates = set(s3_dates[:n_s3m])
+            s3_c_dates = set(s3_dates[n_s3m:])
 
-        # Step 5: map raw indices to dates
+        # Step 4: map raw indices to dates
         raw_to_date = np.full(n_total, -1, dtype=np.int32)
         date_to_idx = {d: i for i, d in enumerate(date_strs)}
         for i in range(n_total):
             d_str = str(ts.iloc[i].date())
             raw_to_date[i] = date_to_idx.get(d_str, -1)
 
-        # Step 6: split hash (includes nested S3 split)
+        # Step 5: split hash (segment assignment + excluded counts)
         h = hashlib.sha256()
         h.update(dataset_id.encode())
         h.update(json.dumps({d: split_of_date.get(d, "?") for d in date_strs}).encode())
-        h.update(json.dumps({
-            "s3m": sorted(s3_m_dates), "s3c": sorted(s3_c_dates),
-            "excluded": excluded,
-        }).encode())
+        h.update(json.dumps({"excluded": excluded}).encode())
         split_hash_val = h.hexdigest()[:16]
 
         # valid is an ARRAY of raw indices (build_tabular contract), not a bool mask
@@ -137,6 +161,8 @@ class ExperimentManifest:
             s3_c_dates=s3_c_dates,
             excluded_dates=excluded,
             raw_to_valid_row=raw_to_valid_row,
+            n_original_hours=int(n_total),
+            n_excluded_dates=int(len(excluded)),
         )
 
     def date_is(self, date_str: str, split: str) -> bool:
@@ -151,7 +177,14 @@ class ExperimentManifest:
         return self.split_of_date.get(self.dates[di]) == split
 
     def valid_indices_in_split(self, split: str) -> np.ndarray:
-        """Valid-hour RAW indices belonging to the given split."""
+        """Valid-hour RAW indices in a split.
+
+        split is a 7-way segment (H0/S1R/S2T/S2V/S3M/S3C/S4) or a legacy
+        4-way aggregate (S1/S2/S3/S4). S1 => H0+S1R, S2 => S2T+S2V, S3 =>
+        S3M+S3C, S4 unchanged.
+        """
+        if split in ("S1", "S2", "S3", "S4"):
+            return self.valid_indices_in_seg4_split(split)
         mask = np.array([self.raw_idx_is(vi, split) for vi in self.valid_indices])
         return self.valid_indices[mask]
 
@@ -161,6 +194,9 @@ class ExperimentManifest:
         return np.array([self.raw_to_valid_row[int(r)] for r in raw], dtype=np.int64)
 
     def dates_in_split(self, split: str) -> set:
+        """Dates in a 7-way segment, or the union of a legacy 4-way group."""
+        if split in ("S1", "S2", "S3", "S4"):
+            return self._seg7(split)
         return {d for d, s in self.split_of_date.items() if s == split}
 
     def dates_in_s3m(self) -> set:
@@ -169,19 +205,80 @@ class ExperimentManifest:
     def dates_in_s3c(self) -> set:
         return self.s3_c_dates
 
+    # ---- P0-2 aggregate view: 7-segment -> legacy 4-segment mapping ----
+    _SEG4_MAP = {"H0": "S1", "S1R": "S1", "S2T": "S2", "S2V": "S2",
+                 "S3M": "S3", "S3C": "S3", "S4": "S4"}
+
+    def seg4(self, seg7: str) -> str:
+        """Map a 7-way segment name to the legacy 4-way group."""
+        return self._SEG4_MAP.get(seg7, seg7)
+
+    def split_of_date_4(self) -> dict:
+        """Aggregated legacy view: H0+S1R->S1, S2T+S2V->S2, S3M+S3C->S3."""
+        return {d: self.seg4(s) for d, s in self.split_of_date.items()}
+
+    def valid_indices_in_seg4_split(self, split4: str) -> np.ndarray:
+        """Valid-hour RAW indices in a legacy 4-way split group."""
+        mask = np.array([
+            self.seg4(self.split_of_date.get(
+                self.dates[int(self.raw_to_date[vi])], "")) == split4
+            for vi in self.valid_indices], dtype=bool)
+        return self.valid_indices[mask]
+
+    def valid_row_in_seg4_split(self, split4: str) -> np.ndarray:
+        """Valid-row positions in a legacy 4-way split group (indexes X/y)."""
+        raw = self.valid_indices_in_seg4_split(split4)
+        return np.array([self.raw_to_valid_row[int(r)] for r in raw], dtype=np.int64)
+
+    def _seg7(self, seg4: str) -> set:
+        return {d for d, s in self.split_of_date.items() if self.seg4(s) == seg4}
+
     def assert_s3_disjoint(self) -> bool:
-        """Verify S1/S2/S3-M/S3-C/S4 are pairwise disjoint."""
-        s1 = self.dates_in_split("S1")
-        s2 = self.dates_in_split("S2")
-        s4 = self.dates_in_split("S4")
-        groups = {"S1": s1, "S2": s2, "S3-M": self.s3_m_dates,
-                  "S3-C": self.s3_c_dates, "S4": s4}
+        """Verify the date segments are pairwise disjoint.
+
+        In 7-way mode the segments H0/S1R/S2T/S2V/S3M/S3C/S4 are checked
+        directly. In legacy 4-way mode S1/S2/S3/S4 (+ nested S3-M/S3-C) are
+        checked. True in both cases.
+        """
+        groups = {"H0": self.dates_in_split("H0"),
+                  "S1R": self.dates_in_split("S1R"),
+                  "S2T": self.dates_in_split("S2T"),
+                  "S2V": self.dates_in_split("S2V"),
+                  "S3-M": self.s3_m_dates,
+                  "S3-C": self.s3_c_dates,
+                  "S4": self.dates_in_split("S4")}
         names = list(groups.keys())
         for i in range(len(names)):
             for j in range(i + 1, len(names)):
                 if groups[names[i]] & groups[names[j]]:
                     return False
         return True
+
+    def assert_7seg_disjoint(self) -> bool:
+        """Verify the 7 P0-2 segments are pairwise disjoint and exhaustive.
+
+        Checks: every date maps to a valid 7-way segment; the segments are
+        pairwise disjoint; the union of all 7 segment date-sets equals the
+        full date list (no date unmapped); every segment is non-empty.
+        """
+        by_seg = {s: set() for s in SPLIT_7}
+        for d in self.dates:
+            s = self.split_of_date.get(d)
+            if s not in SPLIT_7:
+                return False
+            by_seg[s].add(d)
+        # pairwise disjoint
+        segs = list(by_seg.values())
+        for i in range(len(segs)):
+            for j in range(i + 1, len(segs)):
+                if segs[i] & segs[j]:
+                    return False
+        # exhaustive: union equals full date set
+        union = set().union(*segs)
+        if union != set(self.dates):
+            return False
+        # all non-empty
+        return all(len(s) > 0 for s in segs)
 
     def build_s4_eval_manifest(self, yhat_full: np.ndarray) -> EvaluationManifest:
         """Build S4 evaluation manifest from this split authority.

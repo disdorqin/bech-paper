@@ -8,6 +8,8 @@ legacy HCH path (BiOMC, candidate_loss_fn, state_loss_fn, CARA/KL calibration).
 """
 from __future__ import annotations
 
+import hashlib
+import subprocess
 from typing import Optional
 
 import numpy as np
@@ -15,6 +17,19 @@ import torch
 import torch.nn as nn
 
 from iah_candidate import IAHCandidateHead
+
+
+def _git_head() -> str:
+    """Short git HEAD for training provenance (P1-3). Best-effort."""
+    try:
+        out = subprocess.run(["git", "rev-parse", "--short", "HEAD"],
+                             capture_output=True, text=True, timeout=5)
+        return out.stdout.strip() if out.returncode == 0 else "unknown"
+    except Exception:
+        return "unknown"
+
+
+_GIT_HEAD = _git_head()
 from iah_crps_loss import iah_crps_loss
 from s1_rank import S1RankReference
 from hch_v2_context import compute_domain_descriptors
@@ -70,32 +85,67 @@ class HCHV2UniversalPipeline:
         return det
 
     # ------------------------------------------------------------- S2 ----
-    def train_candidate_s2(self, s2_batches, epochs: int = 30,
-                           lr: float = 1e-3, patience: int = 8) -> float:
+    def _eval_s2_batches(self, batches) -> Optional[float]:
+        """Mean IAH-CRPS over a list of S2 batches (eval mode). None if empty."""
+        if not batches:
+            return None
+        total, nb = 0.0, 0
+        with torch.no_grad():
+            for batch in batches:
+                if len(batch) >= 5:
+                    host, ctx, target, vm, domain_det = batch[:5]
+                else:
+                    host, ctx, target, vm = batch
+                    domain_det = None
+                out = self.candidate_head(host, ctx, valid_mask=vm,
+                                          domain_det=domain_det)
+                loss = iah_crps_loss(out, target)
+                total += float(loss)
+                nb += 1
+        return total / max(nb, 1)
+
+    def train_candidate_s2(self, s2_batches, s2v_batches=None,
+                           epochs: int = 30, lr: float = 1e-3,
+                           patience: int = 8) -> float:
         """Train the assembled v0.4 core on S2 with the single IAH-CRPS objective.
 
-        s2_batches: iterable of (host_raw [B,H,1], core_context [B,H,D],
-                                 target_raw [B,H,1], valid_mask [B,H]).
+        s2_batches: iterable of
+            (host_raw [B,H,1], core_context [B,H,D],
+             target_raw [B,H,1], valid_mask [B,H])
+            or optionally 5-tuples with
+             (..., domain_det [B,d_det])  # per-batch signature context (P0-1)
+        s2v_batches: optional same-shaped S2V batches. If provided (G0-3),
+            the S2V IAH-CRPS selects the restored checkpoint and drives
+            early stopping; the pooled S2T loss NEVER selects. If None,
+            falls back to S2T train-loss patience (single-domain legacy).
         core_context excludes z0 (appended inside the head).
         """
         opt = torch.optim.AdamW(self.candidate_head.parameters(), lr=lr,
                                 weight_decay=1e-4)
         best, best_state, pat = float("inf"), None, 0
+        best_source = "s2v" if s2v_batches else "s2t"
 
         for ep in range(epochs):
             total, nb = 0.0, 0
-            for host, ctx, target, vm in s2_batches:
+            for batch in s2_batches:
+                if len(batch) >= 5:
+                    host, ctx, target, vm, domain_det = batch[:5]
+                else:
+                    host, ctx, target, vm = batch
+                    domain_det = None
                 opt.zero_grad()
-                out = self.candidate_head(host, ctx, valid_mask=vm)
+                out = self.candidate_head(host, ctx, valid_mask=vm,
+                                          domain_det=domain_det)
                 loss = iah_crps_loss(out, target)
                 loss.backward()
                 nn.utils.clip_grad_norm_(self.candidate_head.parameters(), 1.0)
                 opt.step()
                 total += loss.item()
                 nb += 1
-            avg = total / max(nb, 1)
-            if avg < best - 1e-5:
-                best, pat = avg, 0
+            train_avg = total / max(nb, 1)
+            sel = self._eval_s2_batches(s2v_batches) if s2v_batches else train_avg
+            if sel is not None and sel < best - 1e-5:
+                best, pat = sel, 0
                 best_state = {k: v.clone() for k, v in
                               self.candidate_head.state_dict().items()}
             else:
@@ -104,6 +154,8 @@ class HCHV2UniversalPipeline:
                     break
         if best_state is not None:
             self.candidate_head.load_state_dict(best_state)
+        if s2v_batches:
+            print(f"S2 checkpoint selected by S2V (G0-3): {best:.4f}")
         return float(best)
 
     # ---------------------------------------------------------- S3-M ----
@@ -148,8 +200,21 @@ class HCHV2UniversalPipeline:
         retrieval estimate best predicts realized value wins. All terms depend
         on k, so this is a genuine selection.
         """
+        n_mem = len(self.memory.dates) if self.memory is not None else 0
+        valid_k = [k for k in candidate_k if k <= n_mem]
+        dropped = [k for k in candidate_k if k > n_mem]
+        if dropped:
+            # protocol §16: k > available memory is INVALID and must be
+            # removed, never silently clipped (get_neighbors would return
+            # fewer than k neighbors and distort the selection score).
+            print(f"S3-M: k candidates {dropped} exceed memory size {n_mem} "
+                  f"— dropped (protocol §16)")
+        if not valid_k:
+            raise ValueError(
+                f"S3-M: no valid k <= memory size {n_mem} in {candidate_k}")
+
         best_k, best_score = None, -float("inf")
-        for k in candidate_k:
+        for k in valid_k:
             errors = []
             for vd in validation_days:
                 A_hat, realized_A = self._replay_value(vd, k)
@@ -157,7 +222,7 @@ class HCHV2UniversalPipeline:
             score = -float(np.mean(errors)) if errors else -float("inf")
             if score > best_score:
                 best_score, best_k = score, k
-        self.k = best_k if best_k is not None else candidate_k[0]
+        self.k = best_k if best_k is not None else valid_k[0]
         return self.k
 
     # ---------------------------------------------------------- S3-C ----
@@ -179,7 +244,7 @@ class HCHV2UniversalPipeline:
 
     # ---------------------------------------------------------- freeze ----
     def freeze_bundle(self, dataset_id: str = "", split_hash: str = "") -> HCHV2Bundle:
-        """Freeze the full pipeline into a universal+local bundle."""
+        """Freeze the full pipeline into a universal+local bundle (P1-3)."""
         b = HCHV2Bundle()
         b.core_model_state = {k: v.clone() for k, v in
                               self.candidate_head.state_dict().items()}
@@ -187,11 +252,22 @@ class HCHV2UniversalPipeline:
                          "d_model": self.d_model,
                          "d_value": self.d_value,
                          "seed": self.seed}
+        # Universal provenance: optimizer/config hash, code commit, S2T/S2V def.
+        b.training_provenance = {
+            "seed": self.seed,
+            "s2_split": "S2T/S2V (v0.3 protocol §5)",
+            "config_hash": b.core_config and hashlib.sha256(
+                repr(sorted(b.core_config.items())).encode()).hexdigest()[:16],
+            "code_commit": _GIT_HEAD,
+        }
         b.source_datasets = [dataset_id] if dataset_id else []
+        b.source_hosts = [dataset_id or ""] if dataset_id else []
+        # Local profile: per-domain deterministic signature + target metadata.
         if self._domain_det is not None:
             b.data_signature_spec = {
                 "det": self._domain_det.tolist(),
                 "version": "domain-det-v1",
+                "source": dataset_id,
             }
         if self.s1_rank_ref is not None:
             b.s1_rank_ref = self.s1_rank_ref.freeze()
@@ -214,7 +290,10 @@ class HCHV2UniversalPipeline:
             b.dvg_alpha = frozen["alpha"]
             b.dvg_errors = frozen["errors"]
             b.dvg_q = frozen["q"]
-        b.local_hashes = {"split_hash": split_hash}
+        # Local metadata: target/market + split hash (P1-3).
+        b.local_hashes = {"split_hash": split_hash,
+                          "target_market": dataset_id,
+                          "target_host": dataset_id or ""}
         b.compute_hash()
         return b
 
@@ -272,15 +351,19 @@ class HCHV2UniversalPipeline:
 
     # ---------------------------------------------------------- S4 ----
     def predict_s4(self, host_raw: torch.Tensor, core_context: torch.Tensor,
-                   valid_mask: Optional[torch.Tensor] = None) -> dict:
+                   valid_mask: Optional[torch.Tensor] = None,
+                   domain_det: Optional[torch.Tensor] = None) -> dict:
         """Target-free S4 inference.
 
-        host_raw [B,H,1], core_context [B,H,D]. No target accepted.
-        Returns full per-day evidence: candidate atoms, neighbors, proposals,
-        pi, A_hat, q, LCB, final raw action — enough to serialize evidence JSON.
+        host_raw [B,H,1], core_context [B,H,D], domain_det [B,d_det] (P0-1).
+        No target accepted. Returns full per-day evidence: candidate atoms,
+        neighbors, proposals, pi, A_hat, q, LCB, final raw action — enough to
+        serialize evidence JSON.
         """
         with torch.no_grad():
-            out = self.candidate_head(host_raw, core_context, valid_mask=valid_mask)
+            out = self.candidate_head(host_raw, core_context,
+                                      valid_mask=valid_mask,
+                                      domain_det=domain_det)
 
         evidence = {"candidate": out}
 

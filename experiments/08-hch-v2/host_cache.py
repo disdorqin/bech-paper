@@ -1,5 +1,7 @@
-"""HCH v2 host cache generator — train 5 backbones on S1, cache S1-S4 predictions.
+"""HCH v2 host cache generator — train 5 backbones on H0 (P0-2), cache predictions.
 
+Per protocol §6: fit host on H0 ONLY, freeze, predict S1R-S4, and record
+required cache metadata (split bounds, feature schema hash, git commit).
 Produces: experiments/08-hch-v2/results/host_cache_manifest.csv
            experiments/08-hch-v2/results/cache/{dataset}/{backbone}/pred.npy
 """
@@ -45,6 +47,27 @@ def _hash_array(arr: np.ndarray) -> str:
     return hashlib.sha256(arr.tobytes()).hexdigest()[:16]
 
 
+def _git_head() -> str:
+    """Short git HEAD for provenance (protocol §6 cache metadata)."""
+    try:
+        import subprocess
+        out = subprocess.run(["git", "rev-parse", "--short", "HEAD"],
+                             capture_output=True, text=True, timeout=5)
+        return out.stdout.strip() if out.returncode == 0 else "unknown"
+    except Exception:
+        return "unknown"
+
+
+def _segment_bounds(exp: ExperimentManifest) -> dict:
+    """Protocol §6: per-segment start/end dates for cache metadata."""
+    bounds = {}
+    for seg in ("H0", "S1R", "S2T", "S2V", "S3M", "S3C", "S4"):
+        dates = sorted(exp.dates_in_split(seg))
+        bounds[f"{seg}_start"] = dates[0] if dates else ""
+        bounds[f"{seg}_end"] = dates[-1] if dates else ""
+    return bounds
+
+
 def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     t0 = time.time()
     ds = _load_ds(ds_key)
@@ -56,7 +79,9 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     assert_no_leakage(ds, X, y, valid, names)
 
     exp = ExperimentManifest.from_dataset(ds, valid, dataset_id=ds_key)
-    s1_indices = exp.valid_indices_in_split("S1")
+    # P0-2: host is fitted on H0 ONLY; S1R predictions are out-of-sample and
+    # are what build the rank/signature reference.
+    s1_indices = exp.valid_indices_in_split("H0")
 
     bb = make_backbone(bb_name, seed=seed)
     if needs_seq(bb_name):
@@ -78,15 +103,25 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     np.save(cache_dir / "y.npy", y.astype(np.float32))
     np.save(cache_dir / "valid.npy", valid.astype(np.int32))
 
-    seg_info = {"split_hash": exp.split_hash,
-                "n_S1": int(len(s1_indices)),
-                "n_S2": int(len(exp.valid_indices_in_split("S2"))),
-                "n_S3": int(len(exp.valid_indices_in_split("S3"))),
-                "n_S4": int(len(exp.valid_indices_in_split("S4")))}
+    seg_info = {
+        "split_hash": exp.split_hash,
+        "n_H0": int(len(exp.valid_indices_in_split("H0"))),
+        "n_S1R": int(len(exp.valid_indices_in_split("S1R"))),
+        "n_S2T": int(len(exp.valid_indices_in_split("S2T"))),
+        "n_S2V": int(len(exp.valid_indices_in_split("S2V"))),
+        "n_S3M": int(len(exp.valid_indices_in_split("S3M"))),
+        "n_S3C": int(len(exp.valid_indices_in_split("S3C"))),
+        "n_S4": int(len(exp.valid_indices_in_split("S4"))),
+        "n_excluded_dates": len(exp.excluded_dates),
+        **_segment_bounds(exp),  # protocol §6: per-segment start/end dates
+    }
     with open(cache_dir / "seg.json", "w") as f:
         json.dump(seg_info, f)
 
     pred_hash = _hash_array(yhat.astype(np.float32))
+    feature_schema_hash = hashlib.sha256(
+        (repr(sorted(names)) if isinstance(names, list) else repr(names)).encode()
+    ).hexdigest()[:16]
 
     n_params = "N/A"
     if hasattr(bb, "m") and hasattr(bb.m, "parameters"):
@@ -98,12 +133,19 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
         "seed": seed,
         "n_full": n_full,
         "n_valid": n,
-        "n_S1": int(len(s1_indices)),
-        "n_S2": int(len(exp.valid_indices_in_split("S2"))),
-        "n_S3": int(len(exp.valid_indices_in_split("S3"))),
+        "n_H0": int(len(exp.valid_indices_in_split("H0"))),
+        "n_S1R": int(len(exp.valid_indices_in_split("S1R"))),
+        "n_S2T": int(len(exp.valid_indices_in_split("S2T"))),
+        "n_S2V": int(len(exp.valid_indices_in_split("S2V"))),
+        "n_S3M": int(len(exp.valid_indices_in_split("S3M"))),
+        "n_S3C": int(len(exp.valid_indices_in_split("S3C"))),
         "n_S4": int(len(exp.valid_indices_in_split("S4"))),
+        "n_excluded_dates": len(exp.excluded_dates),
         "split_hash": exp.split_hash,
         "pred_hash": pred_hash,
+        "feature_schema_hash": feature_schema_hash,
+        "git_commit": _git_head(),
+        **_segment_bounds(exp),
         "n_params": n_params,
         "duration_s": round(time.time() - t0, 1),
     }

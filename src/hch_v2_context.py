@@ -27,42 +27,49 @@ import torch.nn.functional as F
 # ============================ Data Signature =================================
 def compute_domain_descriptors(s1_z0: np.ndarray,
                                s1_hours: np.ndarray | None = None) -> np.ndarray:
-    """Estimate DOMAIN-level stable descriptors from S1 host z0 (frozen).
+    """Estimate DOMAIN-level stable descriptors from S1R host z0 (frozen).
 
     These describe the stable geometry of the series (distribution/dynamics),
-    computed once over the entire S1 host prediction pool — NOT per-day.
-    Only S1 host predictions (pre-outcome) are used; no target, no S2/S3/S4.
+    computed once over the entire S1R host prediction pool — NOT per-day.
+    Only S1R host predictions (pre-outcome) are used; no target, no S2/S3/S4.
 
-    Returns [d_det] = 8: q25/q50/q75/iqr/mean_abs/flips/pos_mass/lag1.
+    P1-2 (protocol §8): descriptor vector v1 is order-free / scale-free:
+        [q05, q25, q50, q75, q95, IQR, E|z0|, P(z0<0)].
+    Removed flips/lag1 (order-sensitive, meaningless across concatenated
+    day boundaries) and s1_hours is intentionally unused (kept for API
+    compatibility with callers that pass it).
+
+    Returns [d_det] = 8.
     """
     z = np.asarray(s1_z0, dtype=np.float64).ravel()
     z = z[np.isfinite(z)]
     if len(z) == 0:
         return np.zeros(8, dtype=np.float64)
 
+    q05 = float(np.quantile(z, 0.05))
     q25 = float(np.quantile(z, 0.25))
     q50 = float(np.quantile(z, 0.50))
     q75 = float(np.quantile(z, 0.75))
+    q95 = float(np.quantile(z, 0.95))
     iqr = q75 - q25
     mean_abs = float(np.mean(np.abs(z)))
+    neg_mass = float(np.mean(z < 0))
 
-    signs = (z > 0).astype(np.float64)
-    flips = float(np.mean(signs[1:] != signs[:-1])) if len(z) > 1 else 0.0
-    pos_mass = float(np.mean(z > 0))
-
-    zc = z - z.mean()
-    ss = float((zc ** 2).sum())
-    lag1 = float((zc[:-1] * zc[1:]).sum() / ss) if (len(z) > 1 and ss > 1e-8) else 0.0
-
-    return np.array([q25, q50, q75, iqr, mean_abs, flips, pos_mass, lag1],
+    return np.array([q05, q25, q50, q75, q95, iqr, mean_abs, neg_mass],
                     dtype=np.float64)
 
 
 class DataSignature(nn.Module):
-    """Lightweight data-conditioned interface (P1-7).
+    """Lightweight data-conditioned interface (P0-1 / P1-1 / P1-7).
 
-    Deterministic descriptors are DOMAIN-level, estimated once on S1 and frozen
-    in `domain_det` buffer. The learned part (Pool(E_core)) remains per-day.
+    Deterministic domain descriptors are DOMAIN-level, estimated once on S1R
+    and passed as a FORWARD CONTEXT (not a mutable model buffer), so a
+    multi-domain training epoch can supply each batch with its own descriptor
+    (P0-1, master plan §1.1). The learned part (Pool(E_core)) remains per-day.
+
+    FiLM is identity-initialized (P1-1):  h' = (1 + Δγ) ⊙ h + β  with the
+    final modulation layer zero-initialized, so at init h' = h — DataSignature
+    starts as incremental conditioning, not a random gate over the core.
     """
 
     def __init__(self, d_core: int, d_det: int, d_sig: int = 32):
@@ -73,34 +80,52 @@ class DataSignature(nn.Module):
             nn.Linear(d_core, d_sig),
             nn.ReLU(),
         )
-        self.mod_head = nn.Linear(d_det + d_sig, 2 * d_core)  # gamma + beta
-        # frozen domain descriptors (S1), zero until set_domain_descriptors
+        self.mod_head = nn.Linear(d_det + d_sig, 2 * d_core)  # Δgamma + beta
+        # P1-1: identity-init FiLM — zero Δgamma/beta at init.
+        nn.init.zeros_(self.mod_head.weight)
+        nn.init.zeros_(self.mod_head.bias)
+        # Legacy convenience buffer for single-domain workflows. Not used by
+        # forward when an explicit domain_det context is passed (P0-1).
         self.register_buffer("domain_det", torch.zeros(d_det))
 
     def set_domain_descriptors(self, det: np.ndarray):
-        """Write S1-estimated domain descriptors into the frozen buffer."""
+        """Legacy single-domain path: write descriptors into the frozen buffer.
+
+        Multi-domain training should pass domain_det to forward() instead.
+        """
         det = np.asarray(det, dtype=np.float64).reshape(-1)
         assert det.shape[0] == self.d_det, \
             f"descriptor dim mismatch: {det.shape[0]} != {self.d_det}"
         self.domain_det.copy_(torch.tensor(det, dtype=torch.float32))
 
     def compute_deterministic(self, z0=None, avail_mask=None) -> torch.Tensor:
-        """Return the FROZEN domain descriptors (no per-day quantile)."""
+        """Return the FROZEN domain descriptors (no per-day quantile).
+
+        Convenience for single-domain/bundle contexts; multi-domain training
+        should use the domain_det passed to forward().
+        """
         return self.domain_det
 
-    def forward(self, core_hidden: torch.Tensor) -> tuple:
-        """Emit FiLM modulation (gamma, beta) for the core hidden states.
+    def forward(self, core_hidden: torch.Tensor,
+                domain_det: torch.Tensor | None = None) -> tuple:
+        """Emit FiLM modulation (Δgamma, beta) for the core hidden states.
 
-        sig = cat([domain_det (frozen S1), learned_proj(core_hidden.mean) (per-day)]).
+        domain_det: [B, d_det] per-batch deterministic descriptors (P0-1).
+        When None (single-domain legacy), the frozen buffer is expanded.
         """
         B, H, d = core_hidden.shape
-        det = self.domain_det.unsqueeze(0).expand(B, -1)      # [B, d_det] frozen
+        if domain_det is None:
+            det = self.domain_det.unsqueeze(0).expand(B, -1)  # [B, d_det]
+        else:
+            det = domain_det.to(core_hidden.dtype)            # [B, d_det]
+            if det.dim() == 1:
+                det = det.unsqueeze(0).expand(B, -1)
         learned = self.learned_proj(core_hidden.mean(dim=1))  # [B, d_sig] per-day
         sig = torch.cat([det, learned], dim=1)                # [B, d_det + d_sig]
         mod = self.mod_head(sig)                              # [B, 2*d_core]
-        gamma = mod[:, :d].unsqueeze(1)                       # [B, 1, d]
+        delta_gamma = mod[:, :d].unsqueeze(1)                 # [B, 1, d]
         beta = mod[:, d:].unsqueeze(1)                        # [B, 1, d]
-        return gamma, beta
+        return delta_gamma, beta
 
 
 # ============================ Core Context Encoder ===========================
@@ -118,13 +143,15 @@ class CoreContextEncoder(nn.Module):
         self.signature = DataSignature(d_model, d_det=8, d_sig=d_sig)
         self.norm = nn.LayerNorm(d_model)
 
-    def forward(self, core_input: torch.Tensor) -> torch.Tensor:
+    def forward(self, core_input: torch.Tensor,
+                domain_det: torch.Tensor | None = None) -> torch.Tensor:
         """core_input: [B, H, d_core_in], dimension 0 = z0.
+        domain_det: [B, d_det] per-batch descriptors (P0-1); None => frozen buffer.
         Returns: [B, H, d_model] FiLM-modulated core representation.
         """
-        h = self.proj(core_input)          # [B, H, d_model]
-        gamma, beta = self.signature(h)    # domain_det (frozen) + learned (per-day)
-        h = gamma * h + beta               # FiLM modulation (P1-7)
+        h = self.proj(core_input)               # [B, H, d_model]
+        delta_gamma, beta = self.signature(h, domain_det)  # identity-init FiLM
+        h = (1.0 + delta_gamma) * h + beta      # FiLM modulation (P1-1)
         return self.norm(h)
 
 
