@@ -353,9 +353,15 @@ def main():
 
 def _write_matrix(path: Path, rows: list[dict], tag: str):
     import csv
-    cols = ["market_seen", "host_seen", "candidate_variant", "host", "market",
+    base = ["market_seen", "host_seen", "candidate_variant", "host", "market",
             "host_baseline", "iah_crps", "delta_crps", "mass_entropy", "w0",
             "mminus_alive", "mplus_alive", "shift_p50", "shift_p95", "status"]
+    # extra keys (e.g. "screen" on DK1 rows) go first so the writer never
+    # rejects a row it must serialize (crash fix: dk1_zero_gradient write).
+    extra = []
+    if rows:
+        extra = [k for k in rows[0].keys() if k not in base]
+    cols = extra + base
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()

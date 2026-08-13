@@ -27,7 +27,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(HERE))
 
-from common import load_dataset
+from common import load_dataset, build_tabular
 from eval_manifest import ExperimentManifest
 import r1a_run as R
 
@@ -48,8 +48,10 @@ def quality_for(ds_key: str, bb: str) -> dict:
     ds = load_dataset(ds_key)
     y_full = ds["price"].astype(np.float64)
     ts = ds["ts"]
-    exp = ExperimentManifest.from_dataset(ds, np.isfinite(y_full),
-                                          dataset_id=ds_key)
+    # valid must be the RAW-INDICES array (build_tabular contract), NOT a bool
+    # mask — a bool mask casts to 0/1 indices and silently empties every split.
+    _, _, _, valid = build_tabular(ds)
+    exp = ExperimentManifest.from_dataset(ds, valid, dataset_id=ds_key)
     cache = HERE / "results" / "cache" / ds_key / bb
     seg = json.load(open(cache / "seg.json"))
     yhat_full = np.load(cache / "pred_full.npy").astype(np.float64)
