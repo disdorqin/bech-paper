@@ -131,13 +131,16 @@ def _collect_health(candidate_head: nn.Module, domains: list) -> dict:
                 w_p.append(float((out["w_plus"] * vh.float()).sum() / cnt))
                 m_m.append(out["m_minus"][vh].detach().cpu().numpy())
                 m_p.append(out["m_plus"][vh].detach().cpu().numpy())
-                # signature FiLM norms (P1-1: identity-init => start near 0)
-                core_input = torch.cat(
-                    [out["z0"].unsqueeze(-1), ctx], dim=-1)
-                h = candidate_head.core_encoder.proj(core_input)
-                dg, beta = candidate_head.core_encoder.signature(h, det)
-                dg_n.append(float(dg.abs().mean()))
-                b_n.append(float(beta.abs().mean()))
+                # signature FiLM norms (P1-1: identity-init => start near 0).
+                # R1B §9 P2 PlainCore bypasses DataSignature entirely; its head
+                # has no `.signature` submodule -> record zeros.
+                if hasattr(candidate_head.core_encoder, "signature"):
+                    core_input = torch.cat(
+                        [out["z0"].unsqueeze(-1), ctx], dim=-1)
+                    h = candidate_head.core_encoder.proj(core_input)
+                    dg, beta = candidate_head.core_encoder.signature(h, det)
+                    dg_n.append(float(dg.abs().mean()))
+                    b_n.append(float(beta.abs().mean()))
     if not w_m:
         return {}
     wm, wz, wp = float(np.mean(w_m)), float(np.mean(w_z)), float(np.mean(w_p))
@@ -155,8 +158,8 @@ def _collect_health(candidate_head: nn.Module, domains: list) -> dict:
         "p95_m_minus": float(np.percentile(m_minus, 95)),
         "med_m_plus": float(np.median(m_plus)),
         "p95_m_plus": float(np.percentile(m_plus, 95)),
-        "mean_abs_delta_gamma": float(np.mean(dg_n)),
-        "mean_abs_beta": float(np.mean(b_n)),
+        "mean_abs_delta_gamma": float(np.mean(dg_n)) if dg_n else 0.0,
+        "mean_abs_beta": float(np.mean(b_n)) if b_n else 0.0,
     }
 
 
