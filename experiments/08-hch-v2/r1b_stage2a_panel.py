@@ -150,7 +150,11 @@ def eval_panel_domain(head: nn.Module, dom: EvalDomain, variant: str) -> dict:
                            .detach().cpu().numpy())
             sv = out["scale_valid"] > 0.5                      # [B]
             scale_days += int(sv.sum())
-            cand_pred = torch.where(sv.unsqueeze(-1), out["x_identity"], host)
+            # torch.where broadcast quirk: cond must be [B,1,1] to broadcast over
+            # [B,H,1] x_identity/host (a [B,1] cond FAILS — PyTorch does not
+            # left-pad the condition rank; reproduces on torch 2.x 4090 server).
+            cand_pred = torch.where(sv.unsqueeze(-1).unsqueeze(-1),
+                                    out["x_identity"], host)
             cand_ae.append((tgt.squeeze(-1) - cand_pred.squeeze(-1))[vh].abs()
                            .detach().cpu().numpy())
     host_raw_mae = float(np.concatenate(host_ae).mean()) if host_ae else float("nan")
