@@ -69,6 +69,10 @@ def _eval_batch_losses(candidate_head: nn.Module,
             else:
                 host, ctx, target, vm = batch
                 det = domain_det
+            # P0-D: det must be the real batch size. [1, d_det] would crash the
+            # DataSignature cat for B > 1 (shape [1,d] vs learned [B,d_sig]).
+            if det is not None and det.shape[0] != host.shape[0]:
+                det = det.expand(host.shape[0], -1)
             out = candidate_head(host, ctx, valid_mask=vm, domain_det=det)
             loss = iah_crps_loss(out, target)
             total += float(loss)
@@ -103,8 +107,7 @@ def _eval_host_baseline(batches: list) -> float:
     return total / max(n, 1)
 
 
-def _collect_health(candidate_head: nn.Module, domains: list,
-                    det_fn) -> dict:
+def _collect_health(candidate_head: nn.Module, domains: list) -> dict:
     """Protocol §13 training-health diagnostics over S2V batches.
 
     Mass: mean w⁻/w⁰/w⁺ + entropy. Shift: fraction m>tiny, median/p95.
@@ -115,7 +118,11 @@ def _collect_health(candidate_head: nn.Module, domains: list,
         for d in domains:
             for batch in d.s2v_batches:
                 host, ctx, target, vm = batch[:4]
-                det = det_fn(batch)
+                # P0-D: 5-tuple carries its own det; 4-tuple uses the domain's
+                # descriptor expanded to the real batch size (never [1, d_det]).
+                det = batch[4] if len(batch) >= 5 else d.det_tensor(host.shape[0])
+                if det is not None and det.shape[0] != host.shape[0]:
+                    det = det.expand(host.shape[0], -1)
                 out = candidate_head(host, ctx, valid_mask=vm, domain_det=det)
                 vh = (vm > 0.5) if vm.dim() <= 2 else (vm.squeeze(-1) > 0.5)
                 cnt = float(vh.float().sum().clamp(min=1))
@@ -162,12 +169,12 @@ class UniversalCoreTrainer:
 
     def train(self, domains: list[DomainBatch], epochs: int = 8,
               lr: float = 3e-4, weight_decay: float = 1e-4,
-              clip: float = 1.0, patience: int = 3,
-              mb_size: int = 16) -> dict:
-        """Uniform-domain sampling + macro S2V checkpoint selection.
+              clip: float = 1.0, patience: int = 3) -> dict:
+        """True equal-domain sampling + macro S2V checkpoint selection.
 
         domains: list of DomainBatch (one per (market, host)).
-        Returns training report: best macro S2V CRPS, L_worst, per-domain val.
+        Returns training report: best macro S2V CRPS, L_worst, per-domain val,
+        and per-epoch updates_per_domain (P0-C audit).
         """
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
@@ -176,7 +183,14 @@ class UniversalCoreTrainer:
         domains = [d for d in domains if d.s2t_batches]
         assert domains, "UniversalCoreTrainer: no domain has S2T batches"
         n_domains = len(domains)
-        print(f"[UCT] {n_domains} domains, epochs={epochs}, lr={lr}")
+        n_batches = [len(d.s2t_batches) for d in domains]
+        # P0-C: L_universal = (1/|G|) Σ_g E_{d~g}[L_g] requires every domain to
+        # receive the SAME number of optimizer updates per epoch. K = median_g
+        # N_g; longer domains sample without replacement, shorter with, so a
+        # long market never gets more gradient weight for being longer.
+        K = int(np.median(n_batches))
+        print(f"[UCT] {n_domains} domains, epochs={epochs}, lr={lr}, "
+              f"K={K}/domain/epoch")
 
         opt = torch.optim.AdamW(self.head.parameters(), lr=lr,
                                 weight_decay=weight_decay)
@@ -188,8 +202,8 @@ class UniversalCoreTrainer:
             """Macro S2V CRPS + L_worst + per-domain CRPS + baselines + health."""
             per_g, worst, host_g, delta_g = {}, float("-inf"), {}, {}
             for d in domains:
-                det = d.det_tensor(1)
-                loss, n = _eval_batch_losses(self.head, d.s2v_batches, det)
+                loss, n = _eval_batch_losses(self.head, d.s2v_batches,
+                                             d.det_tensor(1))
                 per_g[d.name] = float(loss)
                 host_g[d.name] = _eval_host_baseline(d.s2v_batches)
                 if np.isfinite(loss):
@@ -198,40 +212,55 @@ class UniversalCoreTrainer:
                         worst = float(loss)
             macro = float(np.mean([v for v in per_g.values()
                                    if np.isfinite(v)])) if per_g else float("nan")
-            health = _collect_health(self.head, domains,
-                                     lambda b: b[4] if len(b) >= 5 else None)
+            health = _collect_health(self.head, domains)
             return macro, worst, per_g, host_g, delta_g, health
 
         for ep in range(epochs):
-            # one epoch = one pass over each domain's training batches
             epoch_losses = []
             grad_norms, nan_batches, scale_invalid_days = [], 0, 0
-            for g in range(n_domains):
+            updates = [0] * n_domains
+            # shuffled schedule: every domain appears exactly K times
+            schedule = np.repeat(np.arange(n_domains), K)
+            rng.shuffle(schedule)
+            pools = [list(range(len(domains[g].s2t_batches)))
+                     for g in range(n_domains)]
+            for g in schedule:
                 d = domains[g]
-                det = d.det_tensor(1)
-                for batch in d.s2t_batches:
-                    host, ctx, target, vm = batch[:4]
-                    b = host.shape[0]
-                    if det is not None and det.shape[0] < b:
-                        det = d.det_tensor(b)
-                    opt.zero_grad()
-                    out = self.head(host, ctx, valid_mask=vm, domain_det=det)
-                    loss = iah_crps_loss(out, target)
-                    loss.backward()
-                    grad_norm = nn.utils.clip_grad_norm_(self.head.parameters(),
-                                                         clip).item()
-                    grad_norms.append(float(grad_norm))
-                    if not np.isfinite(float(loss.detach())) or not np.isfinite(grad_norm):
-                        nan_batches += 1
-                    scale_invalid_days += int((out["scale_valid"] < 0.5).sum())
-                    opt.step()
-                    epoch_losses.append(float(loss.detach()))
+                pool = pools[g]
+                if not pool:  # exhausted -> sample with replacement
+                    pools[g] = list(range(len(d.s2t_batches)))
+                    pool = pools[g]
+                bi = pool.pop()
+                batch = d.s2t_batches[bi]
+                host, ctx, target, vm = batch[:4]
+                # P0-D: det is always the real batch size, never [1, d_det].
+                det = batch[4] if len(batch) >= 5 else d.det_tensor(host.shape[0])
+                if det is not None and det.shape[0] != host.shape[0]:
+                    det = det.expand(host.shape[0], -1)
+                opt.zero_grad()
+                out = self.head(host, ctx, valid_mask=vm, domain_det=det)
+                loss = iah_crps_loss(out, target)
+                loss.backward()
+                grad_norm = nn.utils.clip_grad_norm_(self.head.parameters(),
+                                                     clip).item()
+                grad_norms.append(float(grad_norm))
+                if not np.isfinite(float(loss.detach())) or not np.isfinite(grad_norm):
+                    nan_batches += 1
+                scale_invalid_days += int((out["scale_valid"] < 0.5).sum())
+                opt.step()
+                updates[g] += 1
+                epoch_losses.append(float(loss.detach()))
+            updates_per_domain = {domains[g].name: updates[g]
+                                  for g in range(n_domains)}
+            assert all(v == K for v in updates), \
+                f"P0-C imbalance: {updates_per_domain} (expect {K}/domain)"
 
             macro, worst, per_g, host_g, delta_g, health = _eval_all()
             history.append({"epoch": ep, "macro_s2v": macro,
                             "worst_s2v": worst, "per_domain": per_g,
                             "host_baseline": host_g, "delta": delta_g,
                             "health": health,
+                            "updates_per_domain": updates_per_domain,
                             "train_loss": float(np.mean(epoch_losses)) if epoch_losses else float("nan"),
                             "grad_health": {
                                 "mean_grad_norm": float(np.mean(grad_norms)) if grad_norms else float("nan"),

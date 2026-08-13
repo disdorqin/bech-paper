@@ -35,6 +35,21 @@ SPLIT_7 = ("H0", "S1R", "S2T", "S2V", "S3M", "S3C", "S4")
 FRAC_7 = (0.40, 0.10, 0.16, 0.04, 0.05, 0.05, 0.20)
 
 
+def cumulative_bounds(n_dates: int, frac) -> np.ndarray:
+    """Monotone cumulative segment boundaries [0=b0 < ... < bk=n_dates].
+
+    P0-A fix: boundaries are float-rounded cumulative fractions; the last
+    boundary is forced to n_dates so bounds stay non-decreasing and cover every
+    date exactly. Never mixes cumulative boundaries with segment sizes (the old
+    `counts[-1] = n - sum(counts[:-1])` summed cumulative boundaries as if they
+    were sizes, producing a negative non-monotone tail).
+    """
+    bounds = np.rint(np.asarray(frac, dtype=np.float64).cumsum()
+                     * n_dates).astype(np.int64)
+    bounds[-1] = n_dates
+    return np.concatenate([[0], bounds])
+
+
 @dataclass
 class ExperimentManifest:
     """Unified date-first split authority. All consumers read splits from here.
@@ -105,11 +120,7 @@ class ExperimentManifest:
         else:
             labels = ["S1", "S2", "S3", "S4"]
             f = list(frac) if len(frac) == 4 else [0.50, 0.20, 0.10, 0.20]
-        cum = np.cumsum(f)
-        counts = [int(round(n_dates * c)) for c in cum]
-        # last segment takes the remainder so totals match exactly
-        counts[-1] = n_dates - sum(counts[:-1])
-        bounds = np.concatenate([[0], counts])
+        bounds = cumulative_bounds(n_dates, f)
         split_of_date = {}
         for i, d in enumerate(date_strs):
             seg = int(np.searchsorted(bounds, i, side="right") - 1)

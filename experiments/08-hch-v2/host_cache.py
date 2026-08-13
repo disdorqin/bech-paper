@@ -81,15 +81,20 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     exp = ExperimentManifest.from_dataset(ds, valid, dataset_id=ds_key)
     # P0-2: host is fitted on H0 ONLY; S1R predictions are out-of-sample and
     # are what build the rank/signature reference.
-    s1_indices = exp.valid_indices_in_split("H0")
+    # P0-B: X/y from build_tabular and seq_full from build_sequences are
+    # VALID-ROW compressed (len = n_valid). valid_indices_in_split() returns
+    # RAW indices into the full array; using them here silently misfits the
+    # host (H0 rows shifted ~warm hours forward + leaks ~warm hours of S1R).
+    # Always index X/y/seq_full by valid_row_in_split().
+    s1_rows = exp.valid_row_in_split("H0")
 
     bb = make_backbone(bb_name, seed=seed)
     if needs_seq(bb_name):
         seq_full = build_sequences(ds, valid)
-        bb.fit(X[s1_indices], y[s1_indices], seq_full[s1_indices])
+        bb.fit(X[s1_rows], y[s1_rows], seq_full[s1_rows])
         yhat = bb.predict(X, seq_full)
     else:
-        bb.fit(X[s1_indices], y[s1_indices])
+        bb.fit(X[s1_rows], y[s1_rows])
         yhat = bb.predict(X)
 
     cache_dir = CACHE_ROOT / ds_key / bb_name
