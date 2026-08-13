@@ -1,0 +1,14 @@
+# HCH-v2 / solar_leak_price_model — server dependencies (Linux GPU)
+# Pinned to the exact versions validated in the local dev env (Python 3.11.9)
+# on 2026-08-13. torch is intentionally NOT listed here: install the CUDA
+# variant separately for the RTX 4090 (sm_89), e.g.
+#   pip install torch --index-url https://download.pytorch.org/whl/cu126
+# then `pip install -r requirements.txt` for everything else.
+
+numpy==2.4.6
+pandas==2.2.3
+scipy==1.17.1          # scipy.optimize in src/common.py (guarded) + bootstrap stats
+scikit-learn==1.5.2    # backbones Linear/MLP, IsotonicRegression (C3 calibrator)
+matplotlib==3.9.2      # R1A/R1B figures (cumulative_delta_*.png, rolling_map_*.png)
+PyYAML==6.0.3          # r1a_run.py config loading
+lightgbm==4.6.0        # peer baselines (07-route-e peers, baselines_v2.py)
