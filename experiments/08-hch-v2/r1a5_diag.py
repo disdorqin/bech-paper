@@ -169,6 +169,53 @@ def rebuild_pipe_from_bundle(bundle: HCHV2Bundle, info, variant: str):
     return pipe, val_days, s3c_days, problems
 
 
+def pipe_from_head(head, info, variant: str = "learned_sig"):
+    """Frozen pipe rebuilt from an in-memory trained head (Stage-2D action
+    chain). Mirrors rebuild_pipe_from_bundle, but the weights come from the
+    trained head object instead of a persisted bundle (which was never saved
+    by the Stage-2A panel). k is the freshly-selected S3M k for this domain.
+    Returns (pipe, val_days, s3c_days, problems).
+    """
+    problems: list[str] = []
+    det_np = R.det_for_variant(variant, info)
+    pipe = HCHV2UniversalPipeline(d_core_context=R.D_CORE_CONTEXT,
+                                  d_model=R.D_MODEL, d_value=R.D_VALUE,
+                                  alpha=R.ALPHA, k=None, seed=R.SEED)
+    pipe.candidate_head.load_state_dict(head.state_dict())
+    pipe.candidate_head.eval()
+    pipe.fit_s1_reference(info.s1_z0, info.s1_hours)
+
+    if variant == "learned_sig":
+        pipe._domain_det = np.zeros(8)
+        pipe.candidate_head.core_encoder.signature.set_domain_descriptors(
+            np.zeros(8))
+    else:
+        pipe.fit_s1_signature(info.s1_z0, info.s1_hours)
+
+    s3m_all = sorted(info.exp.dates_in_split("S3M"))
+    n_mem = int(len(s3m_all) * R.S3M_MEM_FRAC)
+    mem_dates, val_dates = s3m_all[:n_mem], s3m_all[n_mem:]
+    mem_days = [md for md in (_make_day(pipe, info, d, det_np)
+                              for d in mem_dates) if md is not None]
+    if not mem_days:
+        raise ValueError(f"{info.ds_key} x {info.bb}: no memory days")
+    pipe.fit_s3_memory(mem_days)
+    val_days = [vd for vd in (_make_day(pipe, info, d, det_np)
+                              for d in val_dates) if vd is not None]
+
+    k_selected = pipe.select_s3m_k(list(R.K_CANDIDATES), val_days)
+    if k_selected is None:
+        problems.append("select_s3m_k returned None -> fallback k=max(candidates)")
+        k_selected = max(R.K_CANDIDATES)
+    pipe.k = k_selected
+
+    s3c_days = [sd for sd in (_make_day(pipe, info, d, det_np)
+                              for d in sorted(info.exp.dates_in_split("S3C")))
+                if sd is not None]
+    pipe.calibrate_s3c(s3c_days)
+    return pipe, val_days, s3c_days, problems
+
+
 def run_full_chain_roundtrip(pipe_before, pipe_after, info, s4_days, det_np,
                              n_check=3) -> dict:
     """§2.2 audit on the REBUILT pre-freeze pipe vs reloaded pipe."""
