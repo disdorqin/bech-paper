@@ -123,14 +123,28 @@ class EvalDomain:
     market: str
     host: str
     name: str
+    trained_markets: frozenset = frozenset(SOURCE_MARKETS)
+    trained_hosts: frozenset = frozenset(HOSTS)
 
+    # P0-R1B-S1: seen/unseen are RELATIVE to the candidate's training membership,
+    # never a static host/market name. Main trained all 4 hosts -> PatchTST seen;
+    # only LOHO candidates see PatchTST as unseen.
     @property
     def market_seen(self) -> bool:
-        return self.market in SOURCE_MARKETS
+        return self.market in self.trained_markets
 
     @property
     def host_seen(self) -> bool:
-        return self.host != UNSEEN_HOST
+        return self.host in self.trained_hosts
+
+
+def with_membership(doms: list[EvalDomain], trained_mkts, trained_hosts
+                    ) -> list[EvalDomain]:
+    """Clone eval domains under a candidate's training membership."""
+    tmk = frozenset(trained_mkts)
+    ths = frozenset(trained_hosts)
+    return [EvalDomain(info=d.info, market=d.market, host=d.host, name=d.name,
+                       trained_markets=tmk, trained_hosts=ths) for d in doms]
 
 
 def prepare_all() -> dict[str, EvalDomain]:
@@ -280,7 +294,11 @@ def main():
     # LOHO: 3 source markets x 3 seen hosts = 9 source domains (PatchTST excluded)
     loho_train = [doms[f"{mk}:{bb}"] for mk in SOURCE_MARKETS for bb in SEEN_HOSTS_LOHO]
     # eval set: all 16 domains (12 source + 4 DK1)
-    eval_order = [doms[f"{mk}:{bb}"] for mk in SOURCE_MARKETS + [UNSEEN_MARKET] for bb in HOSTS]
+    eval_base = [doms[f"{mk}:{bb}"] for mk in SOURCE_MARKETS + [UNSEEN_MARKET] for bb in HOSTS]
+    # P0-R1B-S1: screen-relative seen flags. Main trained 4/4 hosts (no
+    # unseen-host cell); LOHO trained 3 hosts (PatchTST unseen).
+    main_eval = with_membership(eval_base, SOURCE_MARKETS, HOSTS)
+    loho_eval = with_membership(eval_base, SOURCE_MARKETS, SEEN_HOSTS_LOHO)
 
     config = {
         "protocol": "hch_v2_r1b_two_hour_autonomous_research_sprint_v0.1_2026-08-13.md",
@@ -307,7 +325,7 @@ def main():
             print(f"\n===== MAIN SCREENING {label} (12 source domains) =====", flush=True)
             head, report = train_candidate(variant, main_train)
             reports[f"{label}_main"] = report
-            rows = [eval_domain(head, d, variant) for d in eval_order]
+            rows = [eval_domain(head, d, variant) for d in main_eval]
             all_rows[f"{label}_main"] = rows
             cells_out[f"{label}_main"] = aggregate_cells(rows)
             _write_matrix(out_dir / f"matrix_{label}_main.csv", rows, label)
@@ -315,7 +333,7 @@ def main():
         print(f"\n===== LOHO-PatchTST {label} (9 source domains, no PatchTST grad) =====", flush=True)
         head_l, report_l = train_candidate(variant, loho_train)
         reports[f"{label}_LOHO"] = report_l
-        rows_l = [eval_domain(head_l, d, variant) for d in eval_order]
+        rows_l = [eval_domain(head_l, d, variant) for d in loho_eval]
         all_rows[f"{label}_LOHO"] = rows_l
         cells_out[f"{label}_LOHO"] = aggregate_cells(rows_l)
         _write_matrix(out_dir / f"matrix_{label}_LOHO.csv", rows_l, label)
@@ -368,15 +386,34 @@ def _write_matrix(path: Path, rows: list[dict], tag: str):
         w.writerows(rows)
 
 
+def _best_epoch_index(rep: dict) -> int:
+    """P0-R1B-S2: index of the macro-S2V best epoch (checkpoint-selected state)."""
+    if not rep.get("history"):
+        return -1
+    best = rep.get("best_macro_s2v")
+    for i, h in enumerate(rep["history"]):
+        if best is not None and abs(h.get("macro_s2v", float("nan")) - best) < 1e-6:
+            return i
+    return int(np.argmin([h.get("macro_s2v", float("inf")) for h in rep["history"]]))
+
+
 def _summarize_reports(reports: dict) -> dict:
+    """P0-R1B-S2 fix: report the BEST checkpoint's per-domain diagnostics, never
+    the last epoch. UniversalCoreTrainer reloads best state after training, so
+    last-epoch history may not correspond to the frozen evaluated weights."""
     out = {}
     for key, rep in reports.items():
+        bi = _best_epoch_index(rep)
+        h = rep["history"][bi] if bi >= 0 and rep.get("history") else {}
         out[key] = {
             "best_macro_s2v": rep.get("best_macro_s2v"),
             "worst_s2v_at_best": rep.get("worst_s2v_at_best"),
             "epochs_run": rep.get("epochs_run"),
-            "per_domain_val": rep["history"][-1].get("per_domain") if rep.get("history") else {},
-            "health": rep["history"][-1].get("health") if rep.get("history") else {},
+            "best_epoch": bi,
+            "per_domain_at_best": h.get("per_domain", {}),
+            "host_baseline_at_best": h.get("host_baseline", {}),
+            "delta_at_best": h.get("delta", {}),
+            "health_at_best": h.get("health", {}),
         }
     return out
 
