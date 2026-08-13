@@ -3,15 +3,21 @@
 Authoritative protocol: docs/paper_prep/v2_final/hch_v2_first_round_training_protocol_v0.1_2026-08-13.md
 
 Runs exactly 6 domains (LAGO_DE, LAGO_PJM, NEM_SA1) x (Linear, MLP) with two
-variants sharing the SAME architecture and every hyperparameter:
+variants sharing the SAME architecture and every hyperparameter.
+R1B naming (audit §2.1 of hch_v2_r1a_review_r1a5_diagnostics_r1b_revision_v0.1):
 
-    B2 Universal-NoSig  — deterministic Data Signature ZEROED (np.zeros(8)).
-                          The learned per-day pool + identity-init FiLM stay
-                          identical to B3, so the ONLY difference is whether the
-                          frozen S1R domain descriptor reaches the model.
-                          (protocol §15 B2: "deterministic signature zero/disabled")
-    B3 Universal-Sig    — frozen S1R deterministic descriptor [8] as forward
-                          context (protocol §8 / P1-2 descriptor v1).
+    learned_sig (LearnedSig)      — old "Universal-NoSig". Deterministic Data
+                                    Signature ZEROED (np.zeros(8)); the learned
+                                    per-day pool + identity-init FiLM stay
+                                    identical to the other variant. The ONLY
+                                    difference is whether the frozen S1R domain
+                                    descriptor reaches the model. Tentative main.
+    learned_det_sig (Learned+DetSig) — old "Universal-Sig". Frozen S1R
+                                    deterministic descriptor [8] as forward
+                                    context (protocol §8 / P1-2 descriptor v1).
+                                    Demoted to an ablation by R1A evidence.
+
+PlainCore (h'=h, no DataSignature FiLM) is an R1B addition, NOT part of R1A.5.
 
 Shared candidate trained by UniversalCoreTrainer: equal-domain sampling with
 K = median_g N_g updates/domain/epoch (P0-C), macro S2V IAH-CRPS checkpoint
@@ -82,6 +88,18 @@ SEED = 0
 DOMAINS = [("LAGO_DE", "Linear"), ("LAGO_DE", "MLP"),
            ("LAGO_PJM", "Linear"), ("LAGO_PJM", "MLP"),
            ("NEM_SA1", "Linear"), ("NEM_SA1", "MLP")]
+
+# R1B naming (review §2.1 audit fix). Old R1A keys were "nosig"/"sig".
+VARIANTS = ("learned_sig", "learned_det_sig")
+VARIANT_LABELS = {
+    "learned_sig": "LearnedSig",            # = old Universal-NoSig, det=0
+    "learned_det_sig": "Learned+DetSig",    # = old Universal-Sig
+}
+
+
+def det_for_variant(variant: str, info: "DomainInfo") -> np.ndarray:
+    """Deterministic descriptor for a variant: zeros (LearnedSig) or S1R det."""
+    return np.zeros(8) if variant == "learned_sig" else info.det_real
 
 
 # ------------------------------------------------------------ helpers ------
@@ -287,7 +305,7 @@ def train_variant(variant: str, infos: list[DomainInfo],
     head = IAHCandidateHead(D_CORE_CONTEXT, D_MODEL, d_value=D_VALUE, d_sig=D_SIG)
     domains = []
     for info in infos:
-        det = np.zeros(8) if variant == "nosig" else info.det_real
+        det = det_for_variant(variant, info)
         domains.append(DomainBatch(
             name=f"{info.ds_key}:{info.bb}",
             s2t_batches=info.s2t_batches, s2v_batches=info.s2v_batches,
@@ -323,7 +341,7 @@ def reproducibility_check(infos: list[DomainInfo], variant: str,
     losses = []
     for i in order:
         info = infos[int(i)]
-        det_np = np.zeros(8) if variant == "nosig" else info.det_real
+        det_np = det_for_variant(variant, info)
         l, _ = _eval_batch_losses(head2, info.s2v_batches, det_for(det_np, 1))
         losses.append(l)
     macro = float(np.mean([l for l in losses if np.isfinite(l)]))
@@ -356,14 +374,14 @@ def run_domain_chain(info: DomainInfo, variant: str, best_state: dict,
     ds_key, bb = info.ds_key, info.bb
     ts = info.ds["ts"]
     y_full = info.ds["price"].astype(np.float32)
-    det_np = np.zeros(8) if variant == "nosig" else info.det_real
+    det_np = det_for_variant(variant, info)
 
     pipe = HCHV2UniversalPipeline(d_core_context=D_CORE_CONTEXT, d_model=D_MODEL,
                                   alpha=ALPHA, k=None, seed=SEED)
     pipe.candidate_head.load_state_dict(best_state)
     pipe.candidate_head.eval()
     pipe.fit_s1_reference(info.s1_z0, info.s1_hours)
-    if variant == "nosig":
+    if variant == "learned_sig":
         # bundle self-describes the zeroed signature (forward still gets zeros)
         pipe._domain_det = np.zeros(8)
         pipe.candidate_head.core_encoder.signature.set_domain_descriptors(np.zeros(8))
@@ -435,6 +453,12 @@ def run_domain_chain(info: DomainInfo, variant: str, best_state: dict,
                           valid_mask=torch.ones(len(s4_days), 24),
                           domain_det=domain_det)
     cand_out = ev["candidate"]
+
+    # ---- §2.2 audit fix: full-chain before-freeze vs after-reload ----
+    # Same ≥3 fixed S4 queries through pipe (pre-freeze) and pipe2 (from_bundle);
+    # compares scale/rank/atoms/shifts/W1/neighbors/intervals/pi/A_hat/q/LCB/
+    # action/x_final. Audit only, no math change.
+    roundtrip = _roundtrip_check(pipe, pipe2, info, s4_days, det_np, n_check=3)
 
     # ---- per-day + per-hour evidence ----
     day_rows, hour_rows, final_hour_rows = [], [], []
@@ -585,34 +609,94 @@ def run_domain_chain(info: DomainInfo, variant: str, best_state: dict,
                            if cand_crps else None,
         "spike_thr": float(spike_thr),
         "bundle": bundle, "roundtrip_q_restored": q_restored,
-        "roundtrip_ok": _roundtrip_check(pipe2, info, s4_days, det_np, cand_out, ev),
+        "roundtrip_ok": roundtrip["ok"], "roundtrip_detail": roundtrip,
         "days": day_rows, "hours": hour_rows, "final_hours": final_hour_rows,
     }
 
 
-def _roundtrip_check(pipe2, info, s4_days, det_np, cand_out, ev,
-                     n_check: int = 3) -> bool:
-    """RED criterion: S4 chain must reproduce after freeze/reload.
+def _roundtrip_check(pipe_before, pipe_after, info, s4_days, det_np,
+                     n_check: int = 3) -> dict:
+    """§2.2 audit fix: full-chain before-freeze vs after-reload on ≥3 fixed queries.
 
-    Compares the reloaded candidate's x_identity against the original candidate
-    output (not the gated x_final — gating is a deterministic function of
-    candidate + restored memory/k/q, and q-identity is verified separately).
+    Runs the SAME fixed S4 queries through pipe_before (pre-freeze) and
+    pipe_after (from_bundle) and compares the ENTIRE contract:
+
+        scale -> rank(u) -> atom masses -> shifts -> W1 distances ->
+        neighbor IDs -> Down/Up intervals -> final pi -> A_hat -> q -> LCB ->
+        execute/Identity -> final raw prediction.
+
+    Rank is checked by building each pipe's context with its OWN s1_rank_ref
+    and comparing the u column (context dim 0). Audit only; no math change.
+    Returns {"ok": bool, "n_checked": int, "max_abs_diffs": {field: max|Δ|}}.
     """
-    for i in range(min(n_check, len(s4_days))):
-        day = s4_days[i]
-        if float(cand_out["scale_valid"][i]) < 0.5:
+    checked = 0
+    max_diff: dict[str, float] = {}
+
+    def _cmp(name, b, a, atol=1e-5, exact=False):
+        if exact:
+            eq = (list(b) if not isinstance(b, str) else [b]) == \
+                 (list(a) if not isinstance(a, str) else [a])
+            max_diff[name] = max(max_diff.get(name, 0.0), 0.0 if eq else 1.0)
+            return eq
+        b_arr = np.asarray(b, dtype=np.float64).ravel()
+        a_arr = np.asarray(a, dtype=np.float64).ravel()
+        md = float(np.max(np.abs(b_arr - a_arr))) if b_arr.size else 0.0
+        max_diff[name] = max(max_diff.get(name, 0.0), md)
+        return md < atol
+
+    for i, day in enumerate(s4_days):
+        if checked >= n_check:
+            break
+        if not np.isfinite(day["host_day"]).all():
             continue
+        host_t = torch.tensor(day["host_day"].reshape(1, 24, 1), dtype=torch.float32)
+        vm = torch.ones(1, 24)
         det = det_for(det_np, 1)
+        y_full = info.ds["price"].astype(np.float32)
+        ctx_b = build_core_context(day["host_day"], day["hours"],
+                                   pipe_before.s1_rank_ref, info.z0_full,
+                                   info.s_full, y_full, day["idxs"])
+        ctx_a = build_core_context(day["host_day"], day["hours"],
+                                   pipe_after.s1_rank_ref, info.z0_full,
+                                   info.s_full, y_full, day["idxs"])
+        if not _cmp("rank_u", ctx_b[:, 0], ctx_a[:, 0], atol=1e-6):
+            return {"ok": False, "n_checked": checked, "max_abs_diffs": max_diff}
         with torch.no_grad():
-            out2 = pipe2.candidate_head(
-                torch.tensor(day["host_day"].reshape(1, 24, 1), dtype=torch.float32),
-                torch.tensor(day["ctx"].reshape(1, 24, -1), dtype=torch.float32),
-                valid_mask=torch.ones(1, 24), domain_det=det)
-            x2 = out2["x_identity"][0].detach().cpu().numpy().ravel()
-        x1 = cand_out["x_identity"][i].detach().cpu().numpy().ravel()
-        if not np.allclose(x1, x2, atol=1e-5):
-            return False
-    return True
+            ev_b = pipe_before.predict_s4(
+                host_t, torch.tensor(ctx_b.reshape(1, 24, -1), dtype=torch.float32),
+                valid_mask=vm, domain_det=det)
+            ev_a = pipe_after.predict_s4(
+                host_t, torch.tensor(ctx_a.reshape(1, 24, -1), dtype=torch.float32),
+                valid_mask=vm, domain_det=det)
+
+        ob, oa = ev_b["candidate"], ev_a["candidate"]
+        ok = True
+        ok &= _cmp("scale_s", ob["s"][0], oa["s"][0])
+        ok &= _cmp("scale_valid", ob["scale_valid"][0], oa["scale_valid"][0])
+        for f in ("z0", "w_minus", "w_zero", "w_plus", "m_minus", "m_plus",
+                  "x_identity"):
+            ok &= _cmp(f"atom_{f}", ob[f][0], oa[f][0])
+        ok &= _cmp("neighbor_ids", ev_b["neighbors"][0], ev_a["neighbors"][0],
+                   exact=True)
+        ok &= _cmp("w1_dists", ev_b["neighbor_distances"][0],
+                   ev_a["neighbor_distances"][0])
+        pb, pa = ev_b["proposals"][0], ev_a["proposals"][0]
+        ok &= _cmp("I_down", pb["I_down"] or (-1,), pa["I_down"] or (-1,),
+                   exact=True)
+        ok &= _cmp("I_up", pb["I_up"] or (-1,), pa["I_up"] or (-1,), exact=True)
+        ok &= _cmp("final_pi", ev_b["pi"][0], ev_a["pi"][0])
+        ok &= _cmp("A_hat", ev_b["A_hat"][0], ev_a["A_hat"][0])
+        ok &= _cmp("q", ev_b["q"], ev_a["q"])
+        ok &= _cmp("lcb", ev_b["lcb"][0], ev_a["lcb"][0])
+        ok &= _cmp("action", ev_b["final_action"][0], ev_a["final_action"][0],
+                   exact=True)
+        ok &= _cmp("x_final", ev_b["x_final"][0], ev_a["x_final"][0])
+        if not ok:
+            return {"ok": False, "n_checked": checked, "max_abs_diffs": max_diff}
+        checked += 1
+
+    return {"ok": checked >= n_check, "n_checked": checked,
+            "max_abs_diffs": max_diff}
 
 
 # -------------------------------------------------------------- artifacts ----
@@ -786,13 +870,13 @@ def compute_verdict(reports, results, repro) -> str:
     lines.append(f"- git commit: `{_git_head()}`")
     lines.append("")
 
-    for variant in ("nosig", "sig"):
+    for variant in VARIANTS:
         rep = reports[variant]
         bi = _best_epoch_index(rep)
         h = rep["history"][bi]
         host_macro = float(np.mean(list(h["host_baseline"].values())))
         n_improved = sum(1 for v in h["delta"].values() if v < 0)
-        lines.append(f"## {variant} (best epoch {bi})")
+        lines.append(f"## {VARIANT_LABELS[variant]} = `{variant}` (best epoch {bi})")
         lines.append("")
         lines.append(f"- best macro S2V IAH-CRPS = `{rep['best_macro_s2v']:.5f}`")
         lines.append(f"- worst domain L_worst at best = `{rep['worst_s2v_at_best']:.5f}`")
@@ -810,8 +894,8 @@ def compute_verdict(reports, results, repro) -> str:
         lines.append(f"- reproducibility (shuffled re-eval) = `{repro[variant]}`")
         lines.append("")
 
-    # verdict on B3 Universal-Sig (the proposed main model)
-    rep = reports["sig"]
+    # verdict on Learned+DetSig (old Universal-Sig); R1A ran on both variants
+    rep = reports["learned_det_sig"]
     bi = _best_epoch_index(rep)
     h = rep["history"][bi]
     host_macro = float(np.mean(list(h["host_baseline"].values())))
@@ -829,9 +913,9 @@ def compute_verdict(reports, results, repro) -> str:
     va = [x["macro_s2v"] for x in rep["history"]]
     if len(tr) >= 3 and tr[-1] < tr[0] and va[-1] > va[0] + 1e-4:
         red.append("validation worsens while train improves (overfitting pattern)")
-    if not repro["sig"]["ok"]:
+    if not repro["learned_det_sig"]["ok"]:
         red.append("S2V eval not reproducible after reload (order effect)")
-    for r in results["sig"]:
+    for r in results["learned_det_sig"]:
         if not r["roundtrip_ok"]:
             red.append(f"{r['domain']}: S4 chain NOT reproduced after freeze/reload")
         if r["roundtrip_q_restored"] != r["q"]:
@@ -845,10 +929,10 @@ def compute_verdict(reports, results, repro) -> str:
     nem = {k: v for k, v in deltas.items() if "NEM_SA1" in k}
     if any(v > 0 for v in nem.values()) and n_improved > 0:
         yellow.append("NEM_SA1 sacrificed despite overall improvement")
-    s_tr = [x["macro_s2v"] for x in reports["sig"]["history"]]
-    n_tr = [x["macro_s2v"] for x in reports["nosig"]["history"]]
+    s_tr = [x["macro_s2v"] for x in reports["learned_det_sig"]["history"]]
+    n_tr = [x["macro_s2v"] for x in reports["learned_sig"]["history"]]
     if len(s_tr) >= 3 and np.std(s_tr) > 2 * np.std(n_tr):
-        yellow.append("Sig variant much less stable than NoSig")
+        yellow.append("Learned+DetSig much less stable than LearnedSig")
 
     collapsed = (health["mean_w_zero"] > 0.999
                  or (health["frac_m_minus_alive"] < 0.01
@@ -882,9 +966,13 @@ def compute_verdict(reports, results, repro) -> str:
     lines.append("Hypotheses tested (protocol §2):")
     lines.append("- Q1 (one candidate across heterogeneous markets): "
                  f"{'supports' if n_improved >= 2 else 'not yet supported'}")
-    lines.append(f"- Q2 (Data Signature helps): "
-                 f"best_macro nosig={reports['nosig']['best_macro_s2v']:.5f} vs "
-                 f"sig={reports['sig']['best_macro_s2v']:.5f}")
+    lines.append("- Q2 (8-dim frozen S1R descriptor beyond the learned daily "
+                 "signature): "
+                 f"best_macro LearnedSig={reports['learned_sig']['best_macro_s2v']:.5f} "
+                 f"vs Learned+DetSig="
+                 f"{reports['learned_det_sig']['best_macro_s2v']:.5f} — the "
+                 "frozen descriptor adds no measurable gain. Audit §2.1: this "
+                 "is \"simplifiable\", NOT \"Data Signature has no gain\".")
     lines.append("- Q3/Q4 (Local-Core / unseen DK1): OUT OF SCOPE for R1A (R1B / §17)")
     lines.append("")
     lines.append("Server U0 authorization: "
@@ -927,7 +1015,7 @@ def main():
 
     # ---- train both variants ----
     heads, reports, repro = {}, {}, {}
-    for variant in ("nosig", "sig"):
+    for variant in VARIANTS:
         print(f"\n[R1A/train] variant={variant} ...")
         head, report = train_variant(variant, infos, args.epochs, args.patience)
         heads[variant] = head
@@ -945,7 +1033,7 @@ def main():
         s1_p = info.s1_prices
         spike_thr[f"{info.ds_key}:{info.bb}"] = float(
             np.quantile(s1_p, 0.99)) if len(s1_p) else None
-    for variant in ("nosig", "sig"):
+    for variant in VARIANTS:
         results[variant] = []
         best_state = {k: v.clone() for k, v in heads[variant].state_dict().items()}
         for info in infos:
@@ -967,11 +1055,16 @@ def main():
         "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "domains": DOMAINS,
         "variants": {
-            "nosig": "Universal-NoSig: deterministic Data Signature zeroed "
-                     "(np.zeros(8)); learned per-day pool + FiLM identical to sig",
-            "sig": "Universal-Sig: frozen S1R deterministic descriptor [8] as "
-                   "forward context",
+            "learned_sig": "LearnedSig (=old Universal-NoSig): deterministic "
+                           "Data Signature zeroed (np.zeros(8)); learned per-day "
+                           "pool + FiLM identical to the other variant. "
+                           "Tentative main (review §2.1).",
+            "learned_det_sig": "Learned+DetSig (=old Universal-Sig): frozen S1R "
+                               "deterministic descriptor [8] as forward context. "
+                               "Demoted to ablation.",
         },
+        "variant_rename_note": "R1B naming audit §2.1: old nosig->learned_sig, "
+                               "old sig->learned_det_sig; PlainCore is R1B-only",
         "d_core_context": D_CORE_CONTEXT, "d_model": D_MODEL, "d_sig": D_SIG,
         "d_value": D_VALUE,
         "optimizer": "AdamW", "lr": LR, "weight_decay": WD, "clip": CLIP,
@@ -986,7 +1079,8 @@ def main():
     }
     write_artifacts(out_dir, infos, reports, results, run_config, {
         "cache_records": cache_records,
-        "head_nosig": heads["nosig"], "head_sig": heads["sig"],
+        "head_learned_sig": heads["learned_sig"],
+        "head_learned_det_sig": heads["learned_det_sig"],
     })
 
     verdict = compute_verdict(reports, results, repro)
