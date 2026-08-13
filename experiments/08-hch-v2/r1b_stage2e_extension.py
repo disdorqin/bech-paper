@@ -57,7 +57,9 @@ def main():
 
     # ---- 0. train + freeze primary candidate (same deterministic seed-0 head) ----
     doms = {}
-    for name in EXT_DOMAINS:
+    all_names = ([f"{mk}:{bb}" for mk in SOURCE_MARKETS for bb in HOSTS]
+                 + EXT_DOMAINS)
+    for name in all_names:
         mk, bb = name.split(":")
         print(f"[prep] {name} ...", flush=True)
         info = R.prepare_domain(mk, bb, seed=SEED)
