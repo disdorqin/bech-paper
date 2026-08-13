@@ -42,3 +42,5 @@ data/raw/ts_benchmarks/electricity.csv
 # 嵌入的 git 仓库
 experiments/07-route-e/peers/PIR/
 experiments/07-route-e/peers/vendor/
+# R1A / HCH-v2 实验产物（host cache、R1A_* 产物目录）— 只提交源码+文档，不提交产物
+experiments/08-hch-v2/results/
