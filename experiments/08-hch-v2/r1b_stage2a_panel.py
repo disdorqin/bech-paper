@@ -120,7 +120,8 @@ def provenance(declared_commit: str | None) -> dict:
         "sha256_iah_candidate": _sha256("src/iah_candidate.py"),
         "sha256_universal_trainer": _sha256("src/universal_trainer.py"),
         "sha256_iah_crps_loss": _sha256("src/iah_crps_loss.py"),
-        "sha256_data_signature": _sha256("src/data_signature.py"),
+        # DataSignature class lives in src/hch_v2_context.py (no data_signature.py)
+        "sha256_data_signature": _sha256("src/hch_v2_context.py"),
         "provenance_note": ("git_sha from server .git if available; "
                             "declared_source_commit is the local commit whose "
                             "files were synced to the server (P0-R1B-S3)."),
