@@ -117,13 +117,16 @@ def _eval_cell_worker(args) -> list[dict]:
 
 def t5_verdict(foreign_macro: dict, domestic_macro: dict, r_grid: list[float],
                seeds: list[int]) -> tuple[str, list[str]]:
-    """Doc §3 rule (macro = mean per-cell relative ΔMAE, r vs 0, per seed).
+    """Doc §3 rule, operationalized exactly as written:
 
-    KEEP: every r has ALL seeds foreign_macro <= +0.5%, AND some r has domestic
-          improvement >= +2% (domestic_macro <= -0.02) in >=2/3 seeds.
-    REJECT: some r has foreign_macro > +0.5% in >=2/3 seeds, OR no r improves
-            domestic at all.
-    INCONCLUSIVE: otherwise.
+      KEEP  foreign: 32-cell MACRO mean (across seeds) ΔMAE <= +0.5% noise band
+      KEEP  domestic: some r with >=2/3 seeds domestic <= -2%
+      REJECT foreign: some r with >=2/3 seeds foreign > +0.5%  (明确负迁移)
+      REJECT domestic: no r reaches the domestic-improvement bar
+      both keep_r and reject_r non-empty -> INCONCLUSIVE (r 之间不一致).
+
+    (KEEP 国外条件按 doc 用"宏平均"= 跨 seed 均值;REJECT 国外条件按 doc 用
+    "2/3 seed 一致"。二者并存时若同一 r 都触发 -> INCONCLUSIVE。)
     """
     reasons = []
     if not foreign_macro or not any(domestic_macro.get(r) for r in r_grid):
@@ -133,21 +136,23 @@ def t5_verdict(foreign_macro: dict, domestic_macro: dict, r_grid: list[float],
     for r in r_grid:
         fw = foreign_macro.get(r, [])
         dm = domestic_macro.get(r, [])
-        n_seed = len(seeds)
-        reasons.append(f"r={r:g}: foreign_macro/seed={[round(x,4) for x in fw]} "
-                       f"domestic_macro/seed={[round(x,4) for x in dm]}")
-    ok_foreign = all(all(m <= 0.005 for m in foreign_macro.get(r, []))
-                     for r in r_grid)
-    dom_improve = [r for r in r_grid
-                   if sum(1 for m in domestic_macro.get(r, []) if m <= -0.02) >= 2]
-    bad_foreign = [r for r in r_grid
-                   if sum(1 for m in foreign_macro.get(r, []) if m > 0.005) >= 2]
-    reasons.append(f"KEEP_foreign(≤+0.5% all seeds all r)={ok_foreign}  "
-                   f"domestic_improve(r with ≥2/3 seeds ≤-2%)={dom_improve}  "
-                   f"foreign_reject(>+0.5% in ≥2/3 seeds)={bad_foreign}")
-    if ok_foreign and dom_improve:
+        reasons.append(f"r={r:g}: foreign_macro_mean={float(np.mean(fw)):+.4f} "
+                       f"per-seed={[round(x,4) for x in fw]}  "
+                       f"domestic_per-seed={[round(x,4) for x in dm]}")
+    dom_ok = [r for r in r_grid
+              if sum(1 for m in domestic_macro.get(r, []) if m <= -0.02) >= 2]
+    keep_r = [r for r in r_grid
+              if float(np.mean(foreign_macro.get(r, []))) <= 0.005 and r in dom_ok]
+    reject_r = [r for r in r_grid
+                if sum(1 for m in foreign_macro.get(r, []) if m > 0.005) >= 2]
+    reasons.append(f"domestic_improve_r(≥2/3 seeds ≤-2%)={dom_ok}  "
+                   f"keep_r(foreign_macro_mean≤+0.5% ∩ dom_ok)={keep_r}  "
+                   f"foreign_reject_r(≥2/3 seeds >+0.5%)={reject_r}")
+    if not dom_ok:
+        return "REJECT", reasons
+    if keep_r and not reject_r:
         return "KEEP", reasons
-    if bad_foreign or not dom_improve:
+    if reject_r and not keep_r:
         return "REJECT", reasons
     return "INCONCLUSIVE", reasons
 
