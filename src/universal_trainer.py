@@ -173,8 +173,10 @@ class UniversalCoreTrainer:
     def train(self, domains: list[DomainBatch], epochs: int = 8,
               lr: float = 3e-4, weight_decay: float = 1e-4,
               clip: float = 1.0, patience: int = 3,
-              weights: Optional[list[float]] = None) -> dict:
-        """True equal-domain sampling + macro S2V checkpoint selection.
+              weights: Optional[list[float]] = None,
+              sampling: str = "equal") -> dict:
+        """Equal-domain sampling + macro S2V checkpoint selection (P0-C),
+        or T2 full-coverage sampling.
 
         domains: list of DomainBatch (one per (market, host)).
         weights: optional per-domain update weights (same order as `domains`).
@@ -184,6 +186,13 @@ class UniversalCoreTrainer:
                    but each epoch draws domains proportional to `weights`
                    (difficult domains get more gradient weight). mean(weights)
                    ~ 1 keeps the budget comparable to the equal case.
+        sampling: "equal" (P0-C / weights, default) | "full_coverage" (T2).
+          full_coverage: every domain's FULL set of S2T batches is visited
+          exactly once per epoch (no truncation of long domains, no
+          repetition of short domains). Total updates/epoch = Σ_g N_g;
+          per-domain gradient weight becomes proportional to data volume
+          (N_g) instead of equal. Ignores `weights`. This is the T2
+          "fix day-exposure imbalance" direction (P1 §5.2).
         Returns training report: best macro S2V CRPS, L_worst, per-domain val,
         and per-epoch updates_per_domain (P0-C audit; weights mode reports the
         realized per-domain counts instead of asserting equality).
@@ -200,9 +209,16 @@ class UniversalCoreTrainer:
         # receive the SAME number of optimizer updates per epoch. K = median_g
         # N_g; longer domains sample without replacement, shorter with, so a
         # long market never gets more gradient weight for being longer.
-        K = int(np.median(n_batches))
-        print(f"[UCT] {n_domains} domains, epochs={epochs}, lr={lr}, "
-              f"K={K}/domain/epoch")
+        if sampling == "full_coverage":
+            K = None  # T2: 每域 N_g 次全覆盖, 无 K 预算
+            total_updates = int(np.sum(n_batches))
+            print(f"[UCT] {n_domains} domains, epochs={epochs}, lr={lr}, "
+                  f"sampling=full_coverage, ΣN_g={total_updates}/epoch "
+                  f"(N_g per domain: {n_batches})")
+        else:
+            K = int(np.median(n_batches))
+            print(f"[UCT] {n_domains} domains, epochs={epochs}, lr={lr}, "
+                  f"K={K}/domain/epoch")
 
         opt = torch.optim.AdamW(self.head.parameters(), lr=lr,
                                 weight_decay=weight_decay)
@@ -231,8 +247,13 @@ class UniversalCoreTrainer:
             epoch_losses = []
             grad_norms, nan_batches, scale_invalid_days = [], 0, 0
             updates = [0] * n_domains
-            # schedule: equal-domain (P0-C) or weighted temperature sampling
-            if weights is None:
+            # schedule: equal-domain (P0-C), weighted temperature sampling,
+            # or T2 full-coverage (每域全部 batch 恰好一次/epoch, 无截断无重复)
+            if sampling == "full_coverage":
+                schedule = np.concatenate(
+                    [[g] * len(domains[g].s2t_batches) for g in range(n_domains)])
+                rng.shuffle(schedule)
+            elif weights is None:
                 schedule = np.repeat(np.arange(n_domains), K)
                 rng.shuffle(schedule)
             else:
@@ -248,8 +269,10 @@ class UniversalCoreTrainer:
             for g in schedule:
                 d = domains[g]
                 pool = pools[g]
-                if not pool:  # exhausted -> sample with replacement
-                    pools[g] = list(range(len(d.s2t_batches)))
+                if not pool:  # exhausted
+                    if sampling == "full_coverage":
+                        continue  # T2: 该域已全覆盖, schedule 保证后续不再抽到
+                    pools[g] = list(range(len(d.s2t_batches)))  # with replacement
                     pool = pools[g]
                 bi = pool.pop()
                 batch = d.s2t_batches[bi]
@@ -273,7 +296,12 @@ class UniversalCoreTrainer:
                 epoch_losses.append(float(loss.detach()))
             updates_per_domain = {domains[g].name: updates[g]
                                   for g in range(n_domains)}
-            if weights is None:
+            if sampling == "full_coverage":
+                assert sum(updates) == total_updates, \
+                    f"full-coverage total {sum(updates)} != {total_updates}"
+                assert all(updates[g] == n_batches[g] for g in range(n_domains)), \
+                    f"full-coverage imbalance: {updates_per_domain}"
+            elif weights is None:
                 assert all(v == K for v in updates), \
                     f"P0-C imbalance: {updates_per_domain} (expect {K}/domain)"
             else:
