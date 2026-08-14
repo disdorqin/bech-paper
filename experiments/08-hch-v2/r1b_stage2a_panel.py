@@ -86,7 +86,10 @@ def transfer_category(market: str, host_seen: bool) -> str:
         return "UNSEEN_DATASET_SAME_MARKET" if host_seen else "UNSEEN_MARKET_AND_HOST"
     if market in H3:
         return "UNSEEN_SCHEMA_REGIME" if host_seen else "UNSEEN_MARKET_AND_HOST"
-    raise ValueError(f"unknown market {market}")
+    # domestic / private markets (e.g. shandong_DA/shandong_RT): never in the
+    # public-universal training set -> treat as unseen schema regime, own label
+    # so they never contaminate the H1-H3 aggregates.
+    return "DOMESTIC_UNSEEN" if host_seen else "DOMESTIC_UNSEEN_AND_HOST"
 
 
 def schema_class(market: str) -> str:

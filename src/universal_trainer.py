@@ -172,12 +172,21 @@ class UniversalCoreTrainer:
 
     def train(self, domains: list[DomainBatch], epochs: int = 8,
               lr: float = 3e-4, weight_decay: float = 1e-4,
-              clip: float = 1.0, patience: int = 3) -> dict:
+              clip: float = 1.0, patience: int = 3,
+              weights: Optional[list[float]] = None) -> dict:
         """True equal-domain sampling + macro S2V checkpoint selection.
 
         domains: list of DomainBatch (one per (market, host)).
+        weights: optional per-domain update weights (same order as `domains`).
+          None  -> P0-C exact equal-domain sampling (every domain exactly K
+                   updates/epoch; total = n_domains*K).
+          given -> Case C temperature sampling: total updates stay n_domains*K
+                   but each epoch draws domains proportional to `weights`
+                   (difficult domains get more gradient weight). mean(weights)
+                   ~ 1 keeps the budget comparable to the equal case.
         Returns training report: best macro S2V CRPS, L_worst, per-domain val,
-        and per-epoch updates_per_domain (P0-C audit).
+        and per-epoch updates_per_domain (P0-C audit; weights mode reports the
+        realized per-domain counts instead of asserting equality).
         """
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
@@ -222,9 +231,18 @@ class UniversalCoreTrainer:
             epoch_losses = []
             grad_norms, nan_batches, scale_invalid_days = [], 0, 0
             updates = [0] * n_domains
-            # shuffled schedule: every domain appears exactly K times
-            schedule = np.repeat(np.arange(n_domains), K)
-            rng.shuffle(schedule)
+            # schedule: equal-domain (P0-C) or weighted temperature sampling
+            if weights is None:
+                schedule = np.repeat(np.arange(n_domains), K)
+                rng.shuffle(schedule)
+            else:
+                w = np.asarray(weights, dtype=float)
+                assert w.shape == (n_domains,), \
+                    f"weights shape {w.shape} != n_domains {n_domains}"
+                w = np.clip(w, 0.0, None)
+                if not np.isfinite(w).all() or w.sum() <= 0:
+                    w = np.ones(n_domains)
+                schedule = rng.choice(n_domains, size=n_domains * K, p=w / w.sum())
             pools = [list(range(len(domains[g].s2t_batches)))
                      for g in range(n_domains)]
             for g in schedule:
@@ -255,8 +273,12 @@ class UniversalCoreTrainer:
                 epoch_losses.append(float(loss.detach()))
             updates_per_domain = {domains[g].name: updates[g]
                                   for g in range(n_domains)}
-            assert all(v == K for v in updates), \
-                f"P0-C imbalance: {updates_per_domain} (expect {K}/domain)"
+            if weights is None:
+                assert all(v == K for v in updates), \
+                    f"P0-C imbalance: {updates_per_domain} (expect {K}/domain)"
+            else:
+                assert sum(updates) == n_domains * K, \
+                    f"weighted schedule total {sum(updates)} != {n_domains * K}"
 
             macro, worst, per_g, host_g, delta_g, health = _eval_all()
             history.append({"epoch": ep, "macro_s2v": macro,

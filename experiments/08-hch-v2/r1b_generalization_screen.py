@@ -236,15 +236,21 @@ def eval_domain(head: nn.Module, dom: EvalDomain, variant: str) -> dict:
 
 
 def train_candidate(variant: str, train_domains: list[EvalDomain],
-                    seed: int = SEED) -> tuple[nn.Module, dict]:
-    """Train a frozen candidate at a given RNG seed (Stage-2C varies seed)."""
+                    seed: int = SEED,
+                    weights: Optional[list[float]] = None) -> tuple[nn.Module, dict]:
+    """Train a frozen candidate at a given RNG seed (Stage-2C varies seed).
+
+    weights: optional per-domain update weights (same order as train_domains),
+      forwarded to UniversalCoreTrainer.train (Case C temperature sampling).
+      None preserves the default P0-C equal-domain sampling.
+    """
     torch.manual_seed(seed)
     np.random.seed(seed)
     head = build_head(variant)
     domains = [domain_batches(d) for d in train_domains]
     trainer = UniversalCoreTrainer(head, seed=seed)
     report = trainer.train(domains, epochs=EPOCHS, lr=LR, weight_decay=WD,
-                           clip=CLIP, patience=PATIENCE)
+                           clip=CLIP, patience=PATIENCE, weights=weights)
     head.eval()
     return head, report
 

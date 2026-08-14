@@ -1,0 +1,9 @@
+cell,tag,note,mae,host_mae,delta_crps,degradation_frac,selected
+shandong_DA:Linear,ABSTAIN_SAFE,DVG abstains; final == host,106.93008,106.93008,-0.032855,0.0,C3
+shandong_DA:MLP,NEUTRAL,near-flat,158.988577,159.081383,-0.176288,-0.000583,C3
+shandong_DA:LSTM,CANDIDATE,CRPS<0 and point improves,111.212516,112.970913,-0.028551,-0.015565,C3
+shandong_DA:PatchTST,POINT_READOUT,CRPS<0 but point MAE worse -> Case A,123.539665,121.817232,-0.042026,0.014139,C3
+shandong_RT:Linear,CANDIDATE,CRPS<0 and point improves,171.493611,173.986643,-0.060803,-0.014329,C3
+shandong_RT:MLP,POINT_READOUT,CRPS<0 but point MAE worse -> Case A,276.797505,275.330217,-0.118461,0.005329,C3
+shandong_RT:LSTM,ABSTAIN_SAFE,DVG abstains; final == host,141.844133,141.844133,-0.048807,0.0,C3
+shandong_RT:PatchTST,ABSTAIN_SAFE,DVG abstains; final == host,136.493619,136.493619,-0.067437,0.0,C3

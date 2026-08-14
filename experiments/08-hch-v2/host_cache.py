@@ -43,6 +43,26 @@ def _load_ds(key: str) -> dict:
     return load_dataset(key)
 
 
+def _cache_is_valid(ds_key: str, bb_name: str) -> bool:
+    """Cache is reusable only if it has the current split_hash metadata (P0-B).
+
+    Legacy R1B caches (seg.json = {S1,S2,S3,S4}, no split_hash) use a 4-segment
+    split and are NOT compatible with the 7-segment protocol split -> regenerate.
+    """
+    cache_dir = CACHE_ROOT / ds_key / bb_name
+    if not (cache_dir / "pred_full.npy").exists():
+        return False
+    seg_path = cache_dir / "seg.json"
+    if not seg_path.exists():
+        return False
+    try:
+        with open(seg_path) as f:
+            seg = json.load(f)
+    except Exception:
+        return False
+    return isinstance(seg, dict) and "split_hash" in seg
+
+
 def _hash_array(arr: np.ndarray) -> str:
     return hashlib.sha256(arr.tobytes()).hexdigest()[:16]
 
@@ -186,8 +206,8 @@ def main():
         for bb_name in backbones:
             done += 1
             cache_dir = CACHE_ROOT / ds_key / bb_name
-            if args.resume and (cache_dir / "pred_full.npy").exists():
-                print(f"[{done}/{total}] {ds_key} x {bb_name} SKIP (cached)")
+            if args.resume and _cache_is_valid(ds_key, bb_name):
+                print(f"[{done}/{total}] {ds_key} x {bb_name} SKIP (valid cache)")
                 continue
             print(f"[{done}/{total}] {ds_key} x {bb_name} ", end="", flush=True)
             try:

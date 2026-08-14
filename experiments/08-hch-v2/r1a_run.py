@@ -60,7 +60,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 HERE = Path(__file__).resolve().parent
 
-from common import load_dataset, build_tabular, assert_no_leakage, dm_test
+from common import load_dataset, load_shandong, build_tabular, assert_no_leakage, dm_test
 from host_cache import cache_one
 from eval_manifest import ExperimentManifest, SPLIT_7
 from hch_v2_context import compute_domain_descriptors
@@ -217,7 +217,13 @@ class DomainInfo:
 
 def prepare_domain(ds_key: str, bb: str, seed: int = 0) -> DomainInfo:
     """Load cache (host fitted on H0 only, P0-2), build S1R ref/signature + S2 batches."""
-    ds = load_dataset(ds_key)
+    if ds_key in ("shandong_DA", "shandong_RT"):
+        # Paper Gate: domestic headline (24h hourly file). 96pt xlsx EXCLUDED
+        # by user decision 2026-08-14.
+        ds = load_shandong(price_col="日前电价" if ds_key == "shandong_DA" else "实时电价",
+                           encoding="gbk")
+    else:
+        ds = load_dataset(ds_key)
     y_full = ds["price"].astype(np.float32)
     ts = ds["ts"]
     X, y, names, valid = build_tabular(ds)

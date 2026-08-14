@@ -1,0 +1,5 @@
+cell,tag,note,mae,host_mae,delta_crps,degradation_frac,selected
+shandong_DA:Linear,POINT_READOUT,CRPS<0 but point MAE worse -> Case A,108.759962,106.93008,-0.04672,0.017113,C0
+shandong_DA:MLP,CANDIDATE,CRPS<0 and point improves,156.323859,159.081383,-0.175431,-0.017334,C3
+shandong_RT:Linear,POINT_READOUT,CRPS<0 but point MAE worse -> Case A,177.742291,173.986643,-0.085258,0.021586,C0
+shandong_RT:MLP,CANDIDATE,CRPS<0 and point improves,263.781696,275.330217,-0.142236,-0.041944,C0

@@ -1,0 +1,5 @@
+﻿host,family,n_cached_datasets,cached_datasets
+Linear,Ridge-style,5,LAGO_DE|LAGO_BE|LAGO_FR|LAGO_PJM|NEM_SA1
+MLP,DNN,5,LAGO_DE|LAGO_BE|LAGO_FR|LAGO_PJM|NEM_SA1
+LSTM,SeqRNN,4,LAGO_DE|LAGO_BE|LAGO_FR|LAGO_PJM
+PatchTST,patch-transformer,3,LAGO_DE|LAGO_BE|LAGO_FR

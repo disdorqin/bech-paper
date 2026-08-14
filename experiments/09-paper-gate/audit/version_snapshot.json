@@ -1,0 +1,43 @@
+{
+  "stage": "WP-0 asset baseline",
+  "date": "2026-08-14",
+  "git_sha": "5182ef40ad4b2d4981dc8f9a21ff0553b7c440e6",
+  "branch": "exp/r1b-screening-20260813",
+  "generator": "experiments/09-paper-gate/audit/make_dataset_manifest.py",
+  "artifacts": [
+    "02_DATASET_MANIFEST.csv",
+    "03_DOMESTIC_DATA_AUDIT.csv",
+    "04_HOST_MANIFEST.csv"
+  ],
+  "audit_conclusions": {
+    "foreign_headline": {
+      "n": 8,
+      "all_hourly": true,
+      "neg_price": {"LAGO_DE": "1.03%", "NEM_SA1": "26.0%", "NORD_DK1": "2.77%",
+                    "LAGO_PJM": "0.18%", "LAGO_BE": "0.05%", "LAGO_FR": "0.07%",
+                    "LAGO_NP": "0.00%", "GEFCOM14P": "0.00%"},
+      "info_cutoff_ok": true
+    },
+    "foreign_extended": {
+      "n": 8,
+      "all_hourly": true,
+      "neg_price": "DE_EPEX 3.55% / EPEX_* 2-3.4% / NORD_* 1.1-4.3% / PJM_2020 0.00%",
+      "note": "PJM_2020 + controls are 0% neg -> normal-market controls"
+    },
+    "shandong": {
+      "headline_eligible_DA": true,
+      "headline_eligible_RT": true,
+      "file": "shandong_pmos_hourly.csv (24pt hourly)",
+      "period": "2022-01-01 .. 2026-07-18",
+      "neg_price": {"DA": "11.12%", "RT": "13.38%"},
+      "96point_file": "EXCLUDED by user decision 2026-08-14 (only 24pt hourly tested)"
+    },
+    "other_provinces": {
+      "nx_gs_sx_qh": "all hourly, DA+RT present, 0.00% neg price -> secondary table only, NOT headline eligible",
+      "periods": {"ningxia": "2025-10 .. 2026-04 (4224h)", "gansu": "2024-07 .. 2026-04 (14112h)",
+                  "shaanxi": "2025-01 .. 2026-03 (10752h)", "qinghai": "2025-09 .. 2026-04 (4440h)"}
+    },
+    "host_cache_gap": "all-4-host cache complete ONLY for LAGO_DE/BE/FR. Linear+MLP ready on 5, LSTM on 4, PatchTST on 3. WP-5 must fill headline+extended+shandong for 4 hosts.",
+    "next": "WP-1 P0-A final replay unification + 3 regression tests"
+  }
+}

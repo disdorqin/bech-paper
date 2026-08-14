@@ -1,0 +1,9 @@
+cell,metric,b5_score,best_method,best_score,gap_to_best_pct,b5_rank,n_methods,strict_top1,tied_top1,top2
+shandong_DA:Linear,MAE,108.759962,B1_ResidualL1,74.142748,46.69,7,7,False,False,False
+shandong_DA:Linear,sMAPE,50.239205,B1_ResidualL1,37.983143,32.267,7,7,False,False,False
+shandong_DA:MLP,MAE,156.323859,B3_DeltaAdapter,132.384243,18.083,5,7,False,False,False
+shandong_DA:MLP,sMAPE,62.084773,B3_DeltaAdapter,59.316802,4.666,5,7,False,False,False
+shandong_RT:Linear,MAE,177.742291,B4_PIR,111.860321,58.897,7,7,False,False,False
+shandong_RT:Linear,sMAPE,64.61667,B4_PIR,51.74743,24.869,7,7,False,False,False
+shandong_RT:MLP,MAE,263.781696,B3_DeltaAdapter,193.551761,36.285,6,7,False,False,False
+shandong_RT:MLP,sMAPE,78.021969,B3_DeltaAdapter,71.285616,9.45,6,7,False,False,False

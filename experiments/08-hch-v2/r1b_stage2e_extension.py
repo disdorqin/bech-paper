@@ -37,7 +37,8 @@ from r1b_generalization_screen import (
     SOURCE_MARKETS, HOSTS, SEED, EPOCHS, PATIENCE, EvalDomain, train_candidate,
 )
 from r1b_stage2a_panel import provenance, eval_panel_domain, _write_csv
-from r1b_stage2d_action_chain import forecast_metrics, PREQ_CFG, MAE_SAFETY
+from _final_point import final_metrics
+from r1b_stage2d_action_chain import PREQ_CFG, MAE_SAFETY
 
 EXT_MARKETS = ["EPEX_FR", "PJM_2020", "GEFCOM14P"]
 EXT_HOSTS = ["Linear", "PatchTST"]
@@ -102,7 +103,9 @@ def main():
         calibrator = "C3_local_isotonic" if sel == "C3" else "C0_raw"
 
         pan = eval_panel_domain(head, doms[name], "learned_sig")
-        fm = forecast_metrics(dd)
+        # P0-A: headline point metrics = TRUE final output of SELECTED policy.
+        fm = final_metrics(dv_a2)
+        fm = {k: v for k, v in fm.items() if not isinstance(v, np.ndarray)}
 
         sel_rows.append({
             "domain": name, "total_s3m_days": n_total,
@@ -115,12 +118,14 @@ def main():
             "lcb90": boot.get("lcb") if boot else None,
             "mean_paired_delta": boot.get("mean_delta") if boot else None,
         })
+        fm_scalar = {k: v for k, v in fm.items()
+                     if k not in ("days",) and not isinstance(v, np.ndarray)}
         ac_rows.append({
             "domain": name, "market": mk, "host": bb,
             "transfer": "EXTENSION",
             "host_crps": pan["host_baseline"], "cand_crps": pan["iah_crps"],
             "delta_crps": pan["delta_crps"],
-            "host_mae": pan["host_raw_mae"], "cand_mae": pan["cand_mae"],
+            "host_mae_panel": pan["host_raw_mae"], "cand_mae_panel": pan["cand_mae"],
             "mae_rel": pan["mae_rel_deg"], "safety": pan["safety"],
             "a1_net": dv_a1.get("net_value"), "a2_net": dv_a2.get("net_value"),
             "a1_release": dv_a1.get("release_rate"),
@@ -128,7 +133,10 @@ def main():
             "a1_harm": dv_a1.get("harmful_rate"),
             "a2_harm": dv_a2.get("harmful_rate"),
             "selected": sel, "reason": reason,
-            **{k: v for k, v in fm.items()},
+            **{("final_" + k): v for k, v in fm_scalar.items()
+               if k not in ("mae", "smape_nofloor")},
+            "final_mae": fm_scalar.get("mae"),
+            "final_smape": fm_scalar.get("smape_nofloor"),
         })
         print(f"      {name}: sel={sel} A1_net={dv_a1.get('net_value')} "
               f"A2_net={dv_a2.get('net_value')}", flush=True)

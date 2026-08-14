@@ -1,0 +1,2 @@
+n_primary_cells,n_strict_top1,n_tied_top1,n_top2,rate_top1_tied,rate_top2,host_better_frac
+64,15,22,19,0.3438,0.2969,0.4688

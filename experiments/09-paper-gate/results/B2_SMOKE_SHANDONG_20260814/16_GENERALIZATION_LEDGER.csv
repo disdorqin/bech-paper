@@ -1,0 +1,5 @@
+cell,market_seen,delta_crps,mae_rel
+shandong_DA:Linear,0,-0.04672,0.017113
+shandong_DA:MLP,0,-0.175431,-0.017334
+shandong_RT:Linear,0,-0.085258,0.021586
+shandong_RT:MLP,0,-0.142236,-0.041944

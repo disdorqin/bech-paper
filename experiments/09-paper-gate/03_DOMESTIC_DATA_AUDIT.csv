@@ -1,0 +1,8 @@
+﻿dataset,file,columns,freq_h,start,end,n_hours,info_cutoff,has_da,has_rt,missing_rate,neg_price_rate,headline_eligible,note
+CN_ningxia,宁夏24h电价数据集.xlsx,时刻;光伏总加预测值;新能源总加预测值;风电总加预测值;水电含抽蓄出力预测值;联络线受电负荷预测值,1.0,2025-10-01,2026-04-14,4224.0,2026-04-14,True,True,0.0,0.0,False,secondary only (no neg-price / semantics unclear)
+CN_gansu,甘肃24h电价数据集.xlsx,时刻;光伏总加预测值;新能源总加预测值;风电总加预测值;水电含抽蓄出力预测值;联络线受电负荷预测值,1.0,2024-07-05,2026-04-10,14112.0,2026-04-10,True,True,0.0,0.0,False,secondary only (no neg-price / semantics unclear)
+CN_shaanxi,陕西24h电价数据集(1).xlsx,时刻;发电总出力预测值;光伏总加预测值;新能源总加预测值;风电总加预测值;水电含抽蓄出力预测值,1.0,2025-01-01,2026-03-30,10752.0,2026-03-30,True,True,0.0,0.0,False,secondary only (no neg-price / semantics unclear)
+CN_qinghai,青海24h电价数据集.xlsx,时刻;新能源总加预测值;水电含抽蓄出力预测值;直调负荷预测值;非市场机组总出力预测值;实时电价,1.0,2025-09-01,2026-04-13,4440.0,2026-04-13,True,True,0.0,0.0,False,secondary only (no neg-price / semantics unclear)
+shandong_pmos_96_full_v2,shandong_pmos_96_full_v2.xlsx,(not read),,,,,,,,,,False,EXCLUDED by user decision 2026-08-14 (only the 24pt hourly file is tested)
+shandong_DA,shandong_pmos_hourly.csv,时刻;日前电价;实时电价;exog,1.0,2022-01-01,2026-07-18,39816.0,2026-07-18,True,True,0.0,0.1112,True,"MANDATORY headline target (protocol §5.3), DA 11.1% neg"
+shandong_RT,shandong_pmos_hourly.csv,时刻;日前电价;实时电价;exog,1.0,2022-01-01,2026-07-18,39816.0,2026-07-18,True,True,0.0,0.1338,True,"MANDATORY headline target (protocol §5.3), RT 13.4% neg"

@@ -1,0 +1,17 @@
+cell,metric,b5_score,best_method,best_score,gap_to_best_pct,b5_rank,n_methods,strict_top1,tied_top1,top2
+shandong_DA:LSTM,MAE,111.212516,B4_PIR,82.276787,35.169,6,7,False,False,False
+shandong_DA:LSTM,sMAPE,49.840056,B1_ResidualL1,41.503157,20.087,6,7,False,False,False
+shandong_DA:Linear,MAE,106.93008,B1_ResidualL1,74.142748,44.222,7,7,False,False,False
+shandong_DA:Linear,sMAPE,48.395885,B1_ResidualL1,37.983143,27.414,7,7,False,False,False
+shandong_DA:MLP,MAE,158.988577,B3_DeltaAdapter,132.384243,20.096,5,7,False,False,False
+shandong_DA:MLP,sMAPE,62.359671,B3_DeltaAdapter,59.316802,5.13,5,7,False,False,False
+shandong_DA:PatchTST,MAE,123.539665,B4_PIR,88.858165,39.03,7,7,False,False,False
+shandong_DA:PatchTST,sMAPE,53.110745,B4_PIR,45.058619,17.87,7,7,False,False,False
+shandong_RT:LSTM,MAE,141.844133,B1_ResidualL1,108.180635,31.118,7,7,False,False,False
+shandong_RT:LSTM,sMAPE,57.143155,B1_ResidualL1,49.318288,15.866,7,7,False,False,False
+shandong_RT:Linear,MAE,171.493611,B4_PIR,111.860321,53.31,6,7,False,False,False
+shandong_RT:Linear,sMAPE,64.32912,B4_PIR,51.74743,24.314,7,7,False,False,False
+shandong_RT:MLP,MAE,276.797505,B3_DeltaAdapter,193.551761,43.01,7,7,False,False,False
+shandong_RT:MLP,sMAPE,79.617574,B3_DeltaAdapter,71.285616,11.688,6,7,False,False,False
+shandong_RT:PatchTST,MAE,136.493619,B1_ResidualL1,105.133064,29.829,6,7,False,False,False
+shandong_RT:PatchTST,sMAPE,56.698613,B1_ResidualL1,48.680539,16.471,7,7,False,False,False

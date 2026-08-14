@@ -1,0 +1,46 @@
+{
+  "protocol": "hch_v2_paper_benchmark_gate_comparative_experiment_protocol_v0.1_2026-08-14",
+  "date": "2026-08-14 03:59:27",
+  "git_sha": "5182ef40ad4b2d4981dc8f9a21ff0553b7c440e6",
+  "branch": "exp/r1b-screening-20260813",
+  "architecture_version": "HCH-v2",
+  "math_core_version": "v2-host-relative-asinh-IAH-3atom",
+  "split_version": "H0/S1R/S2T/S2V/S3M/S3C/S4 (four-segment rolling origin)",
+  "host_matrix": {
+    "H1": "Linear",
+    "H2": "MLP",
+    "H3": "LSTM",
+    "H4": "PatchTST-style"
+  },
+  "host_naming_policy": "P0-C: code key 'PatchTST' is rendered as 'PatchTST-style' in all artifacts; never claimed as official/fidelity-equivalent PatchTST.",
+  "peer_naming_policy": "P0-C: PIR/δ-Adapter used under fidelity-smoke status only; accepted/patch status in 05_PEER_FIDELITY_REPORT.md.",
+  "comparison_matrix": [
+    "B0_HostIdentity",
+    "B1_ResidualL1",
+    "B2_QuantileResidual",
+    "B3_deltaAdapter",
+    "B4_PIR",
+    "B5_HCHUniversal",
+    "B6_HCHLocal"
+  ],
+  "primary_metrics": [
+    "MAE",
+    "sMAPE_nofloor"
+  ],
+  "secondary_metrics": [
+    "RMSE",
+    "rMAE",
+    "CRPS_candidate",
+    "neg_price_MAE",
+    "high_tail_MAE",
+    "negative_sign_miss_rate"
+  ],
+  "redlines": [
+    "P0-A pass before any headline comparison",
+    "Shandong/private never mixed into public-universal training",
+    "sealed test not tuned",
+    "30% never called a majority",
+    "PatchTST always 'PatchTST-style'",
+    "R1A/R1B S4 not called pristine manuscript test"
+  ]
+}

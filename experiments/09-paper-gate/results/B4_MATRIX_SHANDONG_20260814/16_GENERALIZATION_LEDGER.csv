@@ -1,0 +1,9 @@
+cell,market_seen,delta_crps,mae_rel
+shandong_DA:Linear,0,-0.032855,0.0
+shandong_DA:MLP,0,-0.176288,-0.000583
+shandong_DA:LSTM,0,-0.028551,-0.015565
+shandong_DA:PatchTST,0,-0.042026,0.014139
+shandong_RT:Linear,0,-0.060803,-0.014329
+shandong_RT:MLP,0,-0.118461,0.005329
+shandong_RT:LSTM,0,-0.048807,0.0
+shandong_RT:PatchTST,0,-0.067437,0.0

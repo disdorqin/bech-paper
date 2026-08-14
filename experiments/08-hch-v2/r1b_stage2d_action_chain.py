@@ -45,9 +45,10 @@ sys.path.insert(0, str(HERE))
 import r1a9_action_calibration as M
 import r1a11_prequential_calibration_router as P
 import r1a_run as R
+from _final_point import final_metrics
 from r1b_generalization_screen import (
     SOURCE_MARKETS, HOSTS, SEED, EPOCHS, PATIENCE,
-    EvalDomain, train_candidate,
+    EvalDomain, build_head, train_candidate,
 )
 from r1b_stage2a_panel import provenance, eval_panel_domain, _write_csv
 
@@ -63,43 +64,14 @@ PREQ_CFG = {"burn_in": P.BURN_IN_DAYS, "block": P.BLOCK_DAYS,
 MAE_SAFETY = 0.15
 
 
-def forecast_metrics(dd) -> dict:
-    """Point-forecast metrics on S4 (dev) days (§20). cand point = host."""
-    pred, act = [], []
-    for day in dd["days"]:
-        if day["block"] != "dev":
-            continue
-        pred.append(day["host_day"])
-        act.append(day["price"])
-    if not pred:
-        return {"n_hours": 0}
-    p = np.concatenate(pred).astype(np.float64)
-    a = np.concatenate(act).astype(np.float64)
-    e = p - a
-    mae = float(np.mean(np.abs(e)))
-    rmae = float(mae / max(np.mean(np.abs(a)), 1e-9))
-    rmse = float(np.sqrt(np.mean(e ** 2)))
-    denom = np.abs(p) + np.abs(a)
-    smape = 200.0 * np.abs(e) / np.maximum(denom, 1e-9)
-    out = {"n_hours": int(len(p)), "mae": round(mae, 6),
-           "rmae": round(rmae, 6), "rmse": round(rmse, 6),
-           "smape_nofloor": round(float(np.mean(smape)), 6),
-           "neg_price_rate": round(float(np.mean(a < 0)), 4),
-           "neg_price_mae": round(float(np.mean(np.abs(e[a < 0]))), 6)
-           if (a < 0).any() else None,
-           "high_tail_rate": round(float(np.mean(np.abs(a) >=
-                                                 np.quantile(np.abs(a), 0.95))), 4),
-           "high_tail_mae": round(float(np.mean(np.abs(e[np.abs(a) >=
-                          np.quantile(np.abs(a), 0.95)]))), 6)}
-    return out
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=str, default=None)
     ap.add_argument("--commit", type=str, default=None)
     ap.add_argument("--parent-stage2c", type=str, default=None)
     ap.add_argument("--skip-cache", action="store_true")
+    ap.add_argument("--head-checkpoint", type=str, default=None,
+                    help="load a previously saved LearnedSig_main head (skip retrain)")
     args = ap.parse_args()
 
     out_dir = Path(args.out) if args.out else \
@@ -114,9 +86,20 @@ def main():
         info = R.prepare_domain(mk, bb, seed=SEED)
         doms[name] = EvalDomain(info=info, market=mk, host=bb, name=name)
     train_doms = [doms[f"{mk}:{bb}"] for mk in SOURCE_MARKETS for bb in HOSTS]
-    print(f"\n===== STAGE-2D train LearnedSig_main ({len(train_doms)} source) =====",
-          flush=True)
-    head, report = train_candidate("learned_sig", train_doms, seed=SEED)
+    if args.head_checkpoint:
+        print(f"[stage2d] loading saved LearnedSig_main head from "
+              f"{args.head_checkpoint}", flush=True)
+        head = build_head("learned_sig")
+        head.load_state_dict(torch.load(args.head_checkpoint, map_location="cpu"))
+        head.eval()
+        report = {}
+    else:
+        print(f"\n===== STAGE-2D train LearnedSig_main ({len(train_doms)} source) =====",
+              flush=True)
+        head, report = train_candidate("learned_sig", train_doms, seed=SEED)
+        torch.save(head.state_dict(), out_dir / "learned_sig_main_head.pt")
+        print(f"[stage2d] saved head -> {out_dir / 'learned_sig_main_head.pt'}",
+              flush=True)
 
     # ---- 1. per-domain action chain (A0/A1/A2) ----
     evaluator = P.PrequentialCalibrationEvaluator(PREQ_CFG)
@@ -156,7 +139,12 @@ def main():
 
         # ---- candidate CRPS + safety (reuse panel eval on trained head) ----
         pan = eval_panel_domain(head, doms[name], "learned_sig")
-        fm = forecast_metrics(dd)
+        # P0-A: headline point metrics = TRUE final output of the SELECTED
+        # policy (x_final = s·sinh(z0+π_eff)); A1 raw-action kept for diagnosis.
+        fm = final_metrics(dv_a2)
+        fm_a1 = final_metrics(dv_a1)
+        fm = {k: v for k, v in fm.items() if not isinstance(v, np.ndarray)}
+        fm_a1_scalar = {k: v for k, v in fm_a1.items() if not isinstance(v, np.ndarray)}
 
         dvg_rows.append({"domain": name, "policy": "A1", **{k: dv_a1.get(k)
                          for k in ("q", "release_rate", "identity_rate",
@@ -189,14 +177,15 @@ def main():
             "c3_net": s3["net"] if s3 else None,
         })
 
+        fm_scalar = {k: v for k, v in fm.items()
+                     if k not in ("days",) and not isinstance(v, np.ndarray)}
         ac_rows.append({
             "domain": name, "market": mk, "host": bb,
             "transfer": "SOURCE" if name in SOURCE_16 else "DK1_TRANSFER",
-            # candidate / host CRPS
+            # candidate / host CRPS (vm-masked CRPS panel)
             "host_crps": pan["host_baseline"], "cand_crps": pan["iah_crps"],
             "delta_crps": pan["delta_crps"],
-            # MAE safety (§21)
-            "host_mae": pan["host_raw_mae"], "cand_mae": pan["cand_mae"],
+            "host_mae_panel": pan["host_raw_mae"], "cand_mae_panel": pan["cand_mae"],
             "mae_rel": pan["mae_rel_deg"], "safety": pan["safety"],
             # A1 / A2 DVG net
             "a1_net": dv_a1.get("net_value"), "a2_net": dv_a2.get("net_value"),
@@ -204,8 +193,14 @@ def main():
             "a2_release": dv_a2.get("release_rate"),
             "a1_harm": dv_a1.get("harmful_rate"),
             "a2_harm": dv_a2.get("harmful_rate"),
+            # P0-A final replay: selected-policy TRUE final output
+            "a1_final_mae": fm_a1_scalar.get("mae"),
+            "a1_final_smape": fm_a1_scalar.get("smape_nofloor"),
+            **{("final_" + k): v for k, v in fm_scalar.items()
+               if k not in ("mae", "smape_nofloor")},
+            "final_mae": fm_scalar.get("mae"),
+            "final_smape": fm_scalar.get("smape_nofloor"),
             "selected": sel, "reason": reason,
-            **{k: v for k, v in fm.items()},
         })
         print(f"      {name}: sel={sel} A1_net={dv_a1.get('net_value')} "
               f"A2_net={dv_a2.get('net_value')}", flush=True)

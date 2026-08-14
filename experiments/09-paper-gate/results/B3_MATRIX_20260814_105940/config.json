@@ -1,0 +1,32 @@
+{
+  "date": "2026-08-14 11:36:39",
+  "datasets": [
+    "LAGO_DE",
+    "LAGO_BE",
+    "LAGO_FR",
+    "LAGO_PJM",
+    "LAGO_NP",
+    "NEM_SA1",
+    "GEFCOM14P",
+    "NORD_DK1"
+  ],
+  "hosts": [
+    "Linear",
+    "MLP",
+    "LSTM",
+    "PatchTST"
+  ],
+  "methods": [
+    "B0_Identity",
+    "B1_ResidualL1",
+    "B2_QuantileResidual",
+    "B3_DeltaAdapter",
+    "B4_PIR",
+    "B5_HCH-Universal",
+    "B6_HCH-Local"
+  ],
+  "universal_head": "D:\\\u4f5c\u4e1a\\science\\solar_leak_price_model\\experiments\\08-hch-v2\\results\\WP5_PUBLIC_20260814_053855\\learned_sig_main_head.pt",
+  "evidence": "fit=S3M(train+val) cal=S3C eval=S4",
+  "tied_rel": 0.005,
+  "dm_alpha": 0.05
+}
