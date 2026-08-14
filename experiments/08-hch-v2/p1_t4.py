@@ -111,7 +111,9 @@ def per_domain_delta_vs_t0(rep: dict, t0: dict) -> tuple[dict, float]:
     bi = best_epoch_index(rep)
     d4 = rep["history"][bi]["delta"]
     d0 = t0["domain_delta_crps"]
-    delta = {k: d4[k] - d0[k] for k in d0}
+    # compare over the domains present in BOTH (sanity subsets train fewer than 12)
+    keys = [k for k in d0 if k in d4]
+    delta = {k: d4[k] - d0[k] for k in keys}
     return delta, sum(delta.values()) / len(delta)
 
 
@@ -132,7 +134,10 @@ def keep_verdict(macro_deltas: list[float], de_pjm_degrade: list[int],
     reasons.append(f"DE/PJM degrade ==0 per seed: {de_pjm_degrade} -> {'OK' if ok_depjm else 'FAIL'}")
     if ok_macro and ok_nem and ok_depjm:
         return "KEEP", reasons
-    if any(d < 0 for d in macro_deltas) or any(c >= 2 for c in nem_improve):
+    # Doc §5: INCONCLUSIVE requires some arm to actually beat T0 on macro
+    # (ΔCRPS<0 at least once). NEM improving is a mechanism detail, not a
+    # reason to downgrade a consistently-worse arm away from REJECT.
+    if any(d < 0 for d in macro_deltas):
         return "INCONCLUSIVE", reasons
     return "REJECT", reasons
 
