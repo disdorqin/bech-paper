@@ -192,7 +192,7 @@ def _():
         assert_true(d <= max_m * 3 + 1e-10, f"W1={d} > 3*max_m={3*max_m}")
 
 
-@test("A12 CAGMAtomMemory: self-exclusion from neighbors confirmed")
+@test("A12 CAGMAtomMemory: ID-based self-exclusion (P1-2)")
 def _():
     mem = CAGMAtomMemory()
     z0 = np.random.randn(24)
@@ -216,8 +216,14 @@ def _():
     q_cand = {k: v.clone() if isinstance(v, torch.Tensor) else v
               for k, v in cand_template.items()}
     dists = mem.build_retrieval_index(q_cand)
-    neighbors = mem.get_neighbors(dists, k=3)
-    assert_true(0 not in neighbors, "query day must not be its own neighbor")
+    # P1-2: self-exclusion is ID-based (exclude_idx), not distance-based.
+    # Excluding the query day's own index removes it even though W1=0.
+    neighbors = mem.get_neighbors(dists, k=3, exclude_idx=0)
+    assert_true(0 not in neighbors, "excluded query day must not be its own neighbor")
+    # Without exclude_idx, a distinct day with an identical atom measure (W1=0)
+    # remains a legal perfect neighbor — two days may legitimately share one.
+    neighbors_plain = mem.get_neighbors(dists, k=3)
+    assert_true(len(neighbors_plain) == 3, "top-k neighbors returned")
 
 
 # =============================== Phase 4: Double Event ==========================

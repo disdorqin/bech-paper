@@ -8,6 +8,7 @@ legacy HCH path (BiOMC, candidate_loss_fn, state_loss_fn, CARA/KL calibration).
 """
 from __future__ import annotations
 
+import datetime
 import hashlib
 import subprocess
 from typing import Optional
@@ -38,6 +39,8 @@ from query_replay import full_replay_chain, estimate_realized_A
 from double_event import double_event_proposal
 from dvg_calibrate import DGVSplitConformal
 from hch_v2_bundle import HCHV2Bundle
+from context_action_memory import (
+    ContextKeyBuilder, ContextActionMemory, CAVMExperience)
 
 
 class HCHV2UniversalPipeline:
@@ -49,13 +52,17 @@ class HCHV2UniversalPipeline:
 
     def __init__(self, d_core_context: int = 13, d_model: int = 64,
                  d_value: int = 0, alpha: float = 0.10,
-                 k: Optional[int] = None, seed: int = 0):
+                 k: Optional[int] = None, seed: int = 0,
+                 memory_mode: str = "w1"):
         self.d_core_context = d_core_context
         self.d_model = d_model
         self.d_value = d_value
         self.alpha = alpha
         self.k = k
         self.seed = seed
+        # Phase4: "w1" (default, unchanged) | "cavm". memory_mode only switches
+        # the CAVM branch ON; the W1 path is always the v0.4 control.
+        self.memory_mode = memory_mode
 
         torch.manual_seed(seed)
         self.candidate_head = IAHCandidateHead(d_core_context, d_model,
@@ -64,6 +71,23 @@ class HCHV2UniversalPipeline:
         self.memory: Optional[CAGMAtomMemory] = None
         self.dvg: Optional[DGVSplitConformal] = None
         self._domain_det: Optional[np.ndarray] = None
+        # CAVM read-only state (P1). Predictions never read cavm_local.
+        self.cavm_key_builder: Optional[ContextKeyBuilder] = None
+        self.cavm_global: Optional[ContextActionMemory] = None
+        self.cavm_local: Optional[ContextActionMemory] = None
+        self.cavm_update_policy: dict = {}  # P3: {"observe": bool, ...}
+        # P2 composite retrieval weights; (1,0) reproduces W1-only exactly.
+        # Only selected on S2V/S3-M, frozen at S4 (never tuned on S4 labels).
+        self.cavm_lambda: tuple = (1.0, 0.0)
+
+    def set_cavm_retrieval(self, lambda_atom: float = 1.0,
+                           lambda_ctx: float = 0.0) -> None:
+        """Set composite retrieval weights d = λ_atom·norm(W1)+λ_ctx·norm(ctx).
+
+        lambda_atom=1, lambda_ctx=0 reproduces W1-only neighbor selection.
+        Select only on S2V/S3-M evidence; S4 weights are frozen in the bundle.
+        """
+        self.cavm_lambda = (float(lambda_atom), float(lambda_ctx))
 
     # ------------------------------------------------------------- S1 ----
     def fit_s1_reference(self, s1_host_z0: np.ndarray,
@@ -166,6 +190,132 @@ class HCHV2UniversalPipeline:
             mem.add_day(day["date"], day["candidate"], day["target_zY"])
         self.memory = mem
         return mem
+
+    def fit_cavm_memory(self, global_days: list, local_days: list | None = None,
+                        key_builder: ContextKeyBuilder | None = None) -> dict:
+        """Build read-only CAVM ledgers (Phase4 P1). Predictions unchanged.
+
+        global_days/local_days: list of day dicts, each with
+            {"date", "candidate" (incl. z0), "target_zY",
+             "core_context": optional [H,D] or [1,H,D] (per-day),
+             "domain_det": optional [d_det],
+             "audit_domain": optional str}
+        Only revealed days (target_zY present) may enter. No S4 target is
+        accepted here; predictions never consume cavm_local.
+        Returns {"global": n_days, "local": n_days}.
+        """
+        kb = key_builder or ContextKeyBuilder(d_core_context=self.d_core_context)
+        self.cavm_key_builder = kb
+
+        g = ContextActionMemory("global", kb)
+        for day in global_days:
+            g.add_revealed_day(_cavm_experience(day, kb))
+        self.cavm_global = g
+
+        if local_days:
+            loc = ContextActionMemory("local", kb)
+            for day in local_days:
+                loc.add_revealed_day(_cavm_experience(day, kb))
+            self.cavm_local = loc
+        else:
+            self.cavm_local = None
+        return {"global": len(g),
+                "local": len(self.cavm_local) if self.cavm_local else 0}
+
+    # -------------------------------------------------- P3: local observe ----
+    def set_cavm_update_policy(self, observe: bool = False, **extra) -> None:
+        """Configure whether observe_outcome() may append to local memory.
+
+        Default is OFF: a strictly frozen S4 never records experience. Setting
+        observe=True only enables the local ledger append — it never updates
+        universal parameters, k, lambda, or q (P3 §5.2).
+        """
+        policy = {"observe": bool(observe)}
+        policy.update({k: v for k, v in extra.items()})
+        self.cavm_update_policy = policy
+
+    def observe_outcome(self, query_id, target_zY: np.ndarray,
+                        evidence: dict) -> dict:
+        """Append one revealed day to LOCAL memory (Phase4 P3). Default OFF.
+
+        Callable only AFTER: (1) the query was predicted, (2) the prediction
+        time passed, (3) the real target fully revealed. The context_key is
+        NEVER rebuilt here — it is read verbatim from the prediction-time
+        evidence["context_keys"], so a key can never depend on the label.
+
+        Effects are strictly scoped to local memory:
+          - universal model parameters:   untouched
+          - k / lambda / q:               untouched (never re-selected)
+          - global ledger:                untouched
+          - predictions:                  unchanged (predictions never consume
+                                          cavm_local, build spec §5.2)
+
+        query_id: int batch index into evidence, or str matched against
+            evidence["query_ids"].
+        target_zY: [H] revealed SCALE-FREE target, zY = arcsinh(y / s) with the
+            query day's own scale s (pipeline convention — the same space as
+            z0; raw price in EUR/MWh is NOT accepted and silently corrupts
+            A_true). evidence: the batch dict returned by predict_s4 (must
+            carry context_keys).
+        """
+        if not self.cavm_update_policy.get("observe", False):
+            return {"applied": False, "reason": "observe_disabled",
+                    "scope": "local"}
+        if self.memory_mode != "cavm" or self.cavm_key_builder is None:
+            return {"applied": False,
+                    "reason": "cavm_not_active_at_query_time"}
+        if "context_keys" not in evidence or not evidence["context_keys"]:
+            raise ValueError(
+                "observe_outcome: evidence has no pre-forecast context_keys "
+                "(predict_s4 must run with memory_mode='cavm' first)")
+        if target_zY is None:
+            raise ValueError(
+                "observe_outcome: target_zY required (label must be revealed)")
+
+        idx = _resolve_query_id(query_id, evidence)
+        if idx is None:
+            raise ValueError(
+                f"observe_outcome: cannot resolve query_id={query_id!r} "
+                "(int index or str in evidence['query_ids'])")
+
+        # Local ledger is created lazily on first observe; never touches global.
+        if self.cavm_local is None:
+            self.cavm_local = ContextActionMemory(
+                "local", self.cavm_key_builder)
+
+        cand = evidence["candidate"]
+        qvc = _cavm_day_view(cand, idx)
+        z0 = qvc["z0"].detach().cpu().numpy().reshape(-1)
+        vm = qvc["valid_mask"].detach().cpu().numpy().reshape(-1).astype(bool)
+        zY = np.asarray(target_zY, dtype=np.float64).reshape(-1)
+        pi_q = np.asarray(evidence["pi"][idx], dtype=np.float64).reshape(-1)
+        A_hat = float(evidence["A_hat"][idx])
+        A_true = float(estimate_realized_A(z0, zY, pi_q, vm))
+        action_error = A_hat - A_true
+
+        exp = CAVMExperience(
+            date=str(query_id),
+            context_key=np.asarray(evidence["context_keys"][idx],
+                                   dtype=np.float64),
+            z0=qvc["z0"], w_minus=qvc["w_minus"], w_zero=qvc["w_zero"],
+            w_plus=qvc["w_plus"], m_minus=qvc["m_minus"],
+            m_plus=qvc["m_plus"],
+            target_zY=zY, valid_mask=qvc["valid_mask"],
+            A_hat=A_hat, A_true=A_true, action_error=action_error,
+            timestamp=datetime.datetime.now().isoformat(timespec="seconds"),
+            audit_domain=str(evidence.get("cavm", {}).get("neighbor_scopes",
+                                                          [""])[idx])
+            if evidence.get("cavm") else "",
+        )
+        self.cavm_local.add_revealed_day(exp)
+        return {
+            "applied": True, "scope": "local", "date": str(query_id),
+            "n_local": len(self.cavm_local),
+            "A_hat": A_hat, "A_true": A_true,
+            "action_error": action_error,
+            "timestamp": exp.timestamp,
+            "reason": "post-reveal local observe (P3)",
+        }
 
     def _replay_value(self, day: dict, k: int) -> tuple:
         """Single authority for the retrieval->replay->proposal->(A_hat, A_true).
@@ -294,6 +444,21 @@ class HCHV2UniversalPipeline:
         b.local_hashes = {"split_hash": split_hash,
                           "target_market": dataset_id,
                           "target_host": dataset_id or ""}
+        # Optional CAVM state (Phase4; empty for memory_mode="w1").
+        b.memory_mode = self.memory_mode
+        if self.cavm_key_builder is not None:
+            b.cavm_key_version = self.cavm_key_builder.version
+        if self.cavm_global is not None:
+            g_state = self.cavm_global.freeze()
+            b.cavm_global_state = g_state
+            b.cavm_global_hash = HCHV2Bundle._cavm_state_hash(g_state)
+        if self.cavm_local is not None:
+            l_state = self.cavm_local.freeze()
+            b.cavm_local_state = l_state
+            b.cavm_local_hash = HCHV2Bundle._cavm_state_hash(l_state)
+        b.cavm_update_policy = dict(self.cavm_update_policy)
+        b.cavm_retrieval_lambda = {"atom": self.cavm_lambda[0],
+                                   "context": self.cavm_lambda[1]}
         b.compute_hash()
         return b
 
@@ -347,6 +512,21 @@ class HCHV2UniversalPipeline:
                 "n_calibration": len(bundle.dvg_errors),
             })
 
+        # Optional CAVM state (Phase4; old bundles load with "w1" defaults).
+        pipe.memory_mode = bundle.memory_mode
+        if bundle.cavm_global_state is not None:
+            pipe.cavm_global = ContextActionMemory.from_frozen(
+                bundle.cavm_global_state)
+            pipe.cavm_key_builder = pipe.cavm_global.key_builder
+        if bundle.cavm_local_state is not None:
+            pipe.cavm_local = ContextActionMemory.from_frozen(
+                bundle.cavm_local_state)
+        pipe.cavm_update_policy = dict(bundle.cavm_update_policy or {})
+        if bundle.cavm_retrieval_lambda:
+            pipe.cavm_lambda = (
+                float(bundle.cavm_retrieval_lambda.get("atom", 1.0)),
+                float(bundle.cavm_retrieval_lambda.get("context", 0.0)))
+
         return pipe
 
     # ---------------------------------------------------------- S4 ----
@@ -365,13 +545,20 @@ class HCHV2UniversalPipeline:
                                       valid_mask=valid_mask,
                                       domain_det=domain_det)
 
-        evidence = {"candidate": out}
+        evidence = {"candidate": out, "memory_mode": self.memory_mode}
 
         if self.memory is None or self.dvg is None or self.dvg.q is None:
             B = host_raw.shape[0]
             evidence["final_action"] = ["identity"] * B
             evidence["fallback"] = "no_memory_or_calibration"
             evidence["x_final"] = out["x_identity"]
+            if self.memory_mode == "cavm" and self.cavm_global is not None:
+                evidence["context_key_version"] = self.cavm_key_builder.version
+                evidence["cavm"] = {"neighbor_scopes": ["identity"] * B,
+                                    "neighbor_ids": [[] for _ in range(B)],
+                                    "distance_context": [[] for _ in range(B)],
+                                    "distance_w1": [[] for _ in range(B)],
+                                    "effective_neighbor_count": [0] * B}
             return evidence
 
         B, H, _ = host_raw.shape
@@ -384,14 +571,57 @@ class HCHV2UniversalPipeline:
         actions, pi_all, A_hats, lcb_all = [], [], [], []
         neighbors_all, dists_all, proposals_all = [], [], []
 
+        # CAVM composite retrieval (Phase4 P2): when memory_mode="cavm" and a
+        # global ledger is present, neighbor selection AND replay run on the
+        # ContextActionMemory ledger with d = λ_atom·norm(W1)+λ_ctx·norm(ctx).
+        # Default λ=(1,0) reproduces W1-only exactly (verified by tests).
+        # memory_mode="w1" (default) keeps the original CAGM path byte-for-byte.
+        cavm_active = (self.memory_mode == "cavm" and self.cavm_global
+                       is not None and self.cavm_key_builder is not None)
+        cavm_scope, cavm_nbr, cavm_ctx, cavm_w1, cavm_eff = [], [], [], [], []
+        cavm_keys = []  # P3: pre-forecast context keys, recorded at query time
+        fallback_reasons = []
+
         for b in range(B):
-            dists = self.memory.build_retrieval_index(_day_view(out, b))
-            nbr = self.memory.get_neighbors(dists, self.k)
-            neighbors_all.append(nbr)
-            dists_all.append([float(dists[i]) for i in nbr])
+            if cavm_active:
+                qvc = _cavm_day_view(out, b)
+                vm_b = out["valid_mask"][b:b + 1]
+                det_b = (domain_det[b:b + 1] if domain_det is not None
+                         else None)
+                qk = self.cavm_key_builder.build(
+                    qvc, core_context[b:b + 1], vm_b, det_b)
+                cavm_keys.append(np.asarray(qk, dtype=np.float64))
+                lam_a, lam_c = self.cavm_lambda
+                res = self.cavm_global.query(
+                    qk, qvc, k=self.k, lambda_atom=lam_a, lambda_ctx=lam_c)
+                nbr = res["neighbor_ids"]
+                replay_mem = self.cavm_global
+                cavm_scope.append(res["source_scope"])
+                cavm_nbr.append(nbr)
+                cavm_ctx.append([float(x) for x in res["distance_context"]])
+                cavm_w1.append([float(x) for x in res["distance_w1"]])
+                cavm_eff.append(res["effective_neighbor_count"])
+                neighbors_all.append(nbr)
+                dists_all.append([float(x) for x in res["distance_total"]])
+                if not nbr:
+                    # No finite composite neighbors -> safe Identity fallback
+                    # (build spec §8.6: explicit, never silent truncation).
+                    actions.append("identity")
+                    pi_all.append(np.zeros(H))
+                    A_hats.append(0.0)
+                    proposals_all.append({"I_down": [], "I_up": []})
+                    lcb_all.append(float(self.dvg.lcb(0.0)["lcb"]))
+                    fallback_reasons.append("cavm_no_neighbors")
+                    continue
+            else:
+                dists = self.memory.build_retrieval_index(_day_view(out, b))
+                nbr = self.memory.get_neighbors(dists, self.k)
+                replay_mem = self.memory
+                neighbors_all.append(nbr)
+                dists_all.append([float(dists[i]) for i in nbr])
 
             chain = full_replay_chain(
-                self.memory, nbr,
+                replay_mem, nbr,
                 m_minus[b].squeeze(-1) if m_minus.ndim == 3 else m_minus[b],
                 m_plus[b].squeeze(-1) if m_plus.ndim == 3 else m_plus[b],
                 double_event_proposal,
@@ -422,6 +652,22 @@ class HCHV2UniversalPipeline:
         evidence["lcb"] = lcb_all
         evidence["final_action"] = actions
         evidence["x_final"] = final_x
+        if fallback_reasons:
+            evidence["fallback_reasons"] = fallback_reasons
+        if cavm_active:
+            evidence["context_key_version"] = self.cavm_key_builder.version
+            evidence["cavm_lambda"] = {"atom": self.cavm_lambda[0],
+                                       "context": self.cavm_lambda[1]}
+            evidence["cavm"] = {
+                "neighbor_scopes": cavm_scope,
+                "neighbor_ids": cavm_nbr,
+                "distance_context": cavm_ctx,
+                "distance_w1": cavm_w1,
+                "effective_neighbor_count": cavm_eff,
+            }
+            # P3: pre-forecast keys recorded at query time. observe_outcome()
+            # consumes these verbatim — never rebuilt from revealed labels.
+            evidence["context_keys"] = cavm_keys
         return evidence
 
 
@@ -435,3 +681,51 @@ def _day_view(candidate: dict, b: int) -> dict:
         "m_plus": candidate["m_plus"][b:b + 1],
         "valid_mask": candidate["valid_mask"][b:b + 1],
     }
+
+
+def _cavm_day_view(candidate: dict, b: int) -> dict:
+    """Single-day view INCLUDING z0 (required by the CAVM context key)."""
+    view = _day_view(candidate, b)
+    view["z0"] = candidate["z0"][b:b + 1]
+    return view
+
+
+def _resolve_query_id(query_id, evidence: dict) -> Optional[int]:
+    """Map a query_id to a batch index. int -> itself; str -> dates lookup."""
+    if isinstance(query_id, (int, np.integer)):
+        return int(query_id)
+    dates = evidence.get("query_ids")
+    if dates is not None and str(query_id) in dates:
+        return int(dates.index(str(query_id)))
+    return None
+
+
+def _cavm_experience(day: dict, kb: ContextKeyBuilder) -> CAVMExperience:
+    """Build one revealed-day CAVMExperience from an offline day dict.
+
+    Pre-forecast only: context_key is built from candidate/core_context/
+    domain_det BEFORE the label enters. core_context/domain_det are optional;
+    when absent, the time/sig key segments fall back to zero (explicit
+    degradation, never fabricated values). target_zY is required (revealed).
+    """
+    cand = day["candidate"]
+    vm = cand["valid_mask"]
+    core = day.get("core_context")
+    if core is None:
+        n_hours = int(np.asarray(vm).reshape(-1).shape[0])
+        core = np.zeros((n_hours, kb.d_core_context))
+    det = day.get("domain_det")
+    key = kb.build(cand, core, vm, det)
+    return CAVMExperience(
+        date=str(day["date"]),
+        context_key=key,
+        z0=cand["z0"],
+        w_minus=cand["w_minus"],
+        w_zero=cand["w_zero"],
+        w_plus=cand["w_plus"],
+        m_minus=cand["m_minus"],
+        m_plus=cand["m_plus"],
+        target_zY=day["target_zY"],
+        valid_mask=vm,
+        audit_domain=day.get("audit_domain", ""),
+    )
