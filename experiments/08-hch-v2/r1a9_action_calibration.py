@@ -272,15 +272,19 @@ class LocalIsotonic(Calibrator):
 # --------------------------------------------------------- data collection ----
 def collect_domain(artifact_dir: Path, ds_key: str, bb: str,
                    variant: str = "learned_sig",
-                   head: Optional[torch.nn.Module] = None) -> dict:
+                   head: Optional[torch.nn.Module] = None,
+                   info: Optional["DomainInfo"] = None) -> dict:
     """Build day-level action-chain domain data.
 
     head is None (default): load the frozen R1A checkpoint from artifact_dir.
     head given (Stage-2D): rebuild the pipe from the in-memory trained head.
+    info given: reuse a pre-built DomainInfo (head-independent; avoids re-running
+      prepare_domain per head eval). Same results, faster.
     """
     old = D.NEW_TO_OLD[variant]
     domain = f"{ds_key}:{bb}"
-    info = R.prepare_domain(ds_key, bb)
+    if info is None:
+        info = R.prepare_domain(ds_key, bb)
     det_np = R.det_for_variant(variant, info)
     if head is not None:
         pipe, _val_days, _s3c_days, problems = D.pipe_from_head(head, info,
