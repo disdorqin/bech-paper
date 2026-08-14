@@ -168,6 +168,62 @@ def domain_batches(dom: EvalDomain) -> DomainBatch:
                        domain_det=det)
 
 
+# --------------------------------------------------- T4: soft sampling weights --
+def _s1r_host_mae(info) -> float:
+    """S1R scale-free host error: mean |asinh(y/s) - asinh(host/s)| over S1R.
+
+    Uses S1R target prices -> training-only statistic (hypothesis doc §3). The
+    correction head never trains on S1R (only S2T), so this is a host-level
+    difficulty proxy, not head selection.
+    """
+    ts = info.ds["ts"]
+    y = info.ds["price"]
+    errs = []
+    for d in sorted(info.exp.dates_in_split("S1R")):
+        idxs = np.where((ts.dt.date == R.pd_date(d)).values)[0]
+        if len(idxs) != 24:
+            continue
+        hd = info.yhat_full[idxs]
+        s = float(np.mean(np.abs(hd)))
+        if s <= 0:
+            continue
+        zt = np.arcsinh(y[idxs] / s)
+        zp = np.arcsinh(hd / s)
+        errs.append(np.abs(zt - zp))
+    return float(np.mean(np.concatenate(errs))) if errs else 0.0
+
+
+def weights_from_host_stats(domains: list[EvalDomain], mode: str = "volatility",
+                            power: float = 1.0) -> list[float]:
+    """Per-domain soft sampling weights from host-only / forecast-visible stats.
+
+    T4 (hypothesis doc 2026-08-14): difficulty-based weights, total budget stays
+    n_domains*K (only the allocation changes). mean(weights) ~= 1.
+
+    modes:
+      volatility    w_g = std(s1_z0)^power          target-free (host output only)
+      host_s1r_mae  w_g = _s1r_host_mae^power       training-only (reads S1R price)
+      inv_nbatch    w_g = (1/N_s2t)^power           target-free (data volume only)
+
+    power defaults 1.0; >1 sharpens the over-weighting of difficult domains.
+    """
+    stats = []
+    for dom in domains:
+        info = dom.info
+        if mode == "volatility":
+            v = float(np.std(info.s1_z0)) if info.s1_z0.size else 0.0
+        elif mode == "host_s1r_mae":
+            v = _s1r_host_mae(info)
+        elif mode == "inv_nbatch":
+            v = 1.0 / max(len(info.s2t_batches), 1)
+        else:
+            raise KeyError(mode)
+        stats.append(max(v, 1e-9))
+    w = np.asarray(stats, dtype=float) ** power
+    w = w / w.mean()                      # mean ~= 1 -> budget preserved
+    return [float(x) for x in w]
+
+
 # ----------------------------------------------------- candidate-level eval ----
 def domain_health(head: nn.Module, dom: EvalDomain, det_np: np.ndarray) -> dict:
     """Per-domain mass/shift/scale health over S2V (transfer eval, no chain)."""

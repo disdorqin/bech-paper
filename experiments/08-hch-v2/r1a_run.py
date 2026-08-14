@@ -60,7 +60,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 HERE = Path(__file__).resolve().parent
 
-from common import load_dataset, load_shandong, build_tabular, assert_no_leakage, dm_test
+from common import (load_dataset, load_shandong, load_province, PROVINCE_KEYS,
+                    build_tabular, assert_no_leakage, dm_test)
 from host_cache import cache_one
 from eval_manifest import ExperimentManifest, SPLIT_7
 from hch_v2_context import compute_domain_descriptors
@@ -222,6 +223,9 @@ def prepare_domain(ds_key: str, bb: str, seed: int = 0) -> DomainInfo:
         # by user decision 2026-08-14.
         ds = load_shandong(price_col="日前电价" if ds_key == "shandong_DA" else "实时电价",
                            encoding="gbk")
+    elif ds_key in PROVINCE_KEYS:
+        prov, mode = ds_key.rsplit("_", 1)
+        ds = load_province(prov, price_col="日前电价" if mode == "DA" else "实时电价")
     else:
         ds = load_dataset(ds_key)
     y_full = ds["price"].astype(np.float32)

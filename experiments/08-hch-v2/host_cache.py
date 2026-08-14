@@ -22,10 +22,12 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from backbones import make_backbone, needs_seq
 from common import (
-    DATASETS, load_dataset, load_shandong,
+    DATASETS, load_dataset, load_shandong, load_province, PROVINCE_KEYS,
     build_tabular, build_sequences, assert_no_leakage,
     four_segment_split,
 )
+
+ALL_DATASETS = list(DATASETS) + ["shandong_DA", "shandong_RT"] + PROVINCE_KEYS
 from eval_manifest import ExperimentManifest
 
 SEED = 0
@@ -40,6 +42,9 @@ def _load_ds(key: str) -> dict:
         return load_shandong(price_col="日前电价", encoding="gbk")
     if key == "shandong_RT":
         return load_shandong(price_col="实时电价", encoding="gbk")
+    if key in PROVINCE_KEYS:
+        prov, mode = key.rsplit("_", 1)
+        return load_province(prov, price_col="日前电价" if mode == "DA" else "实时电价")
     return load_dataset(key)
 
 
@@ -139,6 +144,9 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
         "n_S4": int(len(exp.valid_indices_in_split("S4"))),
         "n_excluded_dates": len(exp.excluded_dates),
         **_segment_bounds(exp),  # protocol §6: per-segment start/end dates
+        "feature_schema_hash": hashlib.sha256(
+            (repr(sorted(names)) if isinstance(names, list) else repr(names)).encode()
+        ).hexdigest()[:16],  # D1: make the cache self-describing for re-audit
     }
     with open(cache_dir / "seg.json", "w") as f:
         json.dump(seg_info, f)
@@ -177,21 +185,107 @@ def cache_one(ds_key: str, bb_name: str, seed: int = 0) -> dict:
     return record
 
 
+def reconstruct_manifest() -> list[dict]:
+    """Rebuild the full cache manifest from on-disk caches (provenance restore).
+
+    Walks results/cache/{ds}/{bb}/ and emits one record per existing cache by
+    reading seg.json + pred.npy and recomputing what the file lacks
+    (feature_schema_hash, pred_hash, n_params). Marks reused=True. Used to
+    regenerate host_cache_manifest.csv without retraining anything.
+    """
+    from backbones import make_backbone
+    records = []
+    if not CACHE_ROOT.exists():
+        return records
+    for ds_dir in sorted(CACHE_ROOT.iterdir()):
+        if not ds_dir.is_dir():
+            continue
+        ds_key = ds_dir.name
+        for bb_dir in sorted(ds_dir.iterdir()):
+            if not bb_dir.is_dir():
+                continue
+            bb_name = bb_dir.name
+            seg_path = bb_dir / "seg.json"
+            pred_path = bb_dir / "pred.npy"
+            if not seg_path.exists() or not pred_path.exists():
+                continue
+            try:
+                seg = json.loads(seg_path.read_text())
+            except Exception:
+                continue
+            # recompute feature schema from the loader (schema is deterministic)
+            names = []
+            try:
+                ds = _load_ds(ds_key)
+                X, y, nms, valid = build_tabular(ds)
+                names = nms
+            except Exception:
+                pass
+            feature_schema_hash = (hashlib.sha256(
+                repr(sorted(names)).encode()).hexdigest()[:16]) if names else seg.get(
+                "feature_schema_hash")
+            pred_hash = _hash_array(
+                np.load(pred_path, mmap_mode="r").astype(np.float32)
+            ) if pred_path.exists() else None
+            n_params = "N/A"
+            try:
+                bb = make_backbone(bb_name, seed=0)
+                if hasattr(bb, "m") and hasattr(bb.m, "parameters"):
+                    n_params = sum(p.numel() for p in bb.m.parameters())
+            except Exception:
+                pass
+            records.append({
+                "dataset": ds_key, "backbone": bb_name, "seed": 0,
+                "n_full": seg.get("n_full"),
+                "n_valid": seg.get("n_valid"),
+                "n_H0": seg.get("n_H0"), "n_S1R": seg.get("n_S1R"),
+                "n_S2T": seg.get("n_S2T"), "n_S2V": seg.get("n_S2V"),
+                "n_S3M": seg.get("n_S3M"), "n_S3C": seg.get("n_S3C"),
+                "n_S4": seg.get("n_S4"),
+                "n_excluded_dates": seg.get("n_excluded_dates"),
+                "split_hash": seg.get("split_hash"),
+                "pred_hash": pred_hash,
+                "feature_schema_hash": feature_schema_hash,
+                "git_commit": _git_head(),
+                **{f"{s}_start": seg.get(f"{s}_start", "") for s in
+                   ("H0", "S1R", "S2T", "S2V", "S3M", "S3C", "S4")},
+                **{f"{s}_end": seg.get(f"{s}_end", "") for s in
+                   ("H0", "S1R", "S2T", "S2V", "S3M", "S3C", "S4")},
+                "n_params": n_params,
+                "duration_s": None,
+                "reused": True,
+            })
+    return records
+
+
 def main():
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", type=str, default=None, help="single dataset or all")
     ap.add_argument("--backbone", type=str, default=None, help="single backbone or all")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--reconstruct", action="store_true",
+                    help="rebuild host_cache_manifest.csv from on-disk caches only")
     ap.add_argument("--seed", type=int, default=SEED)
     args = ap.parse_args()
+
+    if args.reconstruct:
+        records = reconstruct_manifest()
+        out = HERE / "results" / "host_cache_manifest.csv"
+        if records:
+            with open(out, "w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=list(records[0].keys()))
+                w.writeheader()
+                w.writerows(records)
+        print(f"Reconstructed manifest: {len(records)} caches -> {out}")
+        return
 
     seed = args.seed
 
     if args.dataset:
         datasets = [args.dataset]
     else:
-        datasets = list(DATASETS.keys()) + ["shandong_DA", "shandong_RT"]
+        datasets = list(ALL_DATASETS)
 
     if args.backbone:
         backbones = [args.backbone]

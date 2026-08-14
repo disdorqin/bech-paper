@@ -62,6 +62,16 @@ DATASETS = {
     "NORD_DK1":  dict(path="raw/epex_markets/NordPool_DK1_2022_2024.csv", currency="EUR", tier="L1"),
 }
 
+# 国内省份注册表(不含 shandong,其走 load_shandong)。列方言与 shandong 相同:
+# *预测值 → exog_fc,*实际值 → exog_act,日前/实时电价 → target。文件均为 xlsx。
+PROVINCES = {
+    "ningxia": dict(file="宁夏24h电价数据集.xlsx",   currency="CNY", note="NX 2025-10..2026-04, 0% negative"),
+    "gansu":   dict(file="甘肃24h电价数据集.xlsx",   currency="CNY", note="GS 2024-07..2026-04, 0% negative"),
+    "shaanxi": dict(file="陕西24h电价数据集(1).xlsx", currency="CNY", note="SN 2025-01..2026-03, 0% negative"),
+    "qinghai": dict(file="青海24h电价数据集.xlsx",   currency="CNY", note="QH 2025-09..2026-04, 0% negative"),
+}
+PROVINCE_KEYS = [f"{p}_{m}" for p in PROVINCES for m in ("DA", "RT")]   # 8 keys
+
 _LAGO_EXOG_FC = True   # Lago columns are all "* Forecast" -> safe at target hour
 
 
@@ -190,6 +200,82 @@ def assert_no_leakage(ds: dict, X: np.ndarray, y: np.ndarray, valid: np.ndarray,
     assert np.allclose(X[:, j], ref, equal_nan=False), "price_lag24 misaligned"
 
 
+def assert_no_future_leakage(X: np.ndarray, y: np.ndarray, names: list[str],
+                             future_offsets: tuple[int, ...] = (1, 2, 24, 48, 168)
+                             ) -> dict:
+    """Hard guard (user requirement): no design-matrix column may be a function
+    of any FUTURE price y_{t+k} (k>=1).  For each column compare against y
+    shifted by future offsets (correlation + exact-value collision) over valid
+    rows.  Raises AssertionError on a near-perfect future match; otherwise
+    returns a per-column audit dict for the admission report.
+
+    X / y are the build_tabular-compressed matrices (valid rows are consecutive
+    hourly timestamps after warm-up, so shifting within the array aligns to
+    future hours; sparse gaps from dropped non-finite rows only widen the
+    safety margin against false positives, never against false negatives).
+    """
+    report = {}
+    yv = np.asarray(y, dtype=np.float64)
+    n = len(yv)
+    for j, nm in enumerate(names):
+        col = np.asarray(X[:, j], dtype=np.float64)
+        if np.std(col) < 1e-12:
+            report[nm] = {"leak": False, "kind": "const"}
+            continue
+        best = None  # (corr, exact_frac, offset) over future offsets
+        for k in future_offsets:
+            fut = np.full(n, np.nan, dtype=np.float64)
+            fut[: n - k] = yv[k:]
+            m = np.isfinite(col) & np.isfinite(fut)
+            if m.sum() < 50:
+                continue
+            r = abs(np.corrcoef(col[m], fut[m])[0, 1])
+            exact = float(np.mean(np.abs(col[m] - fut[m]) < 1e-6))
+            if best is None or r > best[0]:
+                best = (r, exact, int(k))
+        if best is None:
+            report[nm] = {"leak": False, "kind": "no_overlap"}
+            continue
+        r, exact, k = best
+        if r >= 0.999 or exact >= 0.999:
+            raise AssertionError(
+                f"FUTURE PRICE LEAK: column {nm} ~= y[t+{k}] (corr={r:.5f}, "
+                f"exact={exact:.3f})")
+        report[nm] = {"leak": False, "kind": "ok", "max_future_corr": float(r),
+                      "argmax_offset": int(k), "exact_frac": exact}
+    return report
+
+
+def verify_forecast_vs_actual(ds: dict) -> dict:
+    """Per-column: is each fc_{c} a genuine forecast or a backfilled actual?
+
+    A real day-ahead forecast deviates from the same-hour realized value; if a
+    '预测值' column is (near-)identical to its '实际值' twin, it is a backfilled
+    actual and must NOT be treated as forecast-visible at t. Returns
+    {fc_col: {kind: genuine|backfilled_actual|no_act_pair, corr, exact}}.
+    """
+    out = {}
+    fc, act = ds["exog_fc"], ds["exog_act"]
+    act_map = {c.replace("预测值", "实际值"): c for c in fc.columns}
+    for c in fc.columns:
+        pair = act_map.get(c)
+        v = pd.to_numeric(fc[c], errors="coerce").to_numpy(float)
+        if pair is None or pair not in act.columns:
+            out[c] = {"kind": "no_act_pair", "corr": None, "exact": None}
+            continue
+        a = pd.to_numeric(act[pair], errors="coerce").to_numpy(float)
+        m = np.isfinite(v) & np.isfinite(a)
+        if m.sum() < 50:
+            out[c] = {"kind": "no_act_pair", "corr": None, "exact": None}
+            continue
+        corr = abs(float(np.corrcoef(v[m], a[m])[0, 1]))
+        exact = float(np.mean(np.abs(v[m] - a[m]) < 1e-6))
+        out[c] = {"kind": ("backfilled_actual" if (corr >= 0.999 or exact >= 0.999)
+                           else "genuine"),
+                  "corr": corr, "exact": exact}
+    return out
+
+
 # ------------------------------------------------------------------ splits ---
 def four_segment_split(n: int, frac=(0.50, 0.20, 0.10, 0.20)) -> dict:
     a = int(n * frac[0])
@@ -309,6 +395,50 @@ def load_shandong(
                   n_cols=len(df.columns), currency="CNY",
                   tier="L1",
                   note="Shandong spot market, 11-13% negative price hours"),
+    )
+
+
+# =============================================== 通用省份加载(非 shandong) ====
+def load_province(province: str, price_col: str = "日前电价") -> dict:
+    """Generic provincial loader for the four non-Shandong province files.
+
+    Same column dialect as load_shandong: 时刻→ts, *预测值→exog_fc,
+    *实际值→exog_act, 日前/实时电价→price. Files are .xlsx. Returns the same
+    dict schema as load_dataset / load_shandong, so build_tabular /
+    assert_no_leakage / ExperimentManifest work unchanged. Each province trains
+    its own host on its own column set — no cross-province schema alignment.
+    """
+    if province not in PROVINCES:
+        raise KeyError(f"unknown province {province!r}; have {list(PROVINCES)}")
+    spec = PROVINCES[province]
+    path = os.path.join(DATA, "raw", "provinces", spec["file"])
+    df = pd.read_excel(path)
+    df.columns = df.columns.str.strip()
+    ts_col = [c for c in df.columns if "时刻" in c or "time" in c.lower()][0]
+    df["timestamp"] = pd.to_datetime(df[ts_col])
+    df = df.sort_values("timestamp").drop_duplicates("timestamp").reset_index(drop=True)
+
+    if price_col not in df.columns:
+        raise KeyError(f"{price_col} not found in {province}; "
+                       f"available: {list(df.columns)}")
+
+    price_cols = {c for c in df.columns if "电价" in c}
+    exog_cols = [c for c in df.columns if c not in price_cols
+                 and "时刻" not in c and "timestamp" not in c]
+    exog_fc = [c for c in exog_cols if "预测" in c]
+    exog_act = [c for c in exog_cols if "实际" in c and c not in exog_fc]
+    for c in exog_cols:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+        df[c] = df[c].ffill().bfill()
+
+    price = pd.to_numeric(df[price_col], errors="coerce").ffill().bfill().to_numpy()
+    return dict(
+        key=province, ts=df["timestamp"], price=price.astype(float),
+        exog_fc=df[exog_fc].astype(float) if exog_fc else pd.DataFrame(index=df.index),
+        exog_act=df[exog_act].astype(float) if exog_act else pd.DataFrame(index=df.index),
+        meta=dict(path=path, price_col=price_col, n_cols=len(df.columns),
+                  currency=spec["currency"], tier="L1", note=spec["note"],
+                  province=province),
     )
 
 
