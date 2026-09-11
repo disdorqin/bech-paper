@@ -1,0 +1,62 @@
+PASS T01 exactly five trainable parameters
+PASS T01 beta initialised to exactly zero
+PASS T01 no hidden layer or submodule
+PASS T01 no reset_parameters hook that could wipe beta
+PASS T02 beta=0 replays S1 directions within tolerance
+PASS T02 beta=0 output is still unit norm
+PASS T02 nonzero beta changes the direction
+PASS T03 role table has 24 x 5 shape
+PASS T03 mean pooling within role
+PASS T03 single-channel role equals that channel
+PASS T03 structurally absent roles are exactly zero
+PASS T03 pooling is order invariant within a role
+PASS T04 five roles per market mapping
+PASS T04 every mapped index is in range for its market
+PASS T04 every mapped channel is a registered legal column
+PASS T04 GANSU report-only aggregate excluded
+PASS T04 SUPPLY_MARGIN_FC structurally absent in every market
+PASS T04 only SUPPLY_MARGIN_FC is absent for all three markets
+PASS T04 GANSU uses six primary channels
+PASS T04 GANSU covers four roles
+PASS T05 state reader reads no target-day DA price
+PASS T05 state reader reads no realized RT price
+PASS T05 state reader reads no S3/S4 partition
+PASS T05 state tensor is finite
+PASS T05 state tensor channel count matches LEGAL
+PASS T06 three beta folds for B2..B4
+PASS T06 every beta fold self-excluded
+PASS T06 block B2 beta train rows strictly precede proposals
+PASS T06 block B3 beta train rows strictly precede proposals
+PASS T06 block B4 beta train rows strictly precede proposals
+PASS T06 HSA OOF defined exactly on B2..B4
+PASS T06 B0/B1 have no HSA OOF direction
+PASS T07 alpha folds calibrated strictly before proposals
+PASS T07 three alpha folds
+PASS T07 complete row set is B2..B4 available
+PASS T07 allrows row set is B1..B4 available
+PASS T07 alpha recovers the planted amplitude
+PASS T07 HSA alpha row set is strictly inside the S1 alpha row set
+PASS T08 planted optimum is not reachable at beta=0
+PASS T08 beta training cuts the Shape objective by >95%
+PASS T08 fitted beta is nontrivial
+PASS T08 fitted beta recovers the planted direction
+PASS T08 beta fit is deterministic under a fixed seed
+PASS T08 beta fit is seed-invariant for identical inputs
+PASS T09 final beta trains only on legal OOF rows
+PASS T09 final beta has five finite coefficients
+PASS T09 final beta verified zero-init replay
+PASS T10 train standardisation uses train statistics
+PASS T10 test standardisation does not use test statistics
+PASS T10 per-coordinate standardisation is independent across channels
+PASS T11 importing the runner leaves torch single-threaded
+PASS T11 re-importing the runner re-pins torch to one thread
+PASS T12 role_table fails closed on the whole multi-market schema dict
+PASS T12 schema dict is keyed by exactly the three audited markets
+PASS T12 LAGO_DE single-market mapping carries exactly five roles
+PASS T12 LAGO_DE role slots are index tuples, not column names
+PASS T12 LAGO_PJM single-market mapping carries exactly five roles
+PASS T12 LAGO_PJM role slots are index tuples, not column names
+PASS T12 GANSU_DA single-market mapping carries exactly five roles
+PASS T12 GANSU_DA role slots are index tuples, not column names
+
+60 checks passed

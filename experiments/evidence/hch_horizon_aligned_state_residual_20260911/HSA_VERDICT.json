@@ -1,0 +1,42 @@
+{
+  "token": "HCH_HORIZON_ALIGNED_STATE_RESIDUAL_NOT_SUPPORTED_KEEP_S1",
+  "H0": "PASS",
+  "H1": "FAIL",
+  "H2": "FAIL",
+  "H3": "FAIL",
+  "H4": "PASS",
+  "S1_replay_max_abs_diff": 1.4210854715202004e-14,
+  "beta_zero_init_replay_max_abs_diff": 1.1920928955078125e-07,
+  "H1_cosine_nonworse_cells": 4,
+  "H1_wrong_hemisphere_nonworse_cells": 3,
+  "H1_targeted_cosine_improved_cells": 3,
+  "H1_GANSU_HIGH_cosine_changes": {
+    "GANSU_DA/PatchTST": 0.034704238176345825,
+    "GANSU_DA/TimeMixer": 0.11894172430038452
+  },
+  "H1_GANSU_HIGH_wrong_rate_changes": {
+    "GANSU_DA/PatchTST": -0.125,
+    "GANSU_DA/TimeMixer": -0.1818181818181818
+  },
+  "H2_gain_delta_pct": {
+    "GANSU_DA/PatchTST": 1.2992094406166972,
+    "GANSU_DA/TimeMixer": 4.309894752361166,
+    "LAGO_DE/PatchTST": -0.8724573815744865,
+    "LAGO_DE/TimeMixer": 0.23335784930718262,
+    "LAGO_PJM/PatchTST": 0.21628343193824717,
+    "LAGO_PJM/TimeMixer": -0.20648124181946947
+  },
+  "H2_median_gain_pct": 6.727510651204453,
+  "H2_gain_ge5_cells": 3,
+  "H2_max_Normal_harm_pct": 1.018271145836458,
+  "H2_GANSU_gains_pct": {
+    "GANSU_DA/PatchTST": 3.5465341106965496,
+    "GANSU_DA/TimeMixer": 11.036649003804252
+  },
+  "H3_cells_with_ge2of3_seeds": 3,
+  "H3_worst_seed_gain_delta_pp": -1.2970557288407232,
+  "H4_median_beta_training_seconds_per_cell": 1.733345249958802,
+  "H4_median_overhead_us_per_day": 1.2160550937517933,
+  "H4_median_total_inference_us_per_day": 7.056651306936706,
+  "runtime_seconds": 13.676433563232422
+}
