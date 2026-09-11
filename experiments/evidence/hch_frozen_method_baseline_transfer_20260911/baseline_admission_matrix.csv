@@ -1,0 +1,12 @@
+method,role,admitted_to_best_baseline,fidelity_label,source_commit,reason
+Host,reference,False,FROZEN_HOST,frozen cache,Reference forecaster; reported but never called the strongest post-hoc baseline.
+MatchedDirectResidual,offline baseline,True,FROZEN_INTERNAL_CONTROL,in-repo frozen control,Frozen same-information internal control; replayed verbatim.
+delta_Adapter_AdaY,offline baseline,True,ACCEPTED_WITH_DISCLOSED_PARTIAL_FIDELITY,0add06ea7b4d2e0a84c364a8be72eef2676a92f2,Audited official Adapter-X+Y transfer; partial fidelity disclosed (Electricity 0.21pp).
+PIR_paper_protocol,offline baseline,True,PAPER_FAITHFUL_EXACT_ACCEPTED,fc372bb02090da887d4a20b614a6cfecbfd813d0,"Exact accepted official PIR checkout on the frozen dataset/task/Host family; cached-Host use would change official semantics, so the official backbone is trained too."
+S1_DailyPatch_GRU32,frozen method,False,FROZEN_METHOD_REPLAY,HRSI closure,"The frozen method under test; replayed, never modified."
+PIR_PROXY_10epoch_K10,FORBIDDEN,False,FORBIDDEN_HISTORICAL_PROXY,-,Explicitly excluded by the protocol; never executed.
+src/baselines/pir.py ridge/refiner substitute,FORBIDDEN,False,FORBIDDEN_PROXY,-,Explicitly excluded by the protocol; never executed.
+old 2-epoch delta wrapper,FORBIDDEN,False,FORBIDDEN_WRAPPER,-,Explicitly excluded by the protocol; never executed.
+COSA,online/TTA supplementary only,False,ONLINE_PARTIAL_FIDELITY / PAPER_NATIVE_METHOD_UNRESOLVED,-,No already-audited legal transfer runner exists; kept out of the main offline ranking.
+UEC-STD,excluded,False,HOST_FIDELITY_BLOCKED / NOT_PAPER_FAITHFULLY_ADMITTED,-,Excluded from empirical main-table ranking.
+OMPB,excluded,False,STANDALONE_DATA_BLOCKED / NOT_REPRODUCED,-,Excluded from empirical main-table ranking.

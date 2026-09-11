@@ -1,0 +1,691 @@
+{
+  "cells": {
+    "GANSU_DA/PatchTST": {
+      "cache_sha256": "e1392ee4397aa28aed43fcb4b013919f836870b4874a591feb6e75770aa0afbd",
+      "n_fit": 62,
+      "n_eval": 21,
+      "n_runs": 7,
+      "n_gap_breaks": 6,
+      "runs": [
+        {
+          "run_id": 0,
+          "first_day": 0,
+          "last_day": 6,
+          "n_days": 7,
+          "n_hours": 336,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-04-11 00:00:00",
+          "series_end": "2025-04-24 23:00:00"
+        },
+        {
+          "run_id": 1,
+          "first_day": 7,
+          "last_day": 8,
+          "n_days": 2,
+          "n_hours": 216,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-04-27 00:00:00",
+          "series_end": "2025-05-05 23:00:00"
+        },
+        {
+          "run_id": 2,
+          "first_day": 9,
+          "last_day": 15,
+          "n_days": 7,
+          "n_hours": 336,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-06-02 00:00:00",
+          "series_end": "2025-06-15 23:00:00"
+        },
+        {
+          "run_id": 3,
+          "first_day": 16,
+          "last_day": 19,
+          "n_days": 4,
+          "n_hours": 264,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-06-18 00:00:00",
+          "series_end": "2025-06-28 23:00:00"
+        },
+        {
+          "run_id": 4,
+          "first_day": 20,
+          "last_day": 41,
+          "n_days": 22,
+          "n_hours": 696,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-07-01 00:00:00",
+          "series_end": "2025-07-29 23:00:00"
+        },
+        {
+          "run_id": 5,
+          "first_day": 42,
+          "last_day": 58,
+          "n_days": 17,
+          "n_hours": 576,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-08-02 00:00:00",
+          "series_end": "2025-08-25 23:00:00"
+        },
+        {
+          "run_id": 6,
+          "first_day": 59,
+          "last_day": 82,
+          "n_days": 24,
+          "n_hours": 744,
+          "segments": [
+            "DIAG_EVAL",
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-08-28 00:00:00",
+          "series_end": "2025-09-27 23:00:00"
+        }
+      ],
+      "role_hours": [
+        [
+          0,
+          "train",
+          168,
+          336
+        ],
+        [
+          1,
+          "train",
+          168,
+          216
+        ],
+        [
+          2,
+          "train",
+          168,
+          336
+        ],
+        [
+          3,
+          "train",
+          168,
+          264
+        ],
+        [
+          4,
+          "train",
+          168,
+          696
+        ],
+        [
+          5,
+          "train",
+          168,
+          504
+        ],
+        [
+          5,
+          "val",
+          504,
+          576
+        ],
+        [
+          6,
+          "val",
+          168,
+          240
+        ],
+        [
+          6,
+          "test",
+          240,
+          744
+        ]
+      ],
+      "split_manifest": {
+        "DIAG_FIT_timestamp_hash": "679594bd0462474f2a8349d37586a02cb17ea3cb3e5fb13f537c4db1366c4577",
+        "DIAG_EVAL_timestamp_hash": "accd9ea86c747354fda4e53f4e1fbf12e5bde2ec506838bb860032d58a234493",
+        "DIAG_FIT_n": 62,
+        "DIAG_EVAL_n": 21,
+        "DIAG_FIT_first": "2025-04-18 00:00:00",
+        "DIAG_FIT_last": "2025-09-06 00:00:00",
+        "DIAG_EVAL_first": "2025-09-07 00:00:00",
+        "DIAG_EVAL_last": "2025-09-27 00:00:00"
+      },
+      "fit_avail": 56,
+      "eval_avail": 21,
+      "tail_frac": 0.09523809523809523,
+      "q05": 40.0,
+      "q95": 350.01949920654295,
+      "host_overall_mae": 72.05342864990234,
+      "host_normal_mae": 68.82388305664062,
+      "host_tail_mae": 102.734130859375,
+      "frozen_s1_overall_mae": 70.4341541722147,
+      "frozen_s1_gain": 2.2473246700798524,
+      "host_meta_keys": [
+        "T_base_infer",
+        "T_base_train",
+        "trainable_params_base",
+        "trainable_params_base_after_freeze"
+      ]
+    },
+    "GANSU_DA/TimeMixer": {
+      "cache_sha256": "179fac0d6a4ec71478e3317b228b300512cb1936814e5d0f71852b9967ea54ad",
+      "n_fit": 62,
+      "n_eval": 21,
+      "n_runs": 7,
+      "n_gap_breaks": 6,
+      "runs": [
+        {
+          "run_id": 0,
+          "first_day": 0,
+          "last_day": 6,
+          "n_days": 7,
+          "n_hours": 336,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-04-11 00:00:00",
+          "series_end": "2025-04-24 23:00:00"
+        },
+        {
+          "run_id": 1,
+          "first_day": 7,
+          "last_day": 8,
+          "n_days": 2,
+          "n_hours": 216,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-04-27 00:00:00",
+          "series_end": "2025-05-05 23:00:00"
+        },
+        {
+          "run_id": 2,
+          "first_day": 9,
+          "last_day": 15,
+          "n_days": 7,
+          "n_hours": 336,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-06-02 00:00:00",
+          "series_end": "2025-06-15 23:00:00"
+        },
+        {
+          "run_id": 3,
+          "first_day": 16,
+          "last_day": 19,
+          "n_days": 4,
+          "n_hours": 264,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-06-18 00:00:00",
+          "series_end": "2025-06-28 23:00:00"
+        },
+        {
+          "run_id": 4,
+          "first_day": 20,
+          "last_day": 41,
+          "n_days": 22,
+          "n_hours": 696,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-07-01 00:00:00",
+          "series_end": "2025-07-29 23:00:00"
+        },
+        {
+          "run_id": 5,
+          "first_day": 42,
+          "last_day": 58,
+          "n_days": 17,
+          "n_hours": 576,
+          "segments": [
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-08-02 00:00:00",
+          "series_end": "2025-08-25 23:00:00"
+        },
+        {
+          "run_id": 6,
+          "first_day": 59,
+          "last_day": 82,
+          "n_days": 24,
+          "n_hours": 744,
+          "segments": [
+            "DIAG_EVAL",
+            "DIAG_FIT"
+          ],
+          "series_start": "2025-08-28 00:00:00",
+          "series_end": "2025-09-27 23:00:00"
+        }
+      ],
+      "role_hours": [
+        [
+          0,
+          "train",
+          168,
+          336
+        ],
+        [
+          1,
+          "train",
+          168,
+          216
+        ],
+        [
+          2,
+          "train",
+          168,
+          336
+        ],
+        [
+          3,
+          "train",
+          168,
+          264
+        ],
+        [
+          4,
+          "train",
+          168,
+          696
+        ],
+        [
+          5,
+          "train",
+          168,
+          504
+        ],
+        [
+          5,
+          "val",
+          504,
+          576
+        ],
+        [
+          6,
+          "val",
+          168,
+          240
+        ],
+        [
+          6,
+          "test",
+          240,
+          744
+        ]
+      ],
+      "split_manifest": {
+        "DIAG_FIT_timestamp_hash": "679594bd0462474f2a8349d37586a02cb17ea3cb3e5fb13f537c4db1366c4577",
+        "DIAG_EVAL_timestamp_hash": "accd9ea86c747354fda4e53f4e1fbf12e5bde2ec506838bb860032d58a234493",
+        "DIAG_FIT_n": 62,
+        "DIAG_EVAL_n": 21,
+        "DIAG_FIT_first": "2025-04-18 00:00:00",
+        "DIAG_FIT_last": "2025-09-06 00:00:00",
+        "DIAG_EVAL_first": "2025-09-07 00:00:00",
+        "DIAG_EVAL_last": "2025-09-27 00:00:00"
+      },
+      "fit_avail": 56,
+      "eval_avail": 21,
+      "tail_frac": 0.09523809523809523,
+      "q05": 40.0,
+      "q95": 350.01949920654295,
+      "host_overall_mae": 75.8519515991211,
+      "host_normal_mae": 67.24855041503906,
+      "host_tail_mae": 157.5843505859375,
+      "frozen_s1_overall_mae": 70.74957722012466,
+      "frozen_s1_gain": 6.726754251443086,
+      "host_meta_keys": [
+        "T_base_infer",
+        "T_base_train",
+        "trainable_params_base",
+        "trainable_params_base_after_freeze"
+      ]
+    },
+    "LAGO_DE/PatchTST": {
+      "cache_sha256": "99953d3b1aa2f5e3a36964ef99242b01fd140ff22f3a1294f731873278974bec",
+      "n_fit": 327,
+      "n_eval": 109,
+      "n_runs": 1,
+      "n_gap_breaks": 0,
+      "runs": [
+        {
+          "run_id": 0,
+          "first_day": 0,
+          "last_day": 435,
+          "n_days": 436,
+          "n_hours": 10632,
+          "segments": [
+            "DIAG_EVAL",
+            "DIAG_FIT"
+          ],
+          "series_start": "2015-01-01 00:00:00",
+          "series_end": "2016-03-18 23:00:00"
+        }
+      ],
+      "role_hours": [
+        [
+          0,
+          "train",
+          168,
+          7248
+        ],
+        [
+          0,
+          "val",
+          7248,
+          8016
+        ],
+        [
+          0,
+          "test",
+          8016,
+          10632
+        ]
+      ],
+      "split_manifest": {
+        "DIAG_FIT_timestamp_hash": "f65e70bbc1b031dc7645356f2ff30ae273a554e1d82173208a46f001c8d22b69",
+        "DIAG_EVAL_timestamp_hash": "38b1723aa8c01f418e5f14f13dadc217a231975aba623df28af472d7f2d92265",
+        "DIAG_FIT_n": 327,
+        "DIAG_EVAL_n": 109,
+        "DIAG_FIT_first": "2015-01-08 00:00:00",
+        "DIAG_FIT_last": "2015-11-30 00:00:00",
+        "DIAG_EVAL_first": "2015-12-01 00:00:00",
+        "DIAG_EVAL_last": "2016-03-18 00:00:00"
+      },
+      "fit_avail": 327,
+      "eval_avail": 109,
+      "tail_frac": 0.13379204892966362,
+      "q05": 13.930000305175781,
+      "q95": 52.69500007629391,
+      "host_overall_mae": 4.7565226554870605,
+      "host_normal_mae": 4.3458251953125,
+      "host_tail_mae": 7.4154953956604,
+      "frozen_s1_overall_mae": 4.245660116226809,
+      "frozen_s1_gain": 10.740252412567148,
+      "host_meta_keys": [
+        "T_base_infer",
+        "T_base_train",
+        "trainable_params_base",
+        "trainable_params_base_after_freeze"
+      ]
+    },
+    "LAGO_DE/TimeMixer": {
+      "cache_sha256": "13dc67ad5486031fd37e21f3646dc9cb0350fd5c450127294351a9144f4ef3f4",
+      "n_fit": 327,
+      "n_eval": 109,
+      "n_runs": 1,
+      "n_gap_breaks": 0,
+      "runs": [
+        {
+          "run_id": 0,
+          "first_day": 0,
+          "last_day": 435,
+          "n_days": 436,
+          "n_hours": 10632,
+          "segments": [
+            "DIAG_EVAL",
+            "DIAG_FIT"
+          ],
+          "series_start": "2015-01-01 00:00:00",
+          "series_end": "2016-03-18 23:00:00"
+        }
+      ],
+      "role_hours": [
+        [
+          0,
+          "train",
+          168,
+          7248
+        ],
+        [
+          0,
+          "val",
+          7248,
+          8016
+        ],
+        [
+          0,
+          "test",
+          8016,
+          10632
+        ]
+      ],
+      "split_manifest": {
+        "DIAG_FIT_timestamp_hash": "f65e70bbc1b031dc7645356f2ff30ae273a554e1d82173208a46f001c8d22b69",
+        "DIAG_EVAL_timestamp_hash": "38b1723aa8c01f418e5f14f13dadc217a231975aba623df28af472d7f2d92265",
+        "DIAG_FIT_n": 327,
+        "DIAG_EVAL_n": 109,
+        "DIAG_FIT_first": "2015-01-08 00:00:00",
+        "DIAG_FIT_last": "2015-11-30 00:00:00",
+        "DIAG_EVAL_first": "2015-12-01 00:00:00",
+        "DIAG_EVAL_last": "2016-03-18 00:00:00"
+      },
+      "fit_avail": 327,
+      "eval_avail": 109,
+      "tail_frac": 0.13379204892966362,
+      "q05": 13.930000305175781,
+      "q95": 52.69500007629391,
+      "host_overall_mae": 4.70658016204834,
+      "host_normal_mae": 4.330480575561523,
+      "host_tail_mae": 7.1415534019470215,
+      "frozen_s1_overall_mae": 4.3082407367489,
+      "frozen_s1_gain": 8.463457788554477,
+      "host_meta_keys": [
+        "T_base_infer",
+        "T_base_train",
+        "trainable_params_base",
+        "trainable_params_base_after_freeze"
+      ]
+    },
+    "LAGO_PJM/PatchTST": {
+      "cache_sha256": "faaf20ebc6f11e8fe6c7b2192d77a07829df94af72a1313c7dfc6111a9ff2f86",
+      "n_fit": 327,
+      "n_eval": 109,
+      "n_runs": 1,
+      "n_gap_breaks": 0,
+      "runs": [
+        {
+          "run_id": 0,
+          "first_day": 0,
+          "last_day": 435,
+          "n_days": 436,
+          "n_hours": 10632,
+          "segments": [
+            "DIAG_EVAL",
+            "DIAG_FIT"
+          ],
+          "series_start": "2015-12-25 00:00:00",
+          "series_end": "2017-03-11 23:00:00"
+        }
+      ],
+      "role_hours": [
+        [
+          0,
+          "train",
+          168,
+          7248
+        ],
+        [
+          0,
+          "val",
+          7248,
+          8016
+        ],
+        [
+          0,
+          "test",
+          8016,
+          10632
+        ]
+      ],
+      "split_manifest": {
+        "DIAG_FIT_timestamp_hash": "c0b8e9927e74d1d220f994551fc9e68cf1ab982a5c67bef0ee34ee41cd2fb7f4",
+        "DIAG_EVAL_timestamp_hash": "f644194077a6ee8e2c06170a2cba368ef0e584bfeb9b0d6fd65c7eb1bc65a280",
+        "DIAG_FIT_n": 327,
+        "DIAG_EVAL_n": 109,
+        "DIAG_FIT_first": "2016-01-01 00:00:00",
+        "DIAG_FIT_last": "2016-11-22 00:00:00",
+        "DIAG_EVAL_first": "2016-11-23 00:00:00",
+        "DIAG_EVAL_last": "2017-03-11 00:00:00"
+      },
+      "fit_avail": 327,
+      "eval_avail": 109,
+      "tail_frac": 0.03058103975535168,
+      "q05": 13.708861017227173,
+      "q95": 44.223866271972646,
+      "host_overall_mae": 3.019613027572632,
+      "host_normal_mae": 2.7817885875701904,
+      "host_tail_mae": 10.558648109436035,
+      "frozen_s1_overall_mae": 3.045757513709513,
+      "frozen_s1_gain": -0.8658224049953201,
+      "host_meta_keys": [
+        "T_base_infer",
+        "T_base_train",
+        "trainable_params_base",
+        "trainable_params_base_after_freeze"
+      ]
+    },
+    "LAGO_PJM/TimeMixer": {
+      "cache_sha256": "9d5bd8881fa319a2037b3e734e097689a7e1beb8675f45d3c99eaea994888e7f",
+      "n_fit": 327,
+      "n_eval": 109,
+      "n_runs": 1,
+      "n_gap_breaks": 0,
+      "runs": [
+        {
+          "run_id": 0,
+          "first_day": 0,
+          "last_day": 435,
+          "n_days": 436,
+          "n_hours": 10632,
+          "segments": [
+            "DIAG_EVAL",
+            "DIAG_FIT"
+          ],
+          "series_start": "2015-12-25 00:00:00",
+          "series_end": "2017-03-11 23:00:00"
+        }
+      ],
+      "role_hours": [
+        [
+          0,
+          "train",
+          168,
+          7248
+        ],
+        [
+          0,
+          "val",
+          7248,
+          8016
+        ],
+        [
+          0,
+          "test",
+          8016,
+          10632
+        ]
+      ],
+      "split_manifest": {
+        "DIAG_FIT_timestamp_hash": "c0b8e9927e74d1d220f994551fc9e68cf1ab982a5c67bef0ee34ee41cd2fb7f4",
+        "DIAG_EVAL_timestamp_hash": "f644194077a6ee8e2c06170a2cba368ef0e584bfeb9b0d6fd65c7eb1bc65a280",
+        "DIAG_FIT_n": 327,
+        "DIAG_EVAL_n": 109,
+        "DIAG_FIT_first": "2016-01-01 00:00:00",
+        "DIAG_FIT_last": "2016-11-22 00:00:00",
+        "DIAG_EVAL_first": "2016-11-23 00:00:00",
+        "DIAG_EVAL_last": "2017-03-11 00:00:00"
+      },
+      "fit_avail": 327,
+      "eval_avail": 109,
+      "tail_frac": 0.03058103975535168,
+      "q05": 13.708861017227173,
+      "q95": 44.223866271972646,
+      "host_overall_mae": 3.2211556434631348,
+      "host_normal_mae": 3.019186496734619,
+      "host_tail_mae": 9.623579978942871,
+      "frozen_s1_overall_mae": 3.061235350998428,
+      "frozen_s1_gain": 4.9646869063667145,
+      "host_meta_keys": [
+        "T_base_infer",
+        "T_base_train",
+        "trainable_params_base",
+        "trainable_params_base_after_freeze"
+      ]
+    }
+  },
+  "access": {
+    "target_access": {
+      "target_column": "日前电价",
+      "target_values_read": 9000,
+      "target_day_values_read": 6984,
+      "causal_context_values_read": 2016,
+      "S3_S4_target_values_read": 0
+    },
+    "state_access": {
+      "LAGO_DE": {
+        "columns": [
+          "Ampirion Load Forecast",
+          "PV+Wind Forecast"
+        ],
+        "rows_read": 10464,
+        "target_day_DA_input_reads": 0,
+        "realized_RT_input_reads": 0,
+        "S3_S4_reads": 0,
+        "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+      },
+      "LAGO_PJM": {
+        "columns": [
+          " System load forecast"
+        ],
+        "rows_read": 10464,
+        "target_day_DA_input_reads": 0,
+        "realized_RT_input_reads": 0,
+        "S3_S4_reads": 0,
+        "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+      },
+      "GANSU_DA": {
+        "columns": [
+          "光伏总加预测值",
+          "新能源总加预测值",
+          "风电总加预测值",
+          "水电含抽蓄出力预测值",
+          "联络线受电负荷预测值",
+          "直调负荷预测值",
+          "非市场机组总出力预测值"
+        ],
+        "rows_read": 1992,
+        "target_day_DA_input_reads": 0,
+        "realized_RT_input_reads": 0,
+        "S3_S4_reads": 0,
+        "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+      }
+    },
+    "roles_read": [
+      "S1",
+      "DIAG_FIT",
+      "DIAG_EVAL"
+    ],
+    "S3_reads": 0,
+    "S4_reads": 0,
+    "protected_reads": 0,
+    "final_reads": 0,
+    "other_China_markets_read": 0,
+    "Shandong_reads": 0,
+    "Shaanxi_reads": 0,
+    "Ningxia_reads": 0,
+    "Qinghai_reads": 0,
+    "note": "The only market files opened are LAGO_DE / LAGO_PJM / GANSU_DA. SEC/Regelenergie-style tracks are untouched; only the A_DA track is read."
+  }
+}

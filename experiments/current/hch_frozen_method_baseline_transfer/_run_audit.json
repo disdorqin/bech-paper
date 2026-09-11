@@ -1,0 +1,157 @@
+{
+  "target_access": {
+    "target_column": "日前电价",
+    "target_values_read": 9000,
+    "target_day_values_read": 6984,
+    "causal_context_values_read": 2016,
+    "S3_S4_target_values_read": 0
+  },
+  "state_access": {
+    "LAGO_DE": {
+      "columns": [
+        "Ampirion Load Forecast",
+        "PV+Wind Forecast"
+      ],
+      "rows_read": 10464,
+      "target_day_DA_input_reads": 0,
+      "realized_RT_input_reads": 0,
+      "S3_S4_reads": 0,
+      "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+    },
+    "LAGO_PJM": {
+      "columns": [
+        " System load forecast"
+      ],
+      "rows_read": 10464,
+      "target_day_DA_input_reads": 0,
+      "realized_RT_input_reads": 0,
+      "S3_S4_reads": 0,
+      "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+    },
+    "GANSU_DA": {
+      "columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "rows_read": 1992,
+      "target_day_DA_input_reads": 0,
+      "realized_RT_input_reads": 0,
+      "S3_S4_reads": 0,
+      "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+    }
+  },
+  "roles_read": [
+    "S1",
+    "DIAG_FIT",
+    "DIAG_EVAL"
+  ],
+  "S3_reads": 0,
+  "S4_reads": 0,
+  "protected_reads": 0,
+  "final_reads": 0,
+  "other_China_markets_read": 0,
+  "Shandong_reads": 0,
+  "Shaanxi_reads": 0,
+  "Ningxia_reads": 0,
+  "Qinghai_reads": 0,
+  "note": "The only market files opened are LAGO_DE / LAGO_PJM / GANSU_DA. SEC/Regelenergie-style tracks are untouched; only the A_DA track is read.",
+  "host_cache_sha256": {
+    "LAGO_DE/PatchTST": "99953d3b1aa2f5e3a36964ef99242b01fd140ff22f3a1294f731873278974bec",
+    "LAGO_DE/TimeMixer": "13dc67ad5486031fd37e21f3646dc9cb0350fd5c450127294351a9144f4ef3f4",
+    "LAGO_PJM/PatchTST": "faaf20ebc6f11e8fe6c7b2192d77a07829df94af72a1313c7dfc6111a9ff2f86",
+    "LAGO_PJM/TimeMixer": "9d5bd8881fa319a2037b3e734e097689a7e1beb8675f45d3c99eaea994888e7f",
+    "GANSU_DA/PatchTST": "e1392ee4397aa28aed43fcb4b013919f836870b4874a591feb6e75770aa0afbd",
+    "GANSU_DA/TimeMixer": "179fac0d6a4ec71478e3317b228b300512cb1936814e5d0f71852b9967ea54ad"
+  },
+  "host_cache_paths": {
+    "LAGO_DE|PatchTST": "experiments\\evidence\\hch_repair_diagnostics_20260908\\host_foundation\\LAGO_DE\\PatchTST\\host_predictions.npz",
+    "LAGO_DE|TimeMixer": "experiments\\evidence\\hch_repair_diagnostics_20260908\\host_foundation\\LAGO_DE\\TimeMixer\\host_predictions.npz",
+    "LAGO_PJM|PatchTST": "experiments\\evidence\\hch_repair_diagnostics_20260908\\host_foundation\\LAGO_PJM\\PatchTST\\host_predictions.npz",
+    "LAGO_PJM|TimeMixer": "experiments\\evidence\\hch_repair_diagnostics_20260908\\host_foundation\\LAGO_PJM\\TimeMixer\\host_predictions.npz",
+    "GANSU_DA|PatchTST": "experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\host_foundation\\GANSU_DA\\PatchTST\\host_predictions.npz",
+    "GANSU_DA|TimeMixer": "experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\host_foundation\\GANSU_DA\\TimeMixer\\host_predictions.npz"
+  },
+  "seeds_run": [
+    7,
+    17,
+    37
+  ],
+  "stamp": "full5",
+  "protocol": "docs\\current\\HCH_FROZEN_METHOD_BASELINE_TRANSFER_ADJUDICATION_20260911.md",
+  "protocol_sha256": "7126c85fdd2ad3f374c321c47710331a6b92b42bdf0a992fd4e1170a9b525d90",
+  "cell_gap_breaks": {
+    "LAGO_DE/PatchTST": 0,
+    "LAGO_DE/TimeMixer": 0,
+    "LAGO_PJM/PatchTST": 0,
+    "LAGO_PJM/TimeMixer": 0,
+    "GANSU_DA/PatchTST": 6,
+    "GANSU_DA/TimeMixer": 6
+  },
+  "cell_split": {
+    "LAGO_DE/PatchTST": {
+      "DIAG_FIT_timestamp_hash": "f65e70bbc1b031dc7645356f2ff30ae273a554e1d82173208a46f001c8d22b69",
+      "DIAG_EVAL_timestamp_hash": "38b1723aa8c01f418e5f14f13dadc217a231975aba623df28af472d7f2d92265",
+      "DIAG_FIT_n": 327,
+      "DIAG_EVAL_n": 109,
+      "DIAG_FIT_first": "2015-01-08 00:00:00",
+      "DIAG_FIT_last": "2015-11-30 00:00:00",
+      "DIAG_EVAL_first": "2015-12-01 00:00:00",
+      "DIAG_EVAL_last": "2016-03-18 00:00:00"
+    },
+    "LAGO_DE/TimeMixer": {
+      "DIAG_FIT_timestamp_hash": "f65e70bbc1b031dc7645356f2ff30ae273a554e1d82173208a46f001c8d22b69",
+      "DIAG_EVAL_timestamp_hash": "38b1723aa8c01f418e5f14f13dadc217a231975aba623df28af472d7f2d92265",
+      "DIAG_FIT_n": 327,
+      "DIAG_EVAL_n": 109,
+      "DIAG_FIT_first": "2015-01-08 00:00:00",
+      "DIAG_FIT_last": "2015-11-30 00:00:00",
+      "DIAG_EVAL_first": "2015-12-01 00:00:00",
+      "DIAG_EVAL_last": "2016-03-18 00:00:00"
+    },
+    "LAGO_PJM/PatchTST": {
+      "DIAG_FIT_timestamp_hash": "c0b8e9927e74d1d220f994551fc9e68cf1ab982a5c67bef0ee34ee41cd2fb7f4",
+      "DIAG_EVAL_timestamp_hash": "f644194077a6ee8e2c06170a2cba368ef0e584bfeb9b0d6fd65c7eb1bc65a280",
+      "DIAG_FIT_n": 327,
+      "DIAG_EVAL_n": 109,
+      "DIAG_FIT_first": "2016-01-01 00:00:00",
+      "DIAG_FIT_last": "2016-11-22 00:00:00",
+      "DIAG_EVAL_first": "2016-11-23 00:00:00",
+      "DIAG_EVAL_last": "2017-03-11 00:00:00"
+    },
+    "LAGO_PJM/TimeMixer": {
+      "DIAG_FIT_timestamp_hash": "c0b8e9927e74d1d220f994551fc9e68cf1ab982a5c67bef0ee34ee41cd2fb7f4",
+      "DIAG_EVAL_timestamp_hash": "f644194077a6ee8e2c06170a2cba368ef0e584bfeb9b0d6fd65c7eb1bc65a280",
+      "DIAG_FIT_n": 327,
+      "DIAG_EVAL_n": 109,
+      "DIAG_FIT_first": "2016-01-01 00:00:00",
+      "DIAG_FIT_last": "2016-11-22 00:00:00",
+      "DIAG_EVAL_first": "2016-11-23 00:00:00",
+      "DIAG_EVAL_last": "2017-03-11 00:00:00"
+    },
+    "GANSU_DA/PatchTST": {
+      "DIAG_FIT_timestamp_hash": "679594bd0462474f2a8349d37586a02cb17ea3cb3e5fb13f537c4db1366c4577",
+      "DIAG_EVAL_timestamp_hash": "accd9ea86c747354fda4e53f4e1fbf12e5bde2ec506838bb860032d58a234493",
+      "DIAG_FIT_n": 62,
+      "DIAG_EVAL_n": 21,
+      "DIAG_FIT_first": "2025-04-18 00:00:00",
+      "DIAG_FIT_last": "2025-09-06 00:00:00",
+      "DIAG_EVAL_first": "2025-09-07 00:00:00",
+      "DIAG_EVAL_last": "2025-09-27 00:00:00"
+    },
+    "GANSU_DA/TimeMixer": {
+      "DIAG_FIT_timestamp_hash": "679594bd0462474f2a8349d37586a02cb17ea3cb3e5fb13f537c4db1366c4577",
+      "DIAG_EVAL_timestamp_hash": "accd9ea86c747354fda4e53f4e1fbf12e5bde2ec506838bb860032d58a234493",
+      "DIAG_FIT_n": 62,
+      "DIAG_EVAL_n": 21,
+      "DIAG_FIT_first": "2025-04-18 00:00:00",
+      "DIAG_FIT_last": "2025-09-06 00:00:00",
+      "DIAG_EVAL_first": "2025-09-07 00:00:00",
+      "DIAG_EVAL_last": "2025-09-27 00:00:00"
+    }
+  }
+}

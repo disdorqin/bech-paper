@@ -1,0 +1,75 @@
+{
+  "pir_module_file": "D:\\作业\\science\\solar_leak_price_model\\experiments\\current\\hch_frozen_method_baseline_transfer\\pir_transfer.py",
+  "official_repo": "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\reference_deps\\official_repos\\PIR",
+  "official_exists": true,
+  "utils_path": [
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\reference_deps\\official_repos\\PIR\\utils"
+  ],
+  "imported_exp": "exp.exp_long_term_forecasting_pir",
+  "model_module_file": "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\reference_deps\\official_repos\\PIR\\exp\\exp_long_term_forecasting_pir.py",
+  "args_seq_len": 168,
+  "args_pred_len": 24,
+  "args_batch_size": 32,
+  "window_counts": {
+    "train": 1206,
+    "val": 98,
+    "test": 481
+  },
+  "scaler": {
+    "mean": 164.75867930480413,
+    "scale": 107.0955826625127
+  },
+  "n_eval_expected": 21,
+  "sample_shapes": {
+    "x": [
+      168
+    ],
+    "y": [
+      24
+    ],
+    "xm": [
+      168,
+      5
+    ],
+    "ym": [
+      24,
+      5
+    ],
+    "index": 0
+  },
+  "n_eval_windows": 21,
+  "eval_window_head": [
+    [
+      6,
+      240
+    ],
+    [
+      6,
+      264
+    ],
+    [
+      6,
+      288
+    ]
+  ],
+  "eval_window_tail": [
+    [
+      6,
+      672
+    ],
+    [
+      6,
+      696
+    ],
+    [
+      6,
+      720
+    ]
+  ],
+  "eval_target_max_abs_err": 1.4210854715202004e-14,
+  "model_params_total": 215050,
+  "model_params_backbone": 24552,
+  "has_quality_estimator": true,
+  "has_retrieval": true,
+  "refiner_layers": 1
+}

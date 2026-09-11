@@ -1,0 +1,172 @@
+{
+  "pass": true,
+  "checks": {
+    "V1_cell_medians_reproduced": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "disagreements": {}
+    },
+    "V2_gap_table_reproduced": {
+      "pass": true,
+      "disagreements": {}
+    },
+    "V3_gates_reproduced": {
+      "pass": true,
+      "mine": {
+        "B1": true,
+        "B2": false,
+        "B3": false,
+        "n_host_nonworse": 5,
+        "median_gain_vs_host_pct": 5.8457205789049,
+        "max_gap_pct": 2.3563869656925966
+      },
+      "verdict": {
+        "B1": true,
+        "B2": false,
+        "B3": false
+      },
+      "disagreements": {}
+    },
+    "V4_token_rule": {
+      "pass": true,
+      "token": "HCH_BASELINE_TRANSFER_NOT_COMPETITIVE_NEW_IDEA_REQUIRED",
+      "expected_from_rule": "HCH_BASELINE_TRANSFER_NOT_COMPETITIVE_NEW_IDEA_REQUIRED"
+    },
+    "V5_bootstrap_reproduced": {
+      "pass": true,
+      "disagreements": {},
+      "replicates": 1000,
+      "block_days": 7,
+      "seed": 20260911
+    },
+    "V6_pir_metric_from_raw_predictions": {
+      "pass": true,
+      "disagreements": {}
+    },
+    "V7_frozen_s1_replay": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "detail": {
+        "GANSU_DA/PatchTST": 0.0,
+        "GANSU_DA/TimeMixer": 0.0,
+        "LAGO_DE/PatchTST": 0.0,
+        "LAGO_DE/TimeMixer": 0.0,
+        "LAGO_PJM/PatchTST": 0.0,
+        "LAGO_PJM/TimeMixer": 0.0
+      }
+    },
+    "V8_no_forbidden_imports": {
+      "pass": true,
+      "hits": {},
+      "imports": {
+        "audit_access.py": [
+          "__future__",
+          "experiments",
+          "json",
+          "numpy",
+          "pathlib",
+          "sys",
+          "time"
+        ],
+        "finalize.py": [
+          "__future__",
+          "ast",
+          "hashlib",
+          "json",
+          "matplotlib",
+          "numpy",
+          "pandas",
+          "pathlib",
+          "sys"
+        ],
+        "panel.py": [
+          "__future__",
+          "experiments",
+          "hashlib",
+          "json",
+          "numpy",
+          "pandas",
+          "pathlib",
+          "src",
+          "sys",
+          "torch",
+          "utils"
+        ],
+        "pir_transfer.py": [
+          "__future__",
+          "argparse",
+          "data_provider",
+          "exp",
+          "experiments",
+          "json",
+          "numpy",
+          "pandas",
+          "pathlib",
+          "random",
+          "sys",
+          "time",
+          "torch",
+          "types",
+          "utils"
+        ],
+        "probe_panel.py": [
+          "__future__",
+          "experiments",
+          "json",
+          "pathlib",
+          "sys"
+        ],
+        "run_transfer.py": [
+          "__future__",
+          "argparse",
+          "experiments",
+          "json",
+          "numpy",
+          "pandas",
+          "pathlib",
+          "sys",
+          "time"
+        ],
+        "smoke_pir.py": [
+          "__future__",
+          "experiments",
+          "json",
+          "pathlib",
+          "sys"
+        ],
+        "transfers.py": [
+          "__future__",
+          "ast",
+          "copy",
+          "experiments",
+          "numpy",
+          "src",
+          "time",
+          "torch",
+          "utils"
+        ],
+        "verify_transfer.py": [
+          "__future__",
+          "ast",
+          "experiments",
+          "hashlib",
+          "json",
+          "numpy",
+          "pandas",
+          "pathlib",
+          "subprocess",
+          "sys"
+        ]
+      }
+    },
+    "V9_pir_module_identity": {
+      "pass": true,
+      "loaded_exp_file": "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\reference_deps\\official_repos\\PIR\\exp\\exp_long_term_forecasting_pir.py",
+      "base_class_module": "exp.exp_long_term_forecasting_pir",
+      "stderr_tail": "",
+      "official_exp_sha256": "4997552ac8d205f507fc70872ff4605f918ec26831e93946029b2061ffb10737",
+      "official_model_sha256": "5050b9166d08c809be25c65f37a132c7d5102031b94e7a45a7ad9c4ace54e235"
+    },
+    "pass": true
+  }
+}

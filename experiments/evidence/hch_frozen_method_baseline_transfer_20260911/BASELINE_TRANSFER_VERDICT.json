@@ -1,0 +1,282 @@
+{
+  "token": "HCH_BASELINE_TRANSFER_NOT_COMPETITIVE_NEW_IDEA_REQUIRED",
+  "reason": "international parity (B2) failed; GANSU competitiveness (B1) passed",
+  "protocol": "docs/current/HCH_FROZEN_METHOD_BASELINE_TRANSFER_ADJUDICATION_20260911.md",
+  "frozen_method": "S1 Daily-Patch GRU32 Shape + pooled exact OOF MAE alpha",
+  "panel": [
+    "GANSU_DA/PatchTST",
+    "GANSU_DA/TimeMixer",
+    "LAGO_DE/PatchTST",
+    "LAGO_DE/TimeMixer",
+    "LAGO_PJM/PatchTST",
+    "LAGO_PJM/TimeMixer"
+  ],
+  "seeds": [
+    -1,
+    7,
+    17,
+    37,
+    2021
+  ],
+  "gates": {
+    "B0": {
+      "s1_replay_match": {
+        "pass": true,
+        "tolerance": 1e-06,
+        "detail": {
+          "GANSU_DA/PatchTST": {
+            "replay_median": 70.4341541722147,
+            "frozen": 70.4341541722147,
+            "abs_diff": 0.0
+          },
+          "GANSU_DA/TimeMixer": {
+            "replay_median": 70.74957722012466,
+            "frozen": 70.74957722012466,
+            "abs_diff": 0.0
+          },
+          "LAGO_DE/PatchTST": {
+            "replay_median": 4.245660116226809,
+            "frozen": 4.245660116226809,
+            "abs_diff": 0.0
+          },
+          "LAGO_DE/TimeMixer": {
+            "replay_median": 4.3082407367489,
+            "frozen": 4.3082407367489,
+            "abs_diff": 0.0
+          },
+          "LAGO_PJM/PatchTST": {
+            "replay_median": 3.045757513709513,
+            "frozen": 3.045757513709513,
+            "abs_diff": 0.0
+          },
+          "LAGO_PJM/TimeMixer": {
+            "replay_median": 3.061235350998428,
+            "frozen": 3.061235350998428,
+            "abs_diff": 0.0
+          }
+        }
+      },
+      "host_replay_match": {
+        "pass": true,
+        "tolerance": 1e-06,
+        "detail": {
+          "GANSU_DA/PatchTST": {
+            "replay": 72.05342864990234,
+            "frozen": 72.05342864990234,
+            "abs_diff": 0.0
+          },
+          "GANSU_DA/TimeMixer": {
+            "replay": 75.8519515991211,
+            "frozen": 75.8519515991211,
+            "abs_diff": 0.0
+          },
+          "LAGO_DE/PatchTST": {
+            "replay": 4.7565226554870605,
+            "frozen": 4.7565226554870605,
+            "abs_diff": 0.0
+          },
+          "LAGO_DE/TimeMixer": {
+            "replay": 4.70658016204834,
+            "frozen": 4.70658016204834,
+            "abs_diff": 0.0
+          },
+          "LAGO_PJM/PatchTST": {
+            "replay": 3.019613027572632,
+            "frozen": 3.019613027572632,
+            "abs_diff": 0.0
+          },
+          "LAGO_PJM/TimeMixer": {
+            "replay": 3.2211556434631348,
+            "frozen": 3.2211556434631348,
+            "abs_diff": 0.0
+          }
+        }
+      },
+      "direct_replay_match": {
+        "pass": true,
+        "tolerance": 1e-06,
+        "n_compared": 18,
+        "max_abs_diff": 0.0,
+        "unmatched_keys": []
+      },
+      "delta_lineage": {
+        "pass": true,
+        "commit": "0add06ea7b4d2e0a84c364a8be72eef2676a92f2",
+        "source_file": "experiments\\foundation\\reference_deps\\official_repos\\delta-Adapter\\Adapter-X+Y\\experiments\\exp_post_y_add.py",
+        "sha256": "39fab4132d8a0e44e10917ace41d24d0d8addbf5fba30786f33ae51a71e95291",
+        "label": "ACCEPTED_WITH_DISCLOSED_PARTIAL_FIDELITY"
+      },
+      "pir_lineage": {
+        "pass": true,
+        "commit": "fc372bb02090da887d4a20b614a6cfecbfd813d0",
+        "sha256": {
+          "models/PIR.py": "5050b9166d08c809be25c65f37a132c7d5102031b94e7a45a7ad9c4ace54e235",
+          "exp/exp_long_term_forecasting_pir.py": "4997552ac8d205f507fc70872ff4605f918ec26831e93946029b2061ffb10737",
+          "data_provider/data_factory.py": "6e086e41672a0e750f25b4ca7ceff5015bea95ec107f1c366773be22691b05ce",
+          "data_provider/data_loader.py": "c5bf4c5a480233401cb19004a20a85092d810793b4b01ec1c0ab4e67cfab900c"
+        },
+        "label": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+        "protocol_row": "PIR-paper-protocol"
+      },
+      "no_diag_eval_tuning": {
+        "pass": true,
+        "detail": {
+          "files_scanned": [
+            "panel.py",
+            "transfers.py",
+            "pir_transfer.py",
+            "run_transfer.py"
+          ],
+          "patterns": [
+            "itertools.product",
+            "best_params",
+            "argmax(",
+            "argmin(",
+            ".search(",
+            "tune(",
+            "sweep",
+            "for lr in",
+            "for alpha in",
+            "GridSearch",
+            "ParameterGrid"
+          ],
+          "hits": {},
+          "note": "`min`/`idxmin` over the admitted baselines is the protocol's own §6 BestBaselineMAE definition, not a search."
+        },
+        "note": "Every compared method's hyperparameters are module-level constants fixed before any DIAG_EVAL metric existed; the driver contains no grid, no selection over configurations, and no DIAG_EVAL-conditioned branch."
+      },
+      "partition_access": {
+        "pass": true,
+        "detail": {
+          "S3_reads": 0,
+          "S4_reads": 0,
+          "protected_reads": 0,
+          "final_reads": 0,
+          "Shandong_reads": 0,
+          "Shaanxi_reads": 0,
+          "Ningxia_reads": 0,
+          "Qinghai_reads": 0
+        },
+        "roles_read": [
+          "S1",
+          "DIAG_FIT",
+          "DIAG_EVAL"
+        ]
+      },
+      "forbidden_paths_absent": {
+        "pass": true,
+        "detail": {
+          "files_scanned": [
+            "panel.py",
+            "transfers.py",
+            "pir_transfer.py",
+            "run_transfer.py"
+          ],
+          "report_only_modules_excluded": [
+            "finalize.py",
+            "verify_transfer.py",
+            "audit_access.py",
+            "smoke_pir.py",
+            "probe_panel.py"
+          ],
+          "forbidden_token_hits": {}
+        }
+      },
+      "pass": true,
+      "failed_checks": {}
+    },
+    "B1": {
+      "detail": {
+        "GANSU_DA/PatchTST": {
+          "gap_to_best_pct": -1.600638063562868,
+          "best_baseline": "delta_Adapter_AdaY",
+          "strict_best": true,
+          "gain_vs_host_pct": 2.2473246700798524,
+          "normal_harm_vs_host_pct": 0.3247022628784179,
+          "no_worse_than_0p5pct": true,
+          "normal_harm_ok": true
+        },
+        "GANSU_DA/TimeMixer": {
+          "gap_to_best_pct": -6.748616796614747,
+          "best_baseline": "delta_Adapter_AdaY",
+          "strict_best": true,
+          "gain_vs_host_pct": 6.726754251443086,
+          "normal_harm_vs_host_pct": -3.95357608795166,
+          "no_worse_than_0p5pct": true,
+          "normal_harm_ok": true
+        }
+      },
+      "n_strict_best": 2,
+      "median_gain_vs_host_pct": 4.487039460761469,
+      "pass": true,
+      "two_host_best_offline": true
+    },
+    "B2": {
+      "detail": {
+        "LAGO_DE/PatchTST": {
+          "gap_to_best_pct": -10.452914461411906,
+          "best_baseline": "delta_Adapter_AdaY",
+          "strict_best": true,
+          "within_0p5pct": true,
+          "normal_harm_vs_host_pct": -10.497760772705078,
+          "tight_ok": true,
+          "loose_ok": true,
+          "normal_harm_ok": true
+        },
+        "LAGO_DE/TimeMixer": {
+          "gap_to_best_pct": -8.688511366914197,
+          "best_baseline": "delta_Adapter_AdaY",
+          "strict_best": true,
+          "within_0p5pct": true,
+          "normal_harm_vs_host_pct": -8.537912368774414,
+          "tight_ok": true,
+          "loose_ok": true,
+          "normal_harm_ok": true
+        },
+        "LAGO_PJM/PatchTST": {
+          "gap_to_best_pct": 2.3563869656925966,
+          "best_baseline": "delta_Adapter_AdaY",
+          "strict_best": false,
+          "within_0p5pct": false,
+          "normal_harm_vs_host_pct": 0.8526921272277832,
+          "tight_ok": false,
+          "loose_ok": false,
+          "normal_harm_ok": true
+        },
+        "LAGO_PJM/TimeMixer": {
+          "gap_to_best_pct": -5.076300630396408,
+          "best_baseline": "PIR_paper_protocol",
+          "strict_best": true,
+          "within_0p5pct": true,
+          "normal_harm_vs_host_pct": -3.94970178604126,
+          "tight_ok": true,
+          "loose_ok": true,
+          "normal_harm_ok": true
+        }
+      },
+      "n_tight": 3,
+      "n_best_or_tied": 3,
+      "pass": false
+    },
+    "B3": {
+      "host_nonworse_cells": 5,
+      "n_cells": 6,
+      "median_gain_vs_host_pct": 5.8457205789049,
+      "max_gap_to_best_pct": 2.3563869656925966,
+      "fidelity_labels": {
+        "MatchedDirectResidual": "FROZEN_INTERNAL_CONTROL",
+        "PIR_paper_protocol": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+        "S1_DailyPatch_GRU32": "FROZEN_METHOD_REPLAY",
+        "delta_Adapter_AdaY": "ACCEPTED_WITH_DISCLOSED_PARTIAL_FIDELITY"
+      },
+      "unsupported_fidelity_labels": [],
+      "pass": false
+    }
+  },
+  "gansu_two_host_best_offline": true,
+  "figures": [
+    "fig_gansu_baseline_comparison.png",
+    "fig_international_gap_to_best.png",
+    "fig_gain_vs_host_and_best_baseline.png"
+  ]
+}
