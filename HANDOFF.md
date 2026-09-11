@@ -1,5 +1,19 @@
 # HANDOFF.md
 
+## Window handoff — Host-Relative State Interaction rejected; S1 + pooled fixed alpha frozen (2026-09-11)
+
+`HCH_HOST_RELATIVE_STATE_INTERACTION_NOT_SUPPORTED_FREEZE_S1` is valid. R0 (`PASS`, S1 replay `1.421e-14`, `beta=0` replay `1.192e-07`) and R4 (`PASS`) hold, so the execution is admissible and the negative is scientific rather than procedural: R1, R2 and R3 all fail.
+
+The registered method was executed exactly as specified. Frozen S1 Shape was reused unchanged; `b_hat` was the L2-normalized same-hour mean of the existing seven-day normalized Host-residual history; `Z[h,k]=b_hat[h]*R[h,k]` used the fixed five-role standardized state table; and **one global `beta in R^5` shared by all six cells** was trained on the cross-market stacked chronological OOF pool with a cell-macro-balanced Shape loss. `u_HRSI=normalize(u_S1+Z beta)`; `alpha_HRSI` was refit per cell by the original exact weighted-median rule. The whole panel trains 5 parameters, with 0 per-cell beta vectors.
+
+Where it fails: the shared beta destroys the only mechanism that worked. GANSU Shape cosine changes by only `+0.0002` / `-0.0105` against HSA's `+0.0666` / `+0.1170`, and both GANSU HIGH-state tertile cosines fall (`-0.0109` / `-0.0241`). Overall-MAE gain vs S1 is nonnegative in only 1/6 cell medians and strictly better in only 1/6 (worst cell `-0.6151` pp on LAGO_DE/PatchTST, worst seed `-1.3676` pp); 0/4 international cells are strictly better; only 1/6 cells are non-worse in `>=2/3` seeds; median gain vs Host is `5.61%` with only 3/6 cells `>=5%`; max Normal-MAE harm `1.0227%` exceeds the 1% gate.
+
+The learned beta is stable across seeds (`[0.109, 0.172, 0.000, -0.265, -0.134]`, `[0.048, 0.154, 0.000, -0.313, -0.050]`, `[0.054, 0.144, 0.000, -0.328, -0.047]`) but is set by the four international cells, which contribute most pooled rows; `beta_SUPPLY_MARGIN_FC` is exactly `0.0` for every seed because that role is structurally absent in all three markets. HSA's GANSU gain came from per-market coefficient freedom, so the constraint that makes the interaction universal is exactly the constraint that removes it. The transferability conflict is in the coefficient, not the representation; making the input Host-relative does not resolve it.
+
+Do not rescue this by per-market/per-Host beta, per-hour beta, role selection, conditional Amplitude, a new window or transform, or post hoc threshold relaxation. **`S1 Daily-Patch GRU32 Shape + pooled fixed alpha` is frozen as the final structural candidate.** Read `experiments/evidence/hch_host_relative_state_interaction_20260911/HRSI_SUMMARY.md`, then `HRSI_VERDICT.json`; `verify_gates.py` independently reproduces R0–R4 and the token from the written evidence alone (50/50 integrity checks). No SHAANXI/NINGXIA/QINGHAI, Shandong, full-panel, or protected/final work is authorized by this stage. The next stage is human adjudication, then the full public-China/international comparison against the completed baseline-fidelity suite.
+
+Baseline preparation is complete for that purpose: the selected baselines have all completed strict protocol/official-code/split/training/metric auditing, while their exact admission/fidelity boundaries remain those in the final baseline adjudication. Future HCH-vs-baseline experiments must use identical dataset/task/Host/evaluation contracts.
+
 ## Window handoff — Horizon-Aligned Semantic State Residual rejected; S1 + pooled fixed alpha retained (2026-09-11)
 
 `HCH_HORIZON_ALIGNED_STATE_RESIDUAL_NOT_SUPPORTED_KEEP_S1` is valid. H0 (`PASS`) and H4 (`PASS`) hold, so the execution is admissible and the negative is scientific rather than procedural: H1, H2 and H3 all fail.

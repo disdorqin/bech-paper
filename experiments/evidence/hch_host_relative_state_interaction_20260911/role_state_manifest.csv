@@ -1,0 +1,16 @@
+market,semantic_role,n_channels_in_role,source_columns,legal_column_indices,structurally_absent
+LAGO_DE,DEMAND_FC,1,Ampirion Load Forecast,0,False
+LAGO_DE,RENEWABLE_FC,1,PV+Wind Forecast,1,False
+LAGO_DE,SUPPLY_MARGIN_FC,0,,,True
+LAGO_DE,INTERCHANGE_FC,0,,,True
+LAGO_DE,MUST_RUN_FC,0,,,True
+LAGO_PJM,DEMAND_FC,1, System load forecast,0,False
+LAGO_PJM,RENEWABLE_FC,0,,,True
+LAGO_PJM,SUPPLY_MARGIN_FC,0,,,True
+LAGO_PJM,INTERCHANGE_FC,0,,,True
+LAGO_PJM,MUST_RUN_FC,0,,,True
+GANSU_DA,DEMAND_FC,1,直调负荷预测值,5,False
+GANSU_DA,RENEWABLE_FC,2,光伏总加预测值|风电总加预测值,0|2,False
+GANSU_DA,SUPPLY_MARGIN_FC,0,,,True
+GANSU_DA,INTERCHANGE_FC,1,联络线受电负荷预测值,4,False
+GANSU_DA,MUST_RUN_FC,2,水电含抽蓄出力预测值|非市场机组总出力预测值,3|6,False

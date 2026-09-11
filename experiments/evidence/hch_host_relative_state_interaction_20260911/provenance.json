@@ -1,0 +1,210 @@
+{
+  "git_head": "5f86b4e04c9423969f1a76473952555f96593ccd",
+  "canonical_root": "D:\\作业\\science\\solar_leak_price_model",
+  "controlling_protocol": "docs/current/HCH_HOST_RELATIVE_STATE_INTERACTION_FINAL_CLOSURE_20260911.md",
+  "frozen_hashes_before": {
+    "experiments\\evidence\\hch_market_state_coupling_20260910\\state_schema_manifest.csv": "9b7737d724d87587449e8253026d1ac6e529eba35b7bda6f4e9a4efa190af3fc",
+    "experiments\\evidence\\hch_market_state_coupling_20260910\\state_tertile_mechanisms.csv": "b241ce77b08fa206baa03cf31747e638b3106a28551eec43e2ac6e5fe5477de9",
+    "experiments\\evidence\\hch_market_state_coupling_20260910\\diagnostic_rows.parquet": "ef1d212e996e6ab571c54e91aeaf784ffd21eaa6f510ce0972f9fc005cd79e0c",
+    "experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\metrics_by_seed.csv": "f09df4d7b936db03969d64c492afb76f957fe3bc27deb41e48715cac82460773"
+  },
+  "frozen_hashes_after": {
+    "experiments\\evidence\\hch_market_state_coupling_20260910\\state_schema_manifest.csv": "9b7737d724d87587449e8253026d1ac6e529eba35b7bda6f4e9a4efa190af3fc",
+    "experiments\\evidence\\hch_market_state_coupling_20260910\\state_tertile_mechanisms.csv": "b241ce77b08fa206baa03cf31747e638b3106a28551eec43e2ac6e5fe5477de9",
+    "experiments\\evidence\\hch_market_state_coupling_20260910\\diagnostic_rows.parquet": "ef1d212e996e6ab571c54e91aeaf784ffd21eaa6f510ce0972f9fc005cd79e0c",
+    "experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\metrics_by_seed.csv": "f09df4d7b936db03969d64c492afb76f957fe3bc27deb41e48715cac82460773"
+  },
+  "s1_code_hash_before": "628d69f0c182c4bc49a1a959a3105e1029a0341f18b1ce2b34b1d74faf468ff0",
+  "s1_code_hash_after": "628d69f0c182c4bc49a1a959a3105e1029a0341f18b1ce2b34b1d74faf468ff0",
+  "amplitude_code_hash_before": "cde1a1f2ba333e1c418a8eb9dc3a35bb74e4594a6edeec0fd9bce88a06d9a6e8",
+  "amplitude_code_hash_after": "cde1a1f2ba333e1c418a8eb9dc3a35bb74e4594a6edeec0fd9bce88a06d9a6e8",
+  "hsa_code_hash_before": "4d54e1389cb54847de058cab4d2a77ad4b55b99a3a4e5619c9b6dd188eb7b821",
+  "hsa_code_hash_after": "4d54e1389cb54847de058cab4d2a77ad4b55b99a3a4e5619c9b6dd188eb7b821",
+  "host_hashes_before": {
+    "LAGO_DE/PatchTST": "99953d3b1aa2f5e3a36964ef99242b01fd140ff22f3a1294f731873278974bec",
+    "LAGO_DE/TimeMixer": "13dc67ad5486031fd37e21f3646dc9cb0350fd5c450127294351a9144f4ef3f4",
+    "LAGO_PJM/PatchTST": "faaf20ebc6f11e8fe6c7b2192d77a07829df94af72a1313c7dfc6111a9ff2f86",
+    "LAGO_PJM/TimeMixer": "9d5bd8881fa319a2037b3e734e097689a7e1beb8675f45d3c99eaea994888e7f",
+    "GANSU_DA/PatchTST": "e1392ee4397aa28aed43fcb4b013919f836870b4874a591feb6e75770aa0afbd",
+    "GANSU_DA/TimeMixer": "179fac0d6a4ec71478e3317b228b300512cb1936814e5d0f71852b9967ea54ad"
+  },
+  "host_hashes_after": {
+    "LAGO_DE/PatchTST": "99953d3b1aa2f5e3a36964ef99242b01fd140ff22f3a1294f731873278974bec",
+    "LAGO_DE/TimeMixer": "13dc67ad5486031fd37e21f3646dc9cb0350fd5c450127294351a9144f4ef3f4",
+    "LAGO_PJM/PatchTST": "faaf20ebc6f11e8fe6c7b2192d77a07829df94af72a1313c7dfc6111a9ff2f86",
+    "LAGO_PJM/TimeMixer": "9d5bd8881fa319a2037b3e734e097689a7e1beb8675f45d3c99eaea994888e7f",
+    "GANSU_DA/PatchTST": "e1392ee4397aa28aed43fcb4b013919f836870b4874a591feb6e75770aa0afbd",
+    "GANSU_DA/TimeMixer": "179fac0d6a4ec71478e3317b228b300512cb1936814e5d0f71852b9967ea54ad"
+  },
+  "state_level_access": {
+    "LAGO_DE": {
+      "columns": [
+        "Ampirion Load Forecast",
+        "PV+Wind Forecast"
+      ],
+      "rows_read": 10464,
+      "target_day_DA_input_reads": 0,
+      "realized_RT_input_reads": 0,
+      "S3_S4_reads": 0,
+      "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+    },
+    "LAGO_PJM": {
+      "columns": [
+        " System load forecast"
+      ],
+      "rows_read": 10464,
+      "target_day_DA_input_reads": 0,
+      "realized_RT_input_reads": 0,
+      "S3_S4_reads": 0,
+      "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+    },
+    "GANSU_DA": {
+      "columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "rows_read": 1992,
+      "target_day_DA_input_reads": 0,
+      "realized_RT_input_reads": 0,
+      "S3_S4_reads": 0,
+      "publication_semantics": "included columns are explicitly source-labelled 预测值/Forecast; bidding-space forecast excluded because pre-DA publication time is unconfirmed"
+    }
+  },
+  "role_mapping": {
+    "LAGO_DE": [
+      [
+        "Ampirion Load Forecast"
+      ],
+      [
+        "PV+Wind Forecast"
+      ],
+      [],
+      [],
+      []
+    ],
+    "LAGO_PJM": [
+      [
+        " System load forecast"
+      ],
+      [],
+      [],
+      [],
+      []
+    ],
+    "GANSU_DA": [
+      [
+        "直调负荷预测值"
+      ],
+      [
+        "光伏总加预测值",
+        "风电总加预测值"
+      ],
+      [],
+      [
+        "联络线受电负荷预测值"
+      ],
+      [
+        "水电含抽蓄出力预测值",
+        "非市场机组总出力预测值"
+      ]
+    ]
+  },
+  "splits": {
+    "LAGO_DE/PatchTST": {
+      "DIAG_FIT_timestamp_hash": "f65e70bbc1b031dc7645356f2ff30ae273a554e1d82173208a46f001c8d22b69",
+      "DIAG_EVAL_timestamp_hash": "38b1723aa8c01f418e5f14f13dadc217a231975aba623df28af472d7f2d92265",
+      "fit_n": 327,
+      "eval_n": 109
+    },
+    "LAGO_DE/TimeMixer": {
+      "DIAG_FIT_timestamp_hash": "f65e70bbc1b031dc7645356f2ff30ae273a554e1d82173208a46f001c8d22b69",
+      "DIAG_EVAL_timestamp_hash": "38b1723aa8c01f418e5f14f13dadc217a231975aba623df28af472d7f2d92265",
+      "fit_n": 327,
+      "eval_n": 109
+    },
+    "LAGO_PJM/PatchTST": {
+      "DIAG_FIT_timestamp_hash": "c0b8e9927e74d1d220f994551fc9e68cf1ab982a5c67bef0ee34ee41cd2fb7f4",
+      "DIAG_EVAL_timestamp_hash": "f644194077a6ee8e2c06170a2cba368ef0e584bfeb9b0d6fd65c7eb1bc65a280",
+      "fit_n": 327,
+      "eval_n": 109
+    },
+    "LAGO_PJM/TimeMixer": {
+      "DIAG_FIT_timestamp_hash": "c0b8e9927e74d1d220f994551fc9e68cf1ab982a5c67bef0ee34ee41cd2fb7f4",
+      "DIAG_EVAL_timestamp_hash": "f644194077a6ee8e2c06170a2cba368ef0e584bfeb9b0d6fd65c7eb1bc65a280",
+      "fit_n": 327,
+      "eval_n": 109
+    },
+    "GANSU_DA/PatchTST": {
+      "DIAG_FIT_timestamp_hash": "679594bd0462474f2a8349d37586a02cb17ea3cb3e5fb13f537c4db1366c4577",
+      "DIAG_EVAL_timestamp_hash": "accd9ea86c747354fda4e53f4e1fbf12e5bde2ec506838bb860032d58a234493",
+      "fit_n": 62,
+      "eval_n": 21
+    },
+    "GANSU_DA/TimeMixer": {
+      "DIAG_FIT_timestamp_hash": "679594bd0462474f2a8349d37586a02cb17ea3cb3e5fb13f537c4db1366c4577",
+      "DIAG_EVAL_timestamp_hash": "accd9ea86c747354fda4e53f4e1fbf12e5bde2ec506838bb860032d58a234493",
+      "fit_n": 62,
+      "eval_n": 21
+    }
+  },
+  "host_bias_shape": {
+    "history_days": 7,
+    "window": "existing seven 24h historical days of the S1 repair input",
+    "normalization": "bias / (L2 norm over the 24 horizon hours + eps)",
+    "eps": 1e-08,
+    "imputation": "none; unavailable hours contribute zero numerator",
+    "decay": null,
+    "robust_transform": null,
+    "alternate_window": false
+  },
+  "beta_training": {
+    "parameterization": "one global beta in R^5 shared by all six cells",
+    "loss": "L = (1/6) sum_c (1/N_c) sum_i ||u_HRSI_i - u*_i||^2",
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "steps": 1000,
+    "grad_clip": 1.0,
+    "initialization": "exactly zero",
+    "standardization": "frozen norm_state(train, test): statistics from that fit's training rows, applied unchanged to its prediction rows",
+    "no_search": true
+  },
+  "forbidden": {
+    "alternate_history_window": false,
+    "decay_weighting": false,
+    "median_or_mad_transform": false,
+    "clipping": false,
+    "state_excursion": false,
+    "role_selection": false,
+    "per_hour_beta": false,
+    "beta_mlp": false,
+    "conditional_amplitude": false,
+    "gate_or_verification": false,
+    "router_or_expert_or_retrieval": false,
+    "transformer_attention_cnn_tcn": false,
+    "market_specific_hyperparameters": false,
+    "search": false,
+    "s3_s4_protected_final_reads": 0
+  },
+  "scientific_reads": {
+    "DIAG_FIT": 716,
+    "DIAG_EVAL": 239,
+    "S3": 0,
+    "S4": 0,
+    "protected": 0,
+    "final": 0
+  },
+  "numerical_environment": {
+    "torch": "2.13.0+cpu",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3",
+    "torch_threads": 1,
+    "note": "single-threaded torch is required for bit-exact frozen S1 replay"
+  },
+  "code_sha256": "5ef1d3568d977eb8abc3991745d4070540fa44ea1c66ea5e0eb1618c68ceb2ef"
+}

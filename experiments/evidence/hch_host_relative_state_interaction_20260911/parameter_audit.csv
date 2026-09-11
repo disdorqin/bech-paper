@@ -1,0 +1,2 @@
+panel,trainable_parameter_count,expected_parameter_count,per_cell_beta_vectors,shared_beta_rows,cells_per_beta
+six-cell development panel,5,5,0,12,6

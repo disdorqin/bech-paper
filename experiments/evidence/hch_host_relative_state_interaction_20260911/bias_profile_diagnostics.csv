@@ -1,0 +1,7 @@
+market,host,fit_rows,eval_rows,fit_rows_with_history,eval_rows_with_history,fit_rows_without_history,eval_rows_without_history,fit_rows_zero_bias,eval_rows_zero_bias,fit_hours_with_any_history,eval_hours_with_any_history,fit_min_days_per_hour,fit_max_days_per_hour,eval_min_days_per_hour,eval_max_days_per_hour,fit_mean_raw_bias_norm,eval_mean_raw_bias_norm,fit_bhat_norm_min,fit_bhat_norm_max
+LAGO_DE,PatchTST,327,109,327,109,0,0,0,0,24,24,7.0,7.0,7.0,7.0,2.6995046138763428,2.5054574012756348,0.9999999403953552,1.0
+LAGO_DE,TimeMixer,327,109,327,109,0,0,0,0,24,24,7.0,7.0,7.0,7.0,2.5345447063446045,2.4005823135375977,0.9999999403953552,1.0
+LAGO_PJM,PatchTST,327,109,327,109,0,0,0,0,24,24,7.0,7.0,7.0,7.0,2.8734700679779053,3.5874667167663574,0.9999999403953552,1.0
+LAGO_PJM,TimeMixer,327,109,327,109,0,0,0,0,24,24,7.0,7.0,7.0,7.0,3.3888955116271973,3.764734983444214,0.9999999403953552,1.0
+GANSU_DA,PatchTST,62,21,56,21,6,0,6,0,24,24,0.0,7.0,3.0,7.0,3.672048807144165,2.808804750442505,0.0,1.0
+GANSU_DA,TimeMixer,62,21,56,21,6,0,6,0,24,24,0.0,7.0,3.0,7.0,3.6791229248046875,3.4748013019561768,0.0,1.0

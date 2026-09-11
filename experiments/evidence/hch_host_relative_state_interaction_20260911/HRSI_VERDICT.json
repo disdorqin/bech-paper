@@ -1,0 +1,61 @@
+{
+  "token": "HCH_HOST_RELATIVE_STATE_INTERACTION_NOT_SUPPORTED_FREEZE_S1",
+  "R0": "PASS",
+  "R1": "FAIL",
+  "R2": "FAIL",
+  "R3": "FAIL",
+  "R4": "PASS",
+  "S1_replay_max_abs_diff": 1.4210854715202004e-14,
+  "beta_zero_init_replay_max_abs_diff": 1.1920928955078125e-07,
+  "R0_panel_trainable_parameters": 5,
+  "R0_per_cell_beta_vectors": 0,
+  "R0_cells_per_beta": 6,
+  "R1_GANSU_cosine_changes": {
+    "GANSU_DA/PatchTST": 0.000241890549659729,
+    "GANSU_DA/TimeMixer": -0.010516047477722168
+  },
+  "R1_GANSU_wrong_rate_changes": {
+    "GANSU_DA/PatchTST": -0.047619047619047616,
+    "GANSU_DA/TimeMixer": 0.0
+  },
+  "R1_cosine_improved_cells": 2,
+  "R1_wrong_hemisphere_nonworse_cells": 4,
+  "R1_GANSU_HIGH_cosine_changes": {
+    "GANSU_DA/PatchTST": -0.01087886095046997,
+    "GANSU_DA/TimeMixer": -0.02405199408531189
+  },
+  "R1_GANSU_HIGH_wrong_rate_changes": {
+    "GANSU_DA/PatchTST": 0.0,
+    "GANSU_DA/TimeMixer": 0.0
+  },
+  "R2_gain_delta_pct": {
+    "GANSU_DA/PatchTST": 0.15059163526405417,
+    "GANSU_DA/TimeMixer": -0.2899975439980649,
+    "LAGO_DE/PatchTST": -0.6151387492052862,
+    "LAGO_DE/TimeMixer": -0.5693538666926292,
+    "LAGO_PJM/PatchTST": -0.11848317477917303,
+    "LAGO_PJM/TimeMixer": -0.19027654003716865
+  },
+  "R2_median_gain_pct": 5.605583536887283,
+  "R2_gain_ge5_cells": 3,
+  "R2_host_nonworse_cells": 5,
+  "R2_max_Normal_harm_pct": 1.022650375406342,
+  "R2_GANSU_gains_pct": {
+    "GANSU_DA/PatchTST": 2.3979163053439065,
+    "GANSU_DA/TimeMixer": 6.436756707445021
+  },
+  "R3_cells_improving_in_ge2of3_seeds": 1,
+  "R3_cells_nonworse_in_ge2of3_seeds": 1,
+  "R3_international_cell_median_min_pp": -0.6151387492052862,
+  "R3_international_seed_min_pp": -1.3676132096857305,
+  "R3_international_cells_strictly_better": 0,
+  "R4_panel_parameters": 5,
+  "R4_median_beta_training_seconds": 0.9885094499913976,
+  "R4_median_overhead_us_per_day": 2.190137603491066,
+  "R4_median_total_inference_us_per_day": 8.97912832442671,
+  "DIAG_max_alpha_rowset_shift_pct": 26.392722683521136,
+  "DIAG_cells_nonworse_on_aligned_rowset": 3,
+  "DIAG_aligned_rowset_worst_cell_pp": -0.7847688800344077,
+  "DIAG_aligned_rowset_worst_seed_pp": -1.3997948833621852,
+  "runtime_seconds": 10.796093702316284
+}

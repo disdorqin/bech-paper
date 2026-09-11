@@ -1,0 +1,130 @@
+PASS T01 exactly five trainable parameters
+PASS T01 beta initialised to exactly zero
+PASS T01 no hidden layer or submodule
+PASS T01 no reset_parameters hook that could wipe beta
+PASS T02 beta=0 replays S1 directions within tolerance
+PASS T02 beta=0 output is still unit norm
+PASS T02 a non-zero beta changes the directions
+PASS T02 output remains unit norm for non-zero beta
+PASS T02 the projection is linear in beta before normalization
+PASS T03 day counts per hour are exactly the available days
+PASS T03 hour h aggregates the same hour of every available day
+PASS T03 a partially available hour averages only over its available days
+PASS T03 full-coverage rows carry a unit bias direction
+PASS T03 an hour with no historical residual contributes a zero numerator
+PASS T03 a zero-norm bias yields exactly b_hat = 0 rather than a NaN
+PASS T03 a single non-zero hour yields a one-hot bias direction
+PASS T03 the raw bias is not L2-normalized in place
+PASS T04 wrong history width is rejected
+PASS T04 a non-zero residual in a masked-out coordinate is rejected
+PASS T04 a shape mismatch between residual and mask is rejected
+PASS T04 legal all-masked input is accepted
+PASS T05 the frozen repair input is 624-D
+PASS T05 the mask channel equals RepairInput.residual_mask
+PASS T05 host_bias_direction is exactly the frozen-input read
+PASS T05 masked historical residuals are exactly zero in the frozen input
+PASS T05 host_bias_direction fails closed when a masked coordinate is non-zero
+PASS T05 host_bias_direction fails closed when the mask channel is altered
+PASS T05 a non-registered state width is rejected
+PASS T06 GANSU_DA/PatchTST: rows with any history have unit bias direction
+PASS T06 GANSU_DA/PatchTST: rows with no history carry exactly b_hat = 0
+PASS T06 GANSU_DA/PatchTST: bias availability equals repair availability
+PASS T06 GANSU_DA/PatchTST: no hour uses more than the frozen seven days
+PASS T06 LAGO_DE/PatchTST: full seven-day coverage gives a unit bias direction
+PASS T06 LAGO_DE/PatchTST: every hour reaches the full seven days
+PASS T06 LAGO_DE/PatchTST: bias availability equals repair availability
+PASS T06 LAGO_DE/PatchTST: the frozen seven-day window is never exceeded
+PASS T06 GANSU_DA/TimeMixer: rows with any history have unit bias direction
+PASS T06 GANSU_DA/TimeMixer: rows with no history carry exactly b_hat = 0
+PASS T06 GANSU_DA/TimeMixer: bias availability equals repair availability
+PASS T06 GANSU_DA/TimeMixer: no hour uses more than the frozen seven days
+PASS T06 LAGO_DE/TimeMixer: full seven-day coverage gives a unit bias direction
+PASS T06 LAGO_DE/TimeMixer: every hour reaches the full seven days
+PASS T06 LAGO_DE/TimeMixer: bias availability equals repair availability
+PASS T06 LAGO_DE/TimeMixer: the frozen seven-day window is never exceeded
+PASS T07 interaction shape is [rows, 24, 5]
+PASS T07 Z[h,k] = b_hat[h] * R[h,k]
+PASS T07 a zero bias direction disables every role channel
+PASS T07 a row-alignment mismatch is rejected
+PASS T07 a role table with the wrong arity is rejected
+PASS T08 the macro-balanced objective is invariant to cell size
+PASS T08 a row-weighted objective would not be invariant (so this is a real distinction)
+PASS T08 objective equals the unweighted mean of per-cell mean Shape errors
+PASS T08 the macro-balanced objective refuses a non-six-cell panel
+PASS T09 the fitted beta has exactly five components
+PASS T09 the fitted beta is not the zero initialisation
+PASS T09 beta=0 replay was verified before training
+PASS T09 training reduces the macro-balanced objective
+PASS T09 the fold training row count is reported
+PASS T09 per-cell row counts are reported
+PASS T09 the training time is measured
+PASS T09 every cell is predicted by the same beta vector
+PASS T09 all predictions are unit-norm directions
+PASS T09 the fitted beta recovers the planted direction up to scale
+PASS T09 a global beta refuses a panel that is not exactly six cells
+PASS T09 an empty cell is rejected rather than silently dropped from the mean
+PASS T10 role table is [rows, 24, 5]
+PASS T10 a multi-channel role is the plain channel mean
+PASS T10 a single-channel role is that channel
+PASS T10 a structurally absent role is an exact zero column
+PASS T10 pooling is deterministic and channel-order-free
+PASS T10 role_table fails closed unless exactly five roles are mapped
+PASS T10 role_table fails closed unless exactly five roles are mapped
+PASS T10 role_table fails closed unless exactly five roles are mapped
+PASS T11 role_table fails closed on the whole multi-market schema dict
+PASS T11 schema dict is keyed by exactly the three audited markets
+PASS T11 LAGO_DE single-market mapping carries exactly five roles
+PASS T11 LAGO_DE role slots are index tuples, not column names
+PASS T11 LAGO_PJM single-market mapping carries exactly five roles
+PASS T11 LAGO_PJM role slots are index tuples, not column names
+PASS T11 GANSU_DA single-market mapping carries exactly five roles
+PASS T11 GANSU_DA role slots are index tuples, not column names
+PASS T11 every mapped index is inside the registered LEGAL columns
+PASS T11 only the five audited semantic roles appear
+PASS T11 no market maps more than one channel into the same role slot twice
+PASS T12 output shapes survive the round trip
+PASS T12 training rows are standardized with their own statistics
+PASS T12 evaluation rows use the training statistics, not their own
+PASS T12 evaluation rows are not centred on zero
+PASS T12 the training transform does not depend on the evaluation rows
+PASS T12 a different evaluation set produces a different transform of itself
+PASS T13 pooled alpha is sensitive to which rows are supplied
+PASS T13 NaN-direction rows are silently ignored by the frozen statistic
+PASS T13 pooled alpha is clamped non-negative
+PASS T14 two calibrated folds are produced (B3, B4)
+PASS T14 every calibration fold is self-excluded
+PASS T14 every calibration index precedes every proposal index
+PASS T14 the first HRSI fold is B3, not B1
+PASS T14 the alpha row set is exactly B2..B4
+PASS T14 a finite non-negative alpha is returned
+PASS T14 proposals are produced exactly on the calibrated folds B3..B4
+PASS T14 the alpha row set is exactly B2..B4 with finite directions
+PASS T14 rows without an HRSI direction leave the alpha row set
+PASS T14 the excluded rows would otherwise have been calibrated on
+PASS T15 one beta record is written per fold
+PASS T15 every fold beta covers all six cells
+PASS T15 folds are B2, B3, B4 in order
+PASS T15 every fold beta has exactly five components
+PASS T15 each fold beta is reported with a content hash
+PASS T15 beta training time is accumulated
+PASS T15 every cell is predicted for every fold
+PASS T15 a fold's beta is used by all six cells
+PASS T15 the fold beta training scope is the six-cell pool
+PASS T15 every beta record is marked self-excluded
+PASS T15 HRSI directions exist exactly on the rows that received a beta
+PASS T15 B1 never receives an HRSI direction
+PASS T15 all produced HRSI directions are unit norm
+PASS T16 torch is pinned to a single thread by the runner import
+PASS T17 the frozen S1 metric replay tolerance is unchanged
+PASS T17 the historical window is exactly the seven frozen days
+PASS T17 the bias channel is the frozen normalized residual block
+PASS T17 the mask channel is the frozen residual mask block
+PASS T18 the two alpha row sets really do disagree on this fixture
+PASS T18 rescoring on the shifted row set changes Overall_MAE
+PASS T18 rescoring on the shifted row set changes the reported gain
+PASS T18 the row-set shift leaves the Shape mechanism untouched
+PASS T18 no row-set diagnostic column is a gated metric name
+PASS T18 the diagnostic discloses both the refit alpha and the rescored gain
+PASS T18 the frozen S1 number stays reported alongside the aligned one
+
+128 checks passed

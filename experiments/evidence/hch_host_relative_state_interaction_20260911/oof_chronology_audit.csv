@@ -1,0 +1,145 @@
+market,track,host,seed,method,record_type,block,alpha,calibration_max_index,proposal_min_index,self_excluded,beta_sha256,beta_train_scope,state_std_hash
+GANSU_DA,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B2,0.9748706344841856,33.0,34,True,,,
+GANSU_DA,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B3,1.5662769832753038,43.0,44,True,,,
+GANSU_DA,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B4,1.1410437318462183,52.0,53,True,,,
+GANSU_DA,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,alpha,B3,2.2477483938398044,43.0,44,True,,,
+GANSU_DA,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,alpha,B4,2.04590190135022,52.0,53,True,,,
+GANSU_DA,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B2,,,34,True,43ab8dc0f477625ba60a2f05fc3fd3abe8d8fa67088407fbbfa5c23beabcf834,six-cell pooled B1..B(k-1),966a156506bce6152700fea7f5cf7ff1f9a5a5b19358741af7f47655a59649e7
+GANSU_DA,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B3,,,44,True,30060abd1eddf9632d92553e47ac8cf1b5e6fce9ca4f06e7f5ba0e9ec6bd5ef4,six-cell pooled B1..B(k-1),21d3a4d76397c1a76cb0a370ba138df548955bf6ae243c51d873d8da92ef6f98
+GANSU_DA,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B4,,,53,True,7bcb9bdf14ca710789cd4c02608e6ad1810c73bf6f5efdd26a03e16be5c075fe,six-cell pooled B1..B(k-1),eff3f2969eb4110f1fefcc3dfb754df6d514844069dc269ff15a4380d8c19964
+GANSU_DA,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B2,1.9632897515717185,33.0,34,True,,,
+GANSU_DA,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B3,1.6150983508212693,43.0,44,True,,,
+GANSU_DA,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B4,1.2468494169965691,52.0,53,True,,,
+GANSU_DA,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,alpha,B3,2.2422568910226963,43.0,44,True,,,
+GANSU_DA,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,alpha,B4,2.1697344880021654,52.0,53,True,,,
+GANSU_DA,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B2,,,34,True,43ab8dc0f477625ba60a2f05fc3fd3abe8d8fa67088407fbbfa5c23beabcf834,six-cell pooled B1..B(k-1),966a156506bce6152700fea7f5cf7ff1f9a5a5b19358741af7f47655a59649e7
+GANSU_DA,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B3,,,44,True,30060abd1eddf9632d92553e47ac8cf1b5e6fce9ca4f06e7f5ba0e9ec6bd5ef4,six-cell pooled B1..B(k-1),21d3a4d76397c1a76cb0a370ba138df548955bf6ae243c51d873d8da92ef6f98
+GANSU_DA,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B4,,,53,True,7bcb9bdf14ca710789cd4c02608e6ad1810c73bf6f5efdd26a03e16be5c075fe,six-cell pooled B1..B(k-1),eff3f2969eb4110f1fefcc3dfb754df6d514844069dc269ff15a4380d8c19964
+LAGO_DE,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B2,2.338261891910762,179.0,180,True,,,
+LAGO_DE,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B3,2.2455226266103434,228.0,229,True,,,
+LAGO_DE,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B4,2.4518387975917175,277.0,278,True,,,
+LAGO_DE,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,alpha,B3,2.2230214507055743,228.0,229,True,,,
+LAGO_DE,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,alpha,B4,2.436208221209563,277.0,278,True,,,
+LAGO_DE,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,43ab8dc0f477625ba60a2f05fc3fd3abe8d8fa67088407fbbfa5c23beabcf834,six-cell pooled B1..B(k-1),8b8579d52cb8e5dc2c535683a3c74ca2ba60e1e9119ebe0648191604765a8930
+LAGO_DE,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,30060abd1eddf9632d92553e47ac8cf1b5e6fce9ca4f06e7f5ba0e9ec6bd5ef4,six-cell pooled B1..B(k-1),2deb998002cc76b961df38be8d1fcf4ed1c7f59d3d83f03a6ebe06ef8ecaf988
+LAGO_DE,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,7bcb9bdf14ca710789cd4c02608e6ad1810c73bf6f5efdd26a03e16be5c075fe,six-cell pooled B1..B(k-1),e4451ac72e2d2142eb0f31c01bdcfb7231ae7119e76d162c6dbfbc2d8494d3b0
+LAGO_DE,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B2,2.0654830324100057,179.0,180,True,,,
+LAGO_DE,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B3,2.050837513486532,228.0,229,True,,,
+LAGO_DE,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B4,2.37448964184794,277.0,278,True,,,
+LAGO_DE,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,alpha,B3,2.0468621517909487,228.0,229,True,,,
+LAGO_DE,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,alpha,B4,2.5102077135655607,277.0,278,True,,,
+LAGO_DE,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,43ab8dc0f477625ba60a2f05fc3fd3abe8d8fa67088407fbbfa5c23beabcf834,six-cell pooled B1..B(k-1),8b8579d52cb8e5dc2c535683a3c74ca2ba60e1e9119ebe0648191604765a8930
+LAGO_DE,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,30060abd1eddf9632d92553e47ac8cf1b5e6fce9ca4f06e7f5ba0e9ec6bd5ef4,six-cell pooled B1..B(k-1),2deb998002cc76b961df38be8d1fcf4ed1c7f59d3d83f03a6ebe06ef8ecaf988
+LAGO_DE,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,7bcb9bdf14ca710789cd4c02608e6ad1810c73bf6f5efdd26a03e16be5c075fe,six-cell pooled B1..B(k-1),e4451ac72e2d2142eb0f31c01bdcfb7231ae7119e76d162c6dbfbc2d8494d3b0
+LAGO_PJM,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B2,0.6322720681874513,179.0,180,True,,,
+LAGO_PJM,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B3,0.761653172348671,228.0,229,True,,,
+LAGO_PJM,A_DA,PatchTST,7,S1_DailyPatch_GRU32,alpha,B4,1.081092656017721,277.0,278,True,,,
+LAGO_PJM,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,alpha,B3,1.0737313052811661,228.0,229,True,,,
+LAGO_PJM,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,alpha,B4,1.3971177886856896,277.0,278,True,,,
+LAGO_PJM,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,43ab8dc0f477625ba60a2f05fc3fd3abe8d8fa67088407fbbfa5c23beabcf834,six-cell pooled B1..B(k-1),deccc4372a3e0eb42c201ff2aade3d2705568356370b19466a3df866ca74a61e
+LAGO_PJM,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,30060abd1eddf9632d92553e47ac8cf1b5e6fce9ca4f06e7f5ba0e9ec6bd5ef4,six-cell pooled B1..B(k-1),4cec09b40dbc2156f69df7461f507421362b19a08b0fe4a5d5fcb5d7c943517f
+LAGO_PJM,A_DA,PatchTST,7,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,7bcb9bdf14ca710789cd4c02608e6ad1810c73bf6f5efdd26a03e16be5c075fe,six-cell pooled B1..B(k-1),6772b2507487e60ad10edfb655c8c050aec5df6bcf9d6ac4332f571604ff96dd
+LAGO_PJM,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B2,1.9001934117325452,179.0,180,True,,,
+LAGO_PJM,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B3,2.1566125983096223,228.0,229,True,,,
+LAGO_PJM,A_DA,TimeMixer,7,S1_DailyPatch_GRU32,alpha,B4,2.431056559764441,277.0,278,True,,,
+LAGO_PJM,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,alpha,B3,2.5126048512529384,228.0,229,True,,,
+LAGO_PJM,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,alpha,B4,2.834394359335776,277.0,278,True,,,
+LAGO_PJM,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,43ab8dc0f477625ba60a2f05fc3fd3abe8d8fa67088407fbbfa5c23beabcf834,six-cell pooled B1..B(k-1),deccc4372a3e0eb42c201ff2aade3d2705568356370b19466a3df866ca74a61e
+LAGO_PJM,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,30060abd1eddf9632d92553e47ac8cf1b5e6fce9ca4f06e7f5ba0e9ec6bd5ef4,six-cell pooled B1..B(k-1),4cec09b40dbc2156f69df7461f507421362b19a08b0fe4a5d5fcb5d7c943517f
+LAGO_PJM,A_DA,TimeMixer,7,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,7bcb9bdf14ca710789cd4c02608e6ad1810c73bf6f5efdd26a03e16be5c075fe,six-cell pooled B1..B(k-1),6772b2507487e60ad10edfb655c8c050aec5df6bcf9d6ac4332f571604ff96dd
+GANSU_DA,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B2,1.6640586185516926,33.0,34,True,,,
+GANSU_DA,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B3,1.7399571283562645,43.0,44,True,,,
+GANSU_DA,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B4,1.9387353532585536,52.0,53,True,,,
+GANSU_DA,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,alpha,B3,0.0,43.0,44,True,,,
+GANSU_DA,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,alpha,B4,1.796487461340795,52.0,53,True,,,
+GANSU_DA,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B2,,,34,True,773c0a32390085d0e67fd924cf2f85704f74260e32fab51107224821782fc264,six-cell pooled B1..B(k-1),966a156506bce6152700fea7f5cf7ff1f9a5a5b19358741af7f47655a59649e7
+GANSU_DA,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B3,,,44,True,3d4917a4de224b6799fc6d4053a424527c949c423ca02f6b0fa30b272903d18c,six-cell pooled B1..B(k-1),21d3a4d76397c1a76cb0a370ba138df548955bf6ae243c51d873d8da92ef6f98
+GANSU_DA,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B4,,,53,True,72d41a19a4d853e2934dbd69508445064d249f13acb1b4f70aa754816eedeb51,six-cell pooled B1..B(k-1),eff3f2969eb4110f1fefcc3dfb754df6d514844069dc269ff15a4380d8c19964
+GANSU_DA,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B2,2.3775663725841487,33.0,34,True,,,
+GANSU_DA,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B3,1.765571506716349,43.0,44,True,,,
+GANSU_DA,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B4,1.8074271873105758,52.0,53,True,,,
+GANSU_DA,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,alpha,B3,0.0,43.0,44,True,,,
+GANSU_DA,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,alpha,B4,1.5933419712317043,52.0,53,True,,,
+GANSU_DA,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B2,,,34,True,773c0a32390085d0e67fd924cf2f85704f74260e32fab51107224821782fc264,six-cell pooled B1..B(k-1),966a156506bce6152700fea7f5cf7ff1f9a5a5b19358741af7f47655a59649e7
+GANSU_DA,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B3,,,44,True,3d4917a4de224b6799fc6d4053a424527c949c423ca02f6b0fa30b272903d18c,six-cell pooled B1..B(k-1),21d3a4d76397c1a76cb0a370ba138df548955bf6ae243c51d873d8da92ef6f98
+GANSU_DA,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B4,,,53,True,72d41a19a4d853e2934dbd69508445064d249f13acb1b4f70aa754816eedeb51,six-cell pooled B1..B(k-1),eff3f2969eb4110f1fefcc3dfb754df6d514844069dc269ff15a4380d8c19964
+LAGO_DE,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B2,2.1565398097043005,179.0,180,True,,,
+LAGO_DE,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B3,1.9993222549378133,228.0,229,True,,,
+LAGO_DE,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B4,2.362616504096849,277.0,278,True,,,
+LAGO_DE,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,alpha,B3,1.8540575165148216,228.0,229,True,,,
+LAGO_DE,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,alpha,B4,2.365432863605996,277.0,278,True,,,
+LAGO_DE,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,773c0a32390085d0e67fd924cf2f85704f74260e32fab51107224821782fc264,six-cell pooled B1..B(k-1),8b8579d52cb8e5dc2c535683a3c74ca2ba60e1e9119ebe0648191604765a8930
+LAGO_DE,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,3d4917a4de224b6799fc6d4053a424527c949c423ca02f6b0fa30b272903d18c,six-cell pooled B1..B(k-1),2deb998002cc76b961df38be8d1fcf4ed1c7f59d3d83f03a6ebe06ef8ecaf988
+LAGO_DE,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,72d41a19a4d853e2934dbd69508445064d249f13acb1b4f70aa754816eedeb51,six-cell pooled B1..B(k-1),e4451ac72e2d2142eb0f31c01bdcfb7231ae7119e76d162c6dbfbc2d8494d3b0
+LAGO_DE,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B2,1.470774443967148,179.0,180,True,,,
+LAGO_DE,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B3,1.8368219975314561,228.0,229,True,,,
+LAGO_DE,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B4,2.2582692455962046,277.0,278,True,,,
+LAGO_DE,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,alpha,B3,2.136455741760841,228.0,229,True,,,
+LAGO_DE,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,alpha,B4,2.4780155413140736,277.0,278,True,,,
+LAGO_DE,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,773c0a32390085d0e67fd924cf2f85704f74260e32fab51107224821782fc264,six-cell pooled B1..B(k-1),8b8579d52cb8e5dc2c535683a3c74ca2ba60e1e9119ebe0648191604765a8930
+LAGO_DE,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,3d4917a4de224b6799fc6d4053a424527c949c423ca02f6b0fa30b272903d18c,six-cell pooled B1..B(k-1),2deb998002cc76b961df38be8d1fcf4ed1c7f59d3d83f03a6ebe06ef8ecaf988
+LAGO_DE,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,72d41a19a4d853e2934dbd69508445064d249f13acb1b4f70aa754816eedeb51,six-cell pooled B1..B(k-1),e4451ac72e2d2142eb0f31c01bdcfb7231ae7119e76d162c6dbfbc2d8494d3b0
+LAGO_PJM,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B2,0.8927936186978784,179.0,180,True,,,
+LAGO_PJM,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B3,0.800272503414541,228.0,229,True,,,
+LAGO_PJM,A_DA,PatchTST,17,S1_DailyPatch_GRU32,alpha,B4,0.8370495235001341,277.0,278,True,,,
+LAGO_PJM,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,alpha,B3,0.6386216550684575,228.0,229,True,,,
+LAGO_PJM,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,alpha,B4,0.7755997004314524,277.0,278,True,,,
+LAGO_PJM,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,773c0a32390085d0e67fd924cf2f85704f74260e32fab51107224821782fc264,six-cell pooled B1..B(k-1),deccc4372a3e0eb42c201ff2aade3d2705568356370b19466a3df866ca74a61e
+LAGO_PJM,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,3d4917a4de224b6799fc6d4053a424527c949c423ca02f6b0fa30b272903d18c,six-cell pooled B1..B(k-1),4cec09b40dbc2156f69df7461f507421362b19a08b0fe4a5d5fcb5d7c943517f
+LAGO_PJM,A_DA,PatchTST,17,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,72d41a19a4d853e2934dbd69508445064d249f13acb1b4f70aa754816eedeb51,six-cell pooled B1..B(k-1),6772b2507487e60ad10edfb655c8c050aec5df6bcf9d6ac4332f571604ff96dd
+LAGO_PJM,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B2,2.166527656380571,179.0,180,True,,,
+LAGO_PJM,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B3,2.001888036002025,228.0,229,True,,,
+LAGO_PJM,A_DA,TimeMixer,17,S1_DailyPatch_GRU32,alpha,B4,2.1318855584075505,277.0,278,True,,,
+LAGO_PJM,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,alpha,B3,1.96997919845643,228.0,229,True,,,
+LAGO_PJM,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,alpha,B4,2.167473539206192,277.0,278,True,,,
+LAGO_PJM,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,773c0a32390085d0e67fd924cf2f85704f74260e32fab51107224821782fc264,six-cell pooled B1..B(k-1),deccc4372a3e0eb42c201ff2aade3d2705568356370b19466a3df866ca74a61e
+LAGO_PJM,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,3d4917a4de224b6799fc6d4053a424527c949c423ca02f6b0fa30b272903d18c,six-cell pooled B1..B(k-1),4cec09b40dbc2156f69df7461f507421362b19a08b0fe4a5d5fcb5d7c943517f
+LAGO_PJM,A_DA,TimeMixer,17,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,72d41a19a4d853e2934dbd69508445064d249f13acb1b4f70aa754816eedeb51,six-cell pooled B1..B(k-1),6772b2507487e60ad10edfb655c8c050aec5df6bcf9d6ac4332f571604ff96dd
+GANSU_DA,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B2,2.5126268213892766,33.0,34,True,,,
+GANSU_DA,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B3,2.229063362665927,43.0,44,True,,,
+GANSU_DA,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B4,1.4924185855768222,52.0,53,True,,,
+GANSU_DA,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,alpha,B3,0.0,43.0,44,True,,,
+GANSU_DA,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,alpha,B4,1.3528094338507772,52.0,53,True,,,
+GANSU_DA,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B2,,,34,True,a9579025f5cefe51a1b14ddbfdb39b83da38c17f63af48aaa304922f976aeb1f,six-cell pooled B1..B(k-1),966a156506bce6152700fea7f5cf7ff1f9a5a5b19358741af7f47655a59649e7
+GANSU_DA,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B3,,,44,True,43200009bf09d6b19930699cba4adbe015494b31b78de0ecc9f2528432ad2822,six-cell pooled B1..B(k-1),21d3a4d76397c1a76cb0a370ba138df548955bf6ae243c51d873d8da92ef6f98
+GANSU_DA,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B4,,,53,True,ef15eb0c01e8e7eaf608325cf8e7bc800eea031aa66b84c86afc0fe9e3ab3eb1,six-cell pooled B1..B(k-1),eff3f2969eb4110f1fefcc3dfb754df6d514844069dc269ff15a4380d8c19964
+GANSU_DA,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B2,2.5713173394803857,33.0,34,True,,,
+GANSU_DA,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B3,2.3764317398334747,43.0,44,True,,,
+GANSU_DA,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B4,2.016798036951306,52.0,53,True,,,
+GANSU_DA,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,alpha,B3,0.0,43.0,44,True,,,
+GANSU_DA,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,alpha,B4,1.3758201412650675,52.0,53,True,,,
+GANSU_DA,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B2,,,34,True,a9579025f5cefe51a1b14ddbfdb39b83da38c17f63af48aaa304922f976aeb1f,six-cell pooled B1..B(k-1),966a156506bce6152700fea7f5cf7ff1f9a5a5b19358741af7f47655a59649e7
+GANSU_DA,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B3,,,44,True,43200009bf09d6b19930699cba4adbe015494b31b78de0ecc9f2528432ad2822,six-cell pooled B1..B(k-1),21d3a4d76397c1a76cb0a370ba138df548955bf6ae243c51d873d8da92ef6f98
+GANSU_DA,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B4,,,53,True,ef15eb0c01e8e7eaf608325cf8e7bc800eea031aa66b84c86afc0fe9e3ab3eb1,six-cell pooled B1..B(k-1),eff3f2969eb4110f1fefcc3dfb754df6d514844069dc269ff15a4380d8c19964
+LAGO_DE,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B2,2.153182477354505,179.0,180,True,,,
+LAGO_DE,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B3,1.8738630108286152,228.0,229,True,,,
+LAGO_DE,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B4,2.241296619652331,277.0,278,True,,,
+LAGO_DE,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,alpha,B3,1.7018011703533216,228.0,229,True,,,
+LAGO_DE,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,alpha,B4,2.2624876389808595,277.0,278,True,,,
+LAGO_DE,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,a9579025f5cefe51a1b14ddbfdb39b83da38c17f63af48aaa304922f976aeb1f,six-cell pooled B1..B(k-1),8b8579d52cb8e5dc2c535683a3c74ca2ba60e1e9119ebe0648191604765a8930
+LAGO_DE,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,43200009bf09d6b19930699cba4adbe015494b31b78de0ecc9f2528432ad2822,six-cell pooled B1..B(k-1),2deb998002cc76b961df38be8d1fcf4ed1c7f59d3d83f03a6ebe06ef8ecaf988
+LAGO_DE,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,ef15eb0c01e8e7eaf608325cf8e7bc800eea031aa66b84c86afc0fe9e3ab3eb1,six-cell pooled B1..B(k-1),e4451ac72e2d2142eb0f31c01bdcfb7231ae7119e76d162c6dbfbc2d8494d3b0
+LAGO_DE,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B2,1.8690532799355994,179.0,180,True,,,
+LAGO_DE,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B3,1.870953530225312,228.0,229,True,,,
+LAGO_DE,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B4,2.201356113737669,277.0,278,True,,,
+LAGO_DE,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,alpha,B3,1.9134584092483364,228.0,229,True,,,
+LAGO_DE,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,alpha,B4,2.2890171529593673,277.0,278,True,,,
+LAGO_DE,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,a9579025f5cefe51a1b14ddbfdb39b83da38c17f63af48aaa304922f976aeb1f,six-cell pooled B1..B(k-1),8b8579d52cb8e5dc2c535683a3c74ca2ba60e1e9119ebe0648191604765a8930
+LAGO_DE,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,43200009bf09d6b19930699cba4adbe015494b31b78de0ecc9f2528432ad2822,six-cell pooled B1..B(k-1),2deb998002cc76b961df38be8d1fcf4ed1c7f59d3d83f03a6ebe06ef8ecaf988
+LAGO_DE,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,ef15eb0c01e8e7eaf608325cf8e7bc800eea031aa66b84c86afc0fe9e3ab3eb1,six-cell pooled B1..B(k-1),e4451ac72e2d2142eb0f31c01bdcfb7231ae7119e76d162c6dbfbc2d8494d3b0
+LAGO_PJM,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B2,0.8540311854383899,179.0,180,True,,,
+LAGO_PJM,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B3,0.7043923339738608,228.0,229,True,,,
+LAGO_PJM,A_DA,PatchTST,37,S1_DailyPatch_GRU32,alpha,B4,0.8904674597852089,277.0,278,True,,,
+LAGO_PJM,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,alpha,B3,0.5400583574835567,228.0,229,True,,,
+LAGO_PJM,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,alpha,B4,0.8472618462862795,277.0,278,True,,,
+LAGO_PJM,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,a9579025f5cefe51a1b14ddbfdb39b83da38c17f63af48aaa304922f976aeb1f,six-cell pooled B1..B(k-1),deccc4372a3e0eb42c201ff2aade3d2705568356370b19466a3df866ca74a61e
+LAGO_PJM,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,43200009bf09d6b19930699cba4adbe015494b31b78de0ecc9f2528432ad2822,six-cell pooled B1..B(k-1),4cec09b40dbc2156f69df7461f507421362b19a08b0fe4a5d5fcb5d7c943517f
+LAGO_PJM,A_DA,PatchTST,37,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,ef15eb0c01e8e7eaf608325cf8e7bc800eea031aa66b84c86afc0fe9e3ab3eb1,six-cell pooled B1..B(k-1),6772b2507487e60ad10edfb655c8c050aec5df6bcf9d6ac4332f571604ff96dd
+LAGO_PJM,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B2,2.3080275017298297,179.0,180,True,,,
+LAGO_PJM,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B3,2.0677453306642226,228.0,229,True,,,
+LAGO_PJM,A_DA,TimeMixer,37,S1_DailyPatch_GRU32,alpha,B4,2.2770067082826326,277.0,278,True,,,
+LAGO_PJM,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,alpha,B3,2.0909019052543285,228.0,229,True,,,
+LAGO_PJM,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,alpha,B4,2.3820743079936584,277.0,278,True,,,
+LAGO_PJM,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B2,,,180,True,a9579025f5cefe51a1b14ddbfdb39b83da38c17f63af48aaa304922f976aeb1f,six-cell pooled B1..B(k-1),deccc4372a3e0eb42c201ff2aade3d2705568356370b19466a3df866ca74a61e
+LAGO_PJM,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B3,,,229,True,43200009bf09d6b19930699cba4adbe015494b31b78de0ecc9f2528432ad2822,six-cell pooled B1..B(k-1),4cec09b40dbc2156f69df7461f507421362b19a08b0fe4a5d5fcb5d7c943517f
+LAGO_PJM,A_DA,TimeMixer,37,HRSI_HostRelativeStateInteraction,beta,B4,,,278,True,ef15eb0c01e8e7eaf608325cf8e7bc800eea031aa66b84c86afc0fe9e3ab3eb1,six-cell pooled B1..B(k-1),6772b2507487e60ad10edfb655c8c050aec5df6bcf9d6ac4332f571604ff96dd
