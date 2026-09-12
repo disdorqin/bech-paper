@@ -1,0 +1,140 @@
+{
+  "market": "SHAANXI_DA",
+  "host": "TimeMixer",
+  "method": "PIR_paper_protocol",
+  "seed": 2021,
+  "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 20,
+  "n_fit": 61,
+  "gap_breaks": 2,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 50.81298830000014,
+  "training_seconds": 50.76860689999921,
+  "inference_seconds": 0.022949500000322587,
+  "parameter_count": 368897,
+  "backbone_parameter_count": 178399,
+  "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "eval_windows": [
+    [
+      2,
+      360
+    ],
+    [
+      2,
+      384
+    ],
+    [
+      2,
+      408
+    ],
+    [
+      2,
+      432
+    ],
+    [
+      2,
+      456
+    ],
+    [
+      2,
+      480
+    ],
+    [
+      2,
+      504
+    ],
+    [
+      2,
+      528
+    ],
+    [
+      2,
+      552
+    ],
+    [
+      2,
+      576
+    ],
+    [
+      2,
+      600
+    ],
+    [
+      2,
+      624
+    ],
+    [
+      2,
+      648
+    ],
+    [
+      2,
+      672
+    ],
+    [
+      2,
+      696
+    ],
+    [
+      2,
+      720
+    ],
+    [
+      2,
+      744
+    ],
+    [
+      2,
+      768
+    ],
+    [
+      2,
+      792
+    ],
+    [
+      2,
+      816
+    ]
+  ],
+  "meta": {
+    "scaler_mean": 193.35943970246748,
+    "scaler_scale": 161.69890606948545,
+    "window_counts": {
+      "train": 1251,
+      "val": 121,
+      "test": 457
+    },
+    "n_val_days": 6,
+    "train_span_hours": [
+      [
+        168,
+        648
+      ],
+      [
+        168,
+        960
+      ],
+      [
+        168,
+        216
+      ],
+      [
+        216,
+        360
+      ],
+      [
+        360,
+        840
+      ]
+    ]
+  }
+}

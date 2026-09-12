@@ -1,5 +1,35 @@
 # HANDOFF.md
 
+## China-5 frozen comparison substrate is ready — add an `Our Method` row, do not retrain Hosts (2026-09-12)
+
+A frozen Host + baseline panel now exists for four Chinese provincial day-ahead markets (山东, 陕西, 宁夏, 青海) at `experiments/evidence/china5_posthoc_baseline_panel_20260912/`, terminal state `CHINA5_BASELINE_PANEL_PARTIALLY_FROZEN_WITH_DISCLOSED_BLOCKERS`. A future new-method window appends one `Our Method` row per (market, Host) cell; it must **not** retrain a Host or a baseline, must **not** re-fit any scaler, quantile or threshold, and must **not** unseal `PROTECTED_FINAL`. Read `BASELINE_PANEL_SUMMARY.md` and `NEW_WINDOW_HANDOFF.md` in that root first; the authoritative cell values are `MAIN_OFFLINE_TABLE.csv` (32 strict rows), `SUPPLEMENTARY_TABLE.csv` (COSA with its online setting + the two blocked tracks) and `METRICS_BY_CELL.csv` (40 rows).
+
+Everything needed for comparison is frozen: 8 Hosts all passing their gates on the verbatim accepted GANSU_DA recipe, complete raw prediction / target / residual arrays indexed in `RAW_PREDICTION_INDEX.csv` (44 rows, all hashes verified), per-day 24h losses in full, and `DATASET_REGISTRY.csv` / `HOST_REGISTRY.csv` / `BASELINE_FIDELITY_REGISTRY.csv` / `RUN_LEDGER.csv` / `EVIDENCE_PROVENANCE_MAP.csv`. Thresholds were fixed from `HOST_TRAIN` only and are recorded in `00_protocol/THRESHOLD_FREEZE.json`.
+
+Two things a new window must inherit rather than rediscover. First, the **result shape**: only δ-Adapter ever matches or beats a frozen Host, and harm is concentrated in the normal-price region and grows as the training block shrinks — the same signature as `LAGO_PJM/PatchTST`. Any new method should be judged on that structure, not on average MAE alone. Second, the **coverage gaps**: 山西 has no dataset in this repository (`ABSENT_FROM_REGISTRY`) and was neither invented nor substituted; `UEC_STD` and `OMPB` are blocked with no proxy manufactured. These are disclosed limitations, and repairing them requires new data, not a new model. Baseline fidelity statuses are immutable here — COSA stays online/supplementary and must never be merged into the offline column to claim a `best strict baseline`.
+
+## New-window handoff — audited baseline transfer isolates a repairability / harm-region problem (2026-09-12)
+
+The frozen transfer stage terminated with `HCH_BASELINE_TRANSFER_NOT_COMPETITIVE_NEW_IDEA_REQUIRED`. Execution is valid. Frozen `S1 Daily-Patch GRU32 Shape + pooled exact OOF MAE alpha` is strict best among admitted offline methods on both `GANSU_DA` Hosts, both `LAGO_DE` Hosts and `LAGO_PJM/TimeMixer`. The only decisive failure is `LAGO_PJM/PatchTST`, where HCH MAE `3.0458` is `2.3564%` worse than the best admitted delta-Adapter (`2.9756`) and `0.8658%` worse than its own Host (`3.0196`). B1 GANSU competitiveness passes; B2 international parity and B3 overall fail.
+
+This is no longer an average-accuracy or capacity problem. The evidence suggests a **repair applicability / harm region**: HCH is strong where residual geometry is structured, but an already strong Host may leave mostly unrepairable innovation, making deterministic post-hoc correction harmful. Do not locally rescue `PJM/PatchTST` by changing S1, alpha, state features, conditional Amplitude, Verification/Gate, HSA/HRSI, thresholds, markets or baseline selection. The branch is frozen.
+
+The next window is **discussion only**. Read `docs/history/post_baseline_transfer_reset_20260912/README.md` and use `docs/history/post_baseline_transfer_reset_20260912/NEW_WINDOW_PROMPT.md`. The leading hypothesis to interrogate, not assume, is `Forecast Repairability / Residual Predictability`: whether legal forecast-origin information contains a predictable residual component large enough to justify any deterministic repair. This must be mathematically distinguished from the already-rejected per-proposal verifier and from generic selective forecasting / abstention, PIR Host-error scoring and OMPB fallback. No new experiment, code change, new China market, S3/S4, protected or final access is authorized until human discussion explicitly opens a new design.
+
+Baseline-transfer authority: `experiments/evidence/hch_frozen_method_baseline_transfer_20260911/BASELINE_TRANSFER_SUMMARY.md`, `BASELINE_TRANSFER_VERDICT.json`, and `NEW_WINDOW_HANDOFF.md`; executor reports commit `8ff39ec`. Paper writing can continue on stable sections, but final SOTA/contribution/Abstract/Conclusion wording remains open.
+
+## Window handoff — HRSI terminal negative; frozen S1 enters formal baseline transfer (2026-09-11)
+
+`HCH_HOST_RELATIVE_STATE_INTERACTION_NOT_SUPPORTED_FREEZE_S1` is valid. R0/R4 pass; R1/R2/R3 fail. HRSI used one global five-parameter beta shared across all six cells, so the negative result is not caused by market-specific fitting. It does not recover GANSU HIGH-state Shape and worsens S1 in 5/6 cell medians. Structural rescue is now closed for this branch.
+
+Freeze the executable method as `S1 Daily-Patch GRU32 Shape + pooled exact OOF MAE alpha`. Do not reopen HSA/HRSI, excursion, conditional Amplitude, learned Verification/Gate, new state transforms, deeper Shape architecture, or post-hoc threshold tuning.
+
+The only authorized next scientific execution is `docs/current/HCH_FROZEN_METHOD_BASELINE_TRANSFER_ADJUDICATION_20260911.md`, launcher `experiments/current/hch_frozen_method_baseline_transfer/CODEX_GOAL_PROMPT_20260911.md`. Fixed panel remains `GANSU_DA / LAGO_DE / LAGO_PJM × PatchTST / TimeMixer`. Main offline comparison is Host, frozen MatchedDirectResidual, audited δ-Adapter Ada-Y, exact full-official PIR, and frozen HCH-S1. Historical PIR proxy/2-epoch δ wrapper are forbidden. COSA/UEC/OMPB are not part of main offline best-baseline ranking.
+
+Decision rule: PASS (`HCH_BASELINE_TRANSFER_TARGET_MET_FULL_PANEL_ALLOWED`) freezes S1 and authorizes design of the full public-China + international transfer. FAIL (`HCH_BASELINE_TRANSFER_NOT_COMPETITIVE_NEW_IDEA_REQUIRED`) freezes this branch and requires a new-window scientific reset; do not perform another local rescue before the reset.
+
+Paper writing should proceed in parallel. Stable sections can be written now; result-sensitive claims stay gated. See `paper/_drafts/PAPER_WRITING_STAGE_PLAN_20260911.md`.
+
 ## Window handoff — Host-Relative State Interaction rejected; S1 + pooled fixed alpha frozen (2026-09-11)
 
 `HCH_HOST_RELATIVE_STATE_INTERACTION_NOT_SUPPORTED_FREEZE_S1` is valid. R0 (`PASS`, S1 replay `1.421e-14`, `beta=0` replay `1.192e-07`) and R4 (`PASS`) hold, so the execution is admissible and the negative is scientific rather than procedural: R1, R2 and R3 all fail.

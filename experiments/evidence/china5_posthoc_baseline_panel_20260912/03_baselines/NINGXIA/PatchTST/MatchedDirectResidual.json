@@ -1,0 +1,25 @@
+{
+  "market": "NINGXIA_DA",
+  "host": "PatchTST",
+  "method": "MatchedDirectResidual",
+  "seed": 7,
+  "fidelity": "FROZEN_INTERNAL_CONTROL",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 7,
+  "n_fit": 22,
+  "gap_breaks": 0,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 3.1289347000001726,
+  "training_seconds": 0.5988653000003978,
+  "inference_seconds": 0.00016460000006190967,
+  "parameter_count": 15000,
+  "source": "experiments/current/hch_unified_da_shape_upgrade/run_canary.py::fit_direct"
+}

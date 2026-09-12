@@ -1,0 +1,8 @@
+method,table,setting,fidelity_status,source,note,status_altered_by_china5_run
+Host,strict_offline_main,STRICT_OFFLINE_scored_on_held_out_days,MAINTAINED_HOST_CONTRACT / GANSU_DA_FROZEN_RECIPE_REUSED,backbones PatchTST/TimeMixer @ run_canary.host_cfg,"architecture, loss and hyperparameters reused verbatim; only dataset adapter and legal feature mapping differ per market; no per-province search",False
+MatchedDirectResidual,strict_offline_main,STRICT_OFFLINE_scored_on_held_out_days,INTERNAL_CONTROL / NOT_A_PAPER_METHOD,transfers.run_direct,"frozen internal control; reported for reference, not a literature baseline",False
+delta_Adapter_AdaY,strict_offline_main,STRICT_OFFLINE_scored_on_held_out_days,ACCEPTED_WITH_DISCLOSED_PARTIAL_FIDELITY,transfers.run_delta (official PostProcessingNet),official-transfer Ada-Y path; disclosed partial fidelity unchanged by this panel,False
+PIR_paper_protocol,strict_offline_main,STRICT_OFFLINE_scored_on_held_out_days,PAPER_FAITHFUL_EXACT_ACCEPTED,pir_transfer.run_pir @ fc372bb,full official QualityEstimator + Refiner + official revision/combination path,False
+COSA_online,supplementary,ONLINE_TTA_scored_on_adapted_days,TRANSFERRED_IMPLEMENTATION / PAPER_FIDELITY_UNRESOLVED,official COSA @ 43a8c8d :: tta/cosa.py::SimpleOutputAdapter,online/TTA; scored on the days it adapts on. Repo adjudication ONLINE_PARTIAL_FIDELITY / PAPER_NATIVE_METHOD_UNRESOLVED is NOT upgraded here.,False
+UEC_STD,blocked,NOT_RUN,HOST_FIDELITY_BLOCKED / NOT_PAPER_FAITHFULLY_ADMITTED,none,"instantiating it requires a Host that failed admission, i.e. an unverified proxy",False
+OMPB,blocked,NOT_RUN,STANDALONE_DATA_BLOCKED / NOT_REPRODUCED,none,no committed runner and no reproducible standalone data path in this repo,False

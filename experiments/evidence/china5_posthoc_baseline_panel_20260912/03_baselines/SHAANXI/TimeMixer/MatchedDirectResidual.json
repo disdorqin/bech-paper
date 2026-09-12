@@ -1,0 +1,25 @@
+{
+  "market": "SHAANXI_DA",
+  "host": "TimeMixer",
+  "method": "MatchedDirectResidual",
+  "seed": 7,
+  "fidelity": "FROZEN_INTERNAL_CONTROL",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 20,
+  "n_fit": 61,
+  "gap_breaks": 2,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 1.0369366999984777,
+  "training_seconds": 1.0296952000007877,
+  "inference_seconds": 0.00014370000099006575,
+  "parameter_count": 15000,
+  "source": "experiments/current/hch_unified_da_shape_upgrade/run_canary.py::fit_direct"
+}

@@ -1,0 +1,139 @@
+{
+  "schema": "gansu_da_import_audit.v1",
+  "policy": "integrity/provenance audit only; no retraining performed",
+  "hosts": {
+    "PatchTST": {
+      "array_sha256_recorded": "E1392EE4397AA28AED43FCB4B013919F836870B4874A591FEB6E75770AA0AFBD",
+      "array_sha256_recomputed": "E1392EE4397AA28AED43FCB4B013919F836870B4874A591FEB6E75770AA0AFBD",
+      "hash_match": true,
+      "target_column": "日前电价",
+      "target_compatible": true,
+      "old_GANSU_RT_cache_reused": false,
+      "s3_s4_materialized": false,
+      "frozen": true,
+      "segments_present": [
+        "DIAG_EVAL",
+        "DIAG_FIT",
+        "S1"
+      ],
+      "sealed_roles_absent": true,
+      "shapes": {
+        "context": [
+          291,
+          168,
+          1
+        ],
+        "y_true": [
+          291,
+          24,
+          1
+        ],
+        "host_pred": [
+          291,
+          24,
+          1
+        ]
+      },
+      "n_eval_days": 21,
+      "finite": true,
+      "passed": true
+    },
+    "TimeMixer": {
+      "array_sha256_recorded": "179FAC0D6A4EC71478E3317B228B300512CB1936814E5D0F71852B9967EA54AD",
+      "array_sha256_recomputed": "179FAC0D6A4EC71478E3317B228B300512CB1936814E5D0F71852B9967EA54AD",
+      "hash_match": true,
+      "target_column": "日前电价",
+      "target_compatible": true,
+      "old_GANSU_RT_cache_reused": false,
+      "s3_s4_materialized": false,
+      "frozen": true,
+      "segments_present": [
+        "DIAG_EVAL",
+        "DIAG_FIT",
+        "S1"
+      ],
+      "sealed_roles_absent": true,
+      "shapes": {
+        "context": [
+          291,
+          168,
+          1
+        ],
+        "y_true": [
+          291,
+          24,
+          1
+        ],
+        "host_pred": [
+          291,
+          24,
+          1
+        ]
+      },
+      "n_eval_days": 21,
+      "finite": true,
+      "passed": true
+    }
+  },
+  "pir": {
+    "PatchTST": {
+      "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+      "fidelity_ok": true,
+      "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+      "seed": 2021,
+      "pred_shape": [
+        21,
+        24
+      ],
+      "n_eval_days": 21,
+      "finite": true,
+      "parameter_count": 215050,
+      "passed": true
+    },
+    "TimeMixer": {
+      "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+      "fidelity_ok": true,
+      "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+      "seed": 2021,
+      "pred_shape": [
+        21,
+        24
+      ],
+      "n_eval_days": 21,
+      "finite": true,
+      "parameter_count": 368897,
+      "passed": true
+    }
+  },
+  "cross_check": {
+    "PatchTST": {
+      "Host": {
+        "rederived": 72.05342864990234,
+        "published": 72.05342864990234,
+        "abs_diff": 0.0,
+        "match": true
+      },
+      "PIR_paper_protocol": {
+        "rederived": 80.13679504394531,
+        "published": 80.13679504394531,
+        "abs_diff": 0.0,
+        "match": true
+      }
+    },
+    "TimeMixer": {
+      "Host": {
+        "rederived": 75.8519515991211,
+        "published": 75.8519515991211,
+        "abs_diff": 0.0,
+        "match": true
+      },
+      "PIR_paper_protocol": {
+        "rederived": 81.94119262695312,
+        "published": 81.94119262695312,
+        "abs_diff": 0.0,
+        "match": true
+      }
+    }
+  },
+  "verdict": "GANSU_DA_IMPORT_OK_NO_RETRAINING"
+}

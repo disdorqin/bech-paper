@@ -1,0 +1,73 @@
+{
+  "schema": "china5_threshold_freeze.v1",
+  "thresholds": {
+    "SHANDONG": {
+      "market": "SHANDONG",
+      "dataset_id": "SHANDONG_DA",
+      "fit_partition": "HOST_TRAIN",
+      "n_days_fit": 744,
+      "n_values_fit": 17856,
+      "q05": -80.0,
+      "q95": 647.3237457275391,
+      "day_spread_p90": 840.0375427246094,
+      "read_audit": {
+        "target_column": "日前电价",
+        "target_day_values_read": 17856,
+        "causal_context_values_read": 168,
+        "protected_final_target_values_read": 0
+      },
+      "production_rule": "fixed once from HOST_TRAIN targets; applied unchanged to every method, cell and partition; never recomputed per method"
+    },
+    "SHAANXI": {
+      "market": "SHAANXI",
+      "dataset_id": "SHAANXI_DA",
+      "fit_partition": "HOST_TRAIN",
+      "n_days_fit": 183,
+      "n_values_fit": 4392,
+      "q05": 40.0,
+      "q95": 541.798986816406,
+      "day_spread_p90": 861.4279785156251,
+      "read_audit": {
+        "target_column": "日前电价",
+        "target_day_values_read": 4392,
+        "causal_context_values_read": 336,
+        "protected_final_target_values_read": 0
+      },
+      "production_rule": "fixed once from HOST_TRAIN targets; applied unchanged to every method, cell and partition; never recomputed per method"
+    },
+    "NINGXIA": {
+      "market": "NINGXIA",
+      "dataset_id": "NINGXIA_DA",
+      "fit_partition": "HOST_TRAIN",
+      "n_days_fit": 65,
+      "n_values_fit": 1560,
+      "q05": 40.0,
+      "q95": 384.0060501098633,
+      "day_spread_p90": 353.1156005859375,
+      "read_audit": {
+        "target_column": "日前电价",
+        "target_day_values_read": 1560,
+        "causal_context_values_read": 336,
+        "protected_final_target_values_read": 0
+      },
+      "production_rule": "fixed once from HOST_TRAIN targets; applied unchanged to every method, cell and partition; never recomputed per method"
+    },
+    "QINGHAI": {
+      "market": "QINGHAI",
+      "dataset_id": "QINGHAI_DA",
+      "fit_partition": "HOST_TRAIN",
+      "n_days_fit": 62,
+      "n_values_fit": 1488,
+      "q05": 80.0,
+      "q95": 650.0,
+      "day_spread_p90": 570.0,
+      "read_audit": {
+        "target_column": "日前电价",
+        "target_day_values_read": 1488,
+        "causal_context_values_read": 504,
+        "protected_final_target_values_read": 0
+      },
+      "production_rule": "fixed once from HOST_TRAIN targets; applied unchanged to every method, cell and partition; never recomputed per method"
+    }
+  }
+}

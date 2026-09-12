@@ -1,0 +1,32 @@
+{
+  "market": "SHAANXI_DA",
+  "host": "PatchTST",
+  "method": "delta_Adapter_AdaY",
+  "seed": 7,
+  "fidelity": "ACCEPTED_WITH_DISCLOSED_PARTIAL_FIDELITY",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 20,
+  "n_fit": 61,
+  "gap_breaks": 2,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 0.14009160000023257,
+  "training_seconds": 0.1241427000004478,
+  "inference_seconds": 0.0006107999997766456,
+  "parameter_count": 289816,
+  "hidden_dim": 512,
+  "source_dim": 24,
+  "epochs_run": 10,
+  "best_val_mse": 0.8593199253082275,
+  "mu": 193.35943970246748,
+  "sd": 161.69890606948545,
+  "source": "official delta-Adapter Adapter-X+Y @ 0add06ea7b4d2e0a84c364a8be72eef2676a92f2 :: PostProcessingNet",
+  "source_file_sha256": "39fab4132d8a0e44e10917ace41d24d0d8addbf5fba30786f33ae51a71e95291"
+}

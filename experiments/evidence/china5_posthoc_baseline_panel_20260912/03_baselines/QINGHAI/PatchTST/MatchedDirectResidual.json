@@ -1,0 +1,25 @@
+{
+  "market": "QINGHAI_DA",
+  "host": "PatchTST",
+  "method": "MatchedDirectResidual",
+  "seed": 7,
+  "fidelity": "FROZEN_INTERNAL_CONTROL",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 6,
+  "n_fit": 20,
+  "gap_breaks": 1,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 3.5400450000015553,
+  "training_seconds": 0.875469400001748,
+  "inference_seconds": 0.00013190000026952475,
+  "parameter_count": 15000,
+  "source": "experiments/current/hch_unified_da_shape_upgrade/run_canary.py::fit_direct"
+}

@@ -1,0 +1,7 @@
+physical_market_group,dataset_id,status,n_eligible_days,n_raw_rows,source_path,source_sha256,public,reason
+SHANDONG,SHANDONG_DA,CONTRACT_OK,1652,39816,data/CHINA/SHANDONG/source/shandong_pmos_hourly.csv,04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134,False,
+SHAANXI,SHAANXI_DA,CONTRACT_OK,406,10752,data/CHINA/SHAANXI/陕西24h电价数据集(1).xlsx,5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5,True,
+NINGXIA,NINGXIA_DA,CONTRACT_OK,144,4224,data/CHINA/NINGXIA/宁夏24h电价数据集.xlsx,777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4,True,
+QINGHAI,QINGHAI_DA,CONTRACT_OK,135,4440,data/CHINA/QINGHAI/青海24h电价数据集.xlsx,58B98C214384AF3D6B95F88659259928FBFA2DF58567C2A4B6C9713DEC40D88F,True,
+SHANXI,SHANXI_DA,ABSENT_FROM_REGISTRY,,,,,,"No Shanxi dataset file exists: `data/CHINA/` holds only GANSU/LIAONING/NINGXIA/QINGHAI/SHAANXI/SHANDONG, and `data/MARKET_INDEX.csv` has no Shanxi row. Shanxi appears only as a *candidate* row `SHANXI_DA_RT` in the archived v2.5 research table `docs/archive/v2_5_details/HCH_V2.5_DATA_TRAINING_RESEARCH_20260820/dataset_registry_candidates.csv`, classified `C_diagnostic_only` with 0-1 normalised features and an undisclosed licence (open item D5). It was never admitted to the registry. RESEARCH_STATE forbids inventing or silently substituting a market, so no Shanxi cell is reported."
+LIAONING,LIAONING_DA,DATA_BLOCKED,,,,,,"Registered as public=true but role=candidate with admission unresolved; data/CHINA/LIAONING contains only portal HTML captures, no price dataset."

@@ -1,0 +1,132 @@
+{
+  "schema": "china5_posthoc_baseline_panel_freeze.v1",
+  "terminal_state": "CHINA5_BASELINE_PANEL_PARTIALLY_FROZEN_WITH_DISCLOSED_BLOCKERS",
+  "terminal_state_criterion": "FROZEN only if (a) every executed market x host x strict method cell exists AND (b) there is no non-imported blocker row. Otherwise PARTIALLY_FROZEN_WITH_DISCLOSED_BLOCKERS.",
+  "terminal_state_note": "cells_complete=True, n_non_imported_blockers=6. The panel IS usable for new-method comparison on the four data-bearing markets; the partial token reflects the absent requested market SHANXI plus the two blocked baseline tracks.",
+  "all_executed_cells_complete": true,
+  "evidence_root": "experiments/evidence/china5_posthoc_baseline_panel_20260912",
+  "semantics": "day-ahead price -> day-ahead price, next 24h hourly",
+  "markets_run": [
+    "SHANDONG",
+    "SHAANXI",
+    "NINGXIA",
+    "QINGHAI"
+  ],
+  "hosts_per_market": [
+    "PatchTST",
+    "TimeMixer"
+  ],
+  "strict_offline_methods": [
+    "Host",
+    "MatchedDirectResidual",
+    "delta_Adapter_AdaY",
+    "PIR_paper_protocol"
+  ],
+  "supplementary_methods": [
+    "COSA_online"
+  ],
+  "blocked_methods": [
+    "UEC_STD",
+    "OMPB"
+  ],
+  "protected_final_read": false,
+  "protected_final_status": "SEALED_STRUCTURALLY_NOT_READ",
+  "random_split_used": false,
+  "imputation_used": false,
+  "province_specific_tuning": false,
+  "host_gate_all_passed": true,
+  "host_gate": {
+    "SHANDONG__PatchTST": {
+      "passed": true,
+      "DEV_EVAL_MAE": 104.5451889038086,
+      "const": 150.10113525390625
+    },
+    "SHANDONG__TimeMixer": {
+      "passed": true,
+      "DEV_EVAL_MAE": 103.75902557373047,
+      "const": 150.10113525390625
+    },
+    "SHAANXI__PatchTST": {
+      "passed": true,
+      "DEV_EVAL_MAE": 101.63884735107422,
+      "const": 136.742919921875
+    },
+    "SHAANXI__TimeMixer": {
+      "passed": true,
+      "DEV_EVAL_MAE": 99.74069213867188,
+      "const": 136.742919921875
+    },
+    "NINGXIA__PatchTST": {
+      "passed": true,
+      "DEV_EVAL_MAE": 82.47408294677734,
+      "const": 131.21499633789062
+    },
+    "NINGXIA__TimeMixer": {
+      "passed": true,
+      "DEV_EVAL_MAE": 92.56651306152344,
+      "const": 131.21499633789062
+    },
+    "QINGHAI__PatchTST": {
+      "passed": true,
+      "DEV_EVAL_MAE": 110.85987091064453,
+      "const": 200.9550323486328
+    },
+    "QINGHAI__TimeMixer": {
+      "passed": true,
+      "DEV_EVAL_MAE": 114.15170288085938,
+      "const": 200.9550323486328
+    }
+  },
+  "n_strict_cells": 32,
+  "n_supplementary_cells": 10,
+  "disclosed_blockers": [
+    "MARKET::SHANXI: ABSENT_FROM_REGISTRY",
+    "MARKET::LIAONING: DATA_BLOCKED",
+    "BASELINE::UEC_STD: HOST_FIDELITY_BLOCKED / NOT_PAPER_FAITHFULLY_ADMITTED",
+    "BASELINE::OMPB: STANDALONE_DATA_BLOCKED / NOT_REPRODUCED",
+    "IMPORTED::GANSU_DA::PatchTST::raw_arrays_absent: RAW_ARRAY_ABSENT_METRICS_ONLY",
+    "IMPORTED::GANSU_DA::TimeMixer::raw_arrays_absent: RAW_ARRAY_ABSENT_METRICS_ONLY"
+  ],
+  "cell_summary": {
+    "SHANDONG__PatchTST": {
+      "n_dev_eval_days": 82,
+      "host_mae": 104.54519550647677,
+      "gate_passed": true
+    },
+    "SHANDONG__TimeMixer": {
+      "n_dev_eval_days": 82,
+      "host_mae": 103.75902927079336,
+      "gate_passed": true
+    },
+    "SHAANXI__PatchTST": {
+      "n_dev_eval_days": 20,
+      "host_mae": 101.63885358969371,
+      "gate_passed": true
+    },
+    "SHAANXI__TimeMixer": {
+      "n_dev_eval_days": 20,
+      "host_mae": 99.74069322745005,
+      "gate_passed": true
+    },
+    "NINGXIA__PatchTST": {
+      "n_dev_eval_days": 7,
+      "host_mae": 82.47408810115996,
+      "gate_passed": true
+    },
+    "NINGXIA__TimeMixer": {
+      "n_dev_eval_days": 7,
+      "host_mae": 92.56650777090164,
+      "gate_passed": true
+    },
+    "QINGHAI__PatchTST": {
+      "n_dev_eval_days": 6,
+      "host_mae": 110.85987186431885,
+      "gate_passed": true
+    },
+    "QINGHAI__TimeMixer": {
+      "n_dev_eval_days": 6,
+      "host_mae": 114.15169938405354,
+      "gate_passed": true
+    }
+  }
+}

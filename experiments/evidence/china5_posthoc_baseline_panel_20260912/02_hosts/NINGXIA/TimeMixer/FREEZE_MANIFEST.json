@@ -1,0 +1,110 @@
+{
+  "schema": "china5_host_freeze.v1",
+  "physical_market_group": "NINGXIA",
+  "dataset_id": "NINGXIA_DA",
+  "backbone": "TimeMixer",
+  "host_recipe_id": "gansu_da_frozen_recipe_v1",
+  "source_commit": "8ff39ec6ef25f954ed38ddea9ba4ca238e84987e",
+  "source_path": "data/CHINA/NINGXIA/宁夏24h电价数据集.xlsx",
+  "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4",
+  "array_sha256": "75f5f9bcc5701d2cc871c614a4513f5e35fbe136e7d124418f9911f7e1810f12",
+  "checkpoint_sha256": "804F5C6B682492C5DD8B31D66A64408885E6FFEF87E7173333E1DD7FB98ADE82",
+  "split_hash": "8d542e7d8dd0033871fc1b5b141020ca930c35b4d3bc5518ebc38798ed62d007",
+  "split_manifest": {
+    "schema": "china5_da_development_split.v1",
+    "dataset_id": "NINGXIA_DA",
+    "physical_market_group": "NINGXIA",
+    "source": "data/CHINA/NINGXIA/宁夏24h电价数据集.xlsx",
+    "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4",
+    "target_column": "日前电价",
+    "task": "DA_to_DA_next24h",
+    "timezone": "Asia/Shanghai",
+    "hour_label_convention": "hour_ending",
+    "role_boundaries": {
+      "s1_end": 0.5,
+      "s2_end": 0.7,
+      "s3_end": 0.8,
+      "host_val_tail_of_s1": 0.1,
+      "dev_eval_tail_of_s2": 0.25
+    },
+    "counts": {
+      "HOST_TRAIN": 65,
+      "HOST_VAL": 7,
+      "POST_TRAIN": 22,
+      "DEV_EVAL": 7,
+      "PROTECTED_FINAL": 43
+    },
+    "open_roles": [
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN",
+      "DEV_EVAL"
+    ],
+    "closed_roles": [
+      "PROTECTED_FINAL"
+    ],
+    "forbidden_target_day_inputs": [
+      "日前电价",
+      "实时电价",
+      "竞价空间预测值"
+    ],
+    "excluded_features": {
+      "竞价空间预测值": "pre-DA publication time unconfirmed (GANSU audit precedent)"
+    },
+    "boundary_policy": "identical deterministic natural-day proportions in every market; timestamp-only construction, built before any price value is read"
+  },
+  "effective_host_config": {
+    "seq_len": 168,
+    "pred_len": 24,
+    "channels": 1,
+    "d_model": 64,
+    "e_layers": 2,
+    "dropout": 0.1,
+    "epochs": 10,
+    "batch_size": 128,
+    "lr": 0.01,
+    "optimizer": "Adam",
+    "weight_decay": 0.0,
+    "scheduler": "OneCycleLR",
+    "pct_start": 0.3,
+    "patience": 10,
+    "seed": 7,
+    "device": "cpu",
+    "official_params": {
+      "d_model": 16,
+      "d_ff": 32,
+      "e_layers": 2,
+      "dropout": 0.1,
+      "down_sampling_layers": 3,
+      "down_sampling_window": 2,
+      "down_sampling_method": "avg",
+      "moving_avg": 25,
+      "decomp_method": "moving_avg",
+      "use_norm": 1,
+      "channel_independence": 1,
+      "use_future_temporal_feature": 0,
+      "label_len": 0,
+      "embed": "timeF",
+      "freq": "h",
+      "top_k": 5
+    }
+  },
+  "fit_n": 65,
+  "valid_n": 7,
+  "train_seconds": 0.6235436000006302,
+  "access_manifest": {
+    "roles_read": [
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN",
+      "DEV_EVAL"
+    ],
+    "roles_sealed": [
+      "PROTECTED_FINAL"
+    ],
+    "target_values_read": 2424,
+    "causal_context_values_read": 336,
+    "protected_final_target_values_read": 0,
+    "imputation_used": false
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "china5_host_gate.v1",
+  "cells": {
+    "SHANDONG__PatchTST": {
+      "physical_market_group": "SHANDONG",
+      "backbone": "PatchTST",
+      "DEV_EVAL_MAE": 104.5451889038086,
+      "HOST_TRAIN_MAE": 95.46929931640625,
+      "HOST_VAL_MAE": 99.5919418334961,
+      "DEV_EVAL_MAE_train_mean_constant": 150.10113525390625,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 82,
+      "n_host_train_days": 744,
+      "n_host_val_days": 82
+    },
+    "SHANDONG__TimeMixer": {
+      "physical_market_group": "SHANDONG",
+      "backbone": "TimeMixer",
+      "DEV_EVAL_MAE": 103.75902557373047,
+      "HOST_TRAIN_MAE": 97.12129211425781,
+      "HOST_VAL_MAE": 97.33382415771484,
+      "DEV_EVAL_MAE_train_mean_constant": 150.10113525390625,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 82,
+      "n_host_train_days": 744,
+      "n_host_val_days": 82
+    },
+    "SHAANXI__PatchTST": {
+      "physical_market_group": "SHAANXI",
+      "backbone": "PatchTST",
+      "DEV_EVAL_MAE": 101.63884735107422,
+      "HOST_TRAIN_MAE": 78.24099731445312,
+      "HOST_VAL_MAE": 87.80994415283203,
+      "DEV_EVAL_MAE_train_mean_constant": 136.742919921875,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 20,
+      "n_host_train_days": 183,
+      "n_host_val_days": 20
+    },
+    "SHAANXI__TimeMixer": {
+      "physical_market_group": "SHAANXI",
+      "backbone": "TimeMixer",
+      "DEV_EVAL_MAE": 99.74069213867188,
+      "HOST_TRAIN_MAE": 78.39891052246094,
+      "HOST_VAL_MAE": 87.59578704833984,
+      "DEV_EVAL_MAE_train_mean_constant": 136.742919921875,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 20,
+      "n_host_train_days": 183,
+      "n_host_val_days": 20
+    },
+    "NINGXIA__PatchTST": {
+      "physical_market_group": "NINGXIA",
+      "backbone": "PatchTST",
+      "DEV_EVAL_MAE": 82.47408294677734,
+      "HOST_TRAIN_MAE": 75.6954345703125,
+      "HOST_VAL_MAE": 84.87466430664062,
+      "DEV_EVAL_MAE_train_mean_constant": 131.21499633789062,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 7,
+      "n_host_train_days": 65,
+      "n_host_val_days": 7
+    },
+    "NINGXIA__TimeMixer": {
+      "physical_market_group": "NINGXIA",
+      "backbone": "TimeMixer",
+      "DEV_EVAL_MAE": 92.56651306152344,
+      "HOST_TRAIN_MAE": 90.88613891601562,
+      "HOST_VAL_MAE": 95.17400360107422,
+      "DEV_EVAL_MAE_train_mean_constant": 131.21499633789062,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 7,
+      "n_host_train_days": 65,
+      "n_host_val_days": 7
+    },
+    "QINGHAI__PatchTST": {
+      "physical_market_group": "QINGHAI",
+      "backbone": "PatchTST",
+      "DEV_EVAL_MAE": 110.85987091064453,
+      "HOST_TRAIN_MAE": 74.3883285522461,
+      "HOST_VAL_MAE": 107.49222564697266,
+      "DEV_EVAL_MAE_train_mean_constant": 200.9550323486328,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 6,
+      "n_host_train_days": 62,
+      "n_host_val_days": 6
+    },
+    "QINGHAI__TimeMixer": {
+      "physical_market_group": "QINGHAI",
+      "backbone": "TimeMixer",
+      "DEV_EVAL_MAE": 114.15170288085938,
+      "HOST_TRAIN_MAE": 87.15179443359375,
+      "HOST_VAL_MAE": 99.8546371459961,
+      "DEV_EVAL_MAE_train_mean_constant": 200.9550323486328,
+      "checks": {
+        "finite_and_shaped": true,
+        "beats_train_mean_constant_on_DEV_EVAL": true,
+        "HOST_VAL_not_worse_than_3x_HOST_TRAIN": true
+      },
+      "passed": true,
+      "n_dev_eval_days": 6,
+      "n_host_train_days": 62,
+      "n_host_val_days": 6
+    }
+  }
+}

@@ -1,0 +1,11 @@
+track,scope,status,reason,proxy_used,retrained
+MARKET::SHANXI,SHANXI,ABSENT_FROM_REGISTRY,"No Shanxi dataset file exists: `data/CHINA/` holds only GANSU/LIAONING/NINGXIA/QINGHAI/SHAANXI/SHANDONG, and `data/MARKET_INDEX.csv` has no Shanxi row. Shanxi appears only as a *candidate* row `SHANXI_DA_RT` in the archived v2.5 research table `docs/archive/v2_5_details/HCH_V2.5_DATA_TRAINING_RESEARCH_20260820/dataset_registry_candidates.csv`, classified `C_diagnostic_only` with 0-1 normalised features and an undisclosed licence (open item D5). It was never admitted to the registry. RESEARCH_STATE forbids inventing or silently substituting a market, so no Shanxi cell is reported.",False,False
+MARKET::LIAONING,LIAONING,DATA_BLOCKED,"Registered as public=true but role=candidate with admission unresolved; data/CHINA/LIAONING contains only portal HTML captures, no price dataset.",False,False
+BASELINE::UEC_STD,all markets,HOST_FIDELITY_BLOCKED / NOT_PAPER_FAITHFULLY_ADMITTED,"instantiating it requires a Host that failed admission, i.e. an unverified proxy",False,False
+BASELINE::OMPB,all markets,STANDALONE_DATA_BLOCKED / NOT_REPRODUCED,no committed runner and no reproducible standalone data path in this repo,False,False
+IMPORTED::GANSU_DA::PatchTST::Host,GANSU_DA,IMPORTED_OK,existing strict GANSU_DA evidence imported by integrity audit; never retrained,False,False
+IMPORTED::GANSU_DA::TimeMixer::Host,GANSU_DA,IMPORTED_OK,existing strict GANSU_DA evidence imported by integrity audit; never retrained,False,False
+IMPORTED::GANSU_DA::PatchTST::PIR_paper_protocol,GANSU_DA,IMPORTED_OK,existing strict GANSU_DA evidence imported by integrity audit; never retrained,False,False
+IMPORTED::GANSU_DA::TimeMixer::PIR_paper_protocol,GANSU_DA,IMPORTED_OK,existing strict GANSU_DA evidence imported by integrity audit; never retrained,False,False
+IMPORTED::GANSU_DA::PatchTST::raw_arrays_absent,GANSU_DA,RAW_ARRAY_ABSENT_METRICS_ONLY,delta_Adapter_AdaY and MatchedDirectResidual raw arrays were never persisted by the frozen GANSU_DA transfer run; only published metrics are importable.,False,False
+IMPORTED::GANSU_DA::TimeMixer::raw_arrays_absent,GANSU_DA,RAW_ARRAY_ABSENT_METRICS_ONLY,delta_Adapter_AdaY and MatchedDirectResidual raw arrays were never persisted by the frozen GANSU_DA transfer run; only published metrics are importable.,False,False

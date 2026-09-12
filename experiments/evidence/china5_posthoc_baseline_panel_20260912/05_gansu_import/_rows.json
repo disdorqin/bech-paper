@@ -1,0 +1,85 @@
+{
+  "raw": [
+    {
+      "evidence_origin": "GANSU_DA_STRICT_FROZEN_IMPORT",
+      "dataset_id": "GANSU_DA",
+      "physical_market_group": "GANSU",
+      "backbone": "PatchTST",
+      "method": "Host",
+      "partition": "DIAG_EVAL",
+      "n_days": 21,
+      "horizon": 24,
+      "array_path": "experiments/evidence/hch_unified_da_shape_engineering_20260910/host_foundation/GANSU_DA/PatchTST/host_predictions.npz",
+      "array_sha256": "E1392EE4397AA28AED43FCB4B013919F836870B4874A591FEB6E75770AA0AFBD",
+      "recorded_sha256": "E1392EE4397AA28AED43FCB4B013919F836870B4874A591FEB6E75770AA0AFBD",
+      "contains_y_true": true,
+      "contains_host_pred": true,
+      "imported_by_audit_only": true,
+      "retrained": false
+    },
+    {
+      "evidence_origin": "GANSU_DA_STRICT_FROZEN_IMPORT",
+      "dataset_id": "GANSU_DA",
+      "physical_market_group": "GANSU",
+      "backbone": "TimeMixer",
+      "method": "Host",
+      "partition": "DIAG_EVAL",
+      "n_days": 21,
+      "horizon": 24,
+      "array_path": "experiments/evidence/hch_unified_da_shape_engineering_20260910/host_foundation/GANSU_DA/TimeMixer/host_predictions.npz",
+      "array_sha256": "179FAC0D6A4EC71478E3317B228B300512CB1936814E5D0F71852B9967EA54AD",
+      "recorded_sha256": "179FAC0D6A4EC71478E3317B228B300512CB1936814E5D0F71852B9967EA54AD",
+      "contains_y_true": true,
+      "contains_host_pred": true,
+      "imported_by_audit_only": true,
+      "retrained": false
+    },
+    {
+      "evidence_origin": "GANSU_DA_STRICT_FROZEN_IMPORT",
+      "dataset_id": "GANSU_DA",
+      "physical_market_group": "GANSU",
+      "backbone": "PatchTST",
+      "method": "PIR_paper_protocol",
+      "partition": "DIAG_EVAL",
+      "n_days": 21,
+      "horizon": 24,
+      "array_path": "experiments/current/hch_frozen_method_baseline_transfer/_pir_cache/GANSU_DA__PatchTST.npz",
+      "array_sha256": "481C7AB76827EDEA025670D4E3C9C8820FB9EF068F50EB73C689E6A3AE2816AE",
+      "recorded_sha256": "",
+      "contains_y_true": false,
+      "contains_host_pred": false,
+      "imported_by_audit_only": true,
+      "retrained": false
+    },
+    {
+      "evidence_origin": "GANSU_DA_STRICT_FROZEN_IMPORT",
+      "dataset_id": "GANSU_DA",
+      "physical_market_group": "GANSU",
+      "backbone": "TimeMixer",
+      "method": "PIR_paper_protocol",
+      "partition": "DIAG_EVAL",
+      "n_days": 21,
+      "horizon": 24,
+      "array_path": "experiments/current/hch_frozen_method_baseline_transfer/_pir_cache/GANSU_DA__TimeMixer.npz",
+      "array_sha256": "74337402BF05E016133943CDED8EF1FB6BCA84611F94E8BC29958EC90AF633B7",
+      "recorded_sha256": "",
+      "contains_y_true": false,
+      "contains_host_pred": false,
+      "imported_by_audit_only": true,
+      "retrained": false
+    }
+  ],
+  "prov": [
+    {
+      "evidence_origin": "GANSU_DA_STRICT_FROZEN_IMPORT",
+      "source_evidence_root": "experiments/evidence/hch_frozen_method_baseline_transfer_20260911",
+      "host_cache_root": "experiments/evidence/hch_unified_da_shape_engineering_20260910/host_foundation/GANSU_DA",
+      "role_vocabulary_map": "S1|HOST_TRAIN+HOST_VAL ; DIAG_FIT|POST_TRAIN ; DIAG_EVAL|DEV_EVAL ; S3+S4|PROTECTED_FINAL",
+      "import_mode": "integrity/provenance audit only",
+      "retrained": false,
+      "fidelity_status_altered": false,
+      "verdict": "GANSU_DA_IMPORT_OK_NO_RETRAINING",
+      "note": "delta_Adapter_AdaY and MatchedDirectResidual raw arrays were never persisted by the frozen transfer run; only their published metrics are importable. Reported as metrics-only, not silently reconstructed."
+    }
+  ]
+}

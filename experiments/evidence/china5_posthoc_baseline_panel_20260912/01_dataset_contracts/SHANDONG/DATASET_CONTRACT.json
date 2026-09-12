@@ -1,0 +1,350 @@
+{
+  "physical_market_group": "SHANDONG",
+  "dataset_id": "SHANDONG_DA",
+  "status": "CONTRACT_OK",
+  "provenance": {
+    "source_path": "data/CHINA/SHANDONG/source/shandong_pmos_hourly.csv",
+    "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134",
+    "source_bytes": 9355626,
+    "reader": "csv",
+    "encoding": "gbk",
+    "raw_columns": [
+      "时刻",
+      "日前电价",
+      "实时电价",
+      "地方电厂总加预测值",
+      "联络线受电负荷预测值",
+      "风电总加预测值",
+      "光伏总加预测值",
+      "核电总加预测值",
+      "自备机组总加预测值",
+      "试验机组总加预测值",
+      "直调负荷预测值",
+      "竞价空间预测值",
+      "新能源总加预测值",
+      "地方电厂总加实际值",
+      "联络线受电负荷实际值",
+      "风电总加实际值",
+      "光伏总加实际值",
+      "核电总加实际值",
+      "自备机组总加实际值",
+      "试验机组总加实际值",
+      "直调负荷实际值",
+      "竞价空间实际值",
+      "新能源总加实际值"
+    ],
+    "n_raw_rows": 39816,
+    "declared_research_role": "private_external_case",
+    "public": false
+  },
+  "timestamp_contract": {
+    "n_rows": 39816,
+    "n_unique_timestamps": 39816,
+    "n_duplicate_timestamps": 0,
+    "n_unparseable": 0,
+    "monotonic_increasing": true,
+    "min_timestamp": "2022-01-01 01:00:00",
+    "max_timestamp": "2026-07-18 00:00:00",
+    "hour_labels_present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "n_rows_labelled_00": 1659,
+    "n_rows_labelled_01": 1659,
+    "step_counts": {
+      "0 days 01:00:00": 39815
+    },
+    "dominant_step": "0 days 01:00:00",
+    "resolution_consistent": true,
+    "observed_span_hours": 39815,
+    "n_missing_grid_hours": 0
+  },
+  "horizon_contract": {
+    "seq_len": 168,
+    "horizon": 24,
+    "forecast_origin": "00:00 UTC+8 of target day D",
+    "origin_rule": "origin = first row of day D; target = origin+1h .. origin+24h",
+    "timezone": "Asia/Shanghai",
+    "dst_policy": "China has observed no DST since 1991-09-15; no DST branch is needed",
+    "hour_label_convention": "hour_ending",
+    "day_definition": "day D = rows labelled D 01:00 .. D+1 00:00 (24 contiguous hours)"
+  },
+  "target_contract": {
+    "target_column": "日前电价",
+    "task": "DA_price -> next-24h DA_price",
+    "target_day_price_is_not_an_input": true,
+    "forbidden_target_day_inputs": [
+      "日前电价",
+      "实时电价",
+      "竞价空间预测值"
+    ],
+    "profile": {
+      "column": "日前电价",
+      "n_values": 27744,
+      "n_nonfinite": 0,
+      "min": -100.0,
+      "max": 1500.0,
+      "mean": 336.6108703613281,
+      "median": 378.5195007324219,
+      "std": 197.7827911376953,
+      "n_negative": 2704,
+      "n_zero": 1,
+      "pct_negative": 9.746251441753172,
+      "pct_zero": 0.003604382929642445,
+      "by_role": {
+        "HOST_TRAIN": {
+          "n_days": 744,
+          "n_values": 17856,
+          "min": -91.2031021118164,
+          "max": 1296.0,
+          "mean": 355.5120849609375,
+          "median": 395.9312438964844,
+          "pct_negative": 8.47894265232975,
+          "pct_zero": 0.005600358422939068
+        },
+        "HOST_VAL": {
+          "n_days": 82,
+          "n_values": 1968,
+          "min": -90.0,
+          "max": 673.2119750976562,
+          "mean": 255.2034454345703,
+          "median": 318.2550048828125,
+          "pct_negative": 16.209349593495933,
+          "pct_zero": 0.0
+        },
+        "POST_TRAIN": {
+          "n_days": 248,
+          "n_values": 5952,
+          "min": -100.0,
+          "max": 1500.0,
+          "mean": 334.90911865234375,
+          "median": 377.5950012207031,
+          "pct_negative": 8.971774193548388,
+          "pct_zero": 0.0
+        },
+        "DEV_EVAL": {
+          "n_days": 82,
+          "n_values": 1968,
+          "min": -100.0,
+          "max": 836.4099731445312,
+          "mean": 251.67108154296875,
+          "median": 304.54998779296875,
+          "pct_negative": 17.1239837398374,
+          "pct_zero": 0.0
+        }
+      }
+    }
+  },
+  "feature_contract": {
+    "n_legal_columns": 9,
+    "legal_columns": [
+      "地方电厂总加预测值",
+      "联络线受电负荷预测值",
+      "风电总加预测值",
+      "光伏总加预测值",
+      "核电总加预测值",
+      "自备机组总加预测值",
+      "试验机组总加预测值",
+      "直调负荷预测值",
+      "新能源总加预测值"
+    ],
+    "read_audit": {
+      "columns": [
+        "地方电厂总加预测值",
+        "联络线受电负荷预测值",
+        "风电总加预测值",
+        "光伏总加预测值",
+        "核电总加预测值",
+        "自备机组总加预测值",
+        "试验机组总加预测值",
+        "直调负荷预测值",
+        "新能源总加预测值"
+      ],
+      "rows_read": 27744,
+      "target_day_DA_price_input_reads": 0,
+      "realized_future_input_reads": 0,
+      "protected_final_reads": 0,
+      "publication_semantics": "all included columns are source-labelled 预测值 (forecast); 竞价空间预测值 excluded because pre-DA publication time is unconfirmed"
+    },
+    "per_column_stats": {
+      "地方电厂总加预测值": {
+        "min": 6150.0,
+        "max": 9250.0,
+        "mean": 7447.74609375,
+        "n_nonfinite": 0
+      },
+      "联络线受电负荷预测值": {
+        "min": 2786.0,
+        "max": 26386.0,
+        "mean": 16839.849609375,
+        "n_nonfinite": 0
+      },
+      "风电总加预测值": {
+        "min": 175.28750610351562,
+        "max": 22081.001953125,
+        "mean": 5937.81884765625,
+        "n_nonfinite": 0
+      },
+      "光伏总加预测值": {
+        "min": 0.0,
+        "max": 17938.5625,
+        "mean": 2216.63232421875,
+        "n_nonfinite": 0
+      },
+      "核电总加预测值": {
+        "min": 0.0,
+        "max": 3953.034912109375,
+        "mean": 1537.4361572265625,
+        "n_nonfinite": 0
+      },
+      "自备机组总加预测值": {
+        "min": 3263.0,
+        "max": 5819.2001953125,
+        "mean": 4668.1875,
+        "n_nonfinite": 0
+      },
+      "试验机组总加预测值": {
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "n_nonfinite": 0
+      },
+      "直调负荷预测值": {
+        "min": 19639.482421875,
+        "max": 99933.5,
+        "mean": 60871.44140625,
+        "n_nonfinite": 0
+      },
+      "新能源总加预测值": {
+        "min": 359.5050048828125,
+        "max": 33735.58984375,
+        "mean": 8154.451171875,
+        "n_nonfinite": 0
+      }
+    },
+    "realized_columns_excluded": [
+      "日前电价",
+      "实时电价",
+      "地方电厂总加实际值",
+      "联络线受电负荷实际值",
+      "风电总加实际值",
+      "光伏总加实际值",
+      "核电总加实际值",
+      "自备机组总加实际值",
+      "试验机组总加实际值",
+      "直调负荷实际值",
+      "竞价空间实际值",
+      "新能源总加实际值"
+    ],
+    "excluded_by_policy": {
+      "竞价空间预测值": "pre-DA publication time unconfirmed (GANSU audit precedent)"
+    }
+  },
+  "missing_duplicate_policy": {
+    "imputation": "none - no ffill/bfill/interpolation anywhere in the panel pipeline",
+    "duplicate_timestamps": "hard error",
+    "non_finite_legal_feature": "hard error",
+    "incomplete_day": "excluded from the eligible-episode set (never patched)",
+    "gap_policy": "gaps are preserved; a day is eligible only with 24 contiguous hours AND a contiguous 168h causal context"
+  },
+  "split": {
+    "schema": "china5_da_development_split.v1",
+    "dataset_id": "SHANDONG_DA",
+    "physical_market_group": "SHANDONG",
+    "source": "data/CHINA/SHANDONG/source/shandong_pmos_hourly.csv",
+    "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134",
+    "target_column": "日前电价",
+    "task": "DA_to_DA_next24h",
+    "timezone": "Asia/Shanghai",
+    "hour_label_convention": "hour_ending",
+    "role_boundaries": {
+      "s1_end": 0.5,
+      "s2_end": 0.7,
+      "s3_end": 0.8,
+      "host_val_tail_of_s1": 0.1,
+      "dev_eval_tail_of_s2": 0.25
+    },
+    "counts": {
+      "HOST_TRAIN": 744,
+      "HOST_VAL": 82,
+      "POST_TRAIN": 248,
+      "DEV_EVAL": 82,
+      "PROTECTED_FINAL": 496
+    },
+    "open_roles": [
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN",
+      "DEV_EVAL"
+    ],
+    "closed_roles": [
+      "PROTECTED_FINAL"
+    ],
+    "forbidden_target_day_inputs": [
+      "日前电价",
+      "实时电价",
+      "竞价空间预测值"
+    ],
+    "excluded_features": {
+      "竞价空间预测值": "pre-DA publication time unconfirmed (GANSU audit precedent)"
+    },
+    "boundary_policy": "identical deterministic natural-day proportions in every market; timestamp-only construction, built before any price value is read"
+  },
+  "eligible_days": 1652,
+  "raw_rows": 39816,
+  "read_audit": {
+    "target_column": "日前电价",
+    "target_day_values_read": 27744,
+    "causal_context_values_read": 168,
+    "protected_final_target_values_read": 0
+  },
+  "role_day_span": {
+    "HOST_TRAIN": {
+      "n": 744,
+      "first": "2022-01-08",
+      "last": "2024-01-21"
+    },
+    "HOST_VAL": {
+      "n": 82,
+      "first": "2024-01-22",
+      "last": "2024-04-12"
+    },
+    "POST_TRAIN": {
+      "n": 248,
+      "first": "2024-04-13",
+      "last": "2024-12-16"
+    },
+    "DEV_EVAL": {
+      "n": 82,
+      "first": "2024-12-17",
+      "last": "2025-03-08"
+    },
+    "PROTECTED_FINAL": {
+      "n": 496,
+      "first": "2025-03-09",
+      "last": "2026-07-17"
+    }
+  }
+}

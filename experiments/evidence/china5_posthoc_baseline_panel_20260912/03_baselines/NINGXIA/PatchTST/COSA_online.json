@@ -1,0 +1,50 @@
+{
+  "market": "NINGXIA_DA",
+  "host": "PatchTST",
+  "method": "COSA_online",
+  "seed": 2021,
+  "eval_partition": "DEV_EVAL",
+  "buffer_seed_partition": "POST_TRAIN",
+  "setting": "strict_online_TTA_predict_then_update",
+  "preflight": {
+    "checks": {
+      "P1_DEV_EVAL_strictly_increasing_days": true,
+      "P2_buffer_seed_strictly_prior": true,
+      "P3_no_protected_final_materialised": true,
+      "P4_eval_days_present": true
+    },
+    "passed": true,
+    "n_dev_eval_days": 7,
+    "n_post_train_days": 22,
+    "dev_eval_first_day": "2026-02-07",
+    "dev_eval_last_day": "2026-02-13",
+    "post_train_last_day": "2026-02-06"
+  },
+  "wall_seconds": 0.025405899999896064,
+  "fidelity": "TRANSFERRED_IMPLEMENTATION / PAPER_FIDELITY_UNRESOLVED",
+  "source": "official COSA @ 43a8c8da4de74d5745a8713f6130c523b7df2694 :: tta/cosa.py::SimpleOutputAdapter",
+  "source_file_sha256": "A79BA62F509E2E4BBAFB1590708EC851AF56763431173E660DB33E00AE4C3ABF",
+  "n_days": 7,
+  "n_days_adapted": 6,
+  "first_day_is_unadapted_host": true,
+  "mean_abs_correction": 0.11133439484096708,
+  "context_seed_days": 22,
+  "adaptation_seconds": 0.017980700000407523,
+  "knobs": {
+    "BASE_LR": 0.001,
+    "WEIGHT_DECAY": 0.0001,
+    "STEPS": 3,
+    "BUFFER_CONTEXT_SIZE": 10,
+    "MAX_LR": 0.005,
+    "MIN_LR": 0.0001,
+    "ADAPTER_LAYERS": 1,
+    "HIDDEN": 64,
+    "OPTIMIZER": "adam",
+    "batch_size": 1
+  },
+  "disclosed_adaptation": [
+    "official FFT period+1 batch construction replaced by one cache day per step",
+    "pred_len=24, n_vars=1 for the frozen DA task",
+    "sample_history seeded with observed POST_TRAIN daily target means"
+  ]
+}

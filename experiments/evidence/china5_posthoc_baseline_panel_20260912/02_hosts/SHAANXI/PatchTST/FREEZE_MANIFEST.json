@@ -1,0 +1,108 @@
+{
+  "schema": "china5_host_freeze.v1",
+  "physical_market_group": "SHAANXI",
+  "dataset_id": "SHAANXI_DA",
+  "backbone": "PatchTST",
+  "host_recipe_id": "gansu_da_frozen_recipe_v1",
+  "source_commit": "8ff39ec6ef25f954ed38ddea9ba4ca238e84987e",
+  "source_path": "data/CHINA/SHAANXI/陕西24h电价数据集(1).xlsx",
+  "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5",
+  "array_sha256": "d4449b216ec9a684a57c11ec41e9aeec2287d0b7210f1bd2714b5faed841cfb2",
+  "checkpoint_sha256": "579D3F4CB07B74A6A3968E6578602A01C23C38FB4159F97A8B0BBFF52307A742",
+  "split_hash": "175e9cf1b9d6faeaaf0f49c533a350c8c60879bf45862a2d01591de16621f2f8",
+  "split_manifest": {
+    "schema": "china5_da_development_split.v1",
+    "dataset_id": "SHAANXI_DA",
+    "physical_market_group": "SHAANXI",
+    "source": "data/CHINA/SHAANXI/陕西24h电价数据集(1).xlsx",
+    "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5",
+    "target_column": "日前电价",
+    "task": "DA_to_DA_next24h",
+    "timezone": "Asia/Shanghai",
+    "hour_label_convention": "hour_ending",
+    "role_boundaries": {
+      "s1_end": 0.5,
+      "s2_end": 0.7,
+      "s3_end": 0.8,
+      "host_val_tail_of_s1": 0.1,
+      "dev_eval_tail_of_s2": 0.25
+    },
+    "counts": {
+      "HOST_TRAIN": 183,
+      "HOST_VAL": 20,
+      "POST_TRAIN": 61,
+      "DEV_EVAL": 20,
+      "PROTECTED_FINAL": 122
+    },
+    "open_roles": [
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN",
+      "DEV_EVAL"
+    ],
+    "closed_roles": [
+      "PROTECTED_FINAL"
+    ],
+    "forbidden_target_day_inputs": [
+      "日前电价",
+      "实时电价",
+      "竞价空间预测值"
+    ],
+    "excluded_features": {
+      "竞价空间预测值": "pre-DA publication time unconfirmed (GANSU audit precedent)"
+    },
+    "boundary_policy": "identical deterministic natural-day proportions in every market; timestamp-only construction, built before any price value is read"
+  },
+  "effective_host_config": {
+    "seq_len": 168,
+    "pred_len": 24,
+    "channels": 1,
+    "d_model": 64,
+    "e_layers": 2,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 128,
+    "lr": 0.0001,
+    "optimizer": "Adam",
+    "weight_decay": 0.0,
+    "scheduler": "OneCycleLR",
+    "pct_start": 0.3,
+    "patience": 100,
+    "seed": 7,
+    "device": "cpu",
+    "official_params": {
+      "patch_len": 16,
+      "stride": 8,
+      "padding_patch": "end",
+      "revin": 1,
+      "affine": 0,
+      "subtract_last": 0,
+      "decomposition": 0,
+      "d_model": 512,
+      "n_heads": 8,
+      "e_layers": 2,
+      "d_ff": 2048,
+      "dropout": 0.05,
+      "fc_dropout": 0.05,
+      "head_dropout": 0.0
+    }
+  },
+  "fit_n": 183,
+  "valid_n": 20,
+  "train_seconds": 173.08407499999885,
+  "access_manifest": {
+    "roles_read": [
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN",
+      "DEV_EVAL"
+    ],
+    "roles_sealed": [
+      "PROTECTED_FINAL"
+    ],
+    "target_values_read": 6816,
+    "causal_context_values_read": 840,
+    "protected_final_target_values_read": 0,
+    "imputation_used": false
+  }
+}

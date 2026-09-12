@@ -1,0 +1,25 @@
+{
+  "market": "SHANDONG_DA",
+  "host": "TimeMixer",
+  "method": "MatchedDirectResidual",
+  "seed": 7,
+  "fidelity": "FROZEN_INTERNAL_CONTROL",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 82,
+  "n_fit": 248,
+  "gap_breaks": 0,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 0.9691741000006004,
+  "training_seconds": 0.9648548999994091,
+  "inference_seconds": 6.620000021939632e-05,
+  "parameter_count": 15000,
+  "source": "experiments/current/hch_unified_da_shape_upgrade/run_canary.py::fit_direct"
+}

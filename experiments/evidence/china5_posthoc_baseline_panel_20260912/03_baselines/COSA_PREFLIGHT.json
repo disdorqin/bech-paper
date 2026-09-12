@@ -1,0 +1,175 @@
+{
+  "schema": "cosa_supplementary_preflight.v1",
+  "n_cells_recorded": 8,
+  "ran": [
+    {
+      "market": "NINGXIA",
+      "backbone": "PatchTST",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 7,
+        "n_post_train_days": 22,
+        "dev_eval_first_day": "2026-02-07",
+        "dev_eval_last_day": "2026-02-13",
+        "post_train_last_day": "2026-02-06"
+      },
+      "DEV_EVAL_MAE": 82.46809701408658,
+      "Host_DEV_EVAL_MAE": 82.47408810115996,
+      "n_days_adapted": 6
+    },
+    {
+      "market": "NINGXIA",
+      "backbone": "TimeMixer",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 7,
+        "n_post_train_days": 22,
+        "dev_eval_first_day": "2026-02-07",
+        "dev_eval_last_day": "2026-02-13",
+        "post_train_last_day": "2026-02-06"
+      },
+      "DEV_EVAL_MAE": 92.54977250950677,
+      "Host_DEV_EVAL_MAE": 92.56650777090164,
+      "n_days_adapted": 6
+    },
+    {
+      "market": "QINGHAI",
+      "backbone": "PatchTST",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 6,
+        "n_post_train_days": 20,
+        "dev_eval_first_day": "2026-02-09",
+        "dev_eval_last_day": "2026-02-14",
+        "post_train_last_day": "2026-01-31"
+      },
+      "DEV_EVAL_MAE": 110.84938605626424,
+      "Host_DEV_EVAL_MAE": 110.85987186431885,
+      "n_days_adapted": 5
+    },
+    {
+      "market": "QINGHAI",
+      "backbone": "TimeMixer",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 6,
+        "n_post_train_days": 20,
+        "dev_eval_first_day": "2026-02-09",
+        "dev_eval_last_day": "2026-02-14",
+        "post_train_last_day": "2026-01-31"
+      },
+      "DEV_EVAL_MAE": 114.09600608547528,
+      "Host_DEV_EVAL_MAE": 114.15169938405354,
+      "n_days_adapted": 5
+    },
+    {
+      "market": "SHAANXI",
+      "backbone": "PatchTST",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 20,
+        "n_post_train_days": 61,
+        "dev_eval_first_day": "2025-10-31",
+        "dev_eval_last_day": "2025-11-19",
+        "post_train_last_day": "2025-10-30"
+      },
+      "DEV_EVAL_MAE": 101.40782681380709,
+      "Host_DEV_EVAL_MAE": 101.63885358969371,
+      "n_days_adapted": 19
+    },
+    {
+      "market": "SHAANXI",
+      "backbone": "TimeMixer",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 20,
+        "n_post_train_days": 61,
+        "dev_eval_first_day": "2025-10-31",
+        "dev_eval_last_day": "2025-11-19",
+        "post_train_last_day": "2025-10-30"
+      },
+      "DEV_EVAL_MAE": 99.47235090956092,
+      "Host_DEV_EVAL_MAE": 99.74069322745005,
+      "n_days_adapted": 19
+    },
+    {
+      "market": "SHANDONG",
+      "backbone": "PatchTST",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 82,
+        "n_post_train_days": 248,
+        "dev_eval_first_day": "2024-12-17",
+        "dev_eval_last_day": "2025-03-08",
+        "post_train_last_day": "2024-12-16"
+      },
+      "DEV_EVAL_MAE": 103.8607901529886,
+      "Host_DEV_EVAL_MAE": 104.54519550647677,
+      "n_days_adapted": 81
+    },
+    {
+      "market": "SHANDONG",
+      "backbone": "TimeMixer",
+      "preflight": {
+        "checks": {
+          "P1_DEV_EVAL_strictly_increasing_days": true,
+          "P2_buffer_seed_strictly_prior": true,
+          "P3_no_protected_final_materialised": true,
+          "P4_eval_days_present": true
+        },
+        "passed": true,
+        "n_dev_eval_days": 82,
+        "n_post_train_days": 248,
+        "dev_eval_first_day": "2024-12-17",
+        "dev_eval_last_day": "2025-03-08",
+        "post_train_last_day": "2024-12-16"
+      },
+      "DEV_EVAL_MAE": 102.53547711767317,
+      "Host_DEV_EVAL_MAE": 103.75902927079336,
+      "n_days_adapted": 81
+    }
+  ],
+  "blocked": []
+}

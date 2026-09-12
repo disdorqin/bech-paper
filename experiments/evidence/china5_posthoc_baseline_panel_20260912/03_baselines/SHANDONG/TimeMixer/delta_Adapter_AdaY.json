@@ -1,0 +1,32 @@
+{
+  "market": "SHANDONG_DA",
+  "host": "TimeMixer",
+  "method": "delta_Adapter_AdaY",
+  "seed": 7,
+  "fidelity": "ACCEPTED_WITH_DISCLOSED_PARTIAL_FIDELITY",
+  "target_column": "日前电价",
+  "eval_partition": "DEV_EVAL",
+  "fit_partition": "POST_TRAIN",
+  "n_eval": 82,
+  "n_fit": 248,
+  "gap_breaks": 0,
+  "role_relabelling": {
+    "HOST_TRAIN": "S1",
+    "HOST_VAL": "S1",
+    "POST_TRAIN": "DIAG_FIT",
+    "DEV_EVAL": "DIAG_EVAL",
+    "PROTECTED_FINAL": "S4"
+  },
+  "wall_seconds": 0.09684460000062245,
+  "training_seconds": 0.08926659999997355,
+  "inference_seconds": 0.00014790000022912864,
+  "parameter_count": 1144,
+  "hidden_dim": 16,
+  "source_dim": 24,
+  "epochs_run": 4,
+  "best_val_mse": 0.6447067856788635,
+  "mu": 344.62776109281305,
+  "sd": 180.96565075244658,
+  "source": "official delta-Adapter Adapter-X+Y @ 0add06ea7b4d2e0a84c364a8be72eef2676a92f2 :: PostProcessingNet",
+  "source_file_sha256": "39fab4132d8a0e44e10917ace41d24d0d8addbf5fba30786f33ae51a71e95291"
+}
