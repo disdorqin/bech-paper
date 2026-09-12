@@ -1,0 +1,15 @@
+# Source Working Instructions
+
+- Read root `RESEARCH_STATE.md`, `EXPERIMENT_LEDGER.md`, and `HANDOFF.md` before changing reusable source.
+- The completed signed-mass 5×4 development experiment is CLOSED at `HCH_SIGNED_MASS_DEVELOPMENT_NOT_SUPPORTED_STOP_FOR_ADJUDICATION`. Its four registered optional components were deleted and must not be rescued in source under new names.
+- Current discussion/source-design authority is `docs/current/HCH_RESIDUAL_ALIGNMENT_SAFETY_DESIGN_20260912.md`; core-refactor authority is `docs/current/HCH_ALIGNMENT_SAFE_CORE_REFACTOR_PLAN_20260912.md` and `docs/current/HCH_ALIGNMENT_SAFE_CORE_IMPLEMENTATION_PROMPT_20260912.md`.
+- The user-authorized alignment-safe core refactor has been **executed**. The completed signed-mass development source is byte-preserved at `src/archive/signed_mass_development_core_20260912/legacy_core/` (`ARCHIVE_HASHES.json` holds the per-file SHA256 and the canonical tree digest; `SUPERSEDED_TESTS.md` holds the superseded test file verbatim). Its superseded test was removed from the active tree rather than left failing to import. Do not rewrite that archive, and do not resurrect a deleted component from it.
+- The active `src/core/` tree is exactly 15 files and is intentionally small: one shared MLP, Shape GRU32, Amplitude GRU32 with one nonnegative scalar, balanced fusion `c=A(S+−S−)`, static nonnegative OOF MAE `alpha_0`, and a non-trainable seven-day Residual Alignment Safety controller in `safety.py` + `history.py`.
+- The safety controller may only shrink correction: `lambda=min(alpha_0, lambda_uniform, lambda_shape)`. It uses honest persisted prequential `(S+,S-,c,r)` pairs, exact MAE ray geometry and optional Shape relevance. It has no learned Gate, uncertainty head, retrieval, deployment backprop or market-specific rule.
+- `W=7` is a locked structural default (`HISTORY_DAYS` in `src/core/history.py`, a module constant with no constructor argument): minimum complete weekly support + high deployment locality + one shared temporal memory scale. Do not expose a window search, and do not shorten the window when fewer than seven legal records exist — report a blocker instead.
+- Deleted/closed active components: TCN, Shape semantic context, rare-mass sampling, untied ±Amplitude heads, KNN residual retrieval, Bridge, attention/Transformer, MoE/router, province expert and learned Benefit/Trust Gate.
+- The former V2.5 core remains archived byte-preserving at `src/archive/core_pre_extreme_repair_20260912/legacy_core/`. Preserve all historical archives.
+- `baselines/` and `backbones/` are comparison/Host interfaces. Baseline fidelity status is controlled by experiment adjudication, not by source-file presence.
+- `utils/` contains genuinely shared infrastructure only.
+- Source readiness never authorizes a scientific experiment. The refactor itself executed **zero** scientific DEV runs and read `PROTECTED_FINAL` zero times; its terminal token is not authorization to run the domestic experiment.
+- Source execution must not edit manuscript claims. Paper writing may use only evidence already promoted by canonical research state.

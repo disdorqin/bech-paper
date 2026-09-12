@@ -1,0 +1,177 @@
+{
+  "archive_id": "signed_mass_development_core_20260912",
+  "created_utc": "2026-09-12",
+  "reason": "Mandatory pre-mutation archive required by the user-authorized refactor docs/current/HCH_ALIGNMENT_SAFE_CORE_IMPLEMENTATION_PROMPT_20260912.md section 3 and docs/current/HCH_ALIGNMENT_SAFE_CORE_REFACTOR_PLAN_20260912.md section 2.",
+  "source_root": "src/core",
+  "archive_root": "src/archive/signed_mass_development_core_20260912/legacy_core",
+  "closed_experiment": "HCH_SIGNED_MASS_DEVELOPMENT_NOT_SUPPORTED_STOP_FOR_ADJUDICATION",
+  "file_count": 20,
+  "excluded_from_archive": [
+    "__pycache__/ (compiled bytecode, not source)"
+  ],
+  "tree_digest_algorithm": "sha256 over the concatenation of, for each file in case-sensitive ASCII order of its relative POSIX path: utf8(relpath) || 0x00 || ascii(sha256(file_bytes)) || 0x0a",
+  "tree_digest_sha256": "0c53faab6457ce489cf697543ef498a93e15c99e1098b9d98ffeb2b1e828bb99",
+  "verification": "every archive file re-hashed after copying; all 20 match the pre-refactor source hashes exactly; no extra files present",
+  "files": [
+    {
+      "old_path": "src/core/CORE_READINESS_AUDIT_20260912.md",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/CORE_READINESS_AUDIT_20260912.md",
+      "sha256": "3d4ec78c59ec9f3b09abcac5497124b839ab7a4177da171e95aed893cc61e52d",
+      "bytes": 4351,
+      "role": "predecessor core-readiness audit",
+      "historical_experiment_dependency": "lifecycle metadata of the archived core"
+    },
+    {
+      "old_path": "src/core/CORE_REORGANIZATION_INVENTORY.md",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/CORE_REORGANIZATION_INVENTORY.md",
+      "sha256": "31e3c08916910db66a91da75a63059af9cdf2a1284518b71fef458bf3714cafb",
+      "bytes": 6753,
+      "role": "predecessor reorganization inventory",
+      "historical_experiment_dependency": "lifecycle metadata of the archived core"
+    },
+    {
+      "old_path": "src/core/CORE_REORGANIZATION_PLAN_20260912.md",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/CORE_REORGANIZATION_PLAN_20260912.md",
+      "sha256": "97273414d8f53c02461a3e1631140d990264f304f86ceec6fea39b9ae7e5fe13",
+      "bytes": 14202,
+      "role": "predecessor reorganization plan",
+      "historical_experiment_dependency": "lifecycle metadata of the archived core"
+    },
+    {
+      "old_path": "src/core/DESIGN_CONTRACT.md",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/DESIGN_CONTRACT.md",
+      "sha256": "2968c7fa19d3a550e6c4e3a6fdf679e929046b3d55401f7e556876d1168235b8",
+      "bytes": 6158,
+      "role": "signed-mass invariants I1-I12 + four removal switches",
+      "historical_experiment_dependency": "rewritten to the alignment-safe contract"
+    },
+    {
+      "old_path": "src/core/README.md",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/README.md",
+      "sha256": "ee78963d481d27a0f5f5b6722bb21b81a92d74357ecd684b71f3bd16a64cc0d4",
+      "bytes": 5385,
+      "role": "signed-mass core description",
+      "historical_experiment_dependency": "rewritten to describe the minimal generator + safety layer"
+    },
+    {
+      "old_path": "src/core/__init__.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/__init__.py",
+      "sha256": "5ae77a2396dee851c2f243443e8c824d1c6abb22295d34f81199c31649855059",
+      "bytes": 2767,
+      "role": "package export surface",
+      "historical_experiment_dependency": "re-exported 40 names; every downstream signed-mass fit imported through it"
+    },
+    {
+      "old_path": "src/core/amplitude.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/amplitude.py",
+      "sha256": "b5531b7c5286cc272bb5560a9c6c6925353627f760f25d1d38d0efa8e7db5031",
+      "bytes": 1802,
+      "role": "AmplitudeBranch: trunk + tied/untied non-negative heads",
+      "historical_experiment_dependency": "REMOVED COMPONENT: untied_amplitude_heads (9/20); tied semantics survive as one scalar"
+    },
+    {
+      "old_path": "src/core/calibration.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/calibration.py",
+      "sha256": "6996f7302a165821288ff70a4c15b3dd71c0f85591547d769f7d9c76ea541b2b",
+      "bytes": 4362,
+      "role": "weighted_median, fit_mae_scalar, apply_mae_scalar, mae_objective",
+      "historical_experiment_dependency": "produced the per-cell OOF alpha_0 in the closed fit"
+    },
+    {
+      "old_path": "src/core/contracts.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/contracts.py",
+      "sha256": "539e05927bc0e56bb72f9b1088e4ae53eed1571758309c184bdc12db023cb230",
+      "bytes": 5907,
+      "role": "dataclass contracts (RawInputs, ForecastOriginBatch, ModelConfig, SemanticViews, BranchRepresentation, ShapeOutput, AmplitudeOutput, SignedMassTargets, RepairOutput)",
+      "historical_experiment_dependency": "defined the four-switch search surface consumed by every signed-mass fit"
+    },
+    {
+      "old_path": "src/core/core_reorganization_inventory.json",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/core_reorganization_inventory.json",
+      "sha256": "51350bc567e840928bf87ea20cf9952c783246392a2deb842d527d7d5eacd5b4",
+      "bytes": 13975,
+      "role": "predecessor inventory, machine-readable",
+      "historical_experiment_dependency": "lifecycle metadata of the archived core"
+    },
+    {
+      "old_path": "src/core/encoders.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/encoders.py",
+      "sha256": "25df8e9411a349c39683e96a75fc0073722946fb06d08c1c787d21a6880916ff",
+      "bytes": 6814,
+      "role": "LocalTCN + WindowRNN + BranchEncoder (TCN, GRU/LSTM, bidirectional switches)",
+      "historical_experiment_dependency": "REMOVED COMPONENTS: use_tcn (2/20); LSTM/bidirectional were search switches never selected"
+    },
+    {
+      "old_path": "src/core/fusion.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/fusion.py",
+      "sha256": "71e7c451d7a316b96b2816ef0d12ba29f55bcf3ce3e1fd185f42c2730a037810",
+      "bytes": 2756,
+      "role": "safe_shape, decompose_residual, fuse, repair",
+      "historical_experiment_dependency": "signed-mass identity; survive as pure helpers"
+    },
+    {
+      "old_path": "src/core/losses.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/losses.py",
+      "sha256": "f97a2cbfc719145d1a0f65bdb98222bd41051560348db923ed3a4a0d52457f54",
+      "bytes": 10636,
+      "role": "repair MAE, Shape W1/L1, mass-normalized Amplitude L1, combined loss",
+      "historical_experiment_dependency": "the tied-head Amplitude loss survives rewritten as L_A^bal"
+    },
+    {
+      "old_path": "src/core/model.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/model.py",
+      "sha256": "cb05a014ffc961b070ff6ef8866ce243a3e78334becaf1566d54ede93ea2f285",
+      "bytes": 5521,
+      "role": "SignedMassRepairModel + default_config thin orchestration",
+      "historical_experiment_dependency": "instantiated all four switches; executed the 60 fits / 0 failed of the closed experiment"
+    },
+    {
+      "old_path": "src/core/preprocessing.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/preprocessing.py",
+      "sha256": "dc2d2e5ff55f9c46de29f319b68cf63dc4546b4acdf71487bef2d5d76358a1c4",
+      "bytes": 14018,
+      "role": "deterministic coordinates; TrainFrozenScaler; twin Shape/Amplitude history views",
+      "historical_experiment_dependency": "target-day Shape semantic-view construction was a registered ablation component"
+    },
+    {
+      "old_path": "src/core/sampling.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/sampling.py",
+      "sha256": "da8bc0fe62f0f0ce32d8a4ae837475ff655994c1df95cc8263335931347797bb",
+      "bytes": 8597,
+      "role": "RareMassSampler / RareMassSamplerConfig",
+      "historical_experiment_dependency": "REMOVED COMPONENT: rare_mass_sampling (9/20)"
+    },
+    {
+      "old_path": "src/core/semantic_views.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/semantic_views.py",
+      "sha256": "7d8a1fcee7dc4436da720f87f8dce40cb182baee12bebd59fe70a5c73d0b2393",
+      "bytes": 1808,
+      "role": "SemanticRouter task routing",
+      "historical_experiment_dependency": "REMOVED COMPONENT: shape_semantic_context (1/20)"
+    },
+    {
+      "old_path": "src/core/shape.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/shape.py",
+      "sha256": "b6b7b794a8cca9191e3f2c6223857d08bcc5c2e690b5a836dddc2cca9befc03e",
+      "bytes": 1893,
+      "role": "ShapeBranch: horizon softmax S+, S-",
+      "historical_experiment_dependency": "surviving object; context argument removed"
+    },
+    {
+      "old_path": "src/core/similarity.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/similarity.py",
+      "sha256": "616f5abc7b39ce073ae0741806c3d259bba0f1b1e5ef47b37a88f53e7b6bc5cf",
+      "bytes": 7084,
+      "role": "KNNShapeContext / ShapeMemoryBank / KNNShapeContextProvider",
+      "historical_experiment_dependency": "disabled retrieval interface carried in the pre-adjudication source; never active in the closed fit"
+    },
+    {
+      "old_path": "src/core/stem.py",
+      "archive_path": "src/archive/signed_mass_development_core_20260912/legacy_core/stem.py",
+      "sha256": "667e0d1d10c2153f29b0a9d2625f6a52571949c5e230cfa86305593c742946ee",
+      "bytes": 1659,
+      "role": "UnifiedFeatureStem (one shared MLP)",
+      "historical_experiment_dependency": "unchanged in the refactor apart from defaults"
+    }
+  ]
+}

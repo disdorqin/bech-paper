@@ -1,0 +1,310 @@
+{
+  "task": "src/core reorganization for the signed-mass method phase",
+  "date": "2026-09-12",
+  "canonical_repo": "D:/作业/science/solar_leak_price_model",
+  "controlling_document": "src/core/CORE_REORGANIZATION_PLAN_20260912.md",
+  "archive_root": "src/archive/core_pre_extreme_repair_20260912/",
+  "compat_module": "src/legacy_core_compat.py",
+  "status_vocabulary": [
+    "CURRENT_REUSE",
+    "HISTORICAL_FIDELITY",
+    "OBSOLETE_UNREFERENCED",
+    "UNCERTAIN"
+  ],
+  "files": [
+    {
+      "old_path": "src/core/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/__init__.py",
+      "module_role": "package re-exports",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "__all__"
+      ],
+      "size_bytes": 1316,
+      "sha256": "c8e2acc1f5a711907857388d0ce996009bc6400dc79e06ad20d3f572774e146e",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [],
+      "import_use_note": "Package-level re-export surface (22 names). Repo-wide scan finds ZERO callers using a bare 'from core import <name>' / 'import core'; every live caller imports a submodule path 'core.<subpackage>...' instead, which the compat shim resolves. No extra alias surface is needed.",
+      "reexported_names": [
+        "CoreContextEncoder",
+        "DataSignature",
+        "OptionalCovariateEncoder",
+        "compute_domain_descriptors",
+        "IAHCandidateHead",
+        "iah_crps_loss",
+        "crps_manual",
+        "CANONICAL_POINT_READOUT",
+        "POINT_METRIC_PRIMARY",
+        "atom_supports",
+        "weighted_mean_from_atoms",
+        "weighted_mean_from_candidate",
+        "weighted_mean_from_day",
+        "weighted_median",
+        "weighted_median_from_atoms",
+        "weighted_median_from_candidate",
+        "weighted_median_from_day",
+        "weighted_median_torch",
+        "point_metrics_from_days",
+        "DomainBatch",
+        "UniversalCoreTrainer",
+        "HCHV25PointRuntime"
+      ]
+    },
+    {
+      "old_path": "src/core/iah_candidate/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/iah_candidate/__init__.py",
+      "module_role": "IAH candidate head",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "__all__"
+      ],
+      "size_bytes": 72,
+      "sha256": "76fde240652ae768d07c9109bd4c142e077563b065347d14e7264eddf33f40c9",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/foundation/tests/test_architecture_variants.py:13",
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:16",
+        "src/archive/legacy_hch_runtime/pipeline.py:20",
+        "src/archive/v2_5_ablation_support/architecture_variants.py:14",
+        "src/legacy_core_compat.py:8"
+      ]
+    },
+    {
+      "old_path": "src/core/iah_candidate/candidate.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/iah_candidate/candidate.py",
+      "module_role": "IAH candidate head",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "IAHCandidateHead"
+      ],
+      "size_bytes": 6356,
+      "sha256": "6eea4e69548241675ed5aed7d3cdb2b60979f1d5d11864a17c675d37e2241c45",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/foundation/tests/test_architecture_variants.py:13",
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:16",
+        "src/archive/legacy_hch_runtime/pipeline.py:20",
+        "src/archive/v2_5_ablation_support/architecture_variants.py:14",
+        "src/legacy_core_compat.py:8"
+      ]
+    },
+    {
+      "old_path": "src/core/iah_crps/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/iah_crps/__init__.py",
+      "module_role": "IAH-CRPS training loss",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "__all__"
+      ],
+      "size_bytes": 89,
+      "sha256": "2bd778e4afec7c53e1ae58ea01182fc556a210ab1ea056af53dbe1ca9ebe6a90",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/archive/support_legacy/internal_market_adapter_20260820/20260820/internal_v2_smoke.py:26",
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:17",
+        "src/archive/legacy_hch_runtime/pipeline.py:34"
+      ]
+    },
+    {
+      "old_path": "src/core/iah_crps/loss.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/iah_crps/loss.py",
+      "module_role": "IAH-CRPS training loss",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "iah_crps_loss",
+        "crps_manual"
+      ],
+      "size_bytes": 2461,
+      "sha256": "1ee6282998cdc73c74d9d9fec0928efe13cc07e1436e4750d24581bcfc275a1d",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/archive/support_legacy/internal_market_adapter_20260820/20260820/internal_v2_smoke.py:26",
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:17",
+        "src/archive/legacy_hch_runtime/pipeline.py:34"
+      ]
+    },
+    {
+      "old_path": "src/core/learned_signature/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/learned_signature/__init__.py",
+      "module_role": "learned day signature encoder",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "__all__"
+      ],
+      "size_bytes": 218,
+      "sha256": "14c8e0ec47336138391d8e9d0a603472f1f932a4630d19ef140ac0e6279ae490",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:18",
+        "src/archive/legacy_hch_runtime/pipeline.py:36"
+      ]
+    },
+    {
+      "old_path": "src/core/learned_signature/context.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/learned_signature/context.py",
+      "module_role": "learned day signature encoder",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "compute_domain_descriptors",
+        "DataSignature",
+        "CoreContextEncoder",
+        "OptionalCovariateEncoder"
+      ],
+      "size_bytes": 4652,
+      "sha256": "c9a9d85ed2aff4902aede02c2bbdd64d1a41a877f57797dab2d57b7870ae5710",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:18",
+        "src/archive/legacy_hch_runtime/pipeline.py:36"
+      ]
+    },
+    {
+      "old_path": "src/core/README.md",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/README.md",
+      "module_role": "package documentation",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [],
+      "size_bytes": 933,
+      "sha256": "30d94eae5ecd5a239f9190f202d3a4ffca7c96e82e0ab1bf06d0ab1dc1597dcc",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": []
+    },
+    {
+      "old_path": "src/core/universal_trainer/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/universal_trainer/__init__.py",
+      "module_role": "universal trainer",
+      "belongs_to_current_science": false,
+      "status": "OBSOLETE_UNREFERENCED",
+      "symbols": [
+        "__all__"
+      ],
+      "size_bytes": 108,
+      "sha256": "eb18873a5a1f8cdf6d60d318bf1ede410f193f8c33c5db1a3f3fd351a1f63887",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": []
+    },
+    {
+      "old_path": "src/core/universal_trainer/universal.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/universal_trainer/universal.py",
+      "module_role": "universal trainer",
+      "belongs_to_current_science": false,
+      "status": "OBSOLETE_UNREFERENCED",
+      "symbols": [
+        "DomainBatch",
+        "_eval_batch_losses",
+        "_eval_host_baseline",
+        "_collect_health",
+        "UniversalCoreTrainer"
+      ],
+      "size_bytes": 12424,
+      "sha256": "6c0c06653d8cce4bc709617c9167b5868603477142437a188df09fdedd39ffc4",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": []
+    },
+    {
+      "old_path": "src/core/v25_point_runtime/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/__init__.py",
+      "module_role": "V2.5 point runtime orchestrator",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "__all__"
+      ],
+      "size_bytes": 74,
+      "sha256": "4ee144eefda000e3acdacf9e4ad5a2d023bb9240f4c12839552d2fb89bf7fe9f",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/foundation/pilot_benchmark/runners/phase_b_runner.py:372",
+        "experiments/foundation/tests/test_v25_point_runtime.py:19",
+        "src/legacy_core_compat.py:30"
+      ]
+    },
+    {
+      "old_path": "src/core/v25_point_runtime/runtime.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py",
+      "module_role": "V2.5 point runtime orchestrator",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "HCHV25PointRuntime"
+      ],
+      "size_bytes": 5430,
+      "sha256": "8a46b348e97013eb03af6142eff3fdc31c802d04688acf9611836fd828225cb7",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/foundation/pilot_benchmark/runners/phase_b_runner.py:372",
+        "experiments/foundation/tests/test_v25_point_runtime.py:19",
+        "src/legacy_core_compat.py:30"
+      ]
+    },
+    {
+      "old_path": "src/core/weighted_mean_readout/__init__.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/weighted_mean_readout/__init__.py",
+      "module_role": "raw-space weighted-mean point readout",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [],
+      "size_bytes": 24,
+      "sha256": "ce08af9ce634baa72b884a4eb6896e4bc25c699be744d625a515aae9d4613af1",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/foundation/tests/test_v25_readout_contract.py:29",
+        "experiments/foundation/tests/test_v25_readout_contract.py:40",
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:19",
+        "src/archive/legacy_hch_runtime/pipeline.py:44"
+      ]
+    },
+    {
+      "old_path": "src/core/weighted_mean_readout/readout.py",
+      "new_path": "src/archive/core_pre_extreme_repair_20260912/legacy_core/weighted_mean_readout/readout.py",
+      "module_role": "raw-space weighted-mean point readout",
+      "belongs_to_current_science": true,
+      "status": "HISTORICAL_FIDELITY",
+      "symbols": [
+        "CANONICAL_POINT_READOUT",
+        "POINT_METRIC_PRIMARY",
+        "weighted_median",
+        "atom_supports",
+        "weighted_median_from_atoms",
+        "weighted_mean_from_atoms",
+        "weighted_mean_from_candidate",
+        "weighted_median_torch",
+        "weighted_median_from_candidate",
+        "weighted_median_from_day",
+        "weighted_mean_from_day",
+        "point_metrics_from_days"
+      ],
+      "size_bytes": 8089,
+      "sha256": "9b6490be822bc8803879b52fdad27f7c5a405a8add68db2d79f6ccd4f3bd2aa5",
+      "decision": "MOVE_TO_ARCHIVE_KEEP",
+      "reason": "Superseded frozen HCH V2.5 core; preserved byte-for-byte with a live compatibility shim.",
+      "import_use_sites": [
+        "experiments/foundation/tests/test_v25_readout_contract.py:29",
+        "experiments/foundation/tests/test_v25_readout_contract.py:40",
+        "src/archive/core_pre_extreme_repair_20260912/legacy_core/v25_point_runtime/runtime.py:19",
+        "src/archive/legacy_hch_runtime/pipeline.py:44"
+      ]
+    }
+  ]
+}

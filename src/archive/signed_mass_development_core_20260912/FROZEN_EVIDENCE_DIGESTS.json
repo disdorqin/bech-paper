@@ -1,0 +1,14 @@
+{
+  "purpose": "Frozen closed-evidence digests recorded before the 2026-09-12 core refactor. Verified unchanged by experiments/foundation/tests/test_core_safety.py.",
+  "algorithm": "sha256 over utf8(relpath) || 0x00 || ascii(sha256(bytes)) || 0x0a for each file, in case-sensitive ASCII order of the relative POSIX path",
+  "roots": {
+    "experiments/evidence/hch_signed_mass_method_20260912": {
+      "file_count": 754,
+      "tree_digest_sha256": "3de082de6223bb7e17324ccdd030be3d290e5895dc3e22d9ad6339f5ce508f57"
+    },
+    "experiments/current/hch_signed_mass_method_entry": {
+      "file_count": 37,
+      "tree_digest_sha256": "7b1f5c042c1219aac714d1b7e8d9d803f665c7140d76605a1048346a81b6dcb1"
+    }
+  }
+}
