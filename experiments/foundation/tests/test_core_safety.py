@@ -849,6 +849,269 @@ def test_pending_candidates_do_not_displace_completed_evidence():
     assert bank.is_ready(), "a pending candidate is not an outcome and must not evict one"
 
 
+# --- 26: the bank's trust boundary is the same at every door ------------------
+#
+# `docs/current/HCH_ALIGNMENT_SAFE_CORE_REVIEW_20260912.md` found that warm start
+# and deserialization could bypass part of the chronology/immutability contract the
+# online append/attach path enforces.  These are the adversarial cases from that
+# audit: each one was accepted before the patch and must be refused after it.
+
+def _honest_completed(index, *, seed=301, horizon=5, start_ordinal=50,
+                      provenance=PROVENANCE_OOF_PREQUENTIAL):
+    """One structurally honest completed record, legal at every door."""
+    rng = _rng(seed + index)
+    ordinal = start_ordinal + index
+    return SafetyEvidence(
+        delivery_id=f"h{index}", ordinal=ordinal, candidate_created_at=ordinal - 1,
+        shape_positive=torch.tensor(np.abs(rng.normal(0, 1, horizon)), dtype=torch.float32),
+        shape_negative=torch.tensor(np.abs(rng.normal(0, 1, horizon)), dtype=torch.float32),
+        candidate_correction=torch.tensor(rng.normal(0, 1, horizon), dtype=torch.float32),
+        host_residual=torch.tensor(rng.normal(0, 1, horizon), dtype=torch.float32),
+        revealed_at=ordinal + 1,
+        provenance=provenance,
+    )
+
+
+def test_warm_start_refuses_a_reveal_dated_before_its_slot():
+    """The audit's exact adversarial bank: legal provenance, legal candidate
+    timing, non-null residual -- and ``revealed_at = 0`` for ordinals 10..16.
+    It used to build a ready bank; it is now refused."""
+    adversarial = [SafetyEvidence(
+        delivery_id=f"a{i}", ordinal=10 + i, candidate_created_at=9 + i,
+        shape_positive=torch.ones(5), shape_negative=torch.ones(5),
+        candidate_correction=torch.ones(5), host_residual=torch.ones(5),
+        revealed_at=0, provenance=PROVENANCE_OOF_PREQUENTIAL,
+    ) for i in range(HISTORY_DAYS)]
+    with pytest.raises(DishonestRecordError, match="before its own slot"):
+        select_warm_start(adversarial)
+    with pytest.raises(DishonestRecordError, match="before its own slot"):
+        SafetyEvidenceBank.from_warm_start(adversarial)
+
+
+def test_warm_start_refuses_a_reveal_that_does_not_postdate_the_candidate():
+    """A reveal that does not postdate its own candidate is never accepted.
+
+    With ``candidate_created_at < ordinal <= revealed_at`` already required, the
+    third relation is implied, so the two rules overlap on every input.  This test
+    pins the observable contract -- no such record is ever accepted -- rather than
+    pretending a particular message is the one that fires.
+    """
+    records = [_honest_completed(i) for i in range(HISTORY_DAYS)]
+    records[3] = dataclasses.replace(records[3], revealed_at=records[3].candidate_created_at)
+    with pytest.raises(DishonestRecordError):
+        select_warm_start(records)
+
+    # A candidate that postdates its own outcome slot is refused by the stricter
+    # rule that fires first: it can never be evidence at all.
+    records[3] = dataclasses.replace(_honest_completed(3),
+                                     candidate_created_at=_honest_completed(3).ordinal + 5)
+    with pytest.raises(InSampleCandidateError):
+        select_warm_start(records)
+
+
+def test_warm_start_refuses_a_completed_record_without_a_reveal_time():
+    """A residual with no chronology is not evidence, and a pending candidate
+    that claims a reveal time is internally impossible."""
+    records = [_honest_completed(i) for i in range(HISTORY_DAYS)]
+    records[2] = dataclasses.replace(records[2], revealed_at=None)
+    with pytest.raises(DishonestRecordError, match="no reveal time"):
+        select_warm_start(records)
+
+    pending_with_reveal = [dataclasses.replace(_honest_completed(i), host_residual=None,
+                                               revealed_at=i)
+                           for i in range(HISTORY_DAYS)]
+    with pytest.raises(DishonestRecordError, match="no residual"):
+        select_warm_start(pending_with_reveal)
+
+
+def test_warm_start_refuses_a_duplicate_delivery_identifier():
+    records = [_honest_completed(i) for i in range(HISTORY_DAYS + 1)]
+    records[-1] = dataclasses.replace(records[-1], delivery_id=records[0].delivery_id)
+    with pytest.raises(DuplicateDeliveryError):
+        select_warm_start(records)
+    with pytest.raises(DuplicateDeliveryError):
+        SafetyEvidenceBank.from_warm_start(records)
+
+
+def test_warm_start_refuses_a_non_strict_ordinal_sequence():
+    """Two outcomes cannot claim the same slot: ordinals are the only chronology
+    the safety mathematics uses."""
+    clash = [_honest_completed(i) for i in range(HISTORY_DAYS + 1)]
+    clash[-1] = dataclasses.replace(clash[-1], ordinal=clash[0].ordinal,
+                                    candidate_created_at=clash[0].ordinal - 1,
+                                    revealed_at=clash[0].ordinal + 1)
+    with pytest.raises(DishonestRecordError, match="strictly follow"):
+        select_warm_start(clash)
+    with pytest.raises(DishonestRecordError, match="strictly follow"):
+        SafetyEvidenceBank.from_warm_start(clash)
+
+
+def test_restore_refuses_a_corrupted_reveal_chronology():
+    bank = _fill_bank(seed=306)
+    state = bank.to_state()
+    assert SafetyEvidenceBank.from_state(state).is_ready(), \
+        "the honest serialization must still restore"
+
+    state["records"][0]["revealed_at"] = 0
+    with pytest.raises(DishonestRecordError, match="before its own slot"):
+        SafetyEvidenceBank.from_state(state)
+
+    missing = bank.to_state()
+    missing["records"][0]["revealed_at"] = None
+    with pytest.raises(DishonestRecordError, match="no reveal time"):
+        SafetyEvidenceBank.from_state(missing)
+
+
+def test_restore_refuses_a_duplicate_identifier_or_a_broken_ordinal():
+    bank = _fill_bank(seed=307)
+
+    duplicated = bank.to_state()
+    duplicated["records"][1]["delivery_id"] = duplicated["records"][0]["delivery_id"]
+    with pytest.raises(DuplicateDeliveryError):
+        SafetyEvidenceBank.from_state(duplicated)
+
+    reordered = bank.to_state()
+    reordered["records"][0], reordered["records"][1] = (reordered["records"][1],
+                                                        reordered["records"][0])
+    with pytest.raises(DishonestRecordError, match="strictly follow"):
+        SafetyEvidenceBank.from_state(reordered)
+
+
+def test_restore_refuses_a_record_outside_the_delivered_ledger():
+    """The ledger is the replay guard; a record missing from it was never delivered."""
+    state = _fill_bank(seed=308).to_state()
+    state["delivered_ids"] = [i for i in state["delivered_ids"] if i != "d03"]
+    with pytest.raises(DishonestRecordError, match="ledger"):
+        SafetyEvidenceBank.from_state(state)
+
+
+def test_restore_refuses_more_completed_records_than_the_window():
+    """Live eviction makes this unreachable; a tampered snapshot must still be refused."""
+    state = _fill_bank(seed=309).to_state()
+    extra = dict(state["records"][-1])
+    extra.update(delivery_id="d99", ordinal=200, candidate_created_at=199, revealed_at=201)
+    state["records"].append(extra)
+    state["delivered_ids"] = sorted(state["delivered_ids"] + ["d99"])
+    with pytest.raises(IncompleteHistoryError, match="more than"):
+        SafetyEvidenceBank.from_state(state)
+
+
+def test_restore_refuses_an_impossible_pending_state():
+    without_residual = _fill_bank(seed=310).to_state()
+    without_residual["records"][0]["host_residual"] = None
+    with pytest.raises(DishonestRecordError, match="no residual"):
+        SafetyEvidenceBank.from_state(without_residual)
+
+    without_reveal = _fill_bank(seed=310).to_state()
+    without_reveal["records"][0]["revealed_at"] = None
+    with pytest.raises(DishonestRecordError, match="no reveal time"):
+        SafetyEvidenceBank.from_state(without_reveal)
+
+
+def test_restore_refuses_a_structurally_unparseable_entry():
+    state = _fill_bank(seed=311).to_state()
+    del state["records"][0]["candidate_correction"]
+    with pytest.raises(HistoryError, match="not well formed"):
+        SafetyEvidenceBank.from_state(state)
+
+
+def test_a_caller_cannot_mutate_bank_evidence_through_the_tensors_it_supplied():
+    bank = SafetyEvidenceBank()
+    positive = torch.full((5,), 0.4)
+    negative = torch.full((5,), 0.6)
+    correction = torch.ones(5)
+    mask = torch.ones(5)
+    bank.append_candidate(delivery_id="snap", ordinal=10, candidate_created_at=9,
+                          shape_positive=positive, shape_negative=negative,
+                          correction=correction, provenance=PROVENANCE_PREQUENTIAL,
+                          valid_mask=mask)
+    bank.attach_residual("snap", torch.full((5,), 2.0), revealed_at=11)
+
+    for supplied in (positive, negative, correction, mask):
+        supplied.mul_(9.0)
+
+    record = bank.records()[0]
+    assert torch.allclose(record.shape_positive, torch.full((5,), 0.4))
+    assert torch.allclose(record.shape_negative, torch.full((5,), 0.6))
+    assert torch.allclose(record.candidate_correction, torch.ones(5))
+    assert torch.allclose(record.valid_mask, torch.ones(5))
+
+
+def test_a_caller_cannot_mutate_bank_evidence_through_the_residual_it_supplied():
+    bank = SafetyEvidenceBank()
+    bank.append_candidate(delivery_id="d00", ordinal=100, candidate_created_at=99,
+                          shape_positive=torch.ones(6), shape_negative=torch.ones(6),
+                          correction=torch.ones(6), provenance=PROVENANCE_PREQUENTIAL)
+    residual = torch.full((6,), 3.0)
+    bank.attach_residual("d00", residual=residual, revealed_at=101)
+    residual.mul_(-5.0)
+    assert torch.allclose(bank.records()[0].host_residual, torch.full((6,), 3.0))
+
+
+def test_public_accessors_never_expose_a_mutable_alias():
+    """A frozen dataclass does not make a mutable tensor immutable, so every public
+    surface hands back copies."""
+    bank = _fill_bank(seed=312)
+    expected = {name: value.clone() for name, value in bank.as_arrays().items()
+                if isinstance(value, torch.Tensor)}
+
+    for record in bank.records() + bank.pending + bank.completed():
+        for field in ("shape_positive", "shape_negative", "candidate_correction",
+                      "host_residual", "valid_mask"):
+            value = getattr(record, field)
+            if value is not None:
+                value.mul_(-7.0)
+
+    bank.as_arrays()["correction"].mul_(3.0)  # the stacked result is a copy too
+
+    arrays = bank.as_arrays()
+    for name, reference in expected.items():
+        assert torch.equal(arrays[name], reference), f"{name} was reachable in place"
+
+
+def test_bank_snapshots_carry_no_autograd_graph_and_no_caller_storage():
+    bank = SafetyEvidenceBank()
+    sources = {
+        "shape_positive": torch.full((5,), 0.5, requires_grad=True),
+        "shape_negative": torch.full((5,), 0.5, requires_grad=True),
+    }
+    correction = torch.ones(5, requires_grad=True)
+    bank.append_candidate(delivery_id="grad", ordinal=10, candidate_created_at=9,
+                          shape_positive=sources["shape_positive"],
+                          shape_negative=sources["shape_negative"],
+                          correction=correction, provenance=PROVENANCE_PREQUENTIAL)
+    residual = torch.ones(5, requires_grad=True)
+    bank.attach_residual("grad", residual, revealed_at=11)
+    sources.update(candidate_correction=correction, host_residual=residual)
+
+    record = bank.records()[0]
+    for field, source in sources.items():
+        stored = getattr(record, field)
+        assert not stored.requires_grad, f"{field} still requires grad"
+        assert stored.grad_fn is None, f"{field} retains an autograd graph"
+        assert stored.is_leaf, f"{field} is not a leaf snapshot"
+        assert stored.device.type == "cpu", field
+        assert stored.data_ptr() != source.data_ptr(), f"{field} aliases caller storage"
+
+
+def test_legal_warm_start_and_serialization_round_trip_still_pass():
+    """The hardening must not make an honest pipeline unusable."""
+    records = select_warm_start([r for r in _fill_bank(seed=313).records()])
+    bank = SafetyEvidenceBank.from_warm_start(records)
+    assert bank.is_ready()
+
+    restored = SafetyEvidenceBank.from_state(bank.to_state())
+    assert restored.is_ready()
+    assert ([r.delivery_id for r in restored.completed()]
+            == [r.delivery_id for r in bank.completed()])
+    for original, copy in zip(bank.completed(), restored.completed()):
+        assert original.ordinal == copy.ordinal
+        assert original.revealed_at == copy.revealed_at
+        assert torch.equal(original.candidate_correction, copy.candidate_correction)
+        assert torch.equal(original.host_residual, copy.host_residual)
+    assert torch.equal(bank.as_arrays()["residual"], restored.as_arrays()["residual"])
+
+
 # --- 23: the archived pre-refactor core is byte-preserved ---------------------
 
 def test_archived_tree_digest_matches_the_recorded_digest():

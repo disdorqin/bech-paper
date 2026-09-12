@@ -45,6 +45,22 @@ and refuses rather than improvising when fewer than seven exist.  Shortening the
 window to whatever happens to be available would silently change the estimator;
 the caller is expected to stop with a blocker instead.
 
+The trust boundary is one validator, and one owner
+--------------------------------------------------
+Every record is judged by a single internal validator, whichever door it arrives
+through: live insertion, warm start, or deserialization.  Restore and warm start
+are deliberately **not** weaker doors than :meth:`SafetyEvidenceBank.append_candidate`
+-- a persisted or precomputed record that could not have been appended online is
+refused outright rather than quietly repaired into legal evidence.  A malformed
+record is a blocker to report, because the alternative is a safety radius computed
+from evidence that never existed.
+
+Tensors entering the bank become owned snapshots (``detach().clone().cpu()``), and
+the public accessors hand back copies.  A frozen dataclass does not make a mutable
+tensor immutable, so without this a caller could deliver a candidate, mutate its
+correction in place afterwards, and silently rewrite the evidence the controller
+had already scored -- and the bank would also keep an autograd graph alive.
+
 Non-responsibilities
 --------------------
 No gradient, no parameters, no ``nn.Module``, no learned weighting, no
@@ -107,6 +123,123 @@ def _ordered_ids(records: Iterable[SafetyEvidence]) -> List[str]:
     return [r.delivery_id for r in records]
 
 
+def _owned(value: Optional[torch.Tensor], *, field: str) -> Optional[torch.Tensor]:
+    """An owned, graph-free, CPU snapshot of one evidence tensor.
+
+    The bank must not share storage with its caller: a tensor handed in and
+    mutated afterwards would otherwise rewrite evidence that has already been
+    scored, and a tensor carrying ``grad_fn`` would pin an autograd graph for the
+    lifetime of the bank.  ``detach().clone().cpu()`` severs both.
+    """
+    if value is None:
+        return None
+    if not isinstance(value, torch.Tensor):
+        raise DishonestRecordError(
+            f"evidence field {field!r} must be a torch.Tensor or None, "
+            f"got {type(value).__name__}"
+        )
+    return value.detach().clone().cpu()
+
+
+def _own_evidence(record: SafetyEvidence) -> SafetyEvidence:
+    """The same record, holding only owned snapshots and a copied metadata map.
+
+    Applied on the way in (insertion, warm start, restore) and again on the way
+    out, so neither the caller's tensors nor the bank's own storage can be reached
+    by in-place writes from outside.
+    """
+    return replace(
+        record,
+        shape_positive=_owned(record.shape_positive, field="shape_positive"),
+        shape_negative=_owned(record.shape_negative, field="shape_negative"),
+        candidate_correction=_owned(record.candidate_correction,
+                                    field="candidate_correction"),
+        host_residual=_owned(record.host_residual, field="host_residual"),
+        valid_mask=_owned(record.valid_mask, field="valid_mask"),
+        metadata=dict(record.metadata),
+    )
+
+
+def _validate_evidence(record: SafetyEvidence, *, context: str) -> None:
+    """The single trust boundary for one record's internal honesty.
+
+    This answers only "could this record have been produced honestly?" -- it says
+    nothing about whether the record belongs in *this* bank, which is the ledger
+    and chronology concern of :func:`_validate_sequence`.  Every path that admits
+    evidence (live append/attach, warm start, restore) calls it, so no door is
+    weaker than another.
+
+    A completed record must carry a reveal time that postdates both its own
+    outcome slot and its own candidate.  A pending record must carry neither a
+    residual nor a reveal time.  Neither branch is repaired in place: a malformed
+    record is a blocker, and converting it into legal evidence would fabricate
+    exactly the honesty the bank exists to guarantee.
+    """
+    if not record.delivery_id or not isinstance(record.delivery_id, str):
+        raise DishonestRecordError(
+            f"{context}: delivery_id must be a non-empty identifier, "
+            f"got {record.delivery_id!r}"
+        )
+    if record.provenance not in WARM_START_PROVENANCE:
+        raise DishonestRecordError(
+            f"{context}: provenance {record.provenance!r} is not legal safety "
+            "evidence; a record generated with knowledge of its own outcome is "
+            "never evidence"
+        )
+    if record.candidate_created_at >= record.ordinal:
+        raise InSampleCandidateError(
+            f"{context}: candidate for ordinal {record.ordinal} was created at "
+            f"{record.candidate_created_at}, no earlier than its own outcome"
+        )
+    if record.completed:
+        if record.revealed_at is None:
+            raise DishonestRecordError(
+                f"{context}: record {record.delivery_id!r} carries a residual but "
+                "no reveal time; a residual with no chronology is not evidence"
+            )
+        if record.revealed_at < record.ordinal:
+            raise DishonestRecordError(
+                f"{context}: residual for {record.delivery_id!r} is dated "
+                f"{record.revealed_at}, before its own slot {record.ordinal}"
+            )
+        if record.revealed_at <= record.candidate_created_at:
+            raise DishonestRecordError(
+                f"{context}: residual for {record.delivery_id!r} is dated "
+                f"{record.revealed_at}, not after its candidate at "
+                f"{record.candidate_created_at}"
+            )
+    elif record.revealed_at is not None:
+        raise DishonestRecordError(
+            f"{context}: record {record.delivery_id!r} has a reveal time "
+            f"({record.revealed_at}) but no residual; pending evidence cannot "
+            "have a reveal chronology"
+        )
+
+
+def _validate_sequence(records: Sequence[SafetyEvidence], *, context: str) -> None:
+    """The records of one bank must be unique and strictly chronological.
+
+    Ordinals are the only chronology the safety mathematics uses, so a repeated
+    ordinal means two different outcomes claim the same slot and the window is not
+    a window.  A repeated delivery identifier means a day is scored twice.
+    """
+    seen: set = set()
+    previous: Optional[int] = None
+    for record in records:
+        if record.delivery_id in seen:
+            raise DuplicateDeliveryError(
+                f"{context}: delivery_id {record.delivery_id!r} appears more than "
+                "once in the same bank"
+            )
+        seen.add(record.delivery_id)
+        if previous is not None and record.ordinal <= previous:
+            raise DishonestRecordError(
+                f"{context}: ordinal {record.ordinal} does not strictly follow "
+                f"{previous}; the bank is chronological"
+            )
+        previous = record.ordinal
+
+
 class SafetyEvidenceBank:
     """Chronological store of the last ``HISTORY_DAYS`` completed honest records.
 
@@ -136,11 +269,15 @@ class SafetyEvidenceBank:
     @property
     def pending(self) -> Tuple[SafetyEvidence, ...]:
         """Candidates whose residual has not arrived.  Never evidence."""
-        return tuple(r for r in self._records if not r.completed)
+        return tuple(_own_evidence(r) for r in self._records if not r.completed)
 
     def records(self) -> Tuple[SafetyEvidence, ...]:
-        """All held records, oldest first, pending ones included."""
-        return tuple(self._records)
+        """All held records, oldest first, pending ones included.
+
+        Snapshots, not the bank's own storage: mutating a tensor returned here
+        must not be able to rewrite evidence that has already been scored.
+        """
+        return tuple(_own_evidence(r) for r in self._records)
 
     def completed(self) -> Tuple[SafetyEvidence, ...]:
         """Exactly ``HISTORY_DAYS`` completed records, oldest first.
@@ -150,13 +287,13 @@ class SafetyEvidenceBank:
         bank means the chronology was constructed wrongly upstream and must be
         reported rather than absorbed.
         """
-        done = tuple(r for r in self._records if r.completed)
+        done = [r for r in self._records if r.completed]
         if len(done) != HISTORY_DAYS:
             raise IncompleteHistoryError(
                 f"safety bank holds {len(done)} completed records, "
                 f"exactly {HISTORY_DAYS} are required"
             )
-        return done
+        return tuple(_own_evidence(r) for r in done)
 
     def is_ready(self) -> bool:
         """Whether :meth:`completed` would succeed."""
@@ -186,23 +323,8 @@ class SafetyEvidenceBank:
             raise DuplicateDeliveryError(
                 f"delivery_id {delivery_id!r} was already delivered to this bank"
             )
-        if provenance not in WARM_START_PROVENANCE:
-            raise DishonestRecordError(
-                f"provenance {provenance!r} is not legal safety evidence; a record "
-                "generated with knowledge of its own outcome is never evidence"
-            )
-        if candidate_created_at >= ordinal:
-            raise InSampleCandidateError(
-                f"candidate for ordinal {ordinal} was created at "
-                f"{candidate_created_at}, no earlier than its own outcome"
-            )
-        if self._records and ordinal <= self._records[-1].ordinal:
-            raise DishonestRecordError(
-                f"ordinal {ordinal} does not follow the latest ordinal "
-                f"{self._records[-1].ordinal}; the bank is chronological"
-            )
 
-        evidence = SafetyEvidence(
+        evidence = _own_evidence(SafetyEvidence(
             delivery_id=delivery_id,
             ordinal=int(ordinal),
             shape_positive=shape_positive,
@@ -213,11 +335,18 @@ class SafetyEvidenceBank:
             origin_id=origin_id,
             valid_mask=valid_mask,
             metadata=dict(metadata or {}),
-        )
+        ))
+        _validate_evidence(evidence, context="candidate insertion")
+        if self._records and ordinal <= self._records[-1].ordinal:
+            raise DishonestRecordError(
+                f"ordinal {ordinal} does not follow the latest ordinal "
+                f"{self._records[-1].ordinal}; the bank is chronological"
+            )
+
         self._seen_delivery_ids.add(delivery_id)
         self._records.append(evidence)
         self._evict_oldest_completed()
-        return evidence
+        return _own_evidence(evidence)
 
     def attach_residual(self, delivery_id: str, residual: torch.Tensor,
                         revealed_at: int) -> SafetyEvidence:
@@ -234,20 +363,12 @@ class SafetyEvidenceBank:
                     f"record {delivery_id!r} already carries a residual; "
                     "evidence is append-only"
                 )
-            if revealed_at < record.ordinal:
-                raise DishonestRecordError(
-                    f"residual for {delivery_id!r} is dated {revealed_at}, "
-                    f"before its own slot {record.ordinal}"
-                )
-            if revealed_at <= record.candidate_created_at:
-                raise DishonestRecordError(
-                    f"residual for {delivery_id!r} is dated {revealed_at}, "
-                    f"not after its candidate at {record.candidate_created_at}"
-                )
-            completed = replace(record, host_residual=residual, revealed_at=int(revealed_at))
+            completed = _own_evidence(replace(record, host_residual=residual,
+                                              revealed_at=int(revealed_at)))
+            _validate_evidence(completed, context="residual reveal")
             self._records[index] = completed
             self._evict_oldest_completed(protect=delivery_id)
-            return completed
+            return _own_evidence(completed)
         raise HistoryError(f"no pending candidate named {delivery_id!r}")
 
     def _evict_oldest_completed(self, protect: Optional[str] = None) -> None:
@@ -326,52 +447,85 @@ class SafetyEvidenceBank:
 
     @classmethod
     def from_state(cls, state: Mapping[str, Any]) -> "SafetyEvidenceBank":
-        """Rebuild a bank from :meth:`to_state` output."""
+        """Rebuild a bank from :meth:`to_state` output.
+
+        Restore is a trust boundary, not a convenience: the persisted state is part
+        of the deployment chronology surface, so it goes through the same validator
+        as a live append.  A corrupt serialization is refused, never repaired --
+        silently fixing it would make the restored bank disagree with the bank that
+        produced it, and no reviewer could tell which one had been scored.
+        """
         if int(state.get("history_days", HISTORY_DAYS)) != HISTORY_DAYS:
             raise HistoryError(
                 "serialized bank was written for a different history length; "
                 "the window is a structural constant and is not migrated"
             )
+        ledger = set(state.get("delivered_ids", ()))
         bank = cls()
-        bank._seen_delivery_ids = set(state.get("delivered_ids", ()))
+        bank._seen_delivery_ids = set(ledger)
         for entry in state.get("records", ()):
             mask = entry.get("valid_mask")
-            record = SafetyEvidence(
-                delivery_id=entry["delivery_id"],
-                ordinal=int(entry["ordinal"]),
-                shape_positive=torch.tensor(entry["shape_positive"], dtype=torch.float32),
-                shape_negative=torch.tensor(entry["shape_negative"], dtype=torch.float32),
-                candidate_correction=torch.tensor(entry["candidate_correction"],
-                                                  dtype=torch.float32),
-                candidate_created_at=int(entry["candidate_created_at"]),
-                provenance=entry["provenance"],
-                origin_id=entry.get("origin_id", ""),
-                valid_mask=None if mask is None else torch.tensor(mask, dtype=torch.float32),
-                metadata=dict(entry.get("metadata", {})),
-                host_residual=(None if entry.get("host_residual") is None
-                               else torch.tensor(entry["host_residual"], dtype=torch.float32)),
-                revealed_at=(None if entry.get("revealed_at") is None
-                             else int(entry["revealed_at"])),
-            )
+            try:
+                record = SafetyEvidence(
+                    delivery_id=entry["delivery_id"],
+                    ordinal=int(entry["ordinal"]),
+                    shape_positive=torch.tensor(entry["shape_positive"], dtype=torch.float32),
+                    shape_negative=torch.tensor(entry["shape_negative"], dtype=torch.float32),
+                    candidate_correction=torch.tensor(entry["candidate_correction"],
+                                                      dtype=torch.float32),
+                    candidate_created_at=int(entry["candidate_created_at"]),
+                    provenance=entry["provenance"],
+                    origin_id=entry.get("origin_id", ""),
+                    valid_mask=None if mask is None else torch.tensor(mask, dtype=torch.float32),
+                    metadata=dict(entry.get("metadata", {})),
+                    host_residual=(None if entry.get("host_residual") is None
+                                   else torch.tensor(entry["host_residual"],
+                                                     dtype=torch.float32)),
+                    revealed_at=(None if entry.get("revealed_at") is None
+                                 else int(entry["revealed_at"])),
+                )
+            except (KeyError, TypeError, ValueError) as error:
+                raise HistoryError(
+                    f"serialized bank entry {entry.get('delivery_id')!r} is not well "
+                    f"formed and cannot be restored: {error}"
+                ) from error
+            if record.delivery_id not in ledger:
+                raise DishonestRecordError(
+                    f"serialized bank: active record {record.delivery_id!r} is absent "
+                    "from the delivered-identifier ledger; a record that was never "
+                    "delivered cannot be restored"
+                )
+            _validate_evidence(record, context="serialized bank")
             bank._records.append(record)
+
+        _validate_sequence(bank._records, context="serialized bank")
+        completed = sum(1 for r in bank._records if r.completed)
+        if completed > HISTORY_DAYS:
+            raise IncompleteHistoryError(
+                f"serialized bank holds {completed} completed records, more than "
+                f"the {HISTORY_DAYS}-record window"
+            )
         return bank
 
     @classmethod
     def from_warm_start(cls, records: Sequence[SafetyEvidence]) -> "SafetyEvidenceBank":
-        """Build a full bank from legal chronological warm-start records."""
+        """Build a full bank from legal chronological warm-start records.
+
+        Warm start is not a bypass: :func:`select_warm_start` applies the same
+        per-record validator and the same uniqueness/chronology rules a live bank
+        enforces, and the accepted records are copied into the bank rather than
+        aliased, so the caller keeps no handle on the evidence it seeded.
+        """
         bank = cls()
-        for record in select_warm_start(records):
-            if not record.completed:
+        selected = select_warm_start(records)
+        _validate_sequence(selected, context="warm start")
+        for record in selected:
+            if not record.completed:  # pragma: no cover - selection is completed-only
                 raise IncompleteHistoryError(
                     f"warm-start record {record.delivery_id!r} has no residual"
                 )
-            if record.candidate_created_at >= record.ordinal:
-                raise InSampleCandidateError(
-                    f"warm-start record {record.delivery_id!r} was created at "
-                    f"{record.candidate_created_at}, no earlier than its own outcome"
-                )
             bank._seen_delivery_ids.add(record.delivery_id)
-            bank._records.append(record)
+            bank._records.append(_own_evidence(record))
         if not bank.is_ready():  # pragma: no cover - select_warm_start guarantees this
             raise IncompleteHistoryError("warm start did not yield a full bank")
         return bank
@@ -384,14 +538,24 @@ def select_warm_start(records: Sequence[SafetyEvidence]) -> Tuple[SafetyEvidence
     generated without the outcome they are later scored against.  In-sample
     predictions are excluded, and no other provenance is accepted.
 
+    Declaring a record ``oof_prequential`` or ``prequential`` is a claim, not proof,
+    so every record making that claim is checked against the same honesty contract
+    the live bank enforces.  A declared-legal record whose candidate/reveal
+    chronology is impossible raises rather than being quietly dropped: if the
+    caller's out-of-fold pipeline emitted a dishonest record, the warm start is not
+    safe to run on whatever remains.
+
     There is no length argument.  Fewer than ``HISTORY_DAYS`` legal completed
     records is a blocker to be reported, not a shorter window to be improvised:
     W is part of the estimator, so changing it silently would change what is being
     deployed.
     """
     legal = [r for r in records if r.provenance in WARM_START_PROVENANCE]
+    for record in legal:
+        _validate_evidence(record, context="warm start")
     complete = [r for r in legal if r.completed]
     ordered = sorted(complete, key=lambda r: r.ordinal)
+    _validate_sequence(ordered, context="warm start")
     if len(ordered) < HISTORY_DAYS:
         raise InsufficientWarmStartError(
             f"warm start supplied {len(ordered)} legal completed records; "
