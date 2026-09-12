@@ -1,0 +1,42 @@
+{
+  "by_market": {
+    "GANSU_DA": {
+      "READY_FROZEN": 4
+    },
+    "NINGXIA_DA": {
+      "READY_FROZEN": 4
+    },
+    "QINGHAI_DA": {
+      "READY_FROZEN": 4
+    },
+    "SHAANXI_DA": {
+      "READY_FROZEN": 4
+    },
+    "SHANDONG_DA": {
+      "READY_FROZEN": 4
+    }
+  },
+  "cells_with_dev_eval": 20,
+  "csv": "experiments/current/hch_signed_mass_method_entry/HOST_INPUT_READINESS.csv",
+  "evidence_copy": "experiments/evidence/hch_signed_mass_method_20260912/06_audits/HOST_INPUT_READINESS.csv",
+  "generated_utc": "2026-09-12T08:57:57Z",
+  "n_coordinates": 20,
+  "n_ready_frozen": 20,
+  "ready_hosts": [
+    "LSTM",
+    "PatchTST",
+    "TimeMixer",
+    "iTransformer"
+  ],
+  "ready_markets": [
+    "GANSU_DA",
+    "NINGXIA_DA",
+    "QINGHAI_DA",
+    "SHAANXI_DA",
+    "SHANDONG_DA"
+  ],
+  "status_counts": {
+    "READY_FROZEN": 20
+  },
+  "total_oof_folds": 84
+}

@@ -1,0 +1,116 @@
+{
+  "config": "FROZEN_SMALLEST",
+  "development_experiment_only": true,
+  "frozen_vector": {
+    "deleted_components": [
+      "rare_mass_sampling",
+      "shape_semantic_context",
+      "untied_amplitude_heads",
+      "use_tcn"
+    ],
+    "matches_registered_config": null,
+    "n_components_retained": 0,
+    "registered_config_match_count": 0,
+    "retained_components": [],
+    "switches": {
+      "rare_mass_sampling": false,
+      "shape_semantic_context": false,
+      "untied_amplitude_heads": false,
+      "use_tcn": false
+    }
+  },
+  "gates": {
+    "all_pass": false,
+    "gates": {
+      "gate_1_host_nonworse_19_of_20": {
+        "of": 20,
+        "pass": false,
+        "required": 19,
+        "value": 16
+      },
+      "gate_2_median_overall_gain_vs_host_at_least_3pct": {
+        "pass": true,
+        "required": 3.0,
+        "value": "8.434119377728752"
+      },
+      "gate_3_strict_win_14_of_20": {
+        "of": 20,
+        "pass": true,
+        "required": 14,
+        "value": 16
+      },
+      "gate_4_median_tail_gain_vs_host_at_least_5pct": {
+        "n_cells_with_tail_subset": 20,
+        "pass": true,
+        "required": 5.0,
+        "value": "7.623787885315595"
+      },
+      "gate_5_max_normal_harm_at_most_1pct": {
+        "pass": false,
+        "required": 1.0,
+        "value": "7.585116263660587"
+      },
+      "gate_6_one_recipe": {
+        "pass": true,
+        "value": {
+          "legal_dimension_differences": [
+            "n_features",
+            "n_episodes",
+            "n_days"
+          ],
+          "loss_weights": {
+            "amplitude": 1.0,
+            "repair": 1.0,
+            "shape": 1.0,
+            "shape_metric": "wasserstein"
+          },
+          "n_cells": 20,
+          "retained_components": [],
+          "seeds": [
+            7,
+            17,
+            37
+          ],
+          "switch_vectors": [
+            "{\"rare_mass_sampling\":false,\"shape_semantic_context\":false,\"untied_amplitude_heads\":false,\"use_tcn\":false}"
+          ]
+        }
+      }
+    },
+    "max_normal_harm_pct": 7.585116263660587,
+    "median_gain_pct": 8.434119377728752,
+    "median_tail_gain_pct": 7.623787885315595,
+    "n_cells": 20,
+    "tail_gain_values": [
+      -4.213349286741729,
+      -4.329824657351914,
+      32.32518644621293,
+      28.07826875925345,
+      9.075919236374284,
+      0.706273943061794,
+      19.393529711637303,
+      11.021878544342579,
+      -7.160709108780792,
+      -16.587907320421348,
+      -22.73957509154017,
+      -74.58675764150124,
+      6.72441120276832,
+      8.523164567862871,
+      5.956825747597063,
+      4.92019939255866,
+      22.477570295044742,
+      30.98825365577555,
+      29.3948485427661,
+      29.79259932873604
+    ]
+  },
+  "generated_utc": "2026-09-12T10:44:26Z",
+  "inference_setting": "FROZEN_PARAMETER_CAUSAL_PREQUENTIAL_HISTORY_POSTPROCESSING",
+  "inference_setting_note": "model parameters are frozen on POST_TRAIN before DEV_EVAL is opened; no gradient/update/TTA occurs during DEV_EVAL; each day may use only historically revealed residual windows from strictly earlier eligible origins",
+  "n_cells": 20,
+  "note": "the frozen baseline comparison in 05_baseline_comparison/ joins frozen comparator rows; no Host or baseline was retrained or re-run by this experiment",
+  "protected_final_authorized": false,
+  "protected_final_reads": 0,
+  "schema": "signed_mass_development_verdict.v1",
+  "verdict": "HCH_SIGNED_MASS_DEVELOPMENT_NOT_SUPPORTED_STOP_FOR_ADJUDICATION"
+}

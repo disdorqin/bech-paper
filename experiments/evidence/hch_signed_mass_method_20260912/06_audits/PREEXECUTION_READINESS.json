@@ -1,0 +1,1170 @@
+{
+  "audit_sha256": "4E41CB950E730F032E04748F13AD03E8FF261BF691E51FE929964E34B0CF4D45",
+  "cells": [
+    {
+      "contract_sha256": "0A401DE2CD661D54930EC5227B9D4701610BC7FA7F4938097DB18C0DFBADBAB4",
+      "contract_source": "LEGACY_PREFLIGHT",
+      "declared_sealed_days": 125,
+      "history_causality": {
+        "episodes_with_full_history": 284,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "PatchTST",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "GANSU_DA",
+      "n_episodes": 291,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 21,
+        "HOST_TRAIN": 188,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 62,
+        "PROTECTED_FINAL": 125
+      },
+      "role_taxonomy": "LEGACY_S1_DIAG",
+      "sealing": {
+        "artifact_rows": 291,
+        "declared_role_total": 416,
+        "declared_sealed_days": 125,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 291,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": null
+    },
+    {
+      "contract_sha256": "0A401DE2CD661D54930EC5227B9D4701610BC7FA7F4938097DB18C0DFBADBAB4",
+      "contract_source": "LEGACY_PREFLIGHT",
+      "declared_sealed_days": 125,
+      "history_causality": {
+        "episodes_with_full_history": 284,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "TimeMixer",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "GANSU_DA",
+      "n_episodes": 291,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 21,
+        "HOST_TRAIN": 188,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 62,
+        "PROTECTED_FINAL": 125
+      },
+      "role_taxonomy": "LEGACY_S1_DIAG",
+      "sealing": {
+        "artifact_rows": 291,
+        "declared_role_total": 416,
+        "declared_sealed_days": 125,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 291,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": null
+    },
+    {
+      "contract_sha256": "0A401DE2CD661D54930EC5227B9D4701610BC7FA7F4938097DB18C0DFBADBAB4",
+      "contract_source": "LEGACY_PREFLIGHT",
+      "declared_sealed_days": 125,
+      "history_causality": {
+        "episodes_with_full_history": 284,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "iTransformer",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "GANSU_DA",
+      "n_episodes": 291,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 21,
+        "HOST_TRAIN": 188,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 62,
+        "PROTECTED_FINAL": 125
+      },
+      "role_taxonomy": "LEGACY_S1_DIAG",
+      "sealing": {
+        "artifact_rows": 291,
+        "declared_role_total": 416,
+        "declared_sealed_days": 125,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 291,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": null
+    },
+    {
+      "contract_sha256": "0A401DE2CD661D54930EC5227B9D4701610BC7FA7F4938097DB18C0DFBADBAB4",
+      "contract_source": "LEGACY_PREFLIGHT",
+      "declared_sealed_days": 125,
+      "history_causality": {
+        "episodes_with_full_history": 284,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "LSTM",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "GANSU_DA",
+      "n_episodes": 291,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 21,
+        "HOST_TRAIN": 188,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 62,
+        "PROTECTED_FINAL": 125
+      },
+      "role_taxonomy": "LEGACY_S1_DIAG",
+      "sealing": {
+        "artifact_rows": 291,
+        "declared_role_total": 416,
+        "declared_sealed_days": 125,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 291,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": null
+    },
+    {
+      "contract_sha256": "8A00F0658E8F99FD73B9D093B3CA225E9496329ABF28F53507F30224D6D2142A",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 496,
+      "history_causality": {
+        "episodes_with_full_history": 1149,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "PatchTST",
+      "legal_columns": [
+        "地方电厂总加预测值",
+        "联络线受电负荷预测值",
+        "风电总加预测值",
+        "光伏总加预测值",
+        "核电总加预测值",
+        "自备机组总加预测值",
+        "试验机组总加预测值",
+        "直调负荷预测值",
+        "新能源总加预测值"
+      ],
+      "market": "SHANDONG_DA",
+      "n_episodes": 1156,
+      "n_features": 9,
+      "role_counts": {
+        "DEV_EVAL": 82,
+        "HOST_TRAIN": 744,
+        "HOST_VAL": 82,
+        "POST_TRAIN": 248,
+        "PROTECTED_FINAL": 496
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 1156,
+        "declared_role_total": 1652,
+        "declared_sealed_days": 496,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 1156,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134"
+    },
+    {
+      "contract_sha256": "8A00F0658E8F99FD73B9D093B3CA225E9496329ABF28F53507F30224D6D2142A",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 496,
+      "history_causality": {
+        "episodes_with_full_history": 1149,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "TimeMixer",
+      "legal_columns": [
+        "地方电厂总加预测值",
+        "联络线受电负荷预测值",
+        "风电总加预测值",
+        "光伏总加预测值",
+        "核电总加预测值",
+        "自备机组总加预测值",
+        "试验机组总加预测值",
+        "直调负荷预测值",
+        "新能源总加预测值"
+      ],
+      "market": "SHANDONG_DA",
+      "n_episodes": 1156,
+      "n_features": 9,
+      "role_counts": {
+        "DEV_EVAL": 82,
+        "HOST_TRAIN": 744,
+        "HOST_VAL": 82,
+        "POST_TRAIN": 248,
+        "PROTECTED_FINAL": 496
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 1156,
+        "declared_role_total": 1652,
+        "declared_sealed_days": 496,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 1156,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134"
+    },
+    {
+      "contract_sha256": "8A00F0658E8F99FD73B9D093B3CA225E9496329ABF28F53507F30224D6D2142A",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 496,
+      "history_causality": {
+        "episodes_with_full_history": 1149,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "iTransformer",
+      "legal_columns": [
+        "地方电厂总加预测值",
+        "联络线受电负荷预测值",
+        "风电总加预测值",
+        "光伏总加预测值",
+        "核电总加预测值",
+        "自备机组总加预测值",
+        "试验机组总加预测值",
+        "直调负荷预测值",
+        "新能源总加预测值"
+      ],
+      "market": "SHANDONG_DA",
+      "n_episodes": 1156,
+      "n_features": 9,
+      "role_counts": {
+        "DEV_EVAL": 82,
+        "HOST_TRAIN": 744,
+        "HOST_VAL": 82,
+        "POST_TRAIN": 248,
+        "PROTECTED_FINAL": 496
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 1156,
+        "declared_role_total": 1652,
+        "declared_sealed_days": 496,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 1156,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134"
+    },
+    {
+      "contract_sha256": "8A00F0658E8F99FD73B9D093B3CA225E9496329ABF28F53507F30224D6D2142A",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 496,
+      "history_causality": {
+        "episodes_with_full_history": 1149,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "LSTM",
+      "legal_columns": [
+        "地方电厂总加预测值",
+        "联络线受电负荷预测值",
+        "风电总加预测值",
+        "光伏总加预测值",
+        "核电总加预测值",
+        "自备机组总加预测值",
+        "试验机组总加预测值",
+        "直调负荷预测值",
+        "新能源总加预测值"
+      ],
+      "market": "SHANDONG_DA",
+      "n_episodes": 1156,
+      "n_features": 9,
+      "role_counts": {
+        "DEV_EVAL": 82,
+        "HOST_TRAIN": 744,
+        "HOST_VAL": 82,
+        "POST_TRAIN": 248,
+        "PROTECTED_FINAL": 496
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 1156,
+        "declared_role_total": 1652,
+        "declared_sealed_days": 496,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 1156,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134"
+    },
+    {
+      "contract_sha256": "C2FCF8B1858315F44A3F1FB000C06497EEC79C2FEAC22D89E4EEE6DF2D6786C8",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 122,
+      "history_causality": {
+        "episodes_with_full_history": 277,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "PatchTST",
+      "legal_columns": [
+        "发电总出力预测值",
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "SHAANXI_DA",
+      "n_episodes": 284,
+      "n_features": 8,
+      "role_counts": {
+        "DEV_EVAL": 20,
+        "HOST_TRAIN": 183,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 61,
+        "PROTECTED_FINAL": 122
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 284,
+        "declared_role_total": 406,
+        "declared_sealed_days": 122,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 284,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5"
+    },
+    {
+      "contract_sha256": "C2FCF8B1858315F44A3F1FB000C06497EEC79C2FEAC22D89E4EEE6DF2D6786C8",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 122,
+      "history_causality": {
+        "episodes_with_full_history": 277,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "TimeMixer",
+      "legal_columns": [
+        "发电总出力预测值",
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "SHAANXI_DA",
+      "n_episodes": 284,
+      "n_features": 8,
+      "role_counts": {
+        "DEV_EVAL": 20,
+        "HOST_TRAIN": 183,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 61,
+        "PROTECTED_FINAL": 122
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 284,
+        "declared_role_total": 406,
+        "declared_sealed_days": 122,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 284,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5"
+    },
+    {
+      "contract_sha256": "C2FCF8B1858315F44A3F1FB000C06497EEC79C2FEAC22D89E4EEE6DF2D6786C8",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 122,
+      "history_causality": {
+        "episodes_with_full_history": 277,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "iTransformer",
+      "legal_columns": [
+        "发电总出力预测值",
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "SHAANXI_DA",
+      "n_episodes": 284,
+      "n_features": 8,
+      "role_counts": {
+        "DEV_EVAL": 20,
+        "HOST_TRAIN": 183,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 61,
+        "PROTECTED_FINAL": 122
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 284,
+        "declared_role_total": 406,
+        "declared_sealed_days": 122,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 284,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5"
+    },
+    {
+      "contract_sha256": "C2FCF8B1858315F44A3F1FB000C06497EEC79C2FEAC22D89E4EEE6DF2D6786C8",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 122,
+      "history_causality": {
+        "episodes_with_full_history": 277,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "LSTM",
+      "legal_columns": [
+        "发电总出力预测值",
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "SHAANXI_DA",
+      "n_episodes": 284,
+      "n_features": 8,
+      "role_counts": {
+        "DEV_EVAL": 20,
+        "HOST_TRAIN": 183,
+        "HOST_VAL": 20,
+        "POST_TRAIN": 61,
+        "PROTECTED_FINAL": 122
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 284,
+        "declared_role_total": 406,
+        "declared_sealed_days": 122,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 284,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5"
+    },
+    {
+      "contract_sha256": "78E9C40CB1B118305A8A465FE2BEF04AF4D62C2C039D486EF641E2B3E10AF51B",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 43,
+      "history_causality": {
+        "episodes_with_full_history": 94,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "PatchTST",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "NINGXIA_DA",
+      "n_episodes": 101,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 7,
+        "HOST_TRAIN": 65,
+        "HOST_VAL": 7,
+        "POST_TRAIN": 22,
+        "PROTECTED_FINAL": 43
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 101,
+        "declared_role_total": 144,
+        "declared_sealed_days": 43,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 101,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4"
+    },
+    {
+      "contract_sha256": "78E9C40CB1B118305A8A465FE2BEF04AF4D62C2C039D486EF641E2B3E10AF51B",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 43,
+      "history_causality": {
+        "episodes_with_full_history": 94,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "TimeMixer",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "NINGXIA_DA",
+      "n_episodes": 101,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 7,
+        "HOST_TRAIN": 65,
+        "HOST_VAL": 7,
+        "POST_TRAIN": 22,
+        "PROTECTED_FINAL": 43
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 101,
+        "declared_role_total": 144,
+        "declared_sealed_days": 43,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 101,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4"
+    },
+    {
+      "contract_sha256": "78E9C40CB1B118305A8A465FE2BEF04AF4D62C2C039D486EF641E2B3E10AF51B",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 43,
+      "history_causality": {
+        "episodes_with_full_history": 94,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "iTransformer",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "NINGXIA_DA",
+      "n_episodes": 101,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 7,
+        "HOST_TRAIN": 65,
+        "HOST_VAL": 7,
+        "POST_TRAIN": 22,
+        "PROTECTED_FINAL": 43
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 101,
+        "declared_role_total": 144,
+        "declared_sealed_days": 43,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 101,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4"
+    },
+    {
+      "contract_sha256": "78E9C40CB1B118305A8A465FE2BEF04AF4D62C2C039D486EF641E2B3E10AF51B",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 43,
+      "history_causality": {
+        "episodes_with_full_history": 94,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "LSTM",
+      "legal_columns": [
+        "光伏总加预测值",
+        "新能源总加预测值",
+        "风电总加预测值",
+        "水电含抽蓄出力预测值",
+        "联络线受电负荷预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "NINGXIA_DA",
+      "n_episodes": 101,
+      "n_features": 7,
+      "role_counts": {
+        "DEV_EVAL": 7,
+        "HOST_TRAIN": 65,
+        "HOST_VAL": 7,
+        "POST_TRAIN": 22,
+        "PROTECTED_FINAL": 43
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 101,
+        "declared_role_total": 144,
+        "declared_sealed_days": 43,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 101,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4"
+    },
+    {
+      "contract_sha256": "79FD9AB3A764959C4D13B1307B3EFA313996786494E38A7461E54E6393D52857",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 41,
+      "history_causality": {
+        "episodes_with_full_history": 87,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "PatchTST",
+      "legal_columns": [
+        "新能源总加预测值",
+        "水电含抽蓄出力预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "QINGHAI_DA",
+      "n_episodes": 94,
+      "n_features": 4,
+      "role_counts": {
+        "DEV_EVAL": 6,
+        "HOST_TRAIN": 62,
+        "HOST_VAL": 6,
+        "POST_TRAIN": 20,
+        "PROTECTED_FINAL": 41
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 94,
+        "declared_role_total": 135,
+        "declared_sealed_days": 41,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 94,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "58B98C214384AF3D6B95F88659259928FBFA2DF58567C2A4B6C9713DEC40D88F"
+    },
+    {
+      "contract_sha256": "79FD9AB3A764959C4D13B1307B3EFA313996786494E38A7461E54E6393D52857",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 41,
+      "history_causality": {
+        "episodes_with_full_history": 87,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "TimeMixer",
+      "legal_columns": [
+        "新能源总加预测值",
+        "水电含抽蓄出力预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "QINGHAI_DA",
+      "n_episodes": 94,
+      "n_features": 4,
+      "role_counts": {
+        "DEV_EVAL": 6,
+        "HOST_TRAIN": 62,
+        "HOST_VAL": 6,
+        "POST_TRAIN": 20,
+        "PROTECTED_FINAL": 41
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 94,
+        "declared_role_total": 135,
+        "declared_sealed_days": 41,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 94,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "58B98C214384AF3D6B95F88659259928FBFA2DF58567C2A4B6C9713DEC40D88F"
+    },
+    {
+      "contract_sha256": "79FD9AB3A764959C4D13B1307B3EFA313996786494E38A7461E54E6393D52857",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 41,
+      "history_causality": {
+        "episodes_with_full_history": 87,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "iTransformer",
+      "legal_columns": [
+        "新能源总加预测值",
+        "水电含抽蓄出力预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "QINGHAI_DA",
+      "n_episodes": 94,
+      "n_features": 4,
+      "role_counts": {
+        "DEV_EVAL": 6,
+        "HOST_TRAIN": 62,
+        "HOST_VAL": 6,
+        "POST_TRAIN": 20,
+        "PROTECTED_FINAL": 41
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 94,
+        "declared_role_total": 135,
+        "declared_sealed_days": 41,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 94,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "58B98C214384AF3D6B95F88659259928FBFA2DF58567C2A4B6C9713DEC40D88F"
+    },
+    {
+      "contract_sha256": "79FD9AB3A764959C4D13B1307B3EFA313996786494E38A7461E54E6393D52857",
+      "contract_source": "CANONICAL_CHINA5",
+      "declared_sealed_days": 41,
+      "history_causality": {
+        "episodes_with_full_history": 87,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "host": "LSTM",
+      "legal_columns": [
+        "新能源总加预测值",
+        "水电含抽蓄出力预测值",
+        "直调负荷预测值",
+        "非市场机组总出力预测值"
+      ],
+      "market": "QINGHAI_DA",
+      "n_episodes": 94,
+      "n_features": 4,
+      "role_counts": {
+        "DEV_EVAL": 6,
+        "HOST_TRAIN": 62,
+        "HOST_VAL": 6,
+        "POST_TRAIN": 20,
+        "PROTECTED_FINAL": 41
+      },
+      "role_taxonomy": "CANONICAL_CHINA5",
+      "sealing": {
+        "artifact_rows": 94,
+        "declared_role_total": 135,
+        "declared_sealed_days": 41,
+        "identity_rows_fully_accounted": true,
+        "materialised_revealed_rows": 94,
+        "ok": true,
+        "read_count": 0,
+        "sealed_labels_present_in_artifact": [],
+        "sealed_lookup_refused": true,
+        "witness": "rows materialised + sealed labels present + refusal of the sealed lookup, none of which reuses the adapter counter"
+      },
+      "source_sha256": "58B98C214384AF3D6B95F88659259928FBFA2DF58567C2A4B6C9713DEC40D88F"
+    }
+  ],
+  "core": {
+    "core_module_files": {
+      "__init__.py": "5AE77A2396DEE851C2F243443E8C824D1C6ABB22295D34F81199C31649855059",
+      "amplitude.py": "B5531B7C5286CC272BB5560A9C6C6925353627F760F25D1D38D0EFA8E7DB5031",
+      "calibration.py": "6996F7302A165821288FF70A4C15B3DD71C0F85591547D769F7D9C76EA541B2B",
+      "contracts.py": "539E05927BC0E56BB72F9B1088E4AE53EED1571758309C184BDC12DB023CB230",
+      "encoders.py": "25DF8E9411A349C39683E96A75FC0073722946FB06D08C1C787D21A6880916FF",
+      "fusion.py": "71E7C451D7A316B96B2816EF0D12BA29F55BCF3CE3E1FD185F42C2730A037810",
+      "losses.py": "F97A2CBFC719145D1A0F65BDB98222BD41051560348DB923ED3A4A0D52457F54",
+      "model.py": "CB05A014FFC961B070FF6EF8866CE243A3E78334BECAF1566D54EDE93EA2F285",
+      "preprocessing.py": "DC2D2E5FF55F9C46DE29F319B68CF63DC4546B4ACDF71487BEF2D5D76358A1C4",
+      "sampling.py": "DA8BC0FE62F0F0CE32D8A4AE837475FF655994C1DF95CC8263335931347797BB",
+      "semantic_views.py": "7D8A1FCEE7DC4436DA720F87F8DCE40CB182BAEE12BEBD59FE70A5C73D0B2393",
+      "shape.py": "B6B7B794A8CCA9191E3F2C6223857D08BCC5C2E690B5A836DDDC2CCA9BEFC03E",
+      "similarity.py": "616F5ABC7B39CE073AE0741806C3D259BBA0F1B1E5EF47B37A88F53E7B6BC5CF",
+      "stem.py": "667E0D1D10C2153F29B0A9D2625F6A52571949C5E230CFA86305593C742946EE"
+    },
+    "core_package": "src/core",
+    "core_tree_digest": "4ABF8E7E0F37617489AAF5E48753D8BF6597072E9F104790E794E777CECD45FC",
+    "exports_used": [
+      "RawInputs",
+      "ForecastOriginBatch",
+      "SignedMassTargets",
+      "RepairOutput",
+      "ModelConfig",
+      "DeterministicFeatureBuilder",
+      "TrainFrozenScaler",
+      "fit_residual_scale",
+      "base_token_dim",
+      "shape_channel_dim",
+      "SHAPE_HISTORY_CHANNELS",
+      "AMPLITUDE_HISTORY_CHANNELS",
+      "SignedMassRepairModel",
+      "default_config",
+      "decompose_residual",
+      "fuse",
+      "repair",
+      "combined_loss",
+      "repair_mae",
+      "shape_loss",
+      "amplitude_loss",
+      "fit_mass_normalization",
+      "fit_mae_scalar",
+      "apply_mae_scalar",
+      "mae_objective",
+      "weighted_median",
+      "RareMassSampler",
+      "RareMassSamplerConfig"
+    ]
+  },
+  "environment": {
+    "numpy": "2.4.6",
+    "pandas": "2.2.3",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "scipy": "1.17.1",
+    "torch": "2.13.0+cpu"
+  },
+  "failures": [],
+  "generated_utc": "2026-09-12T10:43:08Z",
+  "git": {
+    "branch": "exp/r1b-screening-20260813",
+    "dirty": true,
+    "head": "8e2062b354b25de451f9bd13822b3a26aaf7299d"
+  },
+  "immutability": {
+    "added": [],
+    "changed": [],
+    "n_files": 79,
+    "removed": []
+  },
+  "method_switches": {
+    "configs": [
+      "FULL",
+      "NO_RARE_MASS",
+      "NO_SHAPE_CONTEXT",
+      "NO_TCN",
+      "TIED_AMPLITUDE"
+    ],
+    "findings": [],
+    "seeds": [
+      7,
+      17,
+      37
+    ],
+    "switches": [
+      "shape_semantic_context",
+      "use_tcn",
+      "untied_amplitude_heads",
+      "rare_mass_sampling"
+    ]
+  },
+  "n_checks": 367,
+  "n_failed": 0,
+  "read_set": [
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\01_dataset_contracts\\NINGXIA\\DATASET_CONTRACT.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\01_dataset_contracts\\QINGHAI\\DATASET_CONTRACT.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\01_dataset_contracts\\SHAANXI\\DATASET_CONTRACT.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\01_dataset_contracts\\SHANDONG\\DATASET_CONTRACT.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\NINGXIA\\PatchTST\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\NINGXIA\\PatchTST\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\NINGXIA\\PatchTST\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\NINGXIA\\TimeMixer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\NINGXIA\\TimeMixer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\NINGXIA\\TimeMixer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\QINGHAI\\PatchTST\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\QINGHAI\\PatchTST\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\QINGHAI\\PatchTST\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\QINGHAI\\TimeMixer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\QINGHAI\\TimeMixer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\QINGHAI\\TimeMixer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHAANXI\\PatchTST\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHAANXI\\PatchTST\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHAANXI\\PatchTST\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHAANXI\\TimeMixer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHAANXI\\TimeMixer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHAANXI\\TimeMixer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHANDONG\\PatchTST\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHANDONG\\PatchTST\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHANDONG\\PatchTST\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHANDONG\\TimeMixer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHANDONG\\TimeMixer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\china5_posthoc_baseline_panel_20260912\\02_hosts\\SHANDONG\\TimeMixer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\00_protocol\\THRESHOLD_FREEZE.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\GANSU_DA\\LSTM\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\GANSU_DA\\LSTM\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\GANSU_DA\\LSTM\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\GANSU_DA\\iTransformer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\GANSU_DA\\iTransformer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\GANSU_DA\\iTransformer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\NINGXIA_DA\\LSTM\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\NINGXIA_DA\\LSTM\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\NINGXIA_DA\\LSTM\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\NINGXIA_DA\\iTransformer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\NINGXIA_DA\\iTransformer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\NINGXIA_DA\\iTransformer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\QINGHAI_DA\\LSTM\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\QINGHAI_DA\\LSTM\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\QINGHAI_DA\\LSTM\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\QINGHAI_DA\\iTransformer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\QINGHAI_DA\\iTransformer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\QINGHAI_DA\\iTransformer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHAANXI_DA\\LSTM\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHAANXI_DA\\LSTM\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHAANXI_DA\\LSTM\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHAANXI_DA\\iTransformer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHAANXI_DA\\iTransformer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHAANXI_DA\\iTransformer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHANDONG_DA\\LSTM\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHANDONG_DA\\LSTM\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHANDONG_DA\\LSTM\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHANDONG_DA\\iTransformer\\FREEZE_MANIFEST.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHANDONG_DA\\iTransformer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_china_host_breadth_expansion_20260912\\03_hosts\\SHANDONG_DA\\iTransformer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\host_foundation\\GANSU_DA\\PatchTST\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\host_foundation\\GANSU_DA\\PatchTST\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\host_foundation\\GANSU_DA\\TimeMixer\\host_predictions.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\host_foundation\\GANSU_DA\\TimeMixer\\host_predictions.npz",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\preflight\\gansu_da_split_manifest.json",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_unified_da_shape_engineering_20260910\\preflight\\legal_state_manifest.json",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\__init__.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\amplitude.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\calibration.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\contracts.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\encoders.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\fusion.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\losses.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\model.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\preprocessing.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\sampling.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\semantic_views.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\shape.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\similarity.py",
+    "D:\\作业\\science\\solar_leak_price_model\\src\\core\\stem.py"
+  ],
+  "readiness": {
+    "pending": [],
+    "summary": {
+      "by_market": {
+        "GANSU_DA": {
+          "READY_FROZEN": 4
+        },
+        "NINGXIA_DA": {
+          "READY_FROZEN": 4
+        },
+        "QINGHAI_DA": {
+          "READY_FROZEN": 4
+        },
+        "SHAANXI_DA": {
+          "READY_FROZEN": 4
+        },
+        "SHANDONG_DA": {
+          "READY_FROZEN": 4
+        }
+      },
+      "cells_with_dev_eval": 20,
+      "n_coordinates": 20,
+      "n_ready_frozen": 20,
+      "ready_hosts": [
+        "LSTM",
+        "PatchTST",
+        "TimeMixer",
+        "iTransformer"
+      ],
+      "ready_markets": [
+        "GANSU_DA",
+        "NINGXIA_DA",
+        "QINGHAI_DA",
+        "SHAANXI_DA",
+        "SHANDONG_DA"
+      ],
+      "status_counts": {
+        "READY_FROZEN": 20
+      },
+      "total_oof_folds": 84
+    }
+  },
+  "schema": "signed_mass_china5_preexecution_readiness.v1",
+  "source_audit": {
+    "core_attrs_used": [
+      "DeterministicFeatureBuilder",
+      "RareMassSampler",
+      "RareMassSamplerConfig",
+      "RawInputs",
+      "SignedMassRepairModel",
+      "TrainFrozenScaler",
+      "apply_mae_scalar",
+      "combined_loss",
+      "decompose_residual",
+      "default_config",
+      "fit_mae_scalar",
+      "fit_mass_normalization",
+      "fit_residual_scale",
+      "mae_objective",
+      "repair",
+      "repair_mae"
+    ],
+    "files_scanned": 28,
+    "findings": {},
+    "market_literal_branches": [
+      [
+        "contracts.py",
+        "GANSU_DA"
+      ]
+    ]
+  },
+  "thresholds": {
+    "markets_present": [
+      "GANSU_DA",
+      "NINGXIA_DA",
+      "QINGHAI_DA",
+      "SHAANXI_DA",
+      "SHANDONG_DA"
+    ],
+    "recomputed_for_this_evaluation": false,
+    "sha256": "ADBFFA74F6B8C876E692A14DA8AB63549C208181B02D639E707B4A8402FDF4EC",
+    "source": "experiments/evidence/hch_china_host_breadth_expansion_20260912/00_protocol/THRESHOLD_FREEZE.json"
+  },
+  "verdict": "SIGNED_MASS_CHINA5_METHOD_HARNESS_READY",
+  "verdict_tokens": {
+    "not_ready": "SIGNED_MASS_CHINA5_METHOD_HARNESS_NOT_READY",
+    "ready": "SIGNED_MASS_CHINA5_METHOD_HARNESS_READY",
+    "ready_pending": "SIGNED_MASS_CHINA5_METHOD_HARNESS_READY_WITH_EXTERNAL_HOSTS_PENDING"
+  },
+  "verifier_version": "1.0.0"
+}

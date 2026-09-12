@@ -1,0 +1,23 @@
+{
+  "frozen_label": "FROZEN_SMALLEST",
+  "generated_utc": "2026-09-12T10:31:06Z",
+  "n_cells": 20,
+  "n_failed": 0,
+  "n_records": 60,
+  "note": "the frozen vector is not one of the five registered configurations, so it was fitted here through the registered grid path rather than reconstructed from the ablations",
+  "registered_config": null,
+  "route": "FITTED_DERIVED_VECTOR",
+  "schema": "signed_mass_frozen_method.v1",
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "status_table": "experiments/evidence/hch_signed_mass_method_20260912/04_frozen_method/FROZEN_STATUS.csv",
+  "switches": {
+    "rare_mass_sampling": false,
+    "shape_semantic_context": false,
+    "untied_amplitude_heads": false,
+    "use_tcn": false
+  }
+}

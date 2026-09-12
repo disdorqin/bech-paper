@@ -1,0 +1,516 @@
+{
+  "cells": [
+    {
+      "cell": "GANSU_DA::LSTM",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "GANSU_DA::LSTM",
+      "config": "FULL"
+    },
+    {
+      "cell": "GANSU_DA::LSTM",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "GANSU_DA::LSTM",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "GANSU_DA::LSTM",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "GANSU_DA::LSTM",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "GANSU_DA::PatchTST",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "GANSU_DA::PatchTST",
+      "config": "FULL"
+    },
+    {
+      "cell": "GANSU_DA::PatchTST",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "GANSU_DA::PatchTST",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "GANSU_DA::PatchTST",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "GANSU_DA::PatchTST",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "GANSU_DA::TimeMixer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "GANSU_DA::TimeMixer",
+      "config": "FULL"
+    },
+    {
+      "cell": "GANSU_DA::TimeMixer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "GANSU_DA::TimeMixer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "GANSU_DA::TimeMixer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "GANSU_DA::TimeMixer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "GANSU_DA::iTransformer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "GANSU_DA::iTransformer",
+      "config": "FULL"
+    },
+    {
+      "cell": "GANSU_DA::iTransformer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "GANSU_DA::iTransformer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "GANSU_DA::iTransformer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "GANSU_DA::iTransformer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "NINGXIA_DA::LSTM",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "NINGXIA_DA::LSTM",
+      "config": "FULL"
+    },
+    {
+      "cell": "NINGXIA_DA::LSTM",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "NINGXIA_DA::LSTM",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "NINGXIA_DA::LSTM",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "NINGXIA_DA::LSTM",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "NINGXIA_DA::PatchTST",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "NINGXIA_DA::PatchTST",
+      "config": "FULL"
+    },
+    {
+      "cell": "NINGXIA_DA::PatchTST",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "NINGXIA_DA::PatchTST",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "NINGXIA_DA::PatchTST",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "NINGXIA_DA::PatchTST",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "NINGXIA_DA::TimeMixer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "NINGXIA_DA::TimeMixer",
+      "config": "FULL"
+    },
+    {
+      "cell": "NINGXIA_DA::TimeMixer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "NINGXIA_DA::TimeMixer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "NINGXIA_DA::TimeMixer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "NINGXIA_DA::TimeMixer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "NINGXIA_DA::iTransformer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "NINGXIA_DA::iTransformer",
+      "config": "FULL"
+    },
+    {
+      "cell": "NINGXIA_DA::iTransformer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "NINGXIA_DA::iTransformer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "NINGXIA_DA::iTransformer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "NINGXIA_DA::iTransformer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "QINGHAI_DA::LSTM",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "QINGHAI_DA::LSTM",
+      "config": "FULL"
+    },
+    {
+      "cell": "QINGHAI_DA::LSTM",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "QINGHAI_DA::LSTM",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "QINGHAI_DA::LSTM",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "QINGHAI_DA::LSTM",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "QINGHAI_DA::PatchTST",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "QINGHAI_DA::PatchTST",
+      "config": "FULL"
+    },
+    {
+      "cell": "QINGHAI_DA::PatchTST",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "QINGHAI_DA::PatchTST",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "QINGHAI_DA::PatchTST",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "QINGHAI_DA::PatchTST",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "QINGHAI_DA::TimeMixer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "QINGHAI_DA::TimeMixer",
+      "config": "FULL"
+    },
+    {
+      "cell": "QINGHAI_DA::TimeMixer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "QINGHAI_DA::TimeMixer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "QINGHAI_DA::TimeMixer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "QINGHAI_DA::TimeMixer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "QINGHAI_DA::iTransformer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "QINGHAI_DA::iTransformer",
+      "config": "FULL"
+    },
+    {
+      "cell": "QINGHAI_DA::iTransformer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "QINGHAI_DA::iTransformer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "QINGHAI_DA::iTransformer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "QINGHAI_DA::iTransformer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHAANXI_DA::LSTM",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHAANXI_DA::LSTM",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHAANXI_DA::LSTM",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHAANXI_DA::LSTM",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHAANXI_DA::LSTM",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHAANXI_DA::LSTM",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHAANXI_DA::PatchTST",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHAANXI_DA::PatchTST",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHAANXI_DA::PatchTST",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHAANXI_DA::PatchTST",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHAANXI_DA::PatchTST",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHAANXI_DA::PatchTST",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHAANXI_DA::TimeMixer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHAANXI_DA::TimeMixer",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHAANXI_DA::TimeMixer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHAANXI_DA::TimeMixer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHAANXI_DA::TimeMixer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHAANXI_DA::TimeMixer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHAANXI_DA::iTransformer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHAANXI_DA::iTransformer",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHAANXI_DA::iTransformer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHAANXI_DA::iTransformer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHAANXI_DA::iTransformer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHAANXI_DA::iTransformer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHANDONG_DA::LSTM",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHANDONG_DA::LSTM",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHANDONG_DA::LSTM",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHANDONG_DA::LSTM",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHANDONG_DA::LSTM",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHANDONG_DA::LSTM",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHANDONG_DA::PatchTST",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHANDONG_DA::PatchTST",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHANDONG_DA::PatchTST",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHANDONG_DA::PatchTST",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHANDONG_DA::PatchTST",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHANDONG_DA::PatchTST",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHANDONG_DA::TimeMixer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHANDONG_DA::TimeMixer",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHANDONG_DA::TimeMixer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHANDONG_DA::TimeMixer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHANDONG_DA::TimeMixer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHANDONG_DA::TimeMixer",
+      "config": "TIED_AMPLITUDE"
+    },
+    {
+      "cell": "SHANDONG_DA::iTransformer",
+      "config": "FROZEN_SMALLEST"
+    },
+    {
+      "cell": "SHANDONG_DA::iTransformer",
+      "config": "FULL"
+    },
+    {
+      "cell": "SHANDONG_DA::iTransformer",
+      "config": "NO_RARE_MASS"
+    },
+    {
+      "cell": "SHANDONG_DA::iTransformer",
+      "config": "NO_SHAPE_CONTEXT"
+    },
+    {
+      "cell": "SHANDONG_DA::iTransformer",
+      "config": "NO_TCN"
+    },
+    {
+      "cell": "SHANDONG_DA::iTransformer",
+      "config": "TIED_AMPLITUDE"
+    }
+  ],
+  "deleted_components": [
+    "rare_mass_sampling",
+    "shape_semantic_context",
+    "untied_amplitude_heads",
+    "use_tcn"
+  ],
+  "frozen_config": "FROZEN_SMALLEST",
+  "high_mass_quantile": 0.9,
+  "inference_setting": "FROZEN_PARAMETER_CAUSAL_PREQUENTIAL_HISTORY_POSTPROCESSING",
+  "inference_setting_note": "model parameters are frozen on POST_TRAIN before DEV_EVAL is opened; no gradient/update/TTA occurs during DEV_EVAL; each day may use only historically revealed residual windows from strictly earlier eligible origins",
+  "knn_enabled": false,
+  "loss_weights": {
+    "amplitude": 1.0,
+    "repair": 1.0,
+    "shape": 1.0,
+    "shape_metric": "wasserstein"
+  },
+  "n_cells": 20,
+  "registered_config_match": null,
+  "retained_components": [],
+  "schema": "signed_mass_method_config.v1",
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "switches": {
+    "rare_mass_sampling": false,
+    "shape_semantic_context": false,
+    "untied_amplitude_heads": false,
+    "use_tcn": false
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "cells": [
+    "GANSU_DA::PatchTST",
+    "GANSU_DA::TimeMixer",
+    "GANSU_DA::iTransformer",
+    "GANSU_DA::LSTM",
+    "SHANDONG_DA::PatchTST",
+    "SHANDONG_DA::TimeMixer",
+    "SHANDONG_DA::iTransformer",
+    "SHANDONG_DA::LSTM",
+    "SHAANXI_DA::PatchTST",
+    "SHAANXI_DA::TimeMixer",
+    "SHAANXI_DA::iTransformer",
+    "SHAANXI_DA::LSTM",
+    "NINGXIA_DA::PatchTST",
+    "NINGXIA_DA::TimeMixer",
+    "NINGXIA_DA::iTransformer",
+    "NINGXIA_DA::LSTM",
+    "QINGHAI_DA::PatchTST",
+    "QINGHAI_DA::TimeMixer",
+    "QINGHAI_DA::iTransformer",
+    "QINGHAI_DA::LSTM"
+  ],
+  "configs": [
+    "FULL",
+    "NO_SHAPE_CONTEXT",
+    "NO_TCN",
+    "TIED_AMPLITUDE",
+    "NO_RARE_MASS"
+  ],
+  "dev_eval_partition": "DEV_EVAL",
+  "dev_eval_subsampled": false,
+  "elapsed_seconds": 561.93,
+  "failures": [],
+  "generated_utc": "2026-09-12T10:29:19Z",
+  "n_failed": 0,
+  "n_index_rows": 300,
+  "n_records": 300,
+  "n_resumed": 0,
+  "n_tasks": 300,
+  "raw_index": "experiments/evidence/hch_signed_mass_method_20260912/RAW_PREDICTION_INDEX.csv",
+  "runtime": {
+    "host_inference_rerun": false,
+    "host_retrained": false,
+    "max_fit_seconds": 149.93,
+    "note": "Host predictions are the frozen artifacts; this run trains only the repair method and re-runs no comparator.",
+    "total_fit_seconds": 7705.38,
+    "total_inference_seconds": 15.859888
+  },
+  "schema": "signed_mass_component_grid.v1",
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "status_table": "experiments/evidence/hch_signed_mass_method_20260912/02_crossfit/GRID_STATUS.csv",
+  "switch_vectors": {
+    "FULL": {
+      "rare_mass_sampling": true,
+      "shape_semantic_context": true,
+      "untied_amplitude_heads": true,
+      "use_tcn": true
+    },
+    "NO_RARE_MASS": {
+      "rare_mass_sampling": false,
+      "shape_semantic_context": true,
+      "untied_amplitude_heads": true,
+      "use_tcn": true
+    },
+    "NO_SHAPE_CONTEXT": {
+      "rare_mass_sampling": true,
+      "shape_semantic_context": false,
+      "untied_amplitude_heads": true,
+      "use_tcn": true
+    },
+    "NO_TCN": {
+      "rare_mass_sampling": true,
+      "shape_semantic_context": true,
+      "untied_amplitude_heads": true,
+      "use_tcn": false
+    },
+    "TIED_AMPLITUDE": {
+      "rare_mass_sampling": true,
+      "shape_semantic_context": true,
+      "untied_amplitude_heads": false,
+      "use_tcn": true
+    }
+  },
+  "threads_per_worker": 1,
+  "workers": 16
+}

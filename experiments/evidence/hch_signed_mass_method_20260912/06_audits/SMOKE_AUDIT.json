@@ -1,0 +1,236 @@
+{
+  "checks": [
+    {
+      "check": "synthetic.fold_plan_expands",
+      "detail": {
+        "n_folds": 5,
+        "n_oof_rows": 32
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.history_causal",
+      "detail": {
+        "episodes_with_full_history": 177,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.fitting_history_complete",
+      "detail": {
+        "DEV_EVAL": 12,
+        "POST_TRAIN": 40
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.fit.FULL",
+      "detail": {
+        "alpha": 1835.1956024661695,
+        "final_epochs": 2,
+        "folds": 5,
+        "seconds": 4.18
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.predict.FULL",
+      "detail": {
+        "shape": [
+          12,
+          24
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.fit.NO_SHAPE_CONTEXT",
+      "detail": {
+        "alpha": 1940.83172820897,
+        "final_epochs": 2,
+        "folds": 5,
+        "seconds": 0.69
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.predict.NO_SHAPE_CONTEXT",
+      "detail": {
+        "shape": [
+          12,
+          24
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.fit.NO_TCN",
+      "detail": {
+        "alpha": 1020.0128464949235,
+        "final_epochs": 1,
+        "folds": 5,
+        "seconds": 0.34
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.predict.NO_TCN",
+      "detail": {
+        "shape": [
+          12,
+          24
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.fit.TIED_AMPLITUDE",
+      "detail": {
+        "alpha": 8152.503605825153,
+        "final_epochs": 2,
+        "folds": 5,
+        "seconds": 0.71
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.predict.TIED_AMPLITUDE",
+      "detail": {
+        "shape": [
+          12,
+          24
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.fit.NO_RARE_MASS",
+      "detail": {
+        "alpha": 1838.4478219360415,
+        "final_epochs": 2,
+        "folds": 5,
+        "seconds": 0.68
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.predict.NO_RARE_MASS",
+      "detail": {
+        "shape": [
+          12,
+          24
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.variant_delta.FULL",
+      "detail": {
+        "differing_switches": []
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.variant_delta.NO_SHAPE_CONTEXT",
+      "detail": {
+        "differing_switches": [
+          "shape_semantic_context"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.variant_delta.NO_TCN",
+      "detail": {
+        "differing_switches": [
+          "use_tcn"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.variant_delta.TIED_AMPLITUDE",
+      "detail": {
+        "differing_switches": [
+          "untied_amplitude_heads"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "synthetic.variant_delta.NO_RARE_MASS",
+      "detail": {
+        "differing_switches": [
+          "rare_mass_sampling"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "check": "real.cell_loaded",
+      "detail": {
+        "F": 7,
+        "host": "PatchTST",
+        "market": "GANSU_DA",
+        "n_episodes": 291,
+        "seconds": 3.01
+      },
+      "ok": true
+    },
+    {
+      "check": "real.history_causal",
+      "detail": {
+        "episodes_with_full_history": 284,
+        "history_windows": 7,
+        "min_margin_hours": 23,
+        "warm_up_episodes": 7
+      },
+      "ok": true
+    },
+    {
+      "check": "real.fitting_history_complete",
+      "detail": {
+        "DEV_EVAL": 21,
+        "POST_TRAIN": 62
+      },
+      "ok": true
+    },
+    {
+      "check": "real.fit_method_runs",
+      "detail": {
+        "alpha": 2722.328040326571,
+        "n_folds": 5,
+        "oof_rows": 54
+      },
+      "ok": true
+    },
+    {
+      "check": "real.alpha_fitted_on_oof_only",
+      "detail": "chronological out-of-fold corrections from POST_TRAIN only",
+      "ok": true
+    },
+    {
+      "check": "real.prediction_finite",
+      "detail": null,
+      "ok": true
+    },
+    {
+      "check": "real.audit_zero_forbidden_reads",
+      "detail": {
+        "history_window_reads": 0,
+        "host_prediction_reads": 1,
+        "protected_final_reads": 0,
+        "realized_future_input_reads": 0,
+        "target_day_price_input_reads": 0
+      },
+      "ok": true
+    }
+  ],
+  "generated_utc": "2026-09-12T08:49:14Z",
+  "kind": "INTEGRATION_SMOKE",
+  "not_a_scientific_result": true,
+  "reason": "this stage may run unit/integration/synthetic smoke checks only; no error metric computed from real outcomes is recorded here"
+}
