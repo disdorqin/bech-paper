@@ -1,0 +1,137 @@
+{
+  "schema": "china5_common_benchmark_threshold_rederivation.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "per_market": {
+    "GANSU_DA": {
+      "agree": true,
+      "rederived": {
+        "q05": 40.435499382019046,
+        "q95": 600.0,
+        "S90": 559.7469779968262
+      },
+      "recorded": {
+        "q05": 40.435499382019046,
+        "q95": 600.0,
+        "S90": 559.7469779968262
+      },
+      "float64_agree": true,
+      "float64_rederived": {
+        "q05": 40.4355,
+        "q95": 600.0,
+        "S90": 559.7470000000001
+      },
+      "float64_recorded": {
+        "q05": 40.4355,
+        "q95": 600.0,
+        "S90": 559.7470000000001
+      },
+      "deviation_agrees": "True",
+      "hash_agrees": true
+    },
+    "SHANDONG_DA": {
+      "agree": true,
+      "rederived": {
+        "q05": -80.0,
+        "q95": 633.8921356201172,
+        "S90": 822.7760009765628
+      },
+      "recorded": {
+        "q05": -80.0,
+        "q95": 633.8921356201172,
+        "S90": 822.7760009765628
+      },
+      "float64_agree": true,
+      "float64_rederived": {
+        "q05": -80.0,
+        "q95": 633.892125,
+        "S90": 822.7760000000004
+      },
+      "float64_recorded": {
+        "q05": -80.0,
+        "q95": 633.892125,
+        "S90": 822.7760000000004
+      },
+      "deviation_agrees": "True",
+      "hash_agrees": true
+    },
+    "SHAANXI_DA": {
+      "agree": true,
+      "rederived": {
+        "q05": 40.0,
+        "q95": 550.0,
+        "S90": 857.8797260284425
+      },
+      "recorded": {
+        "q05": 40.0,
+        "q95": 550.0,
+        "S90": 857.8797260284425
+      },
+      "float64_agree": true,
+      "float64_rederived": {
+        "q05": 40.0,
+        "q95": 550.0,
+        "S90": 857.8797500000001
+      },
+      "float64_recorded": {
+        "q05": 40.0,
+        "q95": 550.0,
+        "S90": 857.8797500000001
+      },
+      "deviation_agrees": "True",
+      "hash_agrees": true
+    },
+    "NINGXIA_DA": {
+      "agree": true,
+      "rederived": {
+        "q05": 40.0,
+        "q95": 384.0,
+        "S90": 349.47760009765625
+      },
+      "recorded": {
+        "q05": 40.0,
+        "q95": 384.0,
+        "S90": 349.47760009765625
+      },
+      "float64_agree": true,
+      "float64_rederived": {
+        "q05": 40.0,
+        "q95": 384.0,
+        "S90": 349.4776
+      },
+      "float64_recorded": {
+        "q05": 40.0,
+        "q95": 384.0,
+        "S90": 349.4776
+      },
+      "deviation_agrees": "True",
+      "hash_agrees": true
+    },
+    "QINGHAI_DA": {
+      "agree": true,
+      "rederived": {
+        "q05": 80.0,
+        "q95": 650.0,
+        "S90": 570.0
+      },
+      "recorded": {
+        "q05": 80.0,
+        "q95": 650.0,
+        "S90": 570.0
+      },
+      "float64_agree": true,
+      "float64_rederived": {
+        "q05": 80.0,
+        "q95": 650.0,
+        "S90": 570.0
+      },
+      "float64_recorded": {
+        "q05": 80.0,
+        "q95": 650.0,
+        "S90": 570.0
+      },
+      "deviation_agrees": "True",
+      "hash_agrees": true
+    }
+  },
+  "passed": true
+}

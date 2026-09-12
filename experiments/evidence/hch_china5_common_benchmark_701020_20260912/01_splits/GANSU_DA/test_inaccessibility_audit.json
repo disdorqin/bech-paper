@@ -1,0 +1,37 @@
+{
+  "market": "GANSU_DA",
+  "M": 291,
+  "counts": {
+    "TRAIN": 203,
+    "VAL": 30,
+    "TEST": 58
+  },
+  "pretest_target_day_rows_materialised": 5592,
+  "test_target_day_rows": 1392,
+  "overlap_rows": 0,
+  "seal_refusal_message": "TEST targets are sealed during PRETEST (attempt: GANSU_DA: audit probe)",
+  "loader_access_audit": {
+    "target_column": "日前电价",
+    "days_requested": 233,
+    "target_day_values_read": 5592,
+    "causal_context_values_read": 1680,
+    "rows_materialised": 7272,
+    "rows_in_source": 14112,
+    "rows_skipped_at_parse_time": 6840,
+    "test_target_values_read": 0,
+    "sealed_final_target_values_read": 0,
+    "read_discipline": "projected parse-time skiprows; unrequested rows are never parsed, so their target values never enter memory"
+  },
+  "checks": {
+    "counts_match_preregistration": true,
+    "no_pretest_row_is_a_test_target_row": true,
+    "test_ids_disjoint_from_train_and_val": true,
+    "test_ids_are_the_chronological_tail": true,
+    "consecutive_blocks_are_contiguous_in_the_open_sequence": true,
+    "loader_reported_zero_test_target_reads": true,
+    "loader_reported_zero_sealed_final_reads": true,
+    "test_seal_refuses_before_joint_test": true,
+    "rows_skipped_at_parse_time_cover_every_test_row": true
+  },
+  "passed": true
+}

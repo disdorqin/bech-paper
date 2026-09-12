@@ -1,0 +1,21 @@
+{
+  "schema": "common_benchmark_pir_blocker.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "QINGHAI_DA::iTransformer::PIR",
+  "market": "QINGHAI_DA",
+  "host": "iTransformer",
+  "method": "PIR",
+  "blocker_class": "Q-INCOMPATIBLE",
+  "blocker_id": "PIR_FROZEN_BACKBONE_CONFIG_ABSENT_FOR_NEW_HOST",
+  "blocker_reason": "frozen pir_transfer.BACKBONE_CONFIG admits ['PatchTST', 'TimeMixer']; it has no entry for 'iTransformer'",
+  "inherited": true,
+  "reopened": false,
+  "frozen_backbone_config_keys": [
+    "PatchTST",
+    "TimeMixer"
+  ],
+  "frozen_module_sha256": "99D8C37BDA03BA62BF2A71CA6F36D71FFB9AA8A5A18F58B5B80B17DD3F3D4C14",
+  "numeric_value_recorded": false,
+  "proxy_object_created": false,
+  "authority": "experiments/lab/strict_results/registry/BLOCKERS.csv"
+}

@@ -1,0 +1,227 @@
+{
+  "schema": "china5_common_benchmark_method_training_manifest.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "stage_id": "hch_china5_common_benchmark_701020",
+  "status": "FROZEN_PRETEST_NO_TEST_RESULT",
+  "authority": [
+    "experiments/current/hch_china5_common_benchmark_701020/AI_PRETEST_EXECUTION_PROMPT.md §8",
+    "src/core/DESIGN_CONTRACT.md",
+    "docs/current/HCH_RESIDUAL_ALIGNMENT_SAFETY_DESIGN_20260912.md"
+  ],
+  "partitions": {
+    "fit": "TRAIN",
+    "selection": "VAL",
+    "scoring": "TEST",
+    "alpha_0_fitted_on": "VAL",
+    "safety_warm_start_from": "VAL",
+    "normalisation_fitted_on": "TRAIN",
+    "amplitude_scale_fitted_on": "TRAIN",
+    "test_labels_visible_to_fitting_or_selection": false,
+    "note": "alpha_0 and the seven-record safety warm start are the method's own calibration/selection objects, so under the common benchmark they are fitted on VAL — the analogue of the old protocol's POST_TRAIN role for the method. TEST is never read. This is the prompt's explicit instruction, and it supersedes the older POST_TRAIN-only wording, which named a role that does not exist under this protocol."
+  },
+  "training_pairs": {
+    "unit": "one forecast origin (one target day) per training example",
+    "construction": "for each TRAIN target day d: r_d = y_d - y_host_d over the 24-hour horizon; the example is (ForecastOriginBatch(d), SignedMassTargets derived from r_d, d). No other day contributes a target to this example.",
+    "targets_from": "the frozen protocol-scoped Host cache rows of role TRAIN",
+    "host_predictions_source": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/<MARKET>/<HOST>/host_predictions.npz",
+    "host_predictions_reused_from_old_stage": false,
+    "feature_builder": "core.preprocessing.DeterministicFeatureBuilder (the only one)",
+    "revealed_history_rule": "the historical branch of a day in role R may draw only on target days that are strictly earlier in the market's chronological eligible sequence and already revealed relative to that day: TRAIN days for a TRAIN day; TRAIN and earlier VAL days for a VAL day; TRAIN, VAL and earlier TEST days for a TEST day, and only in chronological order at TEST time. No future day, no sealed role, and no cross-market history.",
+    "history_windows": 7,
+    "history_windows_note": "W = 7 previous eligible episodes in chronological order, matching core.history.HISTORY_DAYS. Not calendar-contiguous: the frozen splits contain genuine calendar gaps and a gap is not filled.",
+    "current_day_inputs_legality": "C6: the frozen Host forecast, audited forecast-known numeric covariates, deterministic calendar channels and availability masks only. The target-day actual and its residual are never inputs.",
+    "missing_role_policy": "C7: an explicit mask; never substituted by Host price or another physical variable",
+    "cells": "20 = 5 markets x 4 Hosts, independently; no cross-cell pooling"
+  },
+  "optimisation": {
+    "seeds": [
+      7,
+      17,
+      37
+    ],
+    "seed_rule": "each cell is trained at each registered seed; reported numbers are the seed aggregate and are never selected by seed",
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "max_epochs": 50,
+    "patience": 8,
+    "early_stop_rule": "the chronologically last fraction of the training prefix is held out as an inner validation suffix (OOF_INNER_VAL_FRACTION = 0.2, at least OOF_MIN_INNER_VAL_DAYS = 2 days); training stops after `patience` epochs without improvement on that suffix; the suffix is always a suffix of the training prefix, so no fold statistic ever sees its own holdout block",
+    "early_stop_partition": "TRAIN-only (a suffix of the TRAIN prefix); VAL is not used for early stopping of the candidate generator",
+    "loss_weights": {
+      "repair": 1.0,
+      "shape": 1.0,
+      "amplitude": 1.0,
+      "shape_metric": "wasserstein"
+    },
+    "loss_weights_source": "hch_signed_mass_method_entry/config.py LOSS_WEIGHTS — the registered values, identical for every market and Host",
+    "loss_weights_fidelity_caveat": "DESIGN_CONTRACT.md §6 records that these weights are registered but **not scientifically frozen** (never validated as optimal). They are frozen here as the values a run must use, not as a claim that they are well chosen; changing them per market or per Host is forbidden.",
+    "loss_form": {
+      "repair": "L_R = H^-1 sum_h |r_h - c_h|",
+      "shape": "W1(S, S_hat) = sum_{h=1}^{H-1} |F_S(h) - F_Shat(h)|",
+      "amplitude": "L_A^bal = |A+ - A| + |A- - A| (identical to the archived tied-head objective)",
+      "combined": "L = L_R + lambda_S L_S + lambda_A L_A with lambda_S = lambda_A = 1.0"
+    },
+    "market_or_host_specific_weights": false
+  },
+  "normalisation": {
+    "scaler": "core.preprocessing.TrainFrozenScaler",
+    "fit_partition": "TRAIN",
+    "applied_at": "frozen before any VAL or TEST row is scored; never refitted",
+    "amplitude_scale": {
+      "symbol": "s_A",
+      "rule": "s_A = median{A_d^+, A_d^- : A_d^pm > 0} over the TRAIN fitting prefix, shared by both sign heads",
+      "floor": 1.0,
+      "floor_applies_only_when": "that set is empty or degenerate (no positive residual mass anywhere in the prefix)",
+      "fit_partition": "TRAIN",
+      "per_market_or_host": true,
+      "cross_cell_pooling": false
+    },
+    "within_day_normalisation": "core.preprocessing.within_day_robust_normalize (median/MAD) — deterministic, no fitted parameter"
+  },
+  "alpha_0": {
+    "definition": "alpha* = argmin_{alpha >= 0} sum_i |r_i - alpha c_i| = max(0, WeightedMedian(r_i/c_i; |c_i|))",
+    "zero_handling": "coordinates with c_i = 0 are removed BEFORE forming ratios, so no inf/nan can arise; an all-zero candidate returns 0 exactly",
+    "granularity": "one pooled scalar per fitted market x Host model — never per-instance, never per-day",
+    "fit_partition": "VAL",
+    "fit_rows": "the VAL days, using the frozen candidate generator's VAL predictions",
+    "val_is_also_the_selection_partition": true,
+    "val_scope_caveat": "VAL is both the method's calibration source and its selection block. This is recorded as a scope caveat: alpha_0 is not an out-of-sample estimate of anything, it is a frozen deployment scalar.",
+    "refit_at_TEST": false,
+    "numeric_alpha_0_values": "NOT FROZEN IN PRETEST (no method training was executed)"
+  },
+  "safety_warm_start": {
+    "required_records": 7,
+    "source_partition": "VAL",
+    "construction": "1. take the VAL days in chronological order; 2. for each VAL day d, generate the candidate c_d with the TRAIN-frozen parameters — the parameters never saw any VAL day, so each such candidate is out-of-fold with respect to its own outcome; 3. build SafetyEvidence(delivery_id='VAL::<market>::<host>::<d>', ordinal=index(d), candidate_created_at=index(d)-1, provenance='oof_prequential', shape_positive=S+_d, shape_negative=S-_d, candidate_correction=c_d, host_residual=r_d, revealed_at=index(d), valid_mask=the day's availability mask); 4. select_warm_start(records) takes the LAST seven in chronological order and raises InsufficientWarmStartError otherwise; 5. SafetyEvidenceBank.from_warm_start(selected) yields the bank the first TEST day is scored with.",
+    "provenance_token": "oof_prequential (in_sample is refused by the validator)",
+    "candidate_created_before_outcome": "candidate_created_at = index(d) - 1 < ordinal = index(d), asserted by the bank",
+    "w_shortening_permitted": false,
+    "fewer_than_seven_is": "a blocker to report, never a shorter window",
+    "val_days_available": {
+      "GANSU_DA": 30,
+      "SHANDONG_DA": 116,
+      "SHAANXI_DA": 30,
+      "NINGXIA_DA": 11,
+      "QINGHAI_DA": 11
+    },
+    "all_markets_have_at_least_seven_val_days": true
+  },
+  "methods": {
+    "M0": {
+      "setting": "OFFLINE_STATIC_POSTHOC",
+      "definition": "y_hat = y_host + alpha_0 * c",
+      "uses_safety_layer": false,
+      "uses_bank": false,
+      "per_day_adaptation": false,
+      "source": "core.model.plan_deployment with the safety channels disabled; core.calibration.apply_mae_scalar"
+    },
+    "M1": {
+      "setting": "PREQUENTIAL_SAFETY",
+      "definition": "y_hat_d = y_host_d + lambda_d * c_d, lambda_d = min(alpha_0, lambda_U_d)",
+      "uses_safety_layer": true,
+      "uses_bank": true,
+      "per_day_adaptation": "lambda_d only; parameters frozen",
+      "source": "core.safety.exact_mae_safe_radius + core.safety.deployment_scale"
+    },
+    "M2": {
+      "setting": "PREQUENTIAL_SAFETY",
+      "definition": "y_hat_d = y_host_d + lambda_d * c_d, lambda_d = min(alpha_0, lambda_U_d, lambda_S_d)",
+      "uses_safety_layer": true,
+      "uses_bank": true,
+      "per_day_adaptation": "lambda_d only; parameters frozen",
+      "source": "core.safety.shape_weighted_safe_radius + core.safety.deployment_scale"
+    },
+    "shared": {
+      "same_candidate_generator_for_all_three": true,
+      "difference_is_only_the_deployment_scalar": true,
+      "inference_setting": "FROZEN_PARAMETER_CAUSAL_PREQUENTIAL_HISTORY_POSTPROCESSING",
+      "no_gradient_step_on_any_evaluation_partition": true,
+      "test_labels_never_enter": true
+    }
+  },
+  "test_prequential_update_rule": {
+    "applies_to": [
+      "M1",
+      "M2"
+    ],
+    "applies_to_M0": false,
+    "per_test_day_sequence": [
+      "1. generate c_d from the TRAIN-frozen parameters and the already-revealed history strictly before d (never d's own target)",
+      "2. bank.append_candidate(delivery_id, ordinal=index(d), candidate_created_at=index(d)-1, provenance='prequential', c_d, S+_d, S-_d, mask) — the candidate is registered BEFORE its outcome exists",
+      "3. read lambda_d from the bank's last seven completed records (the bank is full by construction: it was warm-started with seven VAL records and every TEST day completes before the next begins)",
+      "4. emit and persist y_hat_d = y_host_d + lambda_d * c_d",
+      "5. only then reveal: bank.attach_residual(delivery_id, r_d, revealed_at=index(d))",
+      "6. the bank evicts the oldest completed record beyond seven"
+    ],
+    "candidate_created_at_encoding": "index(d) - 1, strictly less than ordinal = index(d)",
+    "revealed_at_encoding": "index(d), which is >= ordinal and > candidate_created_at",
+    "no_replay": "delivery identifiers never repeat; a duplicate raises DuplicateDeliveryError",
+    "no_gap_filling": "a postponed or missing day is simply absent; the window is seven completed honest records, not seven calendar days",
+    "predict_before_reveal_is_structural": "the bank refuses a candidate created no earlier than its own outcome",
+    "bank_persisted_as_model_state": false,
+    "bank_persisted_as": "data (to_state/from_state), passed to the controller as an argument, never a module attribute or state_dict entry"
+  },
+  "forbidden_in_any_method_run": [
+    "computing a TEST metric before JOINT_TEST authorization",
+    "fitting or selecting on TEST labels",
+    "changing W away from 7",
+    "per-market or per-Host loss weights, seeds or thresholds",
+    "reintroducing a deleted component behind a config flag",
+    "adding a learned gate, selector or trust score",
+    "rescue-tuning the alignment-safe core"
+  ],
+  "harness_blocker": "SIGNED_MASS_HARNESS_ROLE_TAXONOMY_INCOMPATIBLE_WITH_COMMON_BENCHMARK",
+  "splits": {
+    "GANSU_DA": {
+      "counts": {
+        "TRAIN": 203,
+        "VAL": 30,
+        "TEST": 58
+      },
+      "split_manifest_sha256": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+      "test_target_blind_id_sha256": "6ACDF5FF20601EE68AA73CD98B171069A77CF69F9E0E93F5F32BCD06E226A889"
+    },
+    "SHANDONG_DA": {
+      "counts": {
+        "TRAIN": 809,
+        "VAL": 116,
+        "TEST": 231
+      },
+      "split_manifest_sha256": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+      "test_target_blind_id_sha256": "478939812ED2AD328EC3D4C6D786710239A48503669D09E14F5D66295A1E21AD"
+    },
+    "SHAANXI_DA": {
+      "counts": {
+        "TRAIN": 198,
+        "VAL": 30,
+        "TEST": 56
+      },
+      "split_manifest_sha256": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+      "test_target_blind_id_sha256": "2D021AA0CF7F06ACE89700E7E8209D1037B31E37B63C364D60022948947A3D64"
+    },
+    "NINGXIA_DA": {
+      "counts": {
+        "TRAIN": 70,
+        "VAL": 11,
+        "TEST": 20
+      },
+      "split_manifest_sha256": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+      "test_target_blind_id_sha256": "85144E01D7A0AAC6C4A61DBA96AA86C92253E941696DC71B0D4D2A2C904F7AA5"
+    },
+    "QINGHAI_DA": {
+      "counts": {
+        "TRAIN": 65,
+        "VAL": 11,
+        "TEST": 18
+      },
+      "split_manifest_sha256": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+      "test_target_blind_id_sha256": "012AF394E0C20836066CD9953D37AD2648B5B402A87D20239885A6963C5290EF"
+    }
+  },
+  "test_metric_present": false,
+  "test_label_read_count": 0,
+  "method_results_present": false,
+  "generated_utc": "2026-09-12T15:16:52+00:00",
+  "method_training_manifest_sha256": "B350865FF629D7E736F21E928A9A0100ED0F49D755208A46064E81B034319675"
+}

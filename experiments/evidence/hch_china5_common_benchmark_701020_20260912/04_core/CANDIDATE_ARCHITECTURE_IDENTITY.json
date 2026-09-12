@@ -1,0 +1,66 @@
+{
+  "candidate_object": "c_h = A * (S+_h - S-_h), A >= 0, S+-, S- in Delta^{H-1}",
+  "model_class": "MinimalSignedRedistributionModel",
+  "fusion": "deterministic: fuse(amplitude, shape) = multiplication and subtraction only",
+  "config_class": "ModelConfig",
+  "config": {
+    "d_base_tokens": 2,
+    "n_shape_history_channels": 4,
+    "n_amplitude_history_channels": 4,
+    "stem_hidden": 64,
+    "stem_out": 32,
+    "dropout": 0.1,
+    "d_embed": 16,
+    "rnn_hidden": 32,
+    "rnn_layers": 1,
+    "d_latent": 32,
+    "d_step": 32,
+    "shape_hidden": 32,
+    "amplitude_hidden": 32,
+    "amplitude_scale": 1.0
+  },
+  "config_field_names": [
+    "amplitude_hidden",
+    "amplitude_scale",
+    "d_base_tokens",
+    "d_embed",
+    "d_latent",
+    "d_step",
+    "dropout",
+    "n_amplitude_history_channels",
+    "n_shape_history_channels",
+    "rnn_hidden",
+    "rnn_layers",
+    "shape_hidden",
+    "stem_hidden",
+    "stem_out"
+  ],
+  "components": {
+    "shared_stem": "UnifiedFeatureStem (Linear(D,64) -> GELU -> LayerNorm -> Linear(64,32))",
+    "encoder": "WindowGRUEncoder (GRU, one weight set per branch)",
+    "shape_branch": "ShapeBranch (masked softmax over horizon)",
+    "amplitude_branch": "BalancedAmplitudeBranch (one nonnegative scalar)"
+  },
+  "n_parameters_at_default_config": 22723,
+  "module_files": [
+    "__init__.py",
+    "amplitude.py",
+    "calibration.py",
+    "contracts.py",
+    "encoders.py",
+    "fusion.py",
+    "history.py",
+    "losses.py",
+    "model.py",
+    "preprocessing.py",
+    "safety.py",
+    "shape.py",
+    "stem.py"
+  ],
+  "learned_modules": [
+    "Conv1d",
+    "GRU",
+    "LayerNorm",
+    "Linear"
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "GANSU_DA::PatchTST::PIR",
+  "market": "GANSU_DA",
+  "dataset_id": "GANSU_DA",
+  "host": "PatchTST",
+  "method": "PIR",
+  "setting": "OFFLINE_STATIC_POSTHOC",
+  "online_or_offline": "OFFLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "baseline_selection_partition": "INTERNAL_FIT_BLOCK_CARVE(frozen panel.VAL_FRACTION)",
+  "test_used_for_fitting_or_selection": false,
+  "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+  "host_train_budget": 203,
+  "host_val_budget": 30,
+  "method_train_semantics": "fit_on_TRAIN; frozen internal VAL_FRACTION carve for early stop",
+  "n_eval": 30,
+  "n_fit": 203,
+  "gap_breaks": 9,
+  "n_runs": 10,
+  "role_substitution": {
+    "TRAIN": "DIAG_FIT",
+    "VAL": "DIAG_EVAL"
+  },
+  "host_cache_origin": "COMMON_BENCHMARK_NEW_EXECUTION",
+  "cell_signature": "9365285c4f349cae5fb064175f063d60d3155e782f2ec184ef5d2979592037ce",
+  "wall_seconds": 81.69020309999905,
+  "parent_entry_point": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "pretest_note": "the evaluation block is VAL, which is visible during PRETEST; this row is a readiness proof, not a TEST result",
+  "training_seconds": 81.67260579999856,
+  "inference_seconds": 0.010406600005808286,
+  "parameter_count": 215050,
+  "backbone_parameter_count": 24552,
+  "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "eval_windows": [
+    [
+      5,
+      2280
+    ],
+    [
+      5,
+      2304
+    ],
+    [
+      5,
+      2328
+    ],
+    [
+      5,
+      2352
+    ],
+    [
+      5,
+      2376
+    ],
+    [
+      5,
+      2400
+    ],
+    [
+      5,
+      2424
+    ],
+    [
+      5,
+      2448
+    ],
+    [
+      5,
+      2472
+    ],
+    [
+      5,
+      2496
+    ],
+    [
+      5,
+      2520
+    ],
+    [
+      5,
+      2544
+    ],
+    [
+      6,
+      168
+    ],
+    [
+      6,
+      192
+    ],
+    [
+      7,
+      168
+    ],
+    [
+      7,
+      192
+    ],
+    [
+      7,
+      216
+    ],
+    [
+      7,
+      240
+    ],
+    [
+      7,
+      264
+    ],
+    [
+      7,
+      288
+    ],
+    [
+      7,
+      312
+    ],
+    [
+      8,
+      168
+    ],
+    [
+      8,
+      192
+    ],
+    [
+      8,
+      216
+    ],
+    [
+      8,
+      240
+    ],
+    [
+      9,
+      168
+    ],
+    [
+      9,
+      192
+    ],
+    [
+      9,
+      216
+    ],
+    [
+      9,
+      240
+    ],
+    [
+      9,
+      264
+    ]
+  ],
+  "meta": {
+    "scaler_mean": 295.3363757428793,
+    "scaler_scale": 190.88639087844177,
+    "window_counts": {
+      "train": 4254,
+      "val": 457,
+      "test": 605
+    },
+    "n_val_days": 20,
+    "train_span_hours": [
+      [
+        168,
+        624
+      ],
+      [
+        168,
+        432
+      ],
+      [
+        168,
+        336
+      ],
+      [
+        168,
+        1680
+      ],
+      [
+        168,
+        528
+      ],
+      [
+        168,
+        1800
+      ],
+      [
+        1800,
+        2280
+      ],
+      [
+        2280,
+        2568
+      ],
+      [
+        168,
+        216
+      ],
+      [
+        168,
+        336
+      ],
+      [
+        168,
+        264
+      ],
+      [
+        168,
+        288
+      ]
+    ]
+  },
+  "pir_meta": {
+    "scaler_mean": 295.3363757428793,
+    "scaler_scale": 190.88639087844177,
+    "window_counts": {
+      "train": 4254,
+      "val": 457,
+      "test": 605
+    },
+    "n_val_days": 20,
+    "train_span_hours": [
+      [
+        168,
+        624
+      ],
+      [
+        168,
+        432
+      ],
+      [
+        168,
+        336
+      ],
+      [
+        168,
+        1680
+      ],
+      [
+        168,
+        528
+      ],
+      [
+        168,
+        1800
+      ],
+      [
+        1800,
+        2280
+      ],
+      [
+        2280,
+        2568
+      ],
+      [
+        168,
+        216
+      ],
+      [
+        168,
+        336
+      ],
+      [
+        168,
+        264
+      ],
+      [
+        168,
+        288
+      ]
+    ]
+  }
+}

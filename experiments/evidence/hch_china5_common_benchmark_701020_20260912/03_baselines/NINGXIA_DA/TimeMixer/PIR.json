@@ -1,0 +1,143 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "NINGXIA_DA::TimeMixer::PIR",
+  "market": "NINGXIA_DA",
+  "dataset_id": "NINGXIA_DA",
+  "host": "TimeMixer",
+  "method": "PIR",
+  "setting": "OFFLINE_STATIC_POSTHOC",
+  "online_or_offline": "OFFLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "baseline_selection_partition": "INTERNAL_FIT_BLOCK_CARVE(frozen panel.VAL_FRACTION)",
+  "test_used_for_fitting_or_selection": false,
+  "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+  "host_train_budget": 70,
+  "host_val_budget": 11,
+  "method_train_semantics": "fit_on_TRAIN; frozen internal VAL_FRACTION carve for early stop",
+  "n_eval": 11,
+  "n_fit": 70,
+  "gap_breaks": 1,
+  "n_runs": 2,
+  "role_substitution": {
+    "TRAIN": "DIAG_FIT",
+    "VAL": "DIAG_EVAL"
+  },
+  "host_cache_origin": "COMMON_BENCHMARK_NEW_EXECUTION",
+  "cell_signature": "024964928b6a38f34b21f3e47e35390e6e353179dc87243116c669238b8ba9d9",
+  "wall_seconds": 35.52195449999999,
+  "parent_entry_point": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "pretest_note": "the evaluation block is VAL, which is visible during PRETEST; this row is a readiness proof, not a TEST result",
+  "training_seconds": 35.50458819999767,
+  "inference_seconds": 0.012273599997570273,
+  "parameter_count": 368897,
+  "backbone_parameter_count": 178399,
+  "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "eval_windows": [
+    [
+      1,
+      1440
+    ],
+    [
+      1,
+      1464
+    ],
+    [
+      1,
+      1488
+    ],
+    [
+      1,
+      1512
+    ],
+    [
+      1,
+      1536
+    ],
+    [
+      1,
+      1560
+    ],
+    [
+      1,
+      1584
+    ],
+    [
+      1,
+      1608
+    ],
+    [
+      1,
+      1632
+    ],
+    [
+      1,
+      1656
+    ],
+    [
+      1,
+      1680
+    ]
+  ],
+  "meta": {
+    "scaler_mean": 221.25978465811917,
+    "scaler_scale": 141.1329499677581,
+    "window_counts": {
+      "train": 1466,
+      "val": 145,
+      "test": 241
+    },
+    "n_val_days": 7,
+    "train_span_hours": [
+      [
+        168,
+        576
+      ],
+      [
+        168,
+        1272
+      ],
+      [
+        1272,
+        1440
+      ],
+      [
+        1440,
+        1704
+      ]
+    ]
+  },
+  "pir_meta": {
+    "scaler_mean": 221.25978465811917,
+    "scaler_scale": 141.1329499677581,
+    "window_counts": {
+      "train": 1466,
+      "val": 145,
+      "test": 241
+    },
+    "n_val_days": 7,
+    "train_span_hours": [
+      [
+        168,
+        576
+      ],
+      [
+        168,
+        1272
+      ],
+      [
+        1272,
+        1440
+      ],
+      [
+        1440,
+        1704
+      ]
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "china5_common_benchmark_core_tree_freeze.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "root": "src/core",
+  "tree_digest_sha256": "9B278C5A22C8E88D66A0D6AAD8347C55799BF8A4152484DEDF1E0E8EC695D7AB",
+  "tree_digest_after_tests": "9B278C5A22C8E88D66A0D6AAD8347C55799BF8A4152484DEDF1E0E8EC695D7AB",
+  "unchanged_by_this_stage": true,
+  "n_files": 13,
+  "files": [
+    {
+      "path": "__init__.py",
+      "sha256": "309FEA562FC5331E1FD176370C08EDBE0E087E59ED04CA8D8D26CFC59C5D7A72",
+      "bytes": 5038
+    },
+    {
+      "path": "amplitude.py",
+      "sha256": "79FC18E0A1846AA2D816BB1BDF95856D871281C86128D9CA0CD7EC4935094316",
+      "bytes": 1713
+    },
+    {
+      "path": "calibration.py",
+      "sha256": "6996F7302A165821288FF70A4C15B3DD71C0F85591547D769F7D9C76EA541B2B",
+      "bytes": 4362
+    },
+    {
+      "path": "contracts.py",
+      "sha256": "8EBB59442D941883B872D8584074E1450A6C737CEAEF1F111E8C54A2EDE2190A",
+      "bytes": 8172
+    },
+    {
+      "path": "encoders.py",
+      "sha256": "C01D74380201F91C483C73CE563AB03E18D0425A38A16C6285158B5CB89E2013",
+      "bytes": 4751
+    },
+    {
+      "path": "fusion.py",
+      "sha256": "8253CFDD79D155939661BFE0949AF5DBD5C5E9CC04CE0B0FDEB84CC66236D35E",
+      "bytes": 3220
+    },
+    {
+      "path": "history.py",
+      "sha256": "3AFA37D9C6BBF02DDD8E365156EC037AE10383E3733500428346741BD3673E0F",
+      "bytes": 26538
+    },
+    {
+      "path": "losses.py",
+      "sha256": "2A9FCF890E82E4BB83D7497A21B28703A308D0EF4D2C1284457CB68D3AECD079",
+      "bytes": 11151
+    },
+    {
+      "path": "model.py",
+      "sha256": "8CC8F7D80D380E12F0B7E9F2A3FD04C8E2B800CC76ED8DCAF446042844E1BABD",
+      "bytes": 9419
+    },
+    {
+      "path": "preprocessing.py",
+      "sha256": "349FD562DAFFA81777FE1BD766DAAAA3D7FF31F7042B58A531F3FFF7DC5DD361",
+      "bytes": 12570
+    },
+    {
+      "path": "safety.py",
+      "sha256": "06D84B5D5D701EC469BC81F40158AFA43B4E695B04673A25113CA2A6A6CD4896",
+      "bytes": 16696
+    },
+    {
+      "path": "shape.py",
+      "sha256": "ACE387F0715A7DE03A01D22F40CA794F9C291F9BAD0F793F0E2252A327641323",
+      "bytes": 3656
+    },
+    {
+      "path": "stem.py",
+      "sha256": "B04CC1D55E0A035E16F23E4DAA000AE60977D0B8D66C403B44F214C3790C8315",
+      "bytes": 1627
+    }
+  ]
+}

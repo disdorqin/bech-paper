@@ -1,0 +1,309 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "GANSU_DA::TimeMixer::COSA",
+  "market": "GANSU_DA",
+  "dataset_id": "GANSU_DA",
+  "host": "TimeMixer",
+  "method": "COSA",
+  "setting": "strict_online_TTA_predict_then_update",
+  "online_or_offline": "ONLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "TRANSFERRED_IMPLEMENTATION / PAPER_FIDELITY_UNRESOLVED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "method_train_semantics": "online sequential adaptation; buffer seeded from TRAIN; each day adapts only on already-revealed days",
+  "test_used_for_fitting_or_selection": false,
+  "adaptation_executed_on_TEST_during_pretest": false,
+  "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+  "host_train_budget": 203,
+  "host_val_budget": 30,
+  "n_eval": 30,
+  "n_fit": 203,
+  "gap_breaks": 9,
+  "cell_signature": "6688419521c9ab3bd9b82a3cbb127b8ddffd7df4e8fa1b7104842ac5bbe76f8f",
+  "wall_seconds": 4.478071400000772,
+  "parent_entry_point": "official COSA @ 43a8c8da4de74d5745a8713f6130c523b7df2694 :: tta/cosa.py::SimpleOutputAdapter",
+  "pretest_note": "ONLINE_TTA readiness run on the visible VAL block; COSA is never merged into the offline ranking and no TEST adaptation ran",
+  "frozen_init": {
+    "schema": "common_benchmark_cosa_init.v1",
+    "protocol_id": "COMMON_BENCHMARK_701020_V1",
+    "market": "GANSU_DA",
+    "host": "TimeMixer",
+    "setting": "ONLINE_TTA",
+    "online_or_offline": "ONLINE",
+    "fidelity": "TRANSFERRED_IMPLEMENTATION / PAPER_FIDELITY_UNRESOLVED",
+    "seed": 2021,
+    "buffer_seed_partition": "TRAIN",
+    "buffer_seed_rule": "per-day mean of the TRAIN target rows, in TRAIN day order",
+    "buffer_seed_n_days": 203,
+    "buffer_seed_sha256": "421749272E1C5A57B44A1E536FDEBC763DC231B9DC7ACCDA38701AE7A1056CE4",
+    "adaptation_executed_on_TEST_during_pretest": false,
+    "test_adaptation_authorization_required": true,
+    "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+    "host_train_budget": 203,
+    "host_val_budget": 30,
+    "method_train_semantics": "online sequential adaptation; buffer seeded from TRAIN; no TEST adaptation during PRETEST",
+    "scored_days": "TEST (sealed during PRETEST)"
+  },
+  "preflight": {
+    "checks": {
+      "P1_scoring_days_strictly_increasing": true,
+      "P2_buffer_seed_strictly_prior": true,
+      "P3_no_protected_final_materialised": true,
+      "P4_eval_days_present": true
+    },
+    "passed": true,
+    "n_eval_days": 30,
+    "n_fit_days": 203,
+    "eval_first_day": "2025-04-13",
+    "eval_last_day": "2025-07-12",
+    "fit_last_day": "2025-04-12",
+    "fit_partition": "TRAIN",
+    "P5_gap_disclosure": {
+      "gate": false,
+      "n_gap_breaks_in_scoring_block": 9,
+      "note": "disclosure only: the frozen legality gate is P1-P4; gaps do not weaken the per-cut causality test, which is evaluated on the observed sequence itself"
+    }
+  },
+  "chronology_audit": {
+    "n_days": 30,
+    "max_abs_diff_over_all_cuts": 0.0,
+    "cuts_prefix_clean": true,
+    "n_cuts_where_later_days_changed": 28,
+    "buffer_seed_changes_predictions": true,
+    "passed": true,
+    "cuts": [
+      {
+        "k": 1,
+        "n_days_after_cut": 29,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 2,
+        "n_days_after_cut": 28,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 3,
+        "n_days_after_cut": 27,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 4,
+        "n_days_after_cut": 26,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 5,
+        "n_days_after_cut": 25,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 6,
+        "n_days_after_cut": 24,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 7,
+        "n_days_after_cut": 23,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 8,
+        "n_days_after_cut": 22,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 9,
+        "n_days_after_cut": 21,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 10,
+        "n_days_after_cut": 20,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 11,
+        "n_days_after_cut": 19,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 12,
+        "n_days_after_cut": 18,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 13,
+        "n_days_after_cut": 17,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 14,
+        "n_days_after_cut": 16,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 15,
+        "n_days_after_cut": 15,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 16,
+        "n_days_after_cut": 14,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 17,
+        "n_days_after_cut": 13,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 18,
+        "n_days_after_cut": 12,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 19,
+        "n_days_after_cut": 11,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 20,
+        "n_days_after_cut": 10,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 21,
+        "n_days_after_cut": 9,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 22,
+        "n_days_after_cut": 8,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 23,
+        "n_days_after_cut": 7,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 24,
+        "n_days_after_cut": 6,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 25,
+        "n_days_after_cut": 5,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 26,
+        "n_days_after_cut": 4,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 27,
+        "n_days_after_cut": 3,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 28,
+        "n_days_after_cut": 2,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 29,
+        "n_days_after_cut": 1,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": false
+      }
+    ]
+  },
+  "source": "official COSA @ 43a8c8da4de74d5745a8713f6130c523b7df2694 :: tta/cosa.py::SimpleOutputAdapter",
+  "source_file_sha256": "A79BA62F509E2E4BBAFB1590708EC851AF56763431173E660DB33E00AE4C3ABF",
+  "n_days": 30,
+  "n_days_adapted": 29,
+  "first_day_is_unadapted_host": true,
+  "mean_abs_correction": 0.3673500299453735,
+  "context_seed_days": 203,
+  "adaptation_seconds": 0.0630957000030321,
+  "knobs": {
+    "BASE_LR": 0.001,
+    "WEIGHT_DECAY": 0.0001,
+    "STEPS": 3,
+    "BUFFER_CONTEXT_SIZE": 10,
+    "MAX_LR": 0.005,
+    "MIN_LR": 0.0001,
+    "ADAPTER_LAYERS": 1,
+    "HIDDEN": 64,
+    "OPTIMIZER": "adam",
+    "batch_size": 1
+  },
+  "disclosed_adaptation": [
+    "official FFT period+1 batch construction replaced by one cache day per step",
+    "pred_len=24, n_vars=1 for the frozen DA task",
+    "sample_history seeded with observed POST_TRAIN daily target means"
+  ]
+}

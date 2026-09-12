@@ -1,0 +1,57 @@
+{
+  "schema": "china5_common_benchmark_metric_contract.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "frozen_before_test_opened": true,
+  "definition_source": "experiments/current/china5_posthoc_baseline_panel/panel_metrics.py::cell_metrics — the admitted common metric code, reproduced",
+  "region_rule": {
+    "lower": "y_true <= q05",
+    "upper": "y_true >= q95",
+    "tail": "lower | upper",
+    "normal": "complement of tail",
+    "negative": "y_true < 0",
+    "extreme_day": "(max_h y_true - min_h y_true) >= S90",
+    "upper_tail_day": "any_h y_true >= q95",
+    "note": "every mask is computed on y_true at the hour or day being masked, so a subset is defined without reference to any method's prediction"
+  },
+  "empty_subset_rule": "a subset with no members is reported as NOT_APPLICABLE_N0 and carries no numeric value; a number is never invented for it",
+  "units": {
+    "Overall_MAE": "ABSOLUTE_PRICE",
+    "MSE": "ABSOLUTE_PRICE_SQUARED",
+    "RMSE": "ABSOLUTE_PRICE",
+    "Host_Overall_MAE": "ABSOLUTE_PRICE",
+    "relative_gain_vs_Host_pct": "PERCENT_OF_HOST_MAE",
+    "Tail_MAE": "ABSOLUTE_PRICE",
+    "Upper_tail_MAE": "ABSOLUTE_PRICE",
+    "Lower_tail_MAE": "ABSOLUTE_PRICE",
+    "Normal_region_MAE": "ABSOLUTE_PRICE",
+    "Host_Normal_region_MAE": "ABSOLUTE_PRICE",
+    "Normal_harm_vs_Host": "ABSOLUTE_PRICE",
+    "Normal_harm_vs_Host_pct": "PERCENT_OF_HOST_NORMAL_REGION_MAE",
+    "Tail_MAE_Host": "ABSOLUTE_PRICE",
+    "Extreme_day_MAE": "ABSOLUTE_PRICE",
+    "Extreme_day_MAE_Host": "ABSOLUTE_PRICE",
+    "Upper_tail_day_MAE": "ABSOLUTE_PRICE",
+    "Negative_price_MAE": "ABSOLUTE_PRICE",
+    "Negative_price_MAE_Host": "ABSOLUTE_PRICE"
+  },
+  "harm_field_units": {
+    "Normal_harm_vs_Host": {
+      "unit": "ABSOLUTE_PRICE",
+      "definition": "Normal_region_MAE - Host_Normal_region_MAE",
+      "interpretation": "an absolute price difference in the market's price unit per MWh; it is NOT a percentage and must never be compared against, or printed beside without its unit, a PERCENT_OF_* field",
+      "historical_bug": "the earlier stage read this absolute quantity as if it were a relative percentage, which is the interpretation bug this contract exists to prevent"
+    },
+    "Normal_harm_vs_Host_pct": {
+      "unit": "PERCENT_OF_HOST_NORMAL_REGION_MAE",
+      "definition": "100 * (Normal_region_MAE - Host_Normal_region_MAE) / Host_Normal_region_MAE",
+      "interpretation": "the relative counterpart of the field above, stated as a percentage of the Host's own normal-region MAE; it is undefined (NOT_APPLICABLE_N0) when the Host normal-region MAE is zero or the normal subset is empty"
+    }
+  },
+  "reporting_rules": [
+    "every harm value is published together with its unit token, never alone",
+    "an ABSOLUTE_PRICE harm and a PERCENT_OF_* harm are never placed in the same column, ranked against each other, or averaged together",
+    "the sign convention is method-minus-Host: positive means the method is worse",
+    "relative_gain_vs_Host_pct uses the opposite sign convention (Host-minus-method); the two are never mixed in one table",
+    "no harm field is computed on TEST during PRETEST"
+  ]
+}

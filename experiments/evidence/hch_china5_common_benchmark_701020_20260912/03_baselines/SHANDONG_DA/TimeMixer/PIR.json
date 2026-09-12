@@ -1,0 +1,555 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "SHANDONG_DA::TimeMixer::PIR",
+  "market": "SHANDONG_DA",
+  "dataset_id": "SHANDONG_DA",
+  "host": "TimeMixer",
+  "method": "PIR",
+  "setting": "OFFLINE_STATIC_POSTHOC",
+  "online_or_offline": "OFFLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "baseline_selection_partition": "INTERNAL_FIT_BLOCK_CARVE(frozen panel.VAL_FRACTION)",
+  "test_used_for_fitting_or_selection": false,
+  "split_manifest_hash": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+  "host_train_budget": 809,
+  "host_val_budget": 116,
+  "method_train_semantics": "fit_on_TRAIN; frozen internal VAL_FRACTION carve for early stop",
+  "n_eval": 116,
+  "n_fit": 809,
+  "gap_breaks": 0,
+  "n_runs": 1,
+  "role_substitution": {
+    "TRAIN": "DIAG_FIT",
+    "VAL": "DIAG_EVAL"
+  },
+  "host_cache_origin": "COMMON_BENCHMARK_NEW_EXECUTION",
+  "cell_signature": "1e2bb832c65c94a6f83ac311615c9ed9ba7cc5a1241e47a99786ecd9727be3b6",
+  "wall_seconds": 453.82189059999655,
+  "parent_entry_point": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "pretest_note": "the evaluation block is VAL, which is visible during PRETEST; this row is a readiness proof, not a TEST result",
+  "training_seconds": 453.76538340000116,
+  "inference_seconds": 0.04572349999943981,
+  "parameter_count": 368897,
+  "backbone_parameter_count": 178399,
+  "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "eval_windows": [
+    [
+      0,
+      19584
+    ],
+    [
+      0,
+      19608
+    ],
+    [
+      0,
+      19632
+    ],
+    [
+      0,
+      19656
+    ],
+    [
+      0,
+      19680
+    ],
+    [
+      0,
+      19704
+    ],
+    [
+      0,
+      19728
+    ],
+    [
+      0,
+      19752
+    ],
+    [
+      0,
+      19776
+    ],
+    [
+      0,
+      19800
+    ],
+    [
+      0,
+      19824
+    ],
+    [
+      0,
+      19848
+    ],
+    [
+      0,
+      19872
+    ],
+    [
+      0,
+      19896
+    ],
+    [
+      0,
+      19920
+    ],
+    [
+      0,
+      19944
+    ],
+    [
+      0,
+      19968
+    ],
+    [
+      0,
+      19992
+    ],
+    [
+      0,
+      20016
+    ],
+    [
+      0,
+      20040
+    ],
+    [
+      0,
+      20064
+    ],
+    [
+      0,
+      20088
+    ],
+    [
+      0,
+      20112
+    ],
+    [
+      0,
+      20136
+    ],
+    [
+      0,
+      20160
+    ],
+    [
+      0,
+      20184
+    ],
+    [
+      0,
+      20208
+    ],
+    [
+      0,
+      20232
+    ],
+    [
+      0,
+      20256
+    ],
+    [
+      0,
+      20280
+    ],
+    [
+      0,
+      20304
+    ],
+    [
+      0,
+      20328
+    ],
+    [
+      0,
+      20352
+    ],
+    [
+      0,
+      20376
+    ],
+    [
+      0,
+      20400
+    ],
+    [
+      0,
+      20424
+    ],
+    [
+      0,
+      20448
+    ],
+    [
+      0,
+      20472
+    ],
+    [
+      0,
+      20496
+    ],
+    [
+      0,
+      20520
+    ],
+    [
+      0,
+      20544
+    ],
+    [
+      0,
+      20568
+    ],
+    [
+      0,
+      20592
+    ],
+    [
+      0,
+      20616
+    ],
+    [
+      0,
+      20640
+    ],
+    [
+      0,
+      20664
+    ],
+    [
+      0,
+      20688
+    ],
+    [
+      0,
+      20712
+    ],
+    [
+      0,
+      20736
+    ],
+    [
+      0,
+      20760
+    ],
+    [
+      0,
+      20784
+    ],
+    [
+      0,
+      20808
+    ],
+    [
+      0,
+      20832
+    ],
+    [
+      0,
+      20856
+    ],
+    [
+      0,
+      20880
+    ],
+    [
+      0,
+      20904
+    ],
+    [
+      0,
+      20928
+    ],
+    [
+      0,
+      20952
+    ],
+    [
+      0,
+      20976
+    ],
+    [
+      0,
+      21000
+    ],
+    [
+      0,
+      21024
+    ],
+    [
+      0,
+      21048
+    ],
+    [
+      0,
+      21072
+    ],
+    [
+      0,
+      21096
+    ],
+    [
+      0,
+      21120
+    ],
+    [
+      0,
+      21144
+    ],
+    [
+      0,
+      21168
+    ],
+    [
+      0,
+      21192
+    ],
+    [
+      0,
+      21216
+    ],
+    [
+      0,
+      21240
+    ],
+    [
+      0,
+      21264
+    ],
+    [
+      0,
+      21288
+    ],
+    [
+      0,
+      21312
+    ],
+    [
+      0,
+      21336
+    ],
+    [
+      0,
+      21360
+    ],
+    [
+      0,
+      21384
+    ],
+    [
+      0,
+      21408
+    ],
+    [
+      0,
+      21432
+    ],
+    [
+      0,
+      21456
+    ],
+    [
+      0,
+      21480
+    ],
+    [
+      0,
+      21504
+    ],
+    [
+      0,
+      21528
+    ],
+    [
+      0,
+      21552
+    ],
+    [
+      0,
+      21576
+    ],
+    [
+      0,
+      21600
+    ],
+    [
+      0,
+      21624
+    ],
+    [
+      0,
+      21648
+    ],
+    [
+      0,
+      21672
+    ],
+    [
+      0,
+      21696
+    ],
+    [
+      0,
+      21720
+    ],
+    [
+      0,
+      21744
+    ],
+    [
+      0,
+      21768
+    ],
+    [
+      0,
+      21792
+    ],
+    [
+      0,
+      21816
+    ],
+    [
+      0,
+      21840
+    ],
+    [
+      0,
+      21864
+    ],
+    [
+      0,
+      21888
+    ],
+    [
+      0,
+      21912
+    ],
+    [
+      0,
+      21936
+    ],
+    [
+      0,
+      21960
+    ],
+    [
+      0,
+      21984
+    ],
+    [
+      0,
+      22008
+    ],
+    [
+      0,
+      22032
+    ],
+    [
+      0,
+      22056
+    ],
+    [
+      0,
+      22080
+    ],
+    [
+      0,
+      22104
+    ],
+    [
+      0,
+      22128
+    ],
+    [
+      0,
+      22152
+    ],
+    [
+      0,
+      22176
+    ],
+    [
+      0,
+      22200
+    ],
+    [
+      0,
+      22224
+    ],
+    [
+      0,
+      22248
+    ],
+    [
+      0,
+      22272
+    ],
+    [
+      0,
+      22296
+    ],
+    [
+      0,
+      22320
+    ],
+    [
+      0,
+      22344
+    ]
+  ],
+  "meta": {
+    "scaler_mean": 355.439029152497,
+    "scaler_scale": 201.77796115203756,
+    "window_counts": {
+      "train": 17473,
+      "val": 1897,
+      "test": 2761
+    },
+    "n_val_days": 80,
+    "train_span_hours": [
+      [
+        168,
+        17664
+      ],
+      [
+        17664,
+        19584
+      ],
+      [
+        19584,
+        22368
+      ]
+    ]
+  },
+  "pir_meta": {
+    "scaler_mean": 355.439029152497,
+    "scaler_scale": 201.77796115203756,
+    "window_counts": {
+      "train": 17473,
+      "val": 1897,
+      "test": 2761
+    },
+    "n_val_days": 80,
+    "train_span_hours": [
+      [
+        168,
+        17664
+      ],
+      [
+        17664,
+        19584
+      ],
+      [
+        19584,
+        22368
+      ]
+    ]
+  }
+}

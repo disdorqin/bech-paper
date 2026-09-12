@@ -1,0 +1,235 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "SHAANXI_DA::TimeMixer::PIR",
+  "market": "SHAANXI_DA",
+  "dataset_id": "SHAANXI_DA",
+  "host": "TimeMixer",
+  "method": "PIR",
+  "setting": "OFFLINE_STATIC_POSTHOC",
+  "online_or_offline": "OFFLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "baseline_selection_partition": "INTERNAL_FIT_BLOCK_CARVE(frozen panel.VAL_FRACTION)",
+  "test_used_for_fitting_or_selection": false,
+  "split_manifest_hash": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+  "host_train_budget": 198,
+  "host_val_budget": 30,
+  "method_train_semantics": "fit_on_TRAIN; frozen internal VAL_FRACTION carve for early stop",
+  "n_eval": 30,
+  "n_fit": 198,
+  "gap_breaks": 3,
+  "n_runs": 4,
+  "role_substitution": {
+    "TRAIN": "DIAG_FIT",
+    "VAL": "DIAG_EVAL"
+  },
+  "host_cache_origin": "COMMON_BENCHMARK_NEW_EXECUTION",
+  "cell_signature": "81560e8170a2adadb18b2b3f93afb1a44299c6773682508066c35956ed480817",
+  "wall_seconds": 115.84931700000016,
+  "parent_entry_point": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "pretest_note": "the evaluation block is VAL, which is visible during PRETEST; this row is a readiness proof, not a TEST result",
+  "training_seconds": 115.82258790000196,
+  "inference_seconds": 0.019818599997961428,
+  "parameter_count": 368897,
+  "backbone_parameter_count": 178399,
+  "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "eval_windows": [
+    [
+      2,
+      288
+    ],
+    [
+      2,
+      312
+    ],
+    [
+      2,
+      336
+    ],
+    [
+      2,
+      360
+    ],
+    [
+      2,
+      384
+    ],
+    [
+      2,
+      408
+    ],
+    [
+      2,
+      432
+    ],
+    [
+      2,
+      456
+    ],
+    [
+      2,
+      480
+    ],
+    [
+      2,
+      504
+    ],
+    [
+      2,
+      528
+    ],
+    [
+      2,
+      552
+    ],
+    [
+      2,
+      576
+    ],
+    [
+      2,
+      600
+    ],
+    [
+      2,
+      624
+    ],
+    [
+      2,
+      648
+    ],
+    [
+      2,
+      672
+    ],
+    [
+      2,
+      696
+    ],
+    [
+      2,
+      720
+    ],
+    [
+      2,
+      744
+    ],
+    [
+      2,
+      768
+    ],
+    [
+      2,
+      792
+    ],
+    [
+      2,
+      816
+    ],
+    [
+      2,
+      840
+    ],
+    [
+      2,
+      864
+    ],
+    [
+      3,
+      168
+    ],
+    [
+      3,
+      192
+    ],
+    [
+      3,
+      216
+    ],
+    [
+      3,
+      240
+    ],
+    [
+      3,
+      264
+    ]
+  ],
+  "meta": {
+    "scaler_mean": 241.17943268159692,
+    "scaler_scale": 183.81000354555601,
+    "window_counts": {
+      "train": 4250,
+      "val": 410,
+      "test": 674
+    },
+    "n_val_days": 19,
+    "train_span_hours": [
+      [
+        168,
+        2184
+      ],
+      [
+        168,
+        2448
+      ],
+      [
+        2448,
+        2784
+      ],
+      [
+        168,
+        288
+      ],
+      [
+        288,
+        888
+      ],
+      [
+        168,
+        288
+      ]
+    ]
+  },
+  "pir_meta": {
+    "scaler_mean": 241.17943268159692,
+    "scaler_scale": 183.81000354555601,
+    "window_counts": {
+      "train": 4250,
+      "val": 410,
+      "test": 674
+    },
+    "n_val_days": 19,
+    "train_span_hours": [
+      [
+        168,
+        2184
+      ],
+      [
+        168,
+        2448
+      ],
+      [
+        2448,
+        2784
+      ],
+      [
+        168,
+        288
+      ],
+      [
+        288,
+        888
+      ],
+      [
+        168,
+        288
+      ]
+    ]
+  }
+}

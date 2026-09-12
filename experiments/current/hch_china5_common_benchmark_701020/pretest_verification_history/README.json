@@ -1,0 +1,16 @@
+{
+  "schema": "china5_common_benchmark_pretest_verification_history.v1",
+  "purpose": "a superseded dry-run of the P6 verifier, retained rather than overwritten so the pre-amendment threshold attestation survives",
+  "superseded_by": "the final 08_pretest_verification/PRETEST_VERIFICATION.json",
+  "verdict_at_this_run": "CHINA5_COMMON_BENCHMARK_PRETEST_NOT_READY",
+  "n_pass_at_this_run": 13,
+  "n_checks": 20,
+  "files": {
+    "PRETEST_VERIFICATION_DRYRUN_20260912T2323Z.json": "8A2543B524D989390D6DAD979CB1861FBA8FD895644A44C91A998FE469646B1A",
+    "copied_from": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/08_pretest_verification/PRETEST_VERIFICATION.json",
+    "byte_identical_to_source_at_copy_time": true
+  },
+  "why_it_matters": "this run re-derived q05/q95/S90 for all five markets from the raw sources and matched them bit-exactly, before the P5 freeze was amended with the float32 representation disclosure; it is therefore the independent record that the amendment added a disclosure without changing a single threshold value",
+  "pre_amendment_threshold_attestation": "q05/q95/S90 re-derived from TRAIN source values only and match bit-exactly under the benchmark's float32 window representation (GANSU_DA:q05=40.4355,q95=600.0000,S90=559.7470; SHANDONG_DA:q05=-80.0000,q95=633.8921,S90=822.7760; SHAANXI_DA:q05=40.0000,q95=550.0000,S90=857.8797; NINGXIA_DA:q05=40.0000,q95=384.0000,S90=349.4776; QINGHAI_DA:q05=80.0000,q95=650.0000,S90=570.0000); the same numbers read as float64 from source differ by at most 5.86e-05 absolute (the window-dtype cast); harm units declared; problems=[]",
+  "retained_outside_the_frozen_evidence_tree_because": "the evidence tree is audited by the verifier itself and this file is the verifier's own report, not a stage artifact"
+}

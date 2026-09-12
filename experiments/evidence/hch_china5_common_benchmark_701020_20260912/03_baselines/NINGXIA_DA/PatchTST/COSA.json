@@ -1,0 +1,176 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "NINGXIA_DA::PatchTST::COSA",
+  "market": "NINGXIA_DA",
+  "dataset_id": "NINGXIA_DA",
+  "host": "PatchTST",
+  "method": "COSA",
+  "setting": "strict_online_TTA_predict_then_update",
+  "online_or_offline": "ONLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "TRANSFERRED_IMPLEMENTATION / PAPER_FIDELITY_UNRESOLVED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "method_train_semantics": "online sequential adaptation; buffer seeded from TRAIN; each day adapts only on already-revealed days",
+  "test_used_for_fitting_or_selection": false,
+  "adaptation_executed_on_TEST_during_pretest": false,
+  "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+  "host_train_budget": 70,
+  "host_val_budget": 11,
+  "n_eval": 11,
+  "n_fit": 70,
+  "gap_breaks": 1,
+  "cell_signature": "87a9395ef39d6c14ab8cfe1e9354d0feda5108914f83ad57369f3dd254f9d403",
+  "wall_seconds": 0.37513129999570083,
+  "parent_entry_point": "official COSA @ 43a8c8da4de74d5745a8713f6130c523b7df2694 :: tta/cosa.py::SimpleOutputAdapter",
+  "pretest_note": "ONLINE_TTA readiness run on the visible VAL block; COSA is never merged into the offline ranking and no TEST adaptation ran",
+  "frozen_init": {
+    "schema": "common_benchmark_cosa_init.v1",
+    "protocol_id": "COMMON_BENCHMARK_701020_V1",
+    "market": "NINGXIA_DA",
+    "host": "PatchTST",
+    "setting": "ONLINE_TTA",
+    "online_or_offline": "ONLINE",
+    "fidelity": "TRANSFERRED_IMPLEMENTATION / PAPER_FIDELITY_UNRESOLVED",
+    "seed": 2021,
+    "buffer_seed_partition": "TRAIN",
+    "buffer_seed_rule": "per-day mean of the TRAIN target rows, in TRAIN day order",
+    "buffer_seed_n_days": 70,
+    "buffer_seed_sha256": "F94BE042478307CC8059C9870C9078D99B351CB9A96BDE5B287AADD523D08E93",
+    "adaptation_executed_on_TEST_during_pretest": false,
+    "test_adaptation_authorization_required": true,
+    "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+    "host_train_budget": 70,
+    "host_val_budget": 11,
+    "method_train_semantics": "online sequential adaptation; buffer seeded from TRAIN; no TEST adaptation during PRETEST",
+    "scored_days": "TEST (sealed during PRETEST)"
+  },
+  "preflight": {
+    "checks": {
+      "P1_scoring_days_strictly_increasing": true,
+      "P2_buffer_seed_strictly_prior": true,
+      "P3_no_protected_final_materialised": true,
+      "P4_eval_days_present": true
+    },
+    "passed": true,
+    "n_eval_days": 11,
+    "n_fit_days": 70,
+    "eval_first_day": "2026-01-14",
+    "eval_last_day": "2026-01-24",
+    "fit_last_day": "2026-01-13",
+    "fit_partition": "TRAIN",
+    "P5_gap_disclosure": {
+      "gate": false,
+      "n_gap_breaks_in_scoring_block": 1,
+      "note": "disclosure only: the frozen legality gate is P1-P4; gaps do not weaken the per-cut causality test, which is evaluated on the observed sequence itself"
+    }
+  },
+  "chronology_audit": {
+    "n_days": 11,
+    "max_abs_diff_over_all_cuts": 0.0,
+    "cuts_prefix_clean": true,
+    "n_cuts_where_later_days_changed": 9,
+    "buffer_seed_changes_predictions": true,
+    "passed": true,
+    "cuts": [
+      {
+        "k": 1,
+        "n_days_after_cut": 10,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 2,
+        "n_days_after_cut": 9,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 3,
+        "n_days_after_cut": 8,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 4,
+        "n_days_after_cut": 7,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 5,
+        "n_days_after_cut": 6,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 6,
+        "n_days_after_cut": 5,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 7,
+        "n_days_after_cut": 4,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 8,
+        "n_days_after_cut": 3,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 9,
+        "n_days_after_cut": 2,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": true
+      },
+      {
+        "k": 10,
+        "n_days_after_cut": 1,
+        "max_abs_diff_days_le_k": 0.0,
+        "clean": true,
+        "later_days_changed": false
+      }
+    ]
+  },
+  "source": "official COSA @ 43a8c8da4de74d5745a8713f6130c523b7df2694 :: tta/cosa.py::SimpleOutputAdapter",
+  "source_file_sha256": "A79BA62F509E2E4BBAFB1590708EC851AF56763431173E660DB33E00AE4C3ABF",
+  "n_days": 11,
+  "n_days_adapted": 10,
+  "first_day_is_unadapted_host": true,
+  "mean_abs_correction": 0.18665480850772423,
+  "context_seed_days": 70,
+  "adaptation_seconds": 0.027483500001835637,
+  "knobs": {
+    "BASE_LR": 0.001,
+    "WEIGHT_DECAY": 0.0001,
+    "STEPS": 3,
+    "BUFFER_CONTEXT_SIZE": 10,
+    "MAX_LR": 0.005,
+    "MIN_LR": 0.0001,
+    "ADAPTER_LAYERS": 1,
+    "HIDDEN": 64,
+    "OPTIMIZER": "adam",
+    "batch_size": 1
+  },
+  "disclosed_adaptation": [
+    "official FFT period+1 batch construction replaced by one cache day per step",
+    "pred_len=24, n_vars=1 for the frozen DA task",
+    "sample_history seeded with observed POST_TRAIN daily target means"
+  ]
+}

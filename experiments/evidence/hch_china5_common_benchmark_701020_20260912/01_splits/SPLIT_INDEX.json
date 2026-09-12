@@ -1,0 +1,92 @@
+{
+  "schema": "china5_common_benchmark_split_index.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "stage_id": "hch_china5_common_benchmark_701020",
+  "generated_before_any_host_training": true,
+  "test_label_read_count": 0,
+  "test_seal": {
+    "lifted": false,
+    "test_label_read_count": 0,
+    "refused_attempts": 5,
+    "refusal_reasons": [
+      "GANSU_DA: audit probe",
+      "SHANDONG_DA: audit probe",
+      "SHAANXI_DA: audit probe",
+      "NINGXIA_DA: audit probe",
+      "QINGHAI_DA: audit probe"
+    ],
+    "meaning": "PRETEST requires test_label_read_count == 0; the only legal reader is TestSeal.reveal(), and it raises while the seal holds"
+  },
+  "markets": {
+    "GANSU_DA": {
+      "split_manifest": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/01_splits/GANSU_DA/split_manifest.json",
+      "split_manifest_sha256": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+      "counts": {
+        "TRAIN": 203,
+        "VAL": 30,
+        "TEST": 58
+      },
+      "n_open_days": 291,
+      "source_sha256": "0C9987C50B2A7DF0F8A41F01D2B7B40EF40590DBCEC8A9C1AA54342A412DD229",
+      "test_target_blind_id_sha256": "6ACDF5FF20601EE68AA73CD98B171069A77CF69F9E0E93F5F32BCD06E226A889",
+      "eligibility_contract_sha256": "D8F07D22221FA4E1D630E5A41C4B55AE7E56EF256C1CC6D166B15FE8A43D8E3E",
+      "audit_passed": true
+    },
+    "SHANDONG_DA": {
+      "split_manifest": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/01_splits/SHANDONG_DA/split_manifest.json",
+      "split_manifest_sha256": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+      "counts": {
+        "TRAIN": 809,
+        "VAL": 116,
+        "TEST": 231
+      },
+      "n_open_days": 1156,
+      "source_sha256": "04701787349B0CCCBEDBE6E7572A8AA44167FDB64E6C3287D3CFE32C2C0F1134",
+      "test_target_blind_id_sha256": "478939812ED2AD328EC3D4C6D786710239A48503669D09E14F5D66295A1E21AD",
+      "eligibility_contract_sha256": "609672F342A0384CCCFC178FD405414DFD1352191B1E0235BD368731D8A33E15",
+      "audit_passed": true
+    },
+    "SHAANXI_DA": {
+      "split_manifest": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/01_splits/SHAANXI_DA/split_manifest.json",
+      "split_manifest_sha256": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+      "counts": {
+        "TRAIN": 198,
+        "VAL": 30,
+        "TEST": 56
+      },
+      "n_open_days": 284,
+      "source_sha256": "5222F634483CD6EC6C1C1D2BD064E1C1EF1602F384312B9FE97C0DCAF5C468B5",
+      "test_target_blind_id_sha256": "2D021AA0CF7F06ACE89700E7E8209D1037B31E37B63C364D60022948947A3D64",
+      "eligibility_contract_sha256": "609672F342A0384CCCFC178FD405414DFD1352191B1E0235BD368731D8A33E15",
+      "audit_passed": true
+    },
+    "NINGXIA_DA": {
+      "split_manifest": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/01_splits/NINGXIA_DA/split_manifest.json",
+      "split_manifest_sha256": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+      "counts": {
+        "TRAIN": 70,
+        "VAL": 11,
+        "TEST": 20
+      },
+      "n_open_days": 101,
+      "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4",
+      "test_target_blind_id_sha256": "85144E01D7A0AAC6C4A61DBA96AA86C92253E941696DC71B0D4D2A2C904F7AA5",
+      "eligibility_contract_sha256": "609672F342A0384CCCFC178FD405414DFD1352191B1E0235BD368731D8A33E15",
+      "audit_passed": true
+    },
+    "QINGHAI_DA": {
+      "split_manifest": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/01_splits/QINGHAI_DA/split_manifest.json",
+      "split_manifest_sha256": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+      "counts": {
+        "TRAIN": 65,
+        "VAL": 11,
+        "TEST": 18
+      },
+      "n_open_days": 94,
+      "source_sha256": "58B98C214384AF3D6B95F88659259928FBFA2DF58567C2A4B6C9713DEC40D88F",
+      "test_target_blind_id_sha256": "012AF394E0C20836066CD9953D37AD2648B5B402A87D20239885A6963C5290EF",
+      "eligibility_contract_sha256": "609672F342A0384CCCFC178FD405414DFD1352191B1E0235BD368731D8A33E15",
+      "audit_passed": true
+    }
+  }
+}

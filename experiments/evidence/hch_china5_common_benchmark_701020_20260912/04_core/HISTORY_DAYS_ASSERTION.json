@@ -1,0 +1,18 @@
+{
+  "HISTORY_DAYS": 7,
+  "checks": {
+    "HISTORY_DAYS_equals_7": true,
+    "bank_constructor_takes_no_capacity": true,
+    "warm_start_takes_no_length": true,
+    "capacity_property_is_the_constant": true,
+    "no_capacity_literal": true,
+    "warm_start_provenance_excludes_in_sample": true,
+    "warm_start_provenance_is_oof_or_prequential": true,
+    "short_bank_raises_rather_than_shrinking": true,
+    "insufficient_warm_start_raises": true,
+    "six_records_refused": true,
+    "seven_records_take_the_last_seven": true,
+    "restored_bank_capacity_is_seven": true
+  },
+  "passed": true
+}

@@ -1,0 +1,230 @@
+{
+  "schema": "china5_common_benchmark_host_freeze_index.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "stage_id": "hch_china5_common_benchmark_701020",
+  "n_cells": 20,
+  "n_gate_pass": 20,
+  "test_label_read_count": 0,
+  "cells": [
+    {
+      "market": "GANSU_DA",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+      "array_sha256": "116E0E4C2FF8AAB143AF459759A2B0F5FD88009C76A5E1962FEB4ADB93E90DF6",
+      "checkpoint_sha256": "63491BE38950A7E88754CA27951A840EB2A156C7412842962C95D5CA8711AC01",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/GANSU_DA/LSTM/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 93.35957919226752
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+      "array_sha256": "89E975BF8007576C9809EB13537B217BF1241B82C05DB804A73DF5C3BA9D142F",
+      "checkpoint_sha256": "A5F3A7F739E061C3CD6527009B359265DBECBB958BDA3C751937DB14722A3813",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/GANSU_DA/PatchTST/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 73.93631954193116
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+      "array_sha256": "5B520775EA67CC8B2D2179782B8FA18863C0A2F1F0D7357EA93D87E79C218617",
+      "checkpoint_sha256": "1432F937ADF016FCE8AE1B762D84804BF0282EBD1BFE56E0F5DF4783A5D0B659",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/GANSU_DA/TimeMixer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 79.05607647365994
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "split_manifest_hash": "bc43fd55901749a8afddfaf920031ddbafad7bb47879cead0d71bdf87e90c343",
+      "array_sha256": "CAF7EC88C0C782E83B705ABFA26315FF054F777FFD3C1FAA223C7BDBDAD7678D",
+      "checkpoint_sha256": "1A8A993C66FA93F3823EB1F954ACB63BDEB11766F2696E058C71584741A560A6",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/GANSU_DA/iTransformer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 81.88712262047662
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+      "array_sha256": "5FAE5391458AE1FA6C0D4745C53B46A46AA4EFB4F9108F34DED40BB85F676F40",
+      "checkpoint_sha256": "3B25523C56B49DBB73638E34AE49EA485A0317C15043937ED28F9C342AC4FA8D",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/NINGXIA_DA/LSTM/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 69.26078375903043
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+      "array_sha256": "CCE9B50071BE25F079C8D4A5106101904B22EA11678CD579E4FDCA30C16F676E",
+      "checkpoint_sha256": "88B3A5A58F6115677576F5BF23C138DD606BED007487DCFC96954E4EF9F42103",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/NINGXIA_DA/PatchTST/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 84.79378935785005
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+      "array_sha256": "C4414F5585FADE889EFC733F897234D5874F19282AD1DA5FEEBC8DE1C84B15B0",
+      "checkpoint_sha256": "583D470033DE1F80364BDCF12F2C7EF45B316BA3E5160B7D751EB3B1C609B297",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/NINGXIA_DA/TimeMixer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 102.75953522595492
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+      "array_sha256": "3F6615126D6464A2BCE4768D3A61BB3690A5D9D150B15E196A18F468451A7581",
+      "checkpoint_sha256": "5B948041D56C13D4A9DCF110A17CE0F24B1B9A5BE35A877E239BBB46E0DD9DC0",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/NINGXIA_DA/iTransformer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 91.3881268790274
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "split_manifest_hash": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+      "array_sha256": "A298682A15DF484D99F0F419151B84336FAE2FD556D67BDB6206DDD71D0E1701",
+      "checkpoint_sha256": "8C2B00F6A129B50C657D9CDD0A5B1617F7546EBA9CAD6AEE747AF24D0CC46765",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/QINGHAI_DA/LSTM/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 103.86508505272143
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+      "array_sha256": "F0A4A66E1BDAF93A8196DF4AE79A6D348BF0C8E6D9BF519CE1D820E991AC9E95",
+      "checkpoint_sha256": "1160597C9BC91C13D17DC4FF58BFD1903A9C241099219148EBD120CADDA1F6A4",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/QINGHAI_DA/PatchTST/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 95.85352420806885
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+      "array_sha256": "099053697CEA5E1747BFADFE3596AEED44B3721D6F84671EDFC75D9338C6D9E6",
+      "checkpoint_sha256": "4BB05E1B63BED40B73EB9236F4E375008E3B2AEE1DEED465A8A8B930ADE183E5",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/QINGHAI_DA/TimeMixer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 89.98636364214349
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "split_manifest_hash": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+      "array_sha256": "05CC3CC8F85CBFA9128DF15E199CA158D92848F7B435B3F5425BF4DF4BE75F67",
+      "checkpoint_sha256": "03ADD7ABC036D411A93B4C0691DFCC51E73BE48C1C030741324B54429C8D52BD",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/QINGHAI_DA/iTransformer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 99.15573689431855
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "split_manifest_hash": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+      "array_sha256": "3F4F9834F1C95C288D6BADB7D0FD1F5B0DF9B16F3D34A8AC7D2BBDE07F56B683",
+      "checkpoint_sha256": "EDBF2BB544EBE4670104AF9EA537FAF3DDE8E31F347FFFFFBAAE492FF78A2579",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHAANXI_DA/LSTM/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 97.32434546682569
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+      "array_sha256": "AC159FF4833751C00F8DB43F0C594892FE40E02A4787F5DEF2952BDC6D184AE2",
+      "checkpoint_sha256": "97F0DCB3AC5669F73E76503D2C739EB1442C9DB161AD33B90C16D9BD8056FA76",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHAANXI_DA/PatchTST/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 94.6575295607249
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+      "array_sha256": "7878614D11A61060E3BA4179C0CBEB680B266400F77E3E0754A48AA175C61B81",
+      "checkpoint_sha256": "1452924722ED5A2BE20155FF3D68A022156BBA267A0F697A7C3BFCFC9E000D16",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHAANXI_DA/TimeMixer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 86.62174281544155
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "split_manifest_hash": "8a510619e7da181a1b9d5267f24b172d2afcaabf47683ddf4d9787229fcc0565",
+      "array_sha256": "5407DEA129EF4B40D2E99325645F02D75F0400168D48549B1321CE2F2DED74B9",
+      "checkpoint_sha256": "65E1185E3120A4A70085C86A03ED0FED52DCC10A9E7B3354E814513B7AEF924F",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHAANXI_DA/iTransformer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 89.75787204636468
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "split_manifest_hash": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+      "array_sha256": "AEE61948B6A8888F4CB0B2D4A4CE5EBD5B24FD665C87E78395485B058AFFDDB4",
+      "checkpoint_sha256": "36D037CDF533D4894706EA50185C7A4222F628E9ECFD387BD36668C4302A8508",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHANDONG_DA/LSTM/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 87.3309114431941
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+      "array_sha256": "2DD59E4DAE2ECA783AAC67ED38D2D67E05A651EA37F5AAEC24561740AE8CF22A",
+      "checkpoint_sha256": "99B8B08C86F757EF2FBC72C4674F5D977A040B9D810D5A30BD04DB1388A40B70",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHANDONG_DA/PatchTST/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 86.70473471108353
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "split_manifest_hash": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+      "array_sha256": "434A8ECD7D370E635A455CFC4B39CA1107BE6B76DB812776241E13B62CA11A56",
+      "checkpoint_sha256": "39BA5A64B584A7523BDD4465832B2D2D885B21BE666FD86453ABB06D37B8A3A5",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHANDONG_DA/TimeMixer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 86.36946236885998
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "split_manifest_hash": "5fa0158af04ff55eb41287c4f7f9bf01c9965af072661d2a8860be13c6ac38cb",
+      "array_sha256": "CA11B299E5A1207E4E2B1FCBE43916EDE8B5FE5B5F48820DA24E7E9EF1D29F22",
+      "checkpoint_sha256": "75D58B2279BD63334C0049FEC04ABAB7CD7A5FB1427E4BBB784D669901845229",
+      "host_cache_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/02_hosts/SHANDONG_DA/iTransformer/host_predictions.npz",
+      "gate_passed": true,
+      "HOST_VAL_MAE": 87.78227173429967
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "common_benchmark_lab_build_state.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "schema_version": "COMMON_BENCHMARK_V1_20260912",
+  "stage_id": "hch_china5_common_benchmark_701020",
+  "generated_utc": "2026-09-12T16:17:51+00:00",
+  "old_lab": {
+    "path": "experiments/lab/strict_results",
+    "digest_before": "1d3850d74f225f18a9dd24f9f0a11dea7bcada7d3d97d5a8889334f442492e41",
+    "digest_after": "1d3850d74f225f18a9dd24f9f0a11dea7bcada7d3d97d5a8889334f442492e41",
+    "n_files_before": 30,
+    "n_files_after": 30,
+    "file_list_identical": true,
+    "unchanged": true,
+    "interpretation_tag": "HARD_FROZEN_LOW_SHOT_TRANSFER",
+    "modification_authorized": false
+  },
+  "new_lab": {
+    "path": "experiments/lab/common_benchmark_results",
+    "digest": "11a164fb952bb983fe670b0e47a889d32aa4525d204c6f6d3de6ae2b7295b920",
+    "n_files": 19,
+    "digest_covers": "every file under the lab except audit/build_state.json, which this build writes after taking the digest; re-derive by hashing relpath+NUL+sha256(file)+LF over that set in ASCII path order",
+    "registry_rows": 0,
+    "test_numeric_rows": 0,
+    "state": "SCAFFOLD_ONLY_NO_NUMERIC_ROWS"
+  },
+  "test_label_read_count": 0,
+  "notes": "the new lab is created empty; PRETEST produces no TEST numeric row, and the old strict-results lab is proven byte-identical before and after"
+}

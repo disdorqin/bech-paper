@@ -1,0 +1,21 @@
+{
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "core_tree_digest": "9B278C5A22C8E88D66A0D6AAD8347C55799BF8A4152484DEDF1E0E8EC695D7AB",
+  "core_n_files": 13,
+  "core_unchanged_by_stage": true,
+  "core_tests": {
+    "n_passed": 136,
+    "n_failed": 0,
+    "summary_line": "136 passed in 7.42s"
+  },
+  "HISTORY_DAYS": 7,
+  "history_passed": true,
+  "safety_formula_passed": true,
+  "deleted_components_absent": true,
+  "harness_verdict": "HARNESS_CANNOT_EXPRESS_TRAIN_VAL_TEST_WITHOUT_CHANGING_SEMANTICS",
+  "method_training_manifest_sha256": "B350865FF629D7E736F21E928A9A0100ED0F49D755208A46064E81B034319675",
+  "method_training_executed": false,
+  "test_metric_present": false,
+  "test_label_read_count": 0,
+  "passed": true
+}

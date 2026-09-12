@@ -1,0 +1,1 @@
+protocol_id,stage_id,market,host,method,setting,split,seed_contract,metric,split_manifest_hash,test_target_hash,host_train_budget,host_val_budget,method_train_semantics,online_or_offline,value,unit,n_days,n_values,subset_definition,coverage_status,evidence_root,evidence_path,hash_type,artifact_sha256,gain_vs_host_pct,generated_utc,notes

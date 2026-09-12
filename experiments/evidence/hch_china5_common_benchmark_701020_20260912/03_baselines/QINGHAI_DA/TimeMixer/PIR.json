@@ -1,0 +1,151 @@
+{
+  "schema": "china5_common_benchmark_baseline_row.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "coordinate_id": "QINGHAI_DA::TimeMixer::PIR",
+  "market": "QINGHAI_DA",
+  "dataset_id": "QINGHAI_DA",
+  "host": "TimeMixer",
+  "method": "PIR",
+  "setting": "OFFLINE_STATIC_POSTHOC",
+  "online_or_offline": "OFFLINE",
+  "row_origin": "NEW_EXECUTION",
+  "seed": 2021,
+  "fidelity": "PAPER_FAITHFUL_EXACT_ACCEPTED",
+  "fit_partition": "TRAIN",
+  "eval_partition": "VAL",
+  "scaler_fit_partition": "TRAIN",
+  "baseline_selection_partition": "INTERNAL_FIT_BLOCK_CARVE(frozen panel.VAL_FRACTION)",
+  "test_used_for_fitting_or_selection": false,
+  "split_manifest_hash": "66c8935abe6f80b5c29e17880ec2323b388b5e0d224e371ee18be928f1b24ae9",
+  "host_train_budget": 65,
+  "host_val_budget": 11,
+  "method_train_semantics": "fit_on_TRAIN; frozen internal VAL_FRACTION carve for early stop",
+  "n_eval": 11,
+  "n_fit": 65,
+  "gap_breaks": 3,
+  "n_runs": 4,
+  "role_substitution": {
+    "TRAIN": "DIAG_FIT",
+    "VAL": "DIAG_EVAL"
+  },
+  "host_cache_origin": "COMMON_BENCHMARK_NEW_EXECUTION",
+  "cell_signature": "e790c0cd28c8eeabe48f50cab9445d27f9b4b986d28192c9d80d85ae966bf04e",
+  "wall_seconds": 21.65618910000194,
+  "parent_entry_point": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "pretest_note": "the evaluation block is VAL, which is visible during PRETEST; this row is a readiness proof, not a TEST result",
+  "training_seconds": 21.645861400000285,
+  "inference_seconds": 0.005507299996679649,
+  "parameter_count": 368897,
+  "backbone_parameter_count": 178399,
+  "source": "official PIR @ fc372bb02090da887d4a20b614a6cfecbfd813d0 :: models/PIR.py + exp/exp_long_term_forecasting_pir.py",
+  "eval_windows": [
+    [
+      3,
+      168
+    ],
+    [
+      3,
+      192
+    ],
+    [
+      3,
+      216
+    ],
+    [
+      3,
+      240
+    ],
+    [
+      3,
+      264
+    ],
+    [
+      3,
+      288
+    ],
+    [
+      3,
+      312
+    ],
+    [
+      3,
+      336
+    ],
+    [
+      3,
+      360
+    ],
+    [
+      3,
+      384
+    ],
+    [
+      3,
+      408
+    ]
+  ],
+  "meta": {
+    "scaler_mean": 281.31577673335534,
+    "scaler_scale": 206.910562456275,
+    "window_counts": {
+      "train": 1347,
+      "val": 121,
+      "test": 241
+    },
+    "n_val_days": 6,
+    "train_span_hours": [
+      [
+        168,
+        624
+      ],
+      [
+        168,
+        552
+      ],
+      [
+        168,
+        744
+      ],
+      [
+        744,
+        888
+      ],
+      [
+        168,
+        432
+      ]
+    ]
+  },
+  "pir_meta": {
+    "scaler_mean": 281.31577673335534,
+    "scaler_scale": 206.910562456275,
+    "window_counts": {
+      "train": 1347,
+      "val": 121,
+      "test": 241
+    },
+    "n_val_days": 6,
+    "train_span_hours": [
+      [
+        168,
+        624
+      ],
+      [
+        168,
+        552
+      ],
+      [
+        168,
+        744
+      ],
+      [
+        744,
+        888
+      ],
+      [
+        168,
+        432
+      ]
+    ]
+  }
+}

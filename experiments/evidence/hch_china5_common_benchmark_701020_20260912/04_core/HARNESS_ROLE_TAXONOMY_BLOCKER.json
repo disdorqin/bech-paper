@@ -1,0 +1,29 @@
+{
+  "schema": "common_benchmark_harness_role_taxonomy_blocker.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "harness": "experiments/current/hch_signed_mass_method_entry",
+  "blocker_id": "SIGNED_MASS_HARNESS_ROLE_TAXONOMY_INCOMPATIBLE_WITH_COMMON_BENCHMARK",
+  "blocker_class": "Q-HARNESS",
+  "verdict": "HARNESS_CANNOT_EXPRESS_TRAIN_VAL_TEST_WITHOUT_CHANGING_SEMANTICS",
+  "checks": {
+    "harness_exists": true,
+    "declares_post_train_fitting_role": true,
+    "declares_dev_eval_evaluation_role": true,
+    "has_no_train_role": true,
+    "has_no_val_role": true,
+    "has_no_test_role": true,
+    "adapter_raises_on_unmaterialised_role": true,
+    "adapter_hardcodes_post_train_dev_eval": true,
+    "calibration_states_post_train_only": true
+  },
+  "evidence": {
+    "config.py": "ROLE_ORDER / FITTING_ROLES=(ROLE_POST_TRAIN,) / EVALUATION_ROLES=(ROLE_DEV_EVAL,) / SEALED_ROLES=(ROLE_PROTECTED_FINAL,)",
+    "china5_adapter.py": "positions(role) raises LegalityError for an unmaterialised role; complete-episode counting loops over (ROLE_POST_TRAIN, ROLE_DEV_EVAL)",
+    "calibration.py": "the pooled scalar is documented as fitted on POST_TRAIN only",
+    "aggregate.py": "emitted rows name POST_TRAIN / DEV_EVAL in their narrative"
+  },
+  "why_not_repointed": "repointing POST_TRAIN->TRAIN and DEV_EVAL->VAL would keep the old role names and change the fit/evaluation partition they denote; that is a redefinition of the method's data contract, not a re-run of it, and the prompt forbids improvising with old POST_TRAIN roles",
+  "method_training_executed_in_pretest": false,
+  "method_numeric_objects_produced": 0,
+  "consequence": "TRAIN/VAL fitting is optional in PRETEST; it is not performed. The method-training manifest below freezes the semantics a conforming harness must implement before any TEST result can exist."
+}

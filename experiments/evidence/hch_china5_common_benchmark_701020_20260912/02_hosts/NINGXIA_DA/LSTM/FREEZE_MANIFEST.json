@@ -1,0 +1,80 @@
+{
+  "schema": "china5_common_benchmark_host_freeze.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "market": "NINGXIA_DA",
+  "dataset_id": "NINGXIA_DA",
+  "family": "CHINA5",
+  "backbone": "LSTM",
+  "host_recipe_id": "breadth_new_host_lstm_v1",
+  "new_execution": true,
+  "imported_frozen": false,
+  "old_low_shot_checkpoint_reused": false,
+  "source_path": "data/CHINA/NINGXIA/宁夏24h电价数据集.xlsx",
+  "source_sha256": "777FE0B22BD8634DF51F92021905BD99756F7BD94F62C49CDB115BDE0A7151A4",
+  "split_protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "split_manifest_hash": "383bd102500c376c10f2ad7f2950a8706b4e4507efd74729f51507ab5d5ba08e",
+  "train_id_sha256": "9F43676D2C4BC969059C0870573A9041F63C09E6661F06445676720371062E25",
+  "val_id_sha256": "9FB68E2C984E319F3393BD8A14DE29612910EB60A80FE2B4B8A86C278A6823B1",
+  "test_target_blind_id_sha256": "85144E01D7A0AAC6C4A61DBA96AA86C92253E941696DC71B0D4D2A2C904F7AA5",
+  "host_train_budget": 70,
+  "host_val_budget": 11,
+  "scaler_fit_partition": "TRAIN",
+  "selection_partition": "VAL",
+  "array_sha256": "5FAE5391458AE1FA6C0D4745C53B46A46AA4EFB4F9108F34DED40BB85F676F40",
+  "hash_definition": "sha256 of the whole .npz container bytes as written",
+  "canonical_array_sha256": "1623CF587674AF0B7D431E719F9F8CBF97A04EB2305B40FB8BACFD739D03193C",
+  "checkpoint_sha256": "3B25523C56B49DBB73638E34AE49EA485A0317C15043937ED28F9C342AC4FA8D",
+  "effective_host_config": {
+    "seq_len": 168,
+    "pred_len": 24,
+    "channels": 1,
+    "d_model": 64,
+    "e_layers": 2,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 128,
+    "lr": 0.001,
+    "optimizer": "Adam",
+    "weight_decay": 0.0,
+    "scheduler": null,
+    "pct_start": 0.3,
+    "patience": 10,
+    "seed": 7,
+    "device": "cpu",
+    "official_params": {
+      "hidden": 64,
+      "num_layers": 2,
+      "dropout": 0.1
+    }
+  },
+  "official_config": {
+    "hidden": 64,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "d_model": 64
+  },
+  "official_config_width_basis": "hosts.new_host_cfg('LSTM'); declared width := LSTM hidden size 64",
+  "fit_n": 70,
+  "valid_n": 11,
+  "train_seconds": 13.863553800001682,
+  "torch_num_threads": 1,
+  "source_commit": "f2cb27eeff51bdc64a41017091752b792beecf1f",
+  "access_manifest": {
+    "roles_read": [
+      "TRAIN",
+      "VAL"
+    ],
+    "roles_sealed": [
+      "TEST"
+    ],
+    "partitions_never_touched": [
+      "TEST",
+      "PROTECTED_FINAL",
+      "S3",
+      "S4"
+    ],
+    "test_target_values_read": 0,
+    "sealed_final_target_values_read": 0,
+    "imputation_used": false
+  }
+}

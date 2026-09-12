@@ -1,0 +1,259 @@
+{
+  "schema": "common_benchmark_internal_role_map.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "stage_id": "hch_china5_common_benchmark_701020",
+  "why": "frozen baseline entry points may carry an internal role vocabulary that predates this protocol; this file states, by derivation, which protocol partition each internal role name denotes",
+  "methods": {
+    "PIR": {
+      "per_market": {
+        "GANSU_DA": {
+          "cell_schema": "the cell handed to the frozen entry point",
+          "n_fit": 203,
+          "n_eval": 30,
+          "internal_n_val": 20,
+          "internal_splitter": "panel.role_of_day(i, n_fit, n_val) with n_val = max(1, int(panel.VAL_FRACTION * n_fit))",
+          "internal_roles": {
+            "train": {
+              "protocol_partition": "TRAIN",
+              "n_days": 183,
+              "global_day_index_range": [
+                0,
+                182
+              ]
+            },
+            "val": {
+              "protocol_partition": "TRAIN",
+              "n_days": 20,
+              "global_day_index_range": [
+                183,
+                202
+              ]
+            },
+            "test": {
+              "protocol_partition": "VAL",
+              "n_days": 30,
+              "global_day_index_range": [
+                203,
+                232
+              ]
+            }
+          },
+          "cell_days_held": 233,
+          "cell_global_day_index_range": [
+            0,
+            232
+          ],
+          "sealed_partition": {
+            "protocol_partition": "TEST",
+            "global_index_range": [
+              233,
+              290
+            ],
+            "days_in_cell": 0
+          },
+          "assertion": "no protocol TEST day is present in the cell, so no internal role --- whatever it is named --- can denote protocol TEST"
+        },
+        "SHANDONG_DA": {
+          "cell_schema": "the cell handed to the frozen entry point",
+          "n_fit": 809,
+          "n_eval": 116,
+          "internal_n_val": 80,
+          "internal_splitter": "panel.role_of_day(i, n_fit, n_val) with n_val = max(1, int(panel.VAL_FRACTION * n_fit))",
+          "internal_roles": {
+            "train": {
+              "protocol_partition": "TRAIN",
+              "n_days": 729,
+              "global_day_index_range": [
+                0,
+                728
+              ]
+            },
+            "val": {
+              "protocol_partition": "TRAIN",
+              "n_days": 80,
+              "global_day_index_range": [
+                729,
+                808
+              ]
+            },
+            "test": {
+              "protocol_partition": "VAL",
+              "n_days": 116,
+              "global_day_index_range": [
+                809,
+                924
+              ]
+            }
+          },
+          "cell_days_held": 925,
+          "cell_global_day_index_range": [
+            0,
+            924
+          ],
+          "sealed_partition": {
+            "protocol_partition": "TEST",
+            "global_index_range": [
+              925,
+              1155
+            ],
+            "days_in_cell": 0
+          },
+          "assertion": "no protocol TEST day is present in the cell, so no internal role --- whatever it is named --- can denote protocol TEST"
+        },
+        "SHAANXI_DA": {
+          "cell_schema": "the cell handed to the frozen entry point",
+          "n_fit": 198,
+          "n_eval": 30,
+          "internal_n_val": 19,
+          "internal_splitter": "panel.role_of_day(i, n_fit, n_val) with n_val = max(1, int(panel.VAL_FRACTION * n_fit))",
+          "internal_roles": {
+            "train": {
+              "protocol_partition": "TRAIN",
+              "n_days": 179,
+              "global_day_index_range": [
+                0,
+                178
+              ]
+            },
+            "val": {
+              "protocol_partition": "TRAIN",
+              "n_days": 19,
+              "global_day_index_range": [
+                179,
+                197
+              ]
+            },
+            "test": {
+              "protocol_partition": "VAL",
+              "n_days": 30,
+              "global_day_index_range": [
+                198,
+                227
+              ]
+            }
+          },
+          "cell_days_held": 228,
+          "cell_global_day_index_range": [
+            0,
+            227
+          ],
+          "sealed_partition": {
+            "protocol_partition": "TEST",
+            "global_index_range": [
+              228,
+              283
+            ],
+            "days_in_cell": 0
+          },
+          "assertion": "no protocol TEST day is present in the cell, so no internal role --- whatever it is named --- can denote protocol TEST"
+        },
+        "NINGXIA_DA": {
+          "cell_schema": "the cell handed to the frozen entry point",
+          "n_fit": 70,
+          "n_eval": 11,
+          "internal_n_val": 7,
+          "internal_splitter": "panel.role_of_day(i, n_fit, n_val) with n_val = max(1, int(panel.VAL_FRACTION * n_fit))",
+          "internal_roles": {
+            "train": {
+              "protocol_partition": "TRAIN",
+              "n_days": 63,
+              "global_day_index_range": [
+                0,
+                62
+              ]
+            },
+            "val": {
+              "protocol_partition": "TRAIN",
+              "n_days": 7,
+              "global_day_index_range": [
+                63,
+                69
+              ]
+            },
+            "test": {
+              "protocol_partition": "VAL",
+              "n_days": 11,
+              "global_day_index_range": [
+                70,
+                80
+              ]
+            }
+          },
+          "cell_days_held": 81,
+          "cell_global_day_index_range": [
+            0,
+            80
+          ],
+          "sealed_partition": {
+            "protocol_partition": "TEST",
+            "global_index_range": [
+              81,
+              100
+            ],
+            "days_in_cell": 0
+          },
+          "assertion": "no protocol TEST day is present in the cell, so no internal role --- whatever it is named --- can denote protocol TEST"
+        },
+        "QINGHAI_DA": {
+          "cell_schema": "the cell handed to the frozen entry point",
+          "n_fit": 65,
+          "n_eval": 11,
+          "internal_n_val": 6,
+          "internal_splitter": "panel.role_of_day(i, n_fit, n_val) with n_val = max(1, int(panel.VAL_FRACTION * n_fit))",
+          "internal_roles": {
+            "train": {
+              "protocol_partition": "TRAIN",
+              "n_days": 59,
+              "global_day_index_range": [
+                0,
+                58
+              ]
+            },
+            "val": {
+              "protocol_partition": "TRAIN",
+              "n_days": 6,
+              "global_day_index_range": [
+                59,
+                64
+              ]
+            },
+            "test": {
+              "protocol_partition": "VAL",
+              "n_days": 11,
+              "global_day_index_range": [
+                65,
+                75
+              ]
+            }
+          },
+          "cell_days_held": 76,
+          "cell_global_day_index_range": [
+            0,
+            75
+          ],
+          "sealed_partition": {
+            "protocol_partition": "TEST",
+            "global_index_range": [
+              76,
+              93
+            ],
+            "days_in_cell": 0
+          },
+          "assertion": "no protocol TEST day is present in the cell, so no internal role --- whatever it is named --- can denote protocol TEST"
+        }
+      },
+      "entry_point": "experiments/current/hch_frozen_method_baseline_transfer/pir_transfer.py",
+      "keys_governed": [
+        "meta.window_counts.train",
+        "meta.window_counts.val",
+        "meta.window_counts.test",
+        "pir_meta.window_counts.train",
+        "pir_meta.window_counts.val",
+        "pir_meta.window_counts.test"
+      ],
+      "why": "these are window COUNTS of the baseline's own loader slices, not metrics; the slice it names `test` denotes this protocol's VAL block"
+    }
+  },
+  "test_label_read_count": 0,
+  "numeric_sealed_partition_objects_created": 0
+}

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "-m",
+    "pytest",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\tests\\test_core_candidate.py",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\tests\\test_core_safety.py",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\tests\\test_core_purity.py",
+    "D:\\作业\\science\\solar_leak_price_model\\experiments\\foundation\\tests\\test_canonical_core_layout.py",
+    "-q"
+  ],
+  "returncode": 0,
+  "n_passed": 136,
+  "n_failed": 0,
+  "summary_line": "136 passed in 7.42s",
+  "tests": [
+    "test_core_candidate.py",
+    "test_core_safety.py",
+    "test_core_purity.py",
+    "test_canonical_core_layout.py"
+  ],
+  "scope": "active-core regression tests",
+  "passed": true
+}

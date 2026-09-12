@@ -1,0 +1,43 @@
+{
+  "formulas": {
+    "R_lambda": "R(lambda) = sum_i q_i (|z_i - lambda| - |z_i|),  z_i = r_i/c_i, q_i = |c_i|",
+    "alignment_support": "A_align = 2 Q_+ / Q - 1,  R'(0+) = Q - 2 Q_+ = -Q * A_align",
+    "kappa": "kappa_{d,s} = 1 - (W1(S+_d,S+_s) + W1(S-_d,S-_s)) / (2 (H-1))",
+    "wasserstein1": "W1(P,Q) = sum_{h=1}^{H-1} |F_P(h) - F_Q(h)|",
+    "deployment_scale": "lambda = min(alpha_0, lambda_U, lambda_S)",
+    "safe_radius": "delta = right endpoint of the no-harm interval of R, from sorted breakpoints"
+  },
+  "checks": {
+    "alignment_support_matches_formula": true,
+    "alignment_derivative_identity": true,
+    "excess_risk_at_zero_is_zero": true,
+    "excess_risk_matches_hand_computation": true,
+    "uniform_radius_is_right_endpoint_of_no_harm": true,
+    "deployment_scale_is_the_minimum": true,
+    "deployment_scale_never_exceeds_alpha0": true,
+    "deployment_scale_never_negative": true,
+    "non_finite_radius_is_not_a_constraint": true,
+    "nan_radius_is_refused": true,
+    "kappa_is_one_for_identical_shapes": true,
+    "wasserstein1_matches_hand_computation": true,
+    "wasserstein1_is_zero_for_identical_shapes": true
+  },
+  "passed": true,
+  "module_sha256": "06D84B5D5D701EC469BC81F40158AFA43B4E695B04673A25113CA2A6A6CD4896",
+  "analytic_case": {
+    "r": [
+      3.0,
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "c": [
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "lambda_U": 3.0,
+    "A_align": 0.0
+  }
+}

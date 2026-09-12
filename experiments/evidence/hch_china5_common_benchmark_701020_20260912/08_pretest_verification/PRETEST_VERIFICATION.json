@@ -1,0 +1,136 @@
+{
+  "schema": "china5_common_benchmark_pretest_verification.v1",
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "stage_id": "hch_china5_common_benchmark_701020",
+  "verifier": "implementation/cb_p6_verify.py",
+  "verifier_independence": "imports no module from implementation/ and none of the shared stage contracts (panel_contract / run_canary); re-derives the eligible day block, the native role assignment, the 70/10/20 integer split, the source and eligibility hashes, and the TRAIN thresholds from the raw source files",
+  "verifier_test_rows_used": 0,
+  "reader_discipline": "xlsx sources are streamed through openpyxl read_only so an unrequested row is never converted; the csv source is read with parse-time skiprows",
+  "n_checks": 20,
+  "n_passed": 20,
+  "checks": [
+    {
+      "id": "V01",
+      "title": "protocol id exact",
+      "passed": true,
+      "detail": "399 protocol_id fields read, all == COMMON_BENCHMARK_701020_V1; PROTOCOL.md declares it; mismatches=[]"
+    },
+    {
+      "id": "V02",
+      "title": "five split manifests and expected counts",
+      "passed": true,
+      "detail": "5 manifests, counts GANSU_DA:(203, 30, 58) SHANDONG_DA:(809, 116, 231) SHAANXI_DA:(198, 30, 56) NINGXIA_DA:(70, 11, 20) QINGHAI_DA:(65, 11, 18); independent re-derivation agrees; problems=[]"
+    },
+    {
+      "id": "V03",
+      "title": "chronological order",
+      "passed": true,
+      "detail": "all five markets are strictly chronological, TRAIN<VAL<TEST, blocks contiguous; problems=[]"
+    },
+    {
+      "id": "V04",
+      "title": "source and eligibility hashes",
+      "passed": true,
+      "detail": "source bytes, target column and eligibility-contract hash reproduce from disk; every split manifest re-hashes to its SPLIT_INDEX value (GANSU_DA:delivered object = hashed body + self-referential 'split_manifest_sha256'); problems=[]"
+    },
+    {
+      "id": "V05",
+      "title": "TEST-label read count == 0",
+      "passed": true,
+      "detail": "147 read-audit fields == 0; 90 npz containers carry TRAIN/VAL only; verifier TEST rows materialised = 0; problems=[]"
+    },
+    {
+      "id": "V06",
+      "title": "20 protocol-scoped Host checkpoints/configs ready",
+      "passed": true,
+      "detail": "20/20 protocol-scoped Host checkpoints and configs ready with matching hashes and budgets; problems=[]"
+    },
+    {
+      "id": "V07",
+      "title": "no old low-shot checkpoint substitution",
+      "passed": true,
+      "detail": "compared against 1193 pre-existing .npz and their manifest hashes (1065 distinct digests); no substitution; problems=[]"
+    },
+    {
+      "id": "V08",
+      "title": "Host scaler uses TRAIN only",
+      "passed": true,
+      "detail": "all 20 Host scalers declare TRAIN-only fitting in both the freeze manifest and the cache metadata; problems=[]"
+    },
+    {
+      "id": "V09",
+      "title": "Host selection uses VAL only",
+      "passed": true,
+      "detail": "checkpoint selection and the Host gate both run on VAL only; problems=[]"
+    },
+    {
+      "id": "V10",
+      "title": "baseline fit semantics match the admitted contracts",
+      "passed": true,
+      "detail": "120 rows; settings/fit semantics/scaler partition checked; blocked coordinates echo the strict-registry blocker codes; problems=[]"
+    },
+    {
+      "id": "V11",
+      "title": "blocked coordinates hold no proxy numeric object",
+      "passed": true,
+      "detail": "70 numeric-ready, 50 blocked, scanned 190 baseline objects; no blocked coordinate carries a numeric object or a proxy metric; problems=[]"
+    },
+    {
+      "id": "V12",
+      "title": "active core tree hash frozen",
+      "passed": true,
+      "detail": "src/core tree digest 9B278C5A22C8E88D66A0D6AAD8347C55799BF8A4152484DEDF1E0E8EC695D7AB (13 files) reproduced independently; problems=[]"
+    },
+    {
+      "id": "V13",
+      "title": "M0/M1/M2 definitions frozen",
+      "passed": true,
+      "detail": "M0/M1/M2 frozen with their exact deployment rules (M1 min(alpha_0, lambda_U_d), M2 min(alpha_0, lambda_U_d, lambda_S_d)) and one shared candidate generator; problems=[]"
+    },
+    {
+      "id": "V14",
+      "title": "W == 7 fixed",
+      "passed": true,
+      "detail": "HISTORY_DAYS == 7 in src/core/history.py, no capacity argument, and the manifest freezes 7 warm-start records; problems=[]"
+    },
+    {
+      "id": "V15",
+      "title": "method-training manifest frozen",
+      "passed": true,
+      "detail": "the delivered manifest re-hashes to B350865FF629D7E736F21E928A9A0100ED0F49D755208A46064E81B034319675 (delivered object = hashed body + self-referential 'method_training_manifest_sha256'); status FROZEN_PRETEST_NO_TEST_RESULT; no method training ran; the harness blocker is documented; problems=[]"
+    },
+    {
+      "id": "V16",
+      "title": "thresholds fitted on TRAIN only",
+      "passed": true,
+      "detail": "q05/q95/S90 re-derived from TRAIN source values only and match bit-exactly under the benchmark's float32 window representation (GANSU_DA:q05=40.4355,q95=600.0000,S90=559.7470; SHANDONG_DA:q05=-80.0000,q95=633.8921,S90=822.7760; SHAANXI_DA:q05=40.0000,q95=550.0000,S90=857.8797; NINGXIA_DA:q05=40.0000,q95=384.0000,S90=349.4776; QINGHAI_DA:q05=80.0000,q95=650.0000,S90=570.0000); the same numbers read as float64 from source differ by at most 5.86e-05 absolute (the window-dtype cast); harm units declared; problems=[]"
+    },
+    {
+      "id": "V17",
+      "title": "old strict-results lab unchanged",
+      "passed": true,
+      "detail": "experiments/lab/strict_results digest 1d3850d74f225f18a9dd24f9f0a11dea7bcada7d3d97d5a8889334f442492e41 (30 files) reproduced and bit-identical to the pre-P1 record; problems=[]"
+    },
+    {
+      "id": "V18",
+      "title": "new common-benchmark lab holds no TEST numeric row",
+      "passed": true,
+      "detail": "20 files in the new lab, 0 TEST rows; the lab is scaffold-only and holds no TEST numeric object; problems=[]"
+    },
+    {
+      "id": "V19",
+      "title": "no scientific TEST metric exists anywhere",
+      "passed": true,
+      "detail": "no scientific TEST metric exists anywhere: 0 unrecognised numeric TEST keys, 86 non-numeric TEST keys (audit flags, all name-only); 20 numeric TEST keys attributed to a non-TEST protocol partition by derivation (INTERNAL_ROLE_MAP.json, day count cross-checked against the split manifest); no npz carries a TEST row; P4 disclaims a TEST metric; attributed=[\"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\GANSU_DA\\\\PatchTST\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 605 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\GANSU_DA\\\\PatchTST\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 605 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\GANSU_DA\\\\TimeMixer\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 605 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\GANSU_DA\\\\TimeMixer\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 605 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\NINGXIA_DA\\\\PatchTST\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\NINGXIA_DA\\\\PatchTST\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\NINGXIA_DA\\\\TimeMixer\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\NINGXIA_DA\\\\TimeMixer\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\QINGHAI_DA\\\\PatchTST\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\QINGHAI_DA\\\\PatchTST\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\QINGHAI_DA\\\\TimeMixer\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\QINGHAI_DA\\\\TimeMixer\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (11 days; manifest VAL=11); 241 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHAANXI_DA\\\\PatchTST\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 674 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHAANXI_DA\\\\PatchTST\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 674 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHAANXI_DA\\\\TimeMixer\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 674 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHAANXI_DA\\\\TimeMixer\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (30 days; manifest VAL=30); 674 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHANDONG_DA\\\\PatchTST\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (116 days; manifest VAL=116); 2761 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHANDONG_DA\\\\PatchTST\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (116 days; manifest VAL=116); 2761 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHANDONG_DA\\\\TimeMixer\\\\PIR.json:meta.window_counts.test -> internal role 'test' is the protocol VAL block (116 days; manifest VAL=116); 2761 counts windows in that slice\", \"experiments\\\\evidence\\\\hch_china5_common_benchmark_701020_20260912\\\\03_baselines\\\\SHANDONG_DA\\\\TimeMixer\\\\PIR.json:pir_meta.window_counts.test -> internal role 'test' is the protocol VAL block (116 days; manifest VAL=116); 2761 counts windows in that slice\"]; problems=[]"
+    },
+    {
+      "id": "V20",
+      "title": "no protected/old final role repurposed as TEST",
+      "passed": true,
+      "detail": "no protected or old final role is used as TEST in any market; TEST ⊂ the open block and is disjoint from the sealed role; problems=[]"
+    }
+  ],
+  "passed": true,
+  "verdict_token": "CHINA5_COMMON_BENCHMARK_PRETEST_VERIFIED",
+  "generated_utc": "2026-09-12T16:18:14+00:00"
+}

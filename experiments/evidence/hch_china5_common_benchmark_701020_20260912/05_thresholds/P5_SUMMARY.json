@@ -1,0 +1,23 @@
+{
+  "protocol_id": "COMMON_BENCHMARK_701020_V1",
+  "threshold_freeze_path": "experiments/evidence/hch_china5_common_benchmark_701020_20260912/05_thresholds/THRESHOLD_FREEZE.json",
+  "threshold_freeze_sha256": "FE43B861A059EADEB8779D3D5C8CC828F86176981D54E301A33D758D0CED5EA3",
+  "metric_contract_sha256": "1CFB07862083A7FEC7518560BC35944E2102FDB8B831CC27CBDA595D95ABEBC8",
+  "fit_partition": "TRAIN",
+  "test_target_values_read": 0,
+  "n_harm_fields_with_declared_unit": 2,
+  "target_representation": "float32",
+  "max_abs_deviation_float64_vs_float32_by_market": {
+    "GANSU_DA": 2.929687502728484e-05,
+    "SHANDONG_DA": 5.859375005456968e-05,
+    "SHAANXI_DA": 2.929687502728484e-05,
+    "NINGXIA_DA": 1.5136718729991117e-05,
+    "QINGHAI_DA": 2.6855468831854523e-05
+  },
+  "harm_fields": {
+    "Normal_harm_vs_Host": "ABSOLUTE_PRICE",
+    "Normal_harm_vs_Host_pct": "PERCENT_OF_HOST_NORMAL_REGION_MAE"
+  },
+  "rederivation_passed": true,
+  "passed": true
+}
