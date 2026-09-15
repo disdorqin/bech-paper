@@ -1,0 +1,65 @@
+{
+  "caveat": "protocol section 10: a development target, not a claim of baseline competitiveness",
+  "n_positive": 3,
+  "panel_median_gain_pct": -0.2685382153568385,
+  "rows": [
+    {
+      "gain_vs_host_pct": 11.502892363072991,
+      "host": "LSTM",
+      "host_overall_mae": 81.16556549072266,
+      "market": "GANSU_DA",
+      "r1_repaired_overall_mae": 71.82917785644531
+    },
+    {
+      "gain_vs_host_pct": -1.995109879946896,
+      "host": "TimeMixer",
+      "host_overall_mae": 69.70817565917969,
+      "market": "GANSU_DA",
+      "r1_repaired_overall_mae": 71.09893035888672
+    },
+    {
+      "gain_vs_host_pct": 1.1297162114673427,
+      "host": "PatchTST",
+      "host_overall_mae": 73.0120620727539,
+      "market": "GANSU_DA",
+      "r1_repaired_overall_mae": 72.1872329711914
+    },
+    {
+      "gain_vs_host_pct": 1.8300989106742178,
+      "host": "TimeMixer",
+      "host_overall_mae": 68.57537841796875,
+      "market": "SHANDONG_DA",
+      "r1_repaired_overall_mae": 67.32038116455078
+    },
+    {
+      "gain_vs_host_pct": -1.3035883009592035,
+      "host": "iTransformer",
+      "host_overall_mae": 65.5018310546875,
+      "market": "SHANDONG_DA",
+      "r1_repaired_overall_mae": 66.35570526123047
+    },
+    {
+      "gain_vs_host_pct": -0.41263393343440014,
+      "host": "TimeMixer",
+      "host_overall_mae": 110.73175811767578,
+      "market": "SHAANXI_DA",
+      "r1_repaired_overall_mae": 111.18867492675781
+    },
+    {
+      "gain_vs_host_pct": -1.6049370630758109,
+      "host": "PatchTST",
+      "host_overall_mae": 116.12726593017578,
+      "market": "SHAANXI_DA",
+      "r1_repaired_overall_mae": 117.99103546142578
+    },
+    {
+      "gain_vs_host_pct": -0.12444249727927686,
+      "host": "LSTM",
+      "host_overall_mae": 68.75145721435547,
+      "market": "NINGXIA_DA",
+      "r1_repaired_overall_mae": 68.8370132446289
+    }
+  ],
+  "schema": "rcl_v4_1_host_comparison.v1",
+  "worst_gain_pct": -1.995109879946896
+}

@@ -1,0 +1,50 @@
+{
+  "authorization_token": "HCH_RESIDUAL_COMPLETE_LOCAL_V4_1_SCIENTIFIC_EXECUTION",
+  "cells": [
+    [
+      "GANSU_DA",
+      "LSTM"
+    ],
+    [
+      "GANSU_DA",
+      "TimeMixer"
+    ],
+    [
+      "GANSU_DA",
+      "PatchTST"
+    ],
+    [
+      "SHANDONG_DA",
+      "TimeMixer"
+    ],
+    [
+      "SHANDONG_DA",
+      "iTransformer"
+    ],
+    [
+      "SHAANXI_DA",
+      "TimeMixer"
+    ],
+    [
+      "SHAANXI_DA",
+      "PatchTST"
+    ],
+    [
+      "NINGXIA_DA",
+      "LSTM"
+    ]
+  ],
+  "protocol_id": "HCH_RESIDUAL_COMPLETE_LOCAL_V4_1_20260915",
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "test_label_read_count": 0,
+  "variants": [
+    "R1_RCL_ORTHOGONAL",
+    "R0_STACK_ZERO_SUM",
+    "R2_UNTIED_Q",
+    "R3_DIRECT_Q"
+  ]
+}

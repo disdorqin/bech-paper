@@ -1,0 +1,380 @@
+{
+  "cells": [
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 45.31666690844391,
+        "gain_vs_host_pct": 10.276031479152248,
+        "host_overall_mae": 81.16556549072266,
+        "level_mae": 45.316666041101726,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 72.82495877180722,
+        "repaired_overall_mae": 72.82496643066406
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 46.662099500497185,
+        "gain_vs_host_pct": 11.502892363072991,
+        "host_overall_mae": 81.16556549072266,
+        "level_mae": 45.316666041101726,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 71.82917469547736,
+        "repaired_overall_mae": 71.82917785644531
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 45.40549475522268,
+        "gain_vs_host_pct": 9.38965926975082,
+        "host_overall_mae": 81.16556549072266,
+        "level_mae": 45.316666041101726,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 73.54439488904816,
+        "repaired_overall_mae": 73.54439544677734
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 45.41252412682488,
+        "gain_vs_host_pct": 12.205639630952877,
+        "host_overall_mae": 81.16556549072266,
+        "level_mae": 45.316666041101726,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 71.25879745400466,
+        "repaired_overall_mae": 71.2587890625
+      },
+      "host": "LSTM",
+      "market": "GANSU_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 50.90752242481899,
+        "gain_vs_host_pct": -2.3397057391053093,
+        "host_overall_mae": 69.70817565917969,
+        "level_mae": 50.907521673611235,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 71.33913789677715,
+        "repaired_overall_mae": 71.33914184570312
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 50.80149082626615,
+        "gain_vs_host_pct": -1.995109879946896,
+        "host_overall_mae": 69.70817565917969,
+        "level_mae": 50.907521673611235,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 71.09892378250758,
+        "repaired_overall_mae": 71.09893035888672
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 51.28552093108495,
+        "gain_vs_host_pct": -2.3609604686109673,
+        "host_overall_mae": 69.70817565917969,
+        "level_mae": 50.907521673611235,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 71.35395496681569,
+        "repaired_overall_mae": 71.35395812988281
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 51.13295701571873,
+        "gain_vs_host_pct": 0.413876208165012,
+        "host_overall_mae": 69.70817565917969,
+        "level_mae": 50.907521673611235,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 69.4196757896552,
+        "repaired_overall_mae": 69.41967010498047
+      },
+      "host": "TimeMixer",
+      "market": "GANSU_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 57.29496072152295,
+        "gain_vs_host_pct": -0.061631143769742366,
+        "host_overall_mae": 73.0120620727539,
+        "level_mae": 57.294960721617656,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 73.0570614275203,
+        "repaired_overall_mae": 73.05706024169922
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 55.430332855454516,
+        "gain_vs_host_pct": 1.1297162114673427,
+        "host_overall_mae": 73.0120620727539,
+        "level_mae": 57.294960721617656,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 72.18723785022776,
+        "repaired_overall_mae": 72.1872329711914
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 57.297113526035986,
+        "gain_vs_host_pct": -0.9648440198093238,
+        "host_overall_mae": 73.0120620727539,
+        "level_mae": 57.294960721617656,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 73.71651697070116,
+        "repaired_overall_mae": 73.71651458740234
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 56.75406022440819,
+        "gain_vs_host_pct": 0.7654989316954929,
+        "host_overall_mae": 73.0120620727539,
+        "level_mae": 57.294960721617656,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 72.45315581023516,
+        "repaired_overall_mae": 72.45315551757812
+      },
+      "host": "PatchTST",
+      "market": "GANSU_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 34.84631371115106,
+        "gain_vs_host_pct": 2.214231103682204,
+        "host_overall_mae": 68.57537841796875,
+        "level_mae": 34.84631374280855,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 67.05696462394205,
+        "repaired_overall_mae": 67.05696105957031
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 36.16521742850183,
+        "gain_vs_host_pct": 1.8300989106742178,
+        "host_overall_mae": 68.57537841796875,
+        "level_mae": 34.84631374280855,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 67.3203839903256,
+        "repaired_overall_mae": 67.32038116455078
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 35.17031142923487,
+        "gain_vs_host_pct": 2.259100485163399,
+        "host_overall_mae": 68.57537841796875,
+        "level_mae": 34.84631374280855,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 67.02619144420727,
+        "repaired_overall_mae": 67.02619171142578
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 35.0945222584239,
+        "gain_vs_host_pct": 2.9658182760011003,
+        "host_overall_mae": 68.57537841796875,
+        "level_mae": 34.84631374280855,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 66.54155879089213,
+        "repaired_overall_mae": 66.54155731201172
+      },
+      "host": "TimeMixer",
+      "market": "SHANDONG_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 30.464716673852863,
+        "gain_vs_host_pct": -0.2535217698395985,
+        "host_overall_mae": 65.5018310546875,
+        "level_mae": 30.464716673615467,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 65.66789275669542,
+        "repaired_overall_mae": 65.66789245605469
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 30.73888437791043,
+        "gain_vs_host_pct": -1.3035883009592035,
+        "host_overall_mae": 65.5018310546875,
+        "level_mae": 30.464716673615467,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 66.35570040207551,
+        "repaired_overall_mae": 66.35570526123047
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 30.475746370223632,
+        "gain_vs_host_pct": -0.26838411378498706,
+        "host_overall_mae": 65.5018310546875,
+        "level_mae": 30.464716673615467,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 65.67762598513539,
+        "repaired_overall_mae": 65.67762756347656
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 30.55570556169533,
+        "gain_vs_host_pct": -3.2868609425055584,
+        "host_overall_mae": 65.5018310546875,
+        "level_mae": 30.464716673615467,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 67.6547842308819,
+        "repaired_overall_mae": 67.65478515625
+      },
+      "host": "iTransformer",
+      "market": "SHANDONG_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 48.54141182529312,
+        "gain_vs_host_pct": -0.026092349278099038,
+        "host_overall_mae": 110.73175811767578,
+        "level_mae": 48.541411825588774,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 110.76064690441889,
+        "repaired_overall_mae": 110.76065063476562
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 50.48317833741506,
+        "gain_vs_host_pct": -0.41263393343440014,
+        "host_overall_mae": 110.73175811767578,
+        "level_mae": 48.541411825588774,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 111.18867743653911,
+        "repaired_overall_mae": 111.18867492675781
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 48.55689979504262,
+        "gain_vs_host_pct": -0.026305938617317698,
+        "host_overall_mae": 110.73175811767578,
+        "level_mae": 48.541411825588774,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 110.76089540483164,
+        "repaired_overall_mae": 110.7608871459961
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 50.550119621413096,
+        "gain_vs_host_pct": -0.007041558215531349,
+        "host_overall_mae": 110.73175811767578,
+        "level_mae": 48.541411825588774,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 110.73955163678953,
+        "repaired_overall_mae": 110.73955535888672
+      },
+      "host": "TimeMixer",
+      "market": "SHAANXI_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 57.46313095196253,
+        "gain_vs_host_pct": -0.06220996958616409,
+        "host_overall_mae": 116.12726593017578,
+        "level_mae": 57.463130950927734,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 116.19950409539389,
+        "repaired_overall_mae": 116.19950866699219
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 63.17936516943432,
+        "gain_vs_host_pct": -1.6049370630758109,
+        "host_overall_mae": 116.12726593017578,
+        "level_mae": 57.463130950927734,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 117.99103673109933,
+        "repaired_overall_mae": 117.99103546142578
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 57.46614716051235,
+        "gain_vs_host_pct": -0.06646066663149604,
+        "host_overall_mae": 116.12726593017578,
+        "level_mae": 57.463130950927734,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 116.20445045263004,
+        "repaired_overall_mae": 116.2044448852539
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 61.0207800978706,
+        "gain_vs_host_pct": -0.8213240192042156,
+        "host_overall_mae": 116.12726593017578,
+        "level_mae": 57.463130950927734,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 117.08105079474903,
+        "repaired_overall_mae": 117.08104705810547
+      },
+      "host": "PatchTST",
+      "market": "SHAANXI_DA"
+    },
+    {
+      "R0_STACK_ZERO_SUM": {
+        "delta_mae": 57.574071371927865,
+        "gain_vs_host_pct": -1.7127322518798707,
+        "host_overall_mae": 68.75145721435547,
+        "level_mae": 57.574071388691664,
+        "n_parameters": 22211.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 69.92898293495334,
+        "repaired_overall_mae": 69.92898559570312
+      },
+      "R1_RCL_ORTHOGONAL": {
+        "delta_mae": 57.5827603880316,
+        "gain_vs_host_pct": -0.12444249727927686,
+        "host_overall_mae": 68.75145721435547,
+        "level_mae": 57.574071388691664,
+        "n_parameters": 23332.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 68.83701193189093,
+        "repaired_overall_mae": 68.8370132446289
+      },
+      "R2_UNTIED_Q": {
+        "delta_mae": 57.632984371855855,
+        "gain_vs_host_pct": -2.33528874731992,
+        "host_overall_mae": 68.75145721435547,
+        "level_mae": 57.574071388691664,
+        "n_parameters": 22244.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 70.35699988746394,
+        "repaired_overall_mae": 70.35700225830078
+      },
+      "R3_DIRECT_Q": {
+        "delta_mae": 57.879656951874495,
+        "gain_vs_host_pct": -3.0331166409270223,
+        "host_overall_mae": 68.75145721435547,
+        "level_mae": 57.574071388691664,
+        "n_parameters": 19984.0,
+        "n_seeds": 3,
+        "q_reconstruction_mae": 70.8367658026206,
+        "repaired_overall_mae": 70.8367691040039
+      },
+      "host": "LSTM",
+      "market": "NINGXIA_DA"
+    }
+  ],
+  "panel": {
+    "R0_STACK_ZERO_SUM": {
+      "median_gain_vs_host_pct": -0.06192055667795323,
+      "median_n_parameters": 22211.0,
+      "median_repaired_overall_mae": 72.0820541381836
+    },
+    "R1_RCL_ORTHOGONAL": {
+      "median_gain_vs_host_pct": -0.2685382153568385,
+      "median_n_parameters": 23332.0,
+      "median_repaired_overall_mae": 71.46405410766602
+    },
+    "R2_UNTIED_Q": {
+      "median_gain_vs_host_pct": -0.16742239020824154,
+      "median_n_parameters": 22244.0,
+      "median_repaired_overall_mae": 72.44917678833008
+    },
+    "R3_DIRECT_Q": {
+      "median_gain_vs_host_pct": 0.20341732497474033,
+      "median_n_parameters": 19984.0,
+      "median_repaired_overall_mae": 71.04777908325195
+    }
+  },
+  "schema": "rcl_v4_1_cell_median_table.v1",
+  "unit": "per-cell metric = median across seeds 7/17/37 (section 9)"
+}

@@ -1,0 +1,44 @@
+{
+  "after": {
+    "files": {
+      "src/core/__init__.py": "53fd560940f16f987e61a44801335ae4a5a089c1e86365c0be3def3726a3948b",
+      "src/core/amplitude.py": "0c72d95e7e1e1272500887dc9d2fdf2ab2233c8bcff5f06465602ad523e21582",
+      "src/core/calibration.py": "6996f7302a165821288ff70a4c15b3dd71c0f85591547d769f7d9c76ea541b2b",
+      "src/core/contracts.py": "573e1ceb859b631d12e7dabd3177e533067dd71a2c34f2862a7a0f000c4ac622",
+      "src/core/encoders.py": "b04b30c7cf08f0749847c4cfe3b120910b2fe2d5fbb96ed26d47c34a44644453",
+      "src/core/fusion.py": "f9d5f905aaac649e85381eacfa03af5849009633b27d6a20ea14082f3d86f792",
+      "src/core/losses.py": "ab3e3047a2d03199cedf80fb66a24d47570d9f081166d846873a0712811363c7",
+      "src/core/model.py": "9114b52f525bfb6cf7c42515285840ee034b2417ad76e1bc05c7b2d20ebad7a4",
+      "src/core/preprocessing.py": "95ef41357c87cd5f3c87db4e0fe96ab2802a9ca483530b11a184c094a5ef0fc2",
+      "src/core/shape.py": "92e3ed1657532d99596da619e81e68ea839686a96d468835f4c5e51862dbd9a4",
+      "src/core/stem.py": "b04cc1d55e0a035e16f23e4daa000ae60977d0b8d66c403b44f214c3790c8315",
+      "src/core/targets.py": "b11d4e1f974679f65ea975dbcdf989eeb40029fc000256ad706b7651af4f0e1f"
+    },
+    "latest_mtime": 1789480099.8795872,
+    "n_files": 12,
+    "tree_digest": "68891c77b3974cc327c67db571d1b8de6a6db135ccf909a7ccff83684efa91b3"
+  },
+  "before": {
+    "files": {
+      "src/core/__init__.py": "53fd560940f16f987e61a44801335ae4a5a089c1e86365c0be3def3726a3948b",
+      "src/core/amplitude.py": "0c72d95e7e1e1272500887dc9d2fdf2ab2233c8bcff5f06465602ad523e21582",
+      "src/core/calibration.py": "6996f7302a165821288ff70a4c15b3dd71c0f85591547d769f7d9c76ea541b2b",
+      "src/core/contracts.py": "573e1ceb859b631d12e7dabd3177e533067dd71a2c34f2862a7a0f000c4ac622",
+      "src/core/encoders.py": "b04b30c7cf08f0749847c4cfe3b120910b2fe2d5fbb96ed26d47c34a44644453",
+      "src/core/fusion.py": "f9d5f905aaac649e85381eacfa03af5849009633b27d6a20ea14082f3d86f792",
+      "src/core/losses.py": "ab3e3047a2d03199cedf80fb66a24d47570d9f081166d846873a0712811363c7",
+      "src/core/model.py": "9114b52f525bfb6cf7c42515285840ee034b2417ad76e1bc05c7b2d20ebad7a4",
+      "src/core/preprocessing.py": "95ef41357c87cd5f3c87db4e0fe96ab2802a9ca483530b11a184c094a5ef0fc2",
+      "src/core/shape.py": "92e3ed1657532d99596da619e81e68ea839686a96d468835f4c5e51862dbd9a4",
+      "src/core/stem.py": "b04cc1d55e0a035e16f23e4daa000ae60977d0b8d66c403b44f214c3790c8315",
+      "src/core/targets.py": "b11d4e1f974679f65ea975dbcdf989eeb40029fc000256ad706b7651af4f0e1f"
+    },
+    "latest_mtime": 1789480099.8795872,
+    "n_files": 12,
+    "tree_digest": "68891c77b3974cc327c67db571d1b8de6a6db135ccf909a7ccff83684efa91b3"
+  },
+  "changed_files": [],
+  "definition": "``src/core`` was read-only for this round; the digest is phase0_gate.tree_digest, evaluated over the same 12 files before and after",
+  "schema": "rcl_v4_1_src_core_audit.v1",
+  "unchanged": true
+}

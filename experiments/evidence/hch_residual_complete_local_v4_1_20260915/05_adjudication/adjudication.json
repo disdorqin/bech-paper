@@ -1,0 +1,72 @@
+{
+  "R1_vs_Host": {
+    "caveat": "protocol section 10: a development target, not a claim of baseline competitiveness",
+    "clauses": {
+      "panel_median_gain_ge_1pct": false,
+      "positive_ge_7_of_8": false,
+      "worst_loss_ge_minus_0p5pct": false
+    },
+    "measured": {
+      "n_positive_cells": 3,
+      "panel_median_gain_pct": -0.2685382153568385,
+      "worst_gain_pct": -1.995109879946896
+    },
+    "status": "DEVELOPMENT_TARGET_NOT_MET"
+  },
+  "R1_vs_R0": {
+    "clauses": {
+      "delta_beats_zero_delta_ge_5_of_8": false,
+      "panel_median_gain_ge_0p75pct": false,
+      "panel_median_mean_floor_reduction_ge_25pct": false,
+      "positive_cells_ge_5_of_8": false,
+      "worst_degradation_ge_minus_0p75pct": false
+    },
+    "label": "MIXED/NOT_SUPPORTED",
+    "measured": {
+      "delta_beats_zero_delta_cells": 2,
+      "n_positive_cells": 4,
+      "panel_median_gain_pct": -0.02486154793403947,
+      "panel_median_mean_floor_reduction_pct": -1.9344555462799389,
+      "worst_gain_pct": -1.5417679601105727
+    }
+  },
+  "R1_vs_R2": {
+    "label": "LOCAL_PARAMETERIZATION_MIXED",
+    "measured": {
+      "n_cells_r1_non_worse": 4,
+      "n_cells_r2_better": 4,
+      "panel_median_r1_improvement_pct": -0.014407083535289356,
+      "panel_median_r2_improvement_pct": 0.013023090455335173
+    }
+  },
+  "R1_vs_R3": {
+    "label": "MIXED",
+    "measured": {
+      "matched_capacity": true,
+      "median_parameter_ratio_r3_over_r1": 0.8565060860620607,
+      "n_cells_r1_within_0p5pct": 2,
+      "n_cells_r3_better": 5,
+      "panel_median_r3_improvement_pct": 0.5875804225968829
+    }
+  },
+  "aggregation": "per-cell = median across seeds 7/17/37; panel = median across the 8 cells (section 9)",
+  "schema": "rcl_v4_1_adjudication.v1",
+  "tail_extreme_normal": {
+    "median_extreme_mae": 99.84808158874512,
+    "median_lower_mae": 71.0632495880127,
+    "median_normal_harm": 4.730887174606323,
+    "median_normal_host_mae": 77.80525207519531,
+    "median_normal_mae": 73.17851257324219,
+    "median_tail_mae": 145.5516815185547,
+    "median_upper_mae": 247.21500396728516,
+    "n_cells_extreme_nonempty": 8,
+    "n_cells_failure_tail_nonempty": 3,
+    "n_cells_lower_nonempty": 8,
+    "n_cells_normal_harm_nonempty": 8,
+    "n_cells_normal_harm_positive": 8,
+    "n_cells_normal_host_nonempty": 8,
+    "n_cells_normal_improved": 3,
+    "n_cells_normal_nonempty": 8,
+    "n_cells_upper_nonempty": 4
+  }
+}

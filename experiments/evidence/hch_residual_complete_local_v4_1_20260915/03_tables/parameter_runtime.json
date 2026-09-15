@@ -1,0 +1,85 @@
+{
+  "panel": {
+    "ceiling": 1.25,
+    "max_fit_seconds": 5.291777610778809,
+    "max_ratio_r3_over_r1": 0.8565060860620607,
+    "median_fit_seconds": 2.6102272272109985,
+    "median_r1_n_parameters": 23332.0,
+    "total_fit_seconds": 248.7804982662201
+  },
+  "rows": [
+    {
+      "host": "LSTM",
+      "market": "GANSU_DA",
+      "r1_best_epoch": 13.0,
+      "r1_epochs_run": 21.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "TimeMixer",
+      "market": "GANSU_DA",
+      "r1_best_epoch": 37.0,
+      "r1_epochs_run": 45.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "PatchTST",
+      "market": "GANSU_DA",
+      "r1_best_epoch": 24.0,
+      "r1_epochs_run": 32.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "TimeMixer",
+      "market": "SHANDONG_DA",
+      "r1_best_epoch": 7.0,
+      "r1_epochs_run": 15.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "iTransformer",
+      "market": "SHANDONG_DA",
+      "r1_best_epoch": 10.0,
+      "r1_epochs_run": 18.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "TimeMixer",
+      "market": "SHAANXI_DA",
+      "r1_best_epoch": 13.0,
+      "r1_epochs_run": 21.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "PatchTST",
+      "market": "SHAANXI_DA",
+      "r1_best_epoch": 20.0,
+      "r1_epochs_run": 28.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    },
+    {
+      "host": "LSTM",
+      "market": "NINGXIA_DA",
+      "r1_best_epoch": 10.0,
+      "r1_epochs_run": 18.0,
+      "r1_n_parameters": 23332.0,
+      "r3_n_parameters": 19984.0,
+      "ratio_r3_over_r1": 0.8565060860620607
+    }
+  ],
+  "schema": "rcl_v4_1_parameter_runtime_table.v1"
+}

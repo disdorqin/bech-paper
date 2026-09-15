@@ -1,0 +1,104 @@
+{
+  "forbidden_path_tokens": [
+    "joint.npz",
+    "PROTECTED_FINAL",
+    "QINGHAI",
+    "foreign_market"
+  ],
+  "host_cache_untouched_checks": {
+    "host_untouched:GANSU_DA/LSTM": {
+      "check": "host_untouched:GANSU_DA/LSTM",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:GANSU_DA/PatchTST": {
+      "check": "host_untouched:GANSU_DA/PatchTST",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:GANSU_DA/TimeMixer": {
+      "check": "host_untouched:GANSU_DA/TimeMixer",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:NINGXIA_DA/LSTM": {
+      "check": "host_untouched:NINGXIA_DA/LSTM",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:SHAANXI_DA/PatchTST": {
+      "check": "host_untouched:SHAANXI_DA/PatchTST",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:SHAANXI_DA/TimeMixer": {
+      "check": "host_untouched:SHAANXI_DA/TimeMixer",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:SHANDONG_DA/TimeMixer": {
+      "check": "host_untouched:SHANDONG_DA/TimeMixer",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    },
+    "host_untouched:SHANDONG_DA/iTransformer": {
+      "check": "host_untouched:SHANDONG_DA/iTransformer",
+      "detail": "the Host cache must be byte-identical to the recorded source",
+      "mandate": true,
+      "ok": true
+    }
+  },
+  "joint_file": "host_predictions_joint.npz was never opened by the runner or the verifier; every Host read is the non-joint host_predictions.npz, whose loaded rows must equal the metadata fit_n + valid_n",
+  "runner_audit_block": {
+    "baseline_rerun": false,
+    "cells_read": 8,
+    "core_modified": false,
+    "foreign_read": false,
+    "host_retrained": false,
+    "markets_read": [
+      "GANSU_DA",
+      "SHANDONG_DA",
+      "SHAANXI_DA",
+      "NINGXIA_DA"
+    ],
+    "protected_final_read": false,
+    "seeds_run": 96,
+    "split_modified": false,
+    "test_label_read_count": 0
+  },
+  "schema": "rcl_v4_1_read_set_audit.v1",
+  "test_label_read_count": {
+    "index": 0,
+    "manifest": 0,
+    "records": [
+      0
+    ]
+  },
+  "verifier_boundary_checks": {
+    "source_boundary_scan": {
+      "check": "source_boundary_scan",
+      "detail": "",
+      "mandate": true,
+      "ok": true
+    },
+    "test_label_read_count_index": {
+      "check": "test_label_read_count_index",
+      "detail": "index and manifest must both report 0",
+      "mandate": true,
+      "ok": true
+    },
+    "test_label_read_count_records": {
+      "check": "test_label_read_count_records",
+      "detail": "every record must report 0",
+      "mandate": true,
+      "ok": true
+    }
+  }
+}

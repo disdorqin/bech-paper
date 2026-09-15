@@ -1,0 +1,77 @@
+{
+  "audit": {
+    "baseline_rerun": false,
+    "cells_read": 8,
+    "core_modified": false,
+    "foreign_read": false,
+    "host_retrained": false,
+    "markets_read": [
+      "GANSU_DA",
+      "SHANDONG_DA",
+      "SHAANXI_DA",
+      "NINGXIA_DA"
+    ],
+    "protected_final_read": false,
+    "seeds_run": 96,
+    "split_modified": false,
+    "test_label_read_count": 0
+  },
+  "cells": [
+    [
+      "GANSU_DA",
+      "LSTM"
+    ],
+    [
+      "GANSU_DA",
+      "TimeMixer"
+    ],
+    [
+      "GANSU_DA",
+      "PatchTST"
+    ],
+    [
+      "SHANDONG_DA",
+      "TimeMixer"
+    ],
+    [
+      "SHANDONG_DA",
+      "iTransformer"
+    ],
+    [
+      "SHAANXI_DA",
+      "TimeMixer"
+    ],
+    [
+      "SHAANXI_DA",
+      "PatchTST"
+    ],
+    [
+      "NINGXIA_DA",
+      "LSTM"
+    ]
+  ],
+  "closure_ratio_by_variant": {
+    "R0_STACK_ZERO_SUM": 0.9999999843741579,
+    "R1_RCL_ORTHOGONAL": 1.0496606518782323,
+    "R2_UNTIED_Q": 1.0016011765339219,
+    "R3_DIRECT_Q": 1.024347213391438
+  },
+  "completed_fits": 96,
+  "expected_fits": 96,
+  "protocol_id": "HCH_RESIDUAL_COMPLETE_LOCAL_V4_1_20260915",
+  "records_sha256": "2e39b5235e65e4bf606c7dd19e2895f1edd00b9104cdaacc197445fe322920ac",
+  "schema": "rcl_v4_1_run_index.v1",
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "terminal_state": "PENDING_INDEPENDENT_VERIFICATION",
+  "test_label_read_count": 0,
+  "variants": [
+    "R0_STACK_ZERO_SUM",
+    "R1_RCL_ORTHOGONAL",
+    "R2_UNTIED_Q",
+    "R3_DIRECT_Q"
+  ]
+}
