@@ -1,0 +1,11 @@
+{
+  "protocol_id": "HCH_V44_BASELINE_COMPARISON_FREEZE_20260916",
+  "execution_mode": "READ_ONLY_RECONCILIATION",
+  "new_baseline_fits": 0,
+  "new_run_queue_rows": 50,
+  "new_runs_executed": 0,
+  "cpu_workers_used": 0,
+  "gpu_jobs_used": 0,
+  "reuse_rows": 50,
+  "note": "No model fitting authorized by controlling protocol; queue consists only of inherited blockers."
+}

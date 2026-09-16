@@ -1,0 +1,151 @@
+{
+  "schema": "hch_v44_baseline_completeness_audit.v1",
+  "protocol_id": "HCH_V44_BASELINE_COMPARISON_FREEZE_20260916",
+  "v2_protocol_id": "COMMON_BENCHMARK_701020_FULL_V2",
+  "controlling_design": "docs/current/HCH_V44_BASELINE_COMPLETENESS_AND_PAPER_FREEZE_20260916.md",
+  "coordinate_universe": {
+    "markets": [
+      "GANSU_DA",
+      "SHANDONG_DA",
+      "SHAANXI_DA",
+      "NINGXIA_DA",
+      "QINGHAI_DA"
+    ],
+    "hosts": [
+      "PatchTST",
+      "TimeMixer",
+      "iTransformer",
+      "LSTM"
+    ],
+    "methods": [
+      "Host",
+      "MatchedDirectResidual",
+      "delta-Adapter",
+      "PIR",
+      "COSA",
+      "UEC-STD",
+      "OMPB"
+    ],
+    "registered": 140,
+    "numeric": 90,
+    "blocked": 50,
+    "expected_numeric": 90,
+    "expected_blocked": 50,
+    "census_matches_expected": true
+  },
+  "per_method": {
+    "Host": {
+      "registered": 20,
+      "numeric": 20,
+      "blocked": 0,
+      "setting": "HOST_REFERENCE",
+      "blocker_class": null
+    },
+    "MatchedDirectResidual": {
+      "registered": 20,
+      "numeric": 20,
+      "blocked": 0,
+      "setting": "OFFLINE_STATIC_CONTROL",
+      "blocker_class": null
+    },
+    "delta-Adapter": {
+      "registered": 20,
+      "numeric": 20,
+      "blocked": 0,
+      "setting": "OFFLINE_STATIC_POSTHOC",
+      "blocker_class": null
+    },
+    "PIR": {
+      "registered": 20,
+      "numeric": 10,
+      "blocked": 10,
+      "setting": "OFFLINE_STATIC_POSTHOC",
+      "blocker_class": "Q-INCOMPATIBLE"
+    },
+    "COSA": {
+      "registered": 20,
+      "numeric": 20,
+      "blocked": 0,
+      "setting": "ONLINE_TTA",
+      "blocker_class": null
+    },
+    "UEC-STD": {
+      "registered": 20,
+      "numeric": 0,
+      "blocked": 20,
+      "setting": "BLOCKED",
+      "blocker_class": "Q-FIDELITY"
+    },
+    "OMPB": {
+      "registered": 20,
+      "numeric": 0,
+      "blocked": 20,
+      "setting": "BLOCKED",
+      "blocker_class": "Q-DATA"
+    }
+  },
+  "per_market": {
+    "GANSU_DA": {
+      "n_registered_test_days": 83,
+      "n_scored_test_days": 83,
+      "n_unscorable_missing_target_days": 0,
+      "unscorable_days": []
+    },
+    "SHANDONG_DA": {
+      "n_registered_test_days": 330,
+      "n_scored_test_days": 329,
+      "n_unscorable_missing_target_days": 1,
+      "unscorable_days": [
+        {
+          "day_id": "2026-07-17",
+          "status": "NOT_SCORABLE_MISSING_TARGET",
+          "reason": "TARGET_VECTOR_NONFINITE_24_OF_24"
+        }
+      ]
+    },
+    "SHAANXI_DA": {
+      "n_registered_test_days": 81,
+      "n_scored_test_days": 81,
+      "n_unscorable_missing_target_days": 0,
+      "unscorable_days": []
+    },
+    "NINGXIA_DA": {
+      "n_registered_test_days": 28,
+      "n_scored_test_days": 28,
+      "n_unscorable_missing_target_days": 0,
+      "unscorable_days": []
+    },
+    "QINGHAI_DA": {
+      "n_registered_test_days": 27,
+      "n_scored_test_days": 27,
+      "n_unscorable_missing_target_days": 0,
+      "unscorable_days": []
+    }
+  },
+  "metric_authority": {
+    "numeric_authority": "experiments/lab/common_benchmark_results_v2/RESULTS_LONG.csv",
+    "row_kind": "SEED_OR_HOST",
+    "data_adjudication": "V2_MISSING_TARGET_SCORABILITY_ADJUDICATION_20260913",
+    "per_cell_sidecar_role": "disclosure and fidelity metadata",
+    "per_cell_sidecar_caveat": "the per-cell sidecars carry n_test_values = registered*24 and, on SHANDONG_DA, Overall_MAE/Normal = NaN because the frozen cell_metrics puts non-finite-target hours into the normal complement; the missing-target-adjudicated artifacts are therefore the numeric authority (PROTOCOL section 6)",
+    "sidecar_vs_recomputed_relation": "sidecars were scored from float64 source values while the stored arrays are float32; agreement is to ~1e-9 relative, not bit-exact",
+    "n_numeric_cells_compared_to_sidecar": 56,
+    "max_sidecar_rel_deviation": 3.338046483029385e-09,
+    "max_sidecar_rel_deviation_coordinate": "GANSU_DA::TimeMixer::MatchedDirectResidual"
+  },
+  "no_new_fit_audit": {
+    "new_baseline_neural_fits": 0,
+    "new_host_fits": 0,
+    "new_v44_fits": 0,
+    "models_fitted_by_this_task": [],
+    "statement": "this task reconstructs a registry from frozen TEST arrays and frozen metric code; it fits nothing and writes no model"
+  },
+  "blocker_disposition": {
+    "reopened": 0,
+    "proxied": 0,
+    "policy": "UEC-STD Q-FIDELITY, OMPB Q-DATA and PIR new-Host Q-INCOMPATIBLE remain closed; a blocker is a result"
+  },
+  "blocked_coordinate_day_counts": "BLOCKED rows carry the market's registered TEST-day count and leave scored/unscorable empty: a blocked coordinate has no scored day",
+  "parent_mae_mismatches": [],
+  "conclusion": "numeric coverage is complete at 90/90 against the adjudicated V2 authority; the registry is reconstructible end-to-end from frozen arrays with zero new fits"
+}

@@ -1,0 +1,195 @@
+{
+  "schema": "hch_v44_baseline_freeze_verification.v1",
+  "protocol_id": "HCH_V44_BASELINE_COMPARISON_FREEZE_20260916",
+  "verifier": "experiments/current/hch_v44_baseline_comparison_freeze_20260916/implementation/verify_registry.py",
+  "verifier_independence": {
+    "imports_registry_constructor": false,
+    "imports_frozen_metric_module": false,
+    "note": "this verifier does not import build_registry and does not import panel_metrics; it re-implements the frozen region rules from METRIC_CONTRACT.json::region_rule and recomputes every value from the parent arrays"
+  },
+  "checked_artifacts": [
+    "BASELINE_COMPLETENESS_AUDIT.json",
+    "BLOCKED_ROWS.csv",
+    "CELL_COMPARATOR_SNAPSHOT.csv",
+    "CELL_COMPARATOR_SNAPSHOT.json",
+    "MATRIX_140.csv",
+    "ONLINE_SUPPLEMENTARY_TABLE.csv",
+    "RESULTS.md",
+    "SOURCE_HASHES.json",
+    "STRICT_OFFLINE_TABLE.csv",
+    "VERIFICATION_REPORT.json"
+  ],
+  "n_checks": 24,
+  "n_passed": 24,
+  "passed": true,
+  "verdict_token": "HCH_V44_BASELINE_PAPER_REGISTRY_COMPLETE",
+  "counts": {
+    "matrix_140": 140,
+    "numeric": 90,
+    "blocked": 50,
+    "strict_offline_rows": 80,
+    "strict_offline_numeric": 70,
+    "online_rows": 40,
+    "snapshot_records": 20,
+    "numeric_mae_vs_parent": 90,
+    "subset_values_compared": 1260
+  },
+  "independent_recomputation": {
+    "max_relative_gain_deviation": 0.0,
+    "mae_mismatches": [],
+    "gain_mismatches": [],
+    "subset_mismatches": [],
+    "scoring_mask_mismatches": []
+  },
+  "sidecar_disclosure": {
+    "role": "per-cell sidecars are disclosure/fidelity metadata, not numeric authority",
+    "why": "the per-cell sidecars carry n_test_values = registered*24 and, on SHANDONG_DA, Overall_MAE/Normal = NaN because the frozen cell_metrics puts non-finite-target hours into the normal complement; the missing-target-adjudicated artifacts are therefore the numeric authority (PROTOCOL section 6)",
+    "max_rel_deviation_registry_vs_sidecar": 3.338046483029385e-09
+  },
+  "checks": [
+    {
+      "id": 1,
+      "name": "MATRIX_140 census",
+      "passed": true,
+      "detail": "rows=140 unique=140 equals_cartesian=True"
+    },
+    {
+      "id": 2,
+      "name": "numeric=90 and blocked=50",
+      "passed": true,
+      "detail": "numeric=90 blocked=50"
+    },
+    {
+      "id": 3,
+      "name": "Host/MDR/delta/COSA = 20 numeric each",
+      "passed": true,
+      "detail": "{\"Host\": 20, \"MatchedDirectResidual\": 20, \"delta-Adapter\": 20, \"PIR\": 10, \"COSA\": 20, \"UEC-STD\": 0, \"OMPB\": 0}"
+    },
+    {
+      "id": 4,
+      "name": "PIR = 10 numeric + 10 blocker",
+      "passed": true,
+      "detail": "numeric_hosts=['PatchTST', 'TimeMixer'] blocked_hosts=['LSTM', 'iTransformer']"
+    },
+    {
+      "id": 5,
+      "name": "UEC-STD = 20 blocker (Q-FIDELITY)",
+      "passed": true,
+      "detail": "n=20 classes=['Q-FIDELITY']"
+    },
+    {
+      "id": 6,
+      "name": "OMPB = 20 blocker (Q-DATA)",
+      "passed": true,
+      "detail": "n=20 classes=['Q-DATA']"
+    },
+    {
+      "id": 7,
+      "name": "strict offline table = 70 numeric rows",
+      "passed": true,
+      "detail": "rows=80 numeric=70 methods=['Host', 'MatchedDirectResidual', 'PIR', 'delta-Adapter']"
+    },
+    {
+      "id": 8,
+      "name": "COSA appears only in the online/TTA table",
+      "passed": true,
+      "detail": "cosa_in_offline_table=0 online_rows=40"
+    },
+    {
+      "id": 9,
+      "name": "every numeric MAE equals its frozen V2 parent value",
+      "passed": true,
+      "detail": "compared=90 mismatches=0"
+    },
+    {
+      "id": 10,
+      "name": "relative gains recompute from the same-cell Host (independent)",
+      "passed": true,
+      "detail": "max_abs_deviation=0.000e+00 mismatches=0"
+    },
+    {
+      "id": 11,
+      "name": "Shandong scored-day count is 329 for every numeric method",
+      "passed": true,
+      "detail": "shandong_numeric_rows=18 scored=['329'] declared_unscorable=['2026-07-17']"
+    },
+    {
+      "id": "9b",
+      "name": "subset metrics and counts reproduce independently",
+      "passed": true,
+      "detail": "values_compared=1260 mismatches=0"
+    },
+    {
+      "id": "9c",
+      "name": "registry pins the frozen metric definition hash",
+      "passed": true,
+      "detail": "sha256=9C846BC8538A57CC..."
+    },
+    {
+      "id": 12,
+      "name": "parent source hashes unchanged",
+      "passed": true,
+      "detail": "parent_files=14 per_cell_files=230 regressed=[]"
+    },
+    {
+      "id": 13,
+      "name": "new baseline fit count = 0",
+      "passed": true,
+      "detail": "new_model_artifacts_after_stage_begin=0; stage_begin=1789572746"
+    },
+    {
+      "id": 14,
+      "name": "no parent-evidence / paper / src mutation in this stage",
+      "passed": true,
+      "detail": "paper_root_exists=True mutated_after_stage_begin=0"
+    },
+    {
+      "id": "S1",
+      "name": "blocker rows carry class/code/reason/authority and are unreopened",
+      "passed": true,
+      "detail": "blocked=50 reopened=['False']"
+    },
+    {
+      "id": "S2",
+      "name": "every numeric row carries the historical-exposure caveat",
+      "passed": true,
+      "detail": "scopes=['COMMON_BENCHMARK_TEST_WITH_HISTORICAL_EXPOSURE_CAVEAT']"
+    },
+    {
+      "id": "S3",
+      "name": "setting separation: no ONLINE_TTA in the offline table; blocked=BLOCKED",
+      "passed": true,
+      "detail": "strict_settings=['BLOCKED', 'HOST_REFERENCE', 'OFFLINE_STATIC_CONTROL', 'OFFLINE_STATIC_POSTHOC'] blocked_settings=['BLOCKED'] canonical={\"Host\": \"HOST_REFERENCE\", \"MatchedDirectResidual\": \"OFFLINE_STATIC_CONTROL\", \"delta-Adapter\": \"OFFLINE_STATIC_POSTHOC\", \"PIR\": \"OFFLINE_STATIC_POSTHOC\", \"COSA\": \"ONLINE_TTA\", \"UEC-STD\": \"OFFLINE_STATIC_POSTHOC\", \"OMPB\": \"ONLINE_SHIFT\"} frozen_uec=OFFLINE_STATIC_POSTHOC frozen_ompb=ONLINE_SHIFT"
+    },
+    {
+      "id": "S4",
+      "name": "comparator snapshot has exactly 20 market x Host records",
+      "passed": true,
+      "detail": "records=20 csv_rows=20"
+    },
+    {
+      "id": "S5",
+      "name": "offline selector picks only from {delta-Adapter, numeric PIR}",
+      "passed": true,
+      "detail": "cells=20 mae_violations=[] selector_violations=[]"
+    },
+    {
+      "id": "S6",
+      "name": "harm fields are unit-separated, never merged",
+      "passed": true,
+      "detail": "absolute and percent harm are distinct columns"
+    },
+    {
+      "id": "S7",
+      "name": "blocked rows are never ranked",
+      "passed": true,
+      "detail": "blocked_in_offline_table=10"
+    },
+    {
+      "id": "S8",
+      "name": "evidence root holds exactly the required registry artifacts",
+      "passed": true,
+      "detail": "missing=[] stray=[] quarantined=superseded_ai_execution_prompt_20260916"
+    }
+  ]
+}

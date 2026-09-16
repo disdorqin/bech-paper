@@ -1,0 +1,17 @@
+{
+  "protocol_id": "COMMON_BENCHMARK_701020_FULL_V2",
+  "source_hashes": {
+    "docs/current/HCH_COMMON_BENCHMARK_701020_FULL_V2_PROTOCOL_20260913.md": "4b26a71bbb51c3a348280296e199ca0386009ee322c37bd12a6089a98b714850",
+    "docs/current/HCH_V44_BASELINE_COMPLETENESS_AND_PAPER_FREEZE_20260916.md": "03468cdf27f503070e17899bd9f130a2f253ff4297dfc65dcf28ec45ed1eafca",
+    "experiments/lab/common_benchmark_results_v2/README.md": "4d56f5f6ca0a32266f73696831667e2c161d2e00842833993f8a355a77210a8a",
+    "experiments/lab/common_benchmark_results_v2/STATE.json": "a93643533ffd30012644f2a9930bd1ce0955b1f0547e304f4fc4d798114899a6",
+    "experiments/lab/common_benchmark_results_v2/RESULTS_LONG.csv": "7a906ae7e792caaa2ac161f6b83ee15a6e287b6c2e3e6a9023a3b963e8dc2414",
+    "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/10_missing_target_adjudication/FINAL_OFFLINE_MATRIX.csv": "0cb314c4d704dda2b220e2e119f518585eb5f348efbe8e1611d6e6cb221953a0",
+    "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/10_missing_target_adjudication/FINAL_PREQUENTIAL_MATRIX.csv": "300751ab0edf947da68754b8920706b9c2363b42b985a8d61ea53d247df07fb9",
+    "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/10_missing_target_adjudication/INHERITED_BLOCKERS.csv": "33549a6c3de37c0546018633ba6df1362447c3c74735a2e754c3df2ccfccdfa4",
+    "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/10_missing_target_adjudication/INHERITED_BLOCKERS.json": "e1c625163067d79a50fca4ef47cf80dbb26b38697c81d5a63fa23c7246298acc",
+    "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/10_missing_target_adjudication/SCORABLE_DAY_MANIFEST.json": "3e746b679440bcb46de65857e795a98b746bb224731f571ff9244da7d946e8a1",
+    "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/10_missing_target_adjudication/FINAL_VERIFICATION.json": "969c7bab2892b5fe4757853a4bde9949285ca6a98133eef5c79168378b7685f0"
+  },
+  "parent_artifacts_immutable": true
+}
