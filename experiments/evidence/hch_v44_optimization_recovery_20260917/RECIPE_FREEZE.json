@@ -1,0 +1,61 @@
+{
+  "route_to_terminal_token": "r1_panel_not_promoted_r2_trigger_unsatisfied",
+  "schema": "hch_v44_recovery_recipe_freeze.v1",
+  "protocol_id": "HCH_V44_OPTIMIZATION_RECOVERY_20260917",
+  "recommended_recipe": {
+    "recipe_id": "R1_STEP_BUDGET_2000",
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "batch_size": 32,
+    "weight_decay": 0.0001,
+    "grad_clip": 1.0,
+    "ema_decay": 0.995,
+    "eval_weights": "ema",
+    "max_steps": 2000,
+    "val_every": 50,
+    "no_stop_before": 800,
+    "patience_checks": 8,
+    "readout_init": null,
+    "selection": "min EMA VAL MAE over all checks including step 0"
+  },
+  "panel_gate": {
+    "passed": false,
+    "detail": {
+      "n_cells": 8,
+      "cells_improving": 5,
+      "panel_median_improvement_pct": 0.2912873863507747,
+      "worst_improvement_pct": -0.14779116205610757
+    }
+  },
+  "full_panel_gate": null,
+  "frozen_scientific_object": {
+    "variant": "G2_GEOM_COORD_CONTEXT",
+    "changed_vs_prior_stage": [
+      "optimizer-step budget semantics"
+    ],
+    "unchanged": [
+      "src/core/**",
+      "b/B/S+/S- geometry",
+      "decoder",
+      "feature set",
+      "loss and weights",
+      "W=7 history",
+      "G2 routing",
+      "seeds 7/17/37",
+      "batch 32",
+      "weight_decay 1e-4",
+      "dropout 0.1",
+      "grad_clip 1.0",
+      "EMA 0.995",
+      "EMA-only primary selection"
+    ]
+  },
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "terminal_token": "HCH_V44_OPTIMIZATION_RECOVERY_NOT_SUPPORTED",
+  "test_target_read_count": 0,
+  "not_a_sota_claim": true,
+  "note": "V2 TEST was observed before this stage and is quarantined; the token only authorizes requesting a separately sealed untouched confirmation surface."
+}

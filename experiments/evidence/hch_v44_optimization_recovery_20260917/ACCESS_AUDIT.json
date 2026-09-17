@@ -1,0 +1,38 @@
+{
+  "schema": "hch_v44_optimization_recovery_access_audit.v1",
+  "protocol_id": "HCH_V44_OPTIMIZATION_RECOVERY_20260917",
+  "quarantine": "V2 TEST targets/predictions/metrics forbidden to every recovery decision",
+  "forbidden_files_enumerated": [
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/CELL_MEDIAN_RESULTS.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PER_SEED_RESULTS.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/BASELINE_COMPARISON.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/RESULTS.md",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PANEL_SUMMARY.md",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PANEL_SUMMARY.json",
+    "experiments/lab/common_benchmark_results_v2/HCH_V44_MAIN_20260917.csv",
+    "experiments/lab/common_benchmark_results_v2/RESULTS_LONG.csv",
+    "experiments/lab/common_benchmark_results_v2/BASELINE_COMPLETION_20260917.csv"
+  ],
+  "forbidden_name_patterns": [
+    "result.json",
+    "test_predictions.npz"
+  ],
+  "guard_installed": true,
+  "access_state": {
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": [],
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 0,
+    "legit_frames_built": {
+      "TRAIN": 0,
+      "VAL": 0
+    }
+  },
+  "test_target_read_count": 0,
+  "test_rows_materialised": 0,
+  "note": "The joint Host cache stores TRAIN/VAL/TEST in one array; pretest_joint_arrays drops the sealed segment before any frame exists, and pretest_role_frame refuses role='TEST'.  TEST target values are therefore never materialised.",
+  "phase": "finalize",
+  "reused_support_manifest": "REUSED_SUPPORT_HASHES.json",
+  "recipe_freeze": "RECIPE_FREEZE.json"
+}

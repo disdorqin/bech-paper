@@ -1,0 +1,121 @@
+{
+  "schema": "hch_v44_optimization_recovery_verification.v1",
+  "protocol_id": "HCH_V44_OPTIMIZATION_RECOVERY_20260917",
+  "arm": "R1",
+  "verifier_imports_runner": false,
+  "n_checks": 12,
+  "failed_checks": [],
+  "checks": {
+    "registered_coordinates": {
+      "arm": "R1",
+      "n_runs": 24,
+      "duplicates": [],
+      "seeds_outside_registered": [],
+      "hosts_outside_registered": [],
+      "markets_outside_registered": [],
+      "passed": true
+    },
+    "registered_schedule": {
+      "n_mismatches": 0,
+      "mismatches": [],
+      "distinct_readout_inits": [
+        "None"
+      ],
+      "passed": true
+    },
+    "selection_rule": {
+      "rule": "running-best on val_mae_ema, strict improvement > 1e-7",
+      "n_violations": 0,
+      "violations": [],
+      "runs_explained_by_raw_trajectory": [],
+      "passed": true
+    },
+    "schedule_obeyed": {
+      "n_violations": 0,
+      "violations": [],
+      "passed": true
+    },
+    "test_quarantine": {
+      "n_runtime_violations": 0,
+      "runtime_violations": [],
+      "direct_reader_call_sites": {},
+      "files_opening_the_joint_cache": [
+        "recovery_common.py"
+      ],
+      "audit_test_target_read_count": 0,
+      "passed": true
+    },
+    "train_val_identity": {
+      "n_violations": 0,
+      "violations": [],
+      "host_mae_mismatches": [],
+      "rule": "W=7 window [d-8,d-2]; VAL residuals revealed prequentially; TEST never a row",
+      "passed": true
+    },
+    "reused_support": {
+      "n_cells": 20,
+      "n_violations": 0,
+      "violations": [],
+      "passed": true
+    },
+    "core_unchanged": {
+      "independent_core_tree_digest": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+      "prior_stage_core_tree_digests": [
+        "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+      ],
+      "recovery_run_digests": [
+        "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+      ],
+      "prior_matches_independent": true,
+      "recovery_matches_independent": true,
+      "passed": true
+    },
+    "checkpoints": {
+      "n_violations": 0,
+      "violations": [],
+      "passed": true
+    },
+    "gate_arithmetic": {
+      "gate_file": "R1_GATE.json",
+      "scope": "r1_panel_8_cell",
+      "arm": "R1",
+      "n_cells": 8,
+      "stored": {
+        "gate_1_at_least_6_of_8_cells_improve": false,
+        "gate_2_panel_median_improvement_ge_0.5pct": false,
+        "gate_3_at_least_5_of_8_step_gt0_and_ratio_ge_0.05": true,
+        "gate_4_worst_degradation_le_1.0pct": true,
+        "gate_5_no_leakage_or_numerical_failure": true
+      },
+      "recomputed": {
+        "gate_1_at_least_6_of_8_cells_improve": false,
+        "gate_2_panel_median_improvement_ge_0.5pct": false,
+        "gate_3_at_least_5_of_8_step_gt0_and_ratio_ge_0.05": true,
+        "gate_4_worst_degradation_le_1.0pct": true,
+        "gate_5_no_leakage_or_numerical_failure": true
+      },
+      "stored_passed": false,
+      "recomputed_passed": false,
+      "stored_token": "HCH_V44_RECOVERY_R1_PANEL_NOT_PROMOTED",
+      "expected_token": "HCH_V44_RECOVERY_R1_PANEL_NOT_PROMOTED",
+      "median_improvement_pct": 0.2912873863507747,
+      "passed": true
+    },
+    "no_rescue": {
+      "n_rescue_runs": 0,
+      "runs": [],
+      "passed": true
+    },
+    "terminal_token": {
+      "token": "HCH_V44_OPTIMIZATION_RECOVERY_NOT_SUPPORTED",
+      "expected": "HCH_V44_OPTIMIZATION_RECOVERY_NOT_SUPPORTED",
+      "route": "r1_panel_not_promoted_r2_trigger_unsatisfied",
+      "r2_trigger_satisfied": false,
+      "is_registered_token": true,
+      "not_a_sota_claim": true,
+      "passed": true
+    }
+  },
+  "all_passed": true,
+  "verdict": "HCH_V44_RECOVERY_INDEPENDENTLY_VERIFIED"
+}

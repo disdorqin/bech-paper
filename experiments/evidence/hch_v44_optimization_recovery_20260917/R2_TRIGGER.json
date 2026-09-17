@@ -1,0 +1,19 @@
+{
+  "schema": "hch_v44_recovery_r2_trigger.v1",
+  "n_runs": 24,
+  "hits": {
+    "ceiling": 0,
+    "train_improving_val_flat": 2,
+    "tiny_ratio_with_grad": 7,
+    "ema_lags_raw": 10
+  },
+  "fractions": {
+    "ceiling": 0.0,
+    "train_improving_val_flat": 0.08333333333333333,
+    "tiny_ratio_with_grad": 0.2916666666666667,
+    "ema_lags_raw": 0.4166666666666667
+  },
+  "threshold": "at least one condition holds in >=50% of the 24 R1 runs",
+  "satisfied": false,
+  "r2_authorized": false
+}

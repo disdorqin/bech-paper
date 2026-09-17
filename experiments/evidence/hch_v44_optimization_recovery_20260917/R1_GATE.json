@@ -1,0 +1,222 @@
+{
+  "schema": "hch_v44_recovery_panel_gate.v1",
+  "arm": "R1",
+  "recipe": {
+    "recipe_id": "R1_STEP_BUDGET_2000",
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "batch_size": 32,
+    "weight_decay": 0.0001,
+    "grad_clip": 1.0,
+    "ema_decay": 0.995,
+    "eval_weights": "ema",
+    "max_steps": 2000,
+    "val_every": 50,
+    "no_stop_before": 800,
+    "patience_checks": 8,
+    "readout_init": null,
+    "selection": "min EMA VAL MAE over all checks including step 0"
+  },
+  "cells": [
+    "GANSU_DA__PatchTST",
+    "GANSU_DA__LSTM",
+    "SHANDONG_DA__PatchTST",
+    "SHANDONG_DA__iTransformer",
+    "SHAANXI_DA__TimeMixer",
+    "SHAANXI_DA__PatchTST",
+    "NINGXIA_DA__iTransformer",
+    "QINGHAI_DA__TimeMixer"
+  ],
+  "per_cell": [
+    {
+      "cell": "GANSU_DA__PatchTST",
+      "market": "GANSU_DA",
+      "host": "PatchTST",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 77.10397338867188,
+      "frozen_val_mae_median": 77.10391998291016,
+      "host_val_mae_median": 77.10397338867188,
+      "improvement_vs_frozen_pct": -6.926465182391145e-05,
+      "gain_vs_host_pct_recovery": 0.0,
+      "gain_vs_host_pct_frozen": 6.926460384802476e-05,
+      "selected_correction_ratio_median": 2.242682603537105e-05,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 0,
+      "selected_steps": [
+        0,
+        0,
+        0
+      ],
+      "selected_epoch0_equivalents": 3,
+      "all_finite": true
+    },
+    {
+      "cell": "GANSU_DA__LSTM",
+      "market": "GANSU_DA",
+      "host": "LSTM",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 79.4853286743164,
+      "frozen_val_mae_median": 79.85386657714844,
+      "host_val_mae_median": 80.66068267822266,
+      "improvement_vs_frozen_pct": 0.4615154138791505,
+      "gain_vs_host_pct_recovery": 1.4571585125246906,
+      "gain_vs_host_pct_frozen": 1.0002594501869357,
+      "selected_correction_ratio_median": 0.14654862880706787,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 3,
+      "selected_steps": [
+        600,
+        500,
+        600
+      ],
+      "selected_epoch0_equivalents": 0,
+      "all_finite": true
+    },
+    {
+      "cell": "SHANDONG_DA__PatchTST",
+      "market": "SHANDONG_DA",
+      "host": "PatchTST",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 75.46000671386719,
+      "frozen_val_mae_median": 75.34864807128906,
+      "host_val_mae_median": 76.86666870117188,
+      "improvement_vs_frozen_pct": -0.14779116205610757,
+      "gain_vs_host_pct_recovery": 1.8300025369555817,
+      "gain_vs_host_pct_frozen": 1.9748750082877853,
+      "selected_correction_ratio_median": 0.17467139661312103,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 3,
+      "selected_steps": [
+        800,
+        950,
+        1550
+      ],
+      "selected_epoch0_equivalents": 0,
+      "all_finite": true
+    },
+    {
+      "cell": "SHANDONG_DA__iTransformer",
+      "market": "SHANDONG_DA",
+      "host": "iTransformer",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 74.98084259033203,
+      "frozen_val_mae_median": 75.07172393798828,
+      "host_val_mae_median": 75.07028198242188,
+      "improvement_vs_frozen_pct": 0.12105935882239895,
+      "gain_vs_host_pct_recovery": 0.11914087669310537,
+      "gain_vs_host_pct_frozen": -0.0019208074464724828,
+      "selected_correction_ratio_median": 0.1197773888707161,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 3,
+      "selected_steps": [
+        450,
+        500,
+        450
+      ],
+      "selected_epoch0_equivalents": 0,
+      "all_finite": true
+    },
+    {
+      "cell": "SHAANXI_DA__TimeMixer",
+      "market": "SHAANXI_DA",
+      "host": "TimeMixer",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 103.47103118896484,
+      "frozen_val_mae_median": 103.46220397949219,
+      "host_val_mae_median": 103.59215545654297,
+      "improvement_vs_frozen_pct": -0.008531820445663365,
+      "gain_vs_host_pct_recovery": 0.11692416963844021,
+      "gain_vs_host_pct_frozen": 0.12544528731743212,
+      "selected_correction_ratio_median": 0.03252938762307167,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 0,
+      "selected_steps": [
+        300,
+        250,
+        250
+      ],
+      "selected_epoch0_equivalents": 0,
+      "all_finite": true
+    },
+    {
+      "cell": "SHAANXI_DA__PatchTST",
+      "market": "SHAANXI_DA",
+      "host": "PatchTST",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 108.53507232666016,
+      "frozen_val_mae_median": 111.96558380126953,
+      "host_val_mae_median": 111.96537780761719,
+      "improvement_vs_frozen_pct": 3.0638981713329643,
+      "gain_vs_host_pct_recovery": 3.0637198285090426,
+      "gain_vs_host_pct_frozen": -0.00018397977694291844,
+      "selected_correction_ratio_median": 0.18921668827533722,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 2,
+      "selected_steps": [
+        0,
+        700,
+        1150
+      ],
+      "selected_epoch0_equivalents": 1,
+      "all_finite": true
+    },
+    {
+      "cell": "NINGXIA_DA__iTransformer",
+      "market": "NINGXIA_DA",
+      "host": "iTransformer",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 69.3753662109375,
+      "frozen_val_mae_median": 71.0926513671875,
+      "host_val_mae_median": 71.31417083740234,
+      "improvement_vs_frozen_pct": 2.415559306376644,
+      "gain_vs_host_pct_recovery": 2.7186807386225595,
+      "gain_vs_host_pct_frozen": 0.3106247574832109,
+      "selected_correction_ratio_median": 0.24584171175956726,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 3,
+      "selected_steps": [
+        600,
+        450,
+        450
+      ],
+      "selected_epoch0_equivalents": 0,
+      "all_finite": true
+    },
+    {
+      "cell": "QINGHAI_DA__TimeMixer",
+      "market": "QINGHAI_DA",
+      "host": "TimeMixer",
+      "n_seeds": 3,
+      "recovery_val_mae_median": 150.66725158691406,
+      "frozen_val_mae_median": 157.571044921875,
+      "host_val_mae_median": 157.57135009765625,
+      "improvement_vs_frozen_pct": 4.381384497630192,
+      "gain_vs_host_pct_recovery": 4.38156968666151,
+      "gain_vs_host_pct_frozen": 0.00019367466297703524,
+      "selected_correction_ratio_median": 0.33701851963996887,
+      "n_seeds_step_gt0_and_ratio_ge_0.05": 3,
+      "selected_steps": [
+        950,
+        1450,
+        750
+      ],
+      "selected_epoch0_equivalents": 0,
+      "all_finite": true
+    }
+  ],
+  "checks": {
+    "gate_1_at_least_6_of_8_cells_improve": false,
+    "gate_2_panel_median_improvement_ge_0.5pct": false,
+    "gate_3_at_least_5_of_8_step_gt0_and_ratio_ge_0.05": true,
+    "gate_4_worst_degradation_le_1.0pct": true,
+    "gate_5_no_leakage_or_numerical_failure": true
+  },
+  "detail": {
+    "n_cells": 8,
+    "cells_improving": 5,
+    "panel_median_improvement_pct": 0.2912873863507747,
+    "worst_improvement_pct": -0.14779116205610757
+  },
+  "n_passed": 3,
+  "n_failed": 2,
+  "failed": [
+    "gate_1_at_least_6_of_8_cells_improve",
+    "gate_2_panel_median_improvement_ge_0.5pct"
+  ],
+  "access_violations": {},
+  "passed": false,
+  "token": "HCH_V44_RECOVERY_R1_PANEL_NOT_PROMOTED"
+}

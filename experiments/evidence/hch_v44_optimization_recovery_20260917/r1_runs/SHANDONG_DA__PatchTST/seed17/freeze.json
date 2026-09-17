@@ -1,0 +1,122 @@
+{
+  "schema": "v44_optimization_recovery_run.v1",
+  "recipe_id": "R1_STEP_BUDGET_2000",
+  "market": "SHANDONG_DA",
+  "host": "PatchTST",
+  "seed": 17,
+  "variant": "G2_GEOM_COORD_CONTEXT",
+  "device": "cuda",
+  "optimization": {
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "grad_clip": 1.0,
+    "ema_decay": 0.995,
+    "eval_weights": "ema",
+    "max_steps": 2000,
+    "val_every": 50,
+    "no_stop_before": 800,
+    "patience_checks": 8,
+    "readout_init": null,
+    "stopped_at_step": 1350,
+    "slots_available": 2000
+  },
+  "n_train_rows": 916,
+  "train_rows_excluded": {
+    "no_history": 240,
+    "non_finite_current_day": 0
+  },
+  "n_val_rows": 166,
+  "steps_per_epoch_old_semantics": 29,
+  "epochs_generated": 48,
+  "diag_subset": {
+    "n_rows": 256,
+    "rule": "np.linspace over registered TRAIN order, capped at 256"
+  },
+  "interleaver_audit": {
+    "n_train": 916,
+    "bins": 4,
+    "bin_sizes": {
+      "0": 229,
+      "1": 229,
+      "2": 229,
+      "3": 229
+    },
+    "all_epochs_exact_once": true,
+    "epochs_audited": 72,
+    "oversampling": false,
+    "reweighting": false
+  },
+  "selected_step": 950,
+  "selected_check": 19,
+  "selected_val_mae_ema": 75.46000671386719,
+  "selected_metrics": {
+    "check": 19,
+    "step": 950,
+    "is_initial": false,
+    "samples_seen": 30400,
+    "epoch_equivalent": 33.18777292576419,
+    "lr": 0.001,
+    "val_mae_ema": 75.46000671386719,
+    "val_mae_raw": 74.89665985107422,
+    "val_host_mae": 76.86666870117188,
+    "val_gain_vs_host_pct": 1.8300025369555817,
+    "val_correction_ratio": 0.17467139661312103,
+    "val_mean_abs_correction": 13.426407814025879,
+    "train_mae_ema": 88.53356170654297,
+    "train_host_mae": 91.81681060791016,
+    "train_correction_ratio": 0.17283160984516144,
+    "diag_reconstruction_mae": 88.15333557128906,
+    "level_mae": 48.612945556640625,
+    "mass_mae": 315.56964111328125,
+    "shape_w1": 3.300884246826172,
+    "grad_norms_preclip": {
+      "level": 0.007017806776176136,
+      "mass": 0.31175558116416885,
+      "shape": 0.5449117413043092,
+      "shared": 0.46733769332734015,
+      "direct": null
+    },
+    "best_val_mae_ema_so_far": 75.46000671386719,
+    "best_step_so_far": 950
+  },
+  "selected_ema_checkpoint": "experiments/evidence/hch_v44_optimization_recovery_20260917/r1_runs/SHANDONG_DA__PatchTST/seed17/selected_ema.pt",
+  "selected_ema_checkpoint_sha256": "97467694ECB74CD072A7618CC2B3F9DECEA54622F3FF82FCA64E422F0D93CB9C",
+  "selected_ema_parameter_hash": "249C0BDA4CE9EB33DB6600D7EAFFCF720D1C61EFD3D1160C7C1DEA6F062AD0EC",
+  "epoch_history_check_count": 28,
+  "scales": {
+    "fingerprint": "9f86efd1bbd1d0e2a4eac413b51dbc8883ce0e5e7437fb4a58b8305929db8e42",
+    "s_r": 41.81789324188233,
+    "s_b": 51.57144915668964,
+    "s_B": 377.42921428985596,
+    "n_train_days_fit": 1156
+  },
+  "history_support_hash": "C65C8310D0A2C6FC12792A9BFEEE671935103E32FC5003193DFEAD8FAEBB5E66",
+  "history_oof_days": 924,
+  "train_day_ids_hash": "93EDB2EEAD31FEC610E813B31B0D73B8A51C1F533CFE8B834BDEF3E1A28AA420",
+  "val_day_ids_hash": "0F84BF52C6E35A68C81A4DE0666A7D236AA1A9311D71A4D6261DD15C0C2EB419",
+  "code_hash": "41BFBBF4B31858D54364114D216C7E51139565637B7C14106573E56FA7B9D896",
+  "common_code_hash": "41BFBBF4B31858D54364114D216C7E51139565637B7C14106573E56FA7B9D896",
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "test_target_read_count": 0,
+  "test_rows_materialised": 0,
+  "test_rows_dropped_from_joint_cache": 1158,
+  "optional_features_active": false,
+  "rescue_used": false,
+  "is_registered_fit": true,
+  "access_state": {
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": [],
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 1158,
+    "legit_frames_built": {
+      "TRAIN": 4,
+      "VAL": 4
+    }
+  }
+}

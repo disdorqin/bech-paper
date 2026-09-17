@@ -1,0 +1,122 @@
+{
+  "schema": "v44_optimization_recovery_run.v1",
+  "recipe_id": "R1_STEP_BUDGET_2000",
+  "market": "GANSU_DA",
+  "host": "LSTM",
+  "seed": 37,
+  "variant": "G2_GEOM_COORD_CONTEXT",
+  "device": "cuda",
+  "optimization": {
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "grad_clip": 1.0,
+    "ema_decay": 0.995,
+    "eval_weights": "ema",
+    "max_steps": 2000,
+    "val_every": 50,
+    "no_stop_before": 800,
+    "patience_checks": 8,
+    "readout_init": null,
+    "stopped_at_step": 1000,
+    "slots_available": 2000
+  },
+  "n_train_rows": 224,
+  "train_rows_excluded": {
+    "no_history": 67,
+    "non_finite_current_day": 0
+  },
+  "n_val_rows": 42,
+  "steps_per_epoch_old_semantics": 7,
+  "epochs_generated": 143,
+  "diag_subset": {
+    "n_rows": 224,
+    "rule": "np.linspace over registered TRAIN order, capped at 256"
+  },
+  "interleaver_audit": {
+    "n_train": 224,
+    "bins": 4,
+    "bin_sizes": {
+      "0": 56,
+      "1": 56,
+      "2": 56,
+      "3": 56
+    },
+    "all_epochs_exact_once": true,
+    "epochs_audited": 288,
+    "oversampling": false,
+    "reweighting": false
+  },
+  "selected_step": 600,
+  "selected_check": 12,
+  "selected_val_mae_ema": 79.4853286743164,
+  "selected_metrics": {
+    "check": 12,
+    "step": 600,
+    "is_initial": false,
+    "samples_seen": 19200,
+    "epoch_equivalent": 85.71428571428571,
+    "lr": 0.001,
+    "val_mae_ema": 79.4853286743164,
+    "val_mae_raw": 79.79676818847656,
+    "val_host_mae": 80.66068267822266,
+    "val_gain_vs_host_pct": 1.4571585125246906,
+    "val_correction_ratio": 0.14654862880706787,
+    "val_mean_abs_correction": 11.820712089538574,
+    "train_mae_ema": 83.33483123779297,
+    "train_host_mae": 91.36432647705078,
+    "train_correction_ratio": 0.21997752785682678,
+    "diag_reconstruction_mae": 83.33483123779297,
+    "level_mae": 58.12643814086914,
+    "mass_mae": 244.30715942382812,
+    "shape_w1": 2.717855215072632,
+    "grad_norms_preclip": {
+      "level": 0.013397871670356516,
+      "mass": 0.18979586244531138,
+      "shape": 1.3074667045923591,
+      "shared": 1.7704112272618626,
+      "direct": null
+    },
+    "best_val_mae_ema_so_far": 79.4853286743164,
+    "best_step_so_far": 600
+  },
+  "selected_ema_checkpoint": "experiments/evidence/hch_v44_optimization_recovery_20260917/r1_runs/GANSU_DA__LSTM/seed37/selected_ema.pt",
+  "selected_ema_checkpoint_sha256": "8386C4AFC61760DBDD7E0A19DEF637D17DEAF78248479FE68D704452EB25C5E0",
+  "selected_ema_parameter_hash": "D7572036F8DF11AA253A268D5A661A5297F385E7B5FA2DBFC9659192DA501835",
+  "epoch_history_check_count": 21,
+  "scales": {
+    "fingerprint": "8adac0c3b1ff8d44ea428df15021dedce878e411bfa7fecfb05649cf48f69f29",
+    "s_r": 29.058803149414068,
+    "s_b": 70.38729239959716,
+    "s_B": 362.8382073852539,
+    "n_train_days_fit": 291
+  },
+  "history_support_hash": "A44B0817E719E977EEF43DE3BC3802FE62281DA3C7C161CA3A7CBF7D5AFD0335",
+  "history_oof_days": 232,
+  "train_day_ids_hash": "164B4590D09B6F8E755591272672C2AB3D4C78CE515BADCA251096BA9859C729",
+  "val_day_ids_hash": "E4F02F4FDEF2314C51EF1C101866498D9AB60857D330468EF45BE4526ADB01D9",
+  "code_hash": "41BFBBF4B31858D54364114D216C7E51139565637B7C14106573E56FA7B9D896",
+  "common_code_hash": "41BFBBF4B31858D54364114D216C7E51139565637B7C14106573E56FA7B9D896",
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "test_target_read_count": 0,
+  "test_rows_materialised": 0,
+  "test_rows_dropped_from_joint_cache": 498,
+  "optional_features_active": false,
+  "rescue_used": false,
+  "is_registered_fit": true,
+  "access_state": {
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": [],
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 498,
+    "legit_frames_built": {
+      "TRAIN": 3,
+      "VAL": 3
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "hch_v44_recovery_r0.v1",
+  "n_runs": 60,
+  "failures": [],
+  "steps_per_epoch": {
+    "min": 3,
+    "max": 29,
+    "ratio_max_over_min": 9.666666666666666,
+    "per_market": {
+      "GANSU_DA": [
+        7
+      ],
+      "SHANDONG_DA": [
+        29
+      ],
+      "SHAANXI_DA": [
+        7
+      ],
+      "NINGXIA_DA": [
+        3
+      ],
+      "QINGHAI_DA": [
+        3
+      ]
+    }
+  },
+  "old_optimizer_steps": {
+    "min": 27,
+    "max": 1450,
+    "median": 67.5
+  },
+  "epoch0_selected_count": 34,
+  "epoch0_selected_fraction": 0.5666666666666667,
+  "epoch0_selected_by_market": {
+    "GANSU_DA": 8,
+    "SHANDONG_DA": 8,
+    "SHAANXI_DA": 6,
+    "NINGXIA_DA": 5,
+    "QINGHAI_DA": 7
+  },
+  "val_improvement_from_training_pct": {
+    "median": 0.0,
+    "max": 2.3325530232837437,
+    "n_positive": 26
+  },
+  "recovery_panel": {
+    "keys": [
+      "GANSU_DA__LSTM",
+      "GANSU_DA__PatchTST",
+      "NINGXIA_DA__iTransformer",
+      "QINGHAI_DA__TimeMixer",
+      "SHAANXI_DA__PatchTST",
+      "SHAANXI_DA__TimeMixer",
+      "SHANDONG_DA__PatchTST",
+      "SHANDONG_DA__iTransformer"
+    ],
+    "epoch0_selected_count": 13,
+    "n_runs": 24,
+    "median_old_optimizer_steps": 205.5
+  },
+  "correction_magnitude_stored_in_prior_freeze": false,
+  "note": "The completed stage's freeze record stores the EMA VAL MAE per epoch but not correction magnitude; that diagnostic is produced by the R1 step-0 check, which is the first check of every recovery run.",
+  "test_target_read_count": 0
+}
