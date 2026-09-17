@@ -1,0 +1,419 @@
+{
+  "schema": "hch_v44_objective_probe_verification.v1",
+  "gate_verdict": "AUXILIARY_PERSISTENCE_NOT_SHOWN_HARMFUL",
+  "checks": {
+    "registered_coordinates": true,
+    "reference_pairing": true,
+    "val_surface_rebuilt": true,
+    "schedule_identical": true,
+    "only_loss_schedule_changed": true,
+    "pre_switch_identity": true,
+    "objective_switch_after_400": true,
+    "selection_rule": true,
+    "core_unchanged": true,
+    "test_quarantine": true,
+    "gate_arithmetic": true,
+    "one_code_state": true,
+    "terminal_token": true
+  },
+  "notes": {
+    "registered_coordinates": {
+      "expected": [
+        "GANSU_DA__PatchTST__seed17",
+        "GANSU_DA__PatchTST__seed37",
+        "GANSU_DA__PatchTST__seed7",
+        "NINGXIA_DA__iTransformer__seed17",
+        "NINGXIA_DA__iTransformer__seed37",
+        "NINGXIA_DA__iTransformer__seed7",
+        "SHAANXI_DA__TimeMixer__seed17",
+        "SHAANXI_DA__TimeMixer__seed37",
+        "SHAANXI_DA__TimeMixer__seed7",
+        "SHANDONG_DA__iTransformer__seed17",
+        "SHANDONG_DA__iTransformer__seed37",
+        "SHANDONG_DA__iTransformer__seed7"
+      ],
+      "n_found": 12,
+      "missing": [],
+      "extra": [],
+      "each_run_has_freeze_curve_checkpoint": true
+    },
+    "reference_pairing": {
+      "n_paired": 12,
+      "violations": [],
+      "all_reference_runs_are_R1_full_loss": true,
+      "reference_all_12_present": true
+    },
+    "val_surface_rebuilt": {
+      "rule": "eligible = fully-finite 24h target AND a legal W=7 window [d-8, d-2] with history from the shadow-OOF support; VAL residuals revealed prequentially.  Reimplemented here from the split plan and the joint cache, independently of the runner.",
+      "violations": [],
+      "per_cell": {
+        "GANSU_DA__PatchTST": {
+          "n_train_eligible": 224,
+          "n_val_eligible": 42,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 83,
+          "cache_days_total": 416,
+          "train_day_ids_hash": "164B4590D09B6F8E755591272672C2AB3D4C78CE515BADCA251096BA9859C729",
+          "val_day_ids_hash": "E4F02F4FDEF2314C51EF1C101866498D9AB60857D330468EF45BE4526ADB01D9"
+        },
+        "SHANDONG_DA__iTransformer": {
+          "n_train_eligible": 916,
+          "n_val_eligible": 166,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 330,
+          "cache_days_total": 1652,
+          "train_day_ids_hash": "93EDB2EEAD31FEC610E813B31B0D73B8A51C1F533CFE8B834BDEF3E1A28AA420",
+          "val_day_ids_hash": "0F84BF52C6E35A68C81A4DE0666A7D236AA1A9311D71A4D6261DD15C0C2EB419"
+        },
+        "SHAANXI_DA__TimeMixer": {
+          "n_train_eligible": 219,
+          "n_val_eligible": 41,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 81,
+          "cache_days_total": 406,
+          "train_day_ids_hash": "BF4383548D09B10257A6E0AF6D3FBDF4D4965CFED72E3CAAC7D65061B904C145",
+          "val_day_ids_hash": "CFD9221C07EC768FF4F0C3CFDB0FD7639D37F91853D9D474DF91A6AFB48410F7"
+        },
+        "NINGXIA_DA__iTransformer": {
+          "n_train_eligible": 72,
+          "n_val_eligible": 16,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 28,
+          "cache_days_total": 144,
+          "train_day_ids_hash": "705EB5635ADB62BC9CB1ED62B8D0EFBF5FC0141DAE242DDF03EE1103E1D228C4",
+          "val_day_ids_hash": "AFC42D892415D8DADFE0ADAD68DDFBD3CAAD09F921AB992881090F197E97B454"
+        }
+      }
+    },
+    "schedule_identical": {
+      "n_distinct_o1_schedules": 1,
+      "violations": [],
+      "registered": {
+        "optimizer": "AdamW",
+        "lr": 0.001,
+        "batch_size": 32,
+        "weight_decay": 0.0001,
+        "grad_clip": 1.0,
+        "ema_decay": 0.995,
+        "eval_weights": "ema",
+        "max_steps": 2000,
+        "val_every": 50,
+        "no_stop_before": 800,
+        "patience_checks": 8,
+        "readout_init": null
+      },
+      "reference_schedule_matches": true,
+      "no_extra_arms": false
+    },
+    "only_loss_schedule_changed": {
+      "n_removed_lines": 2,
+      "n_added_lines": 2,
+      "removed": [
+        "loss = model.compute_loss(out, sub_target, sub_res, data[\"scales\"])[\"total\"]",
+        "record_check(step, samples_seen, False, norms)"
+      ],
+      "added": [
+        "loss, used_full = objective(model.compute_loss(out, sub_target, sub_res, data[\"scales\"]), step + 1)",
+        "record_check(step, samples_seen, False, norms, float(loss.detach()), used_full)"
+      ],
+      "removed_is_exactly_expected": true,
+      "added_is_exactly_expected": true,
+      "reference_has_original_calls": true,
+      "probe_has_replacement_calls": true
+    },
+    "pre_switch_identity": {
+      "note": "O1's updates 1..400 use the reference's own loss and the same random stream, so the pre-switch checkpoints must reproduce the reference exactly; any deviation would mean a second, unregistered change.",
+      "n_coords_compared": 12,
+      "violations": [],
+      "per_coord": {
+        "GANSU_DA__PatchTST__seed7": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "GANSU_DA__PatchTST__seed17": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "GANSU_DA__PatchTST__seed37": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "SHANDONG_DA__iTransformer__seed7": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "SHANDONG_DA__iTransformer__seed17": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "SHANDONG_DA__iTransformer__seed37": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "SHAANXI_DA__TimeMixer__seed7": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "SHAANXI_DA__TimeMixer__seed17": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "SHAANXI_DA__TimeMixer__seed37": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "NINGXIA_DA__iTransformer__seed7": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "NINGXIA_DA__iTransformer__seed17": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        },
+        "NINGXIA_DA__iTransformer__seed37": {
+          "shared_pre_switch_steps": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400
+          ],
+          "max_relative_deviation": 0.0,
+          "step0_abs_deviation": 0.0
+        }
+      }
+    },
+    "objective_switch_after_400": {
+      "violations": [],
+      "n_violations": 0
+    },
+    "selection_rule": {
+      "violations": [],
+      "tol": 1e-07
+    },
+    "core_unchanged": {
+      "working_tree_core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+      "working_tree_backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B",
+      "n_files": {
+        "core": 18,
+        "backbones": 10
+      },
+      "prior_recorded_digests": [
+        "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+      ],
+      "matches_a_prior_stage_digest": true
+    },
+    "test_quarantine": {
+      "test_target_read_count": 0,
+      "violations": [],
+      "direct_reader_scan_hits": [],
+      "guard_installed": true,
+      "forbidden_files_enumerated": 9,
+      "forbidden_name_patterns": [
+        "result.json",
+        "test_predictions.npz"
+      ],
+      "distinct_paths_blocked_in_audit": []
+    },
+    "gate_arithmetic": {
+      "recomputed_checks": {
+        "g1_at_least_3_of_4_cell_medians_improve": true,
+        "g2_panel_median_relative_improvement_ge_0.5pct": false,
+        "g3_worst_cell_degradation_le_0.5pct": true,
+        "g4_not_a_step0_or_near_zero_retreat": true,
+        "g5_no_leakage_anomaly_or_protocol_violation": true
+      },
+      "recomputed_verdict": "AUXILIARY_PERSISTENCE_NOT_SHOWN_HARMFUL",
+      "recorded_checks": {
+        "g1_at_least_3_of_4_cell_medians_improve": true,
+        "g2_panel_median_relative_improvement_ge_0.5pct": false,
+        "g3_worst_cell_degradation_le_0.5pct": true,
+        "g4_not_a_step0_or_near_zero_retreat": true,
+        "g5_no_leakage_anomaly_or_protocol_violation": true
+      },
+      "recorded_verdict": "AUXILIARY_PERSISTENCE_NOT_SHOWN_HARMFUL",
+      "panel_median_recomputed": 0.19050094795917516,
+      "step0_retreats_recomputed": 0,
+      "selected_correction_ratio_median_recomputed": 0.20317884534597397,
+      "per_cell_recomputed": [
+        {
+          "cell": "GANSU_DA__PatchTST",
+          "median_gain": 1.7337326140896872,
+          "mae_o1": 75.76719665527344,
+          "mae_r1": 77.10397338867188
+        },
+        {
+          "cell": "SHANDONG_DA__iTransformer",
+          "median_gain": 0.19028728468494963,
+          "mae_o1": 74.84967803955078,
+          "mae_r1": 74.98084259033203
+        },
+        {
+          "cell": "SHAANXI_DA__TimeMixer",
+          "median_gain": 0.0,
+          "mae_o1": 103.47103118896484,
+          "mae_r1": 103.47103118896484
+        },
+        {
+          "cell": "NINGXIA_DA__iTransformer",
+          "median_gain": 0.19071461123340072,
+          "mae_o1": 69.24305725097656,
+          "mae_r1": 69.3753662109375
+        }
+      ]
+    },
+    "one_code_state": {
+      "n_distinct_probe_code_hashes": 1,
+      "probe_code_hash": [
+        "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880"
+      ],
+      "recovery_common_sha256_matches_disk": true,
+      "note": "no run straddled a source edit, and the imported quarantine module is the one on disk"
+    },
+    "terminal_token": {
+      "written_token": "HCH_V44_OBJECTIVE_ALIGNMENT_PROBE_COMPLETE_FOR_ADJUDICATION",
+      "artifact": "STAGE_TOKEN.json",
+      "allowed": [
+        "HCH_V44_OBJECTIVE_ALIGNMENT_PROBE_COMPLETE_FOR_ADJUDICATION",
+        "HCH_V44_OBJECTIVE_ALIGNMENT_PROBE_BLOCKED_"
+      ],
+      "note": "the probe's terminal token is fixed by the protocol, not by the verdict"
+    }
+  },
+  "n_passed": 13,
+  "n_checks": 13,
+  "failed": [],
+  "issues": [],
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "core_tree_n_files": 18,
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B",
+    "backbones_tree_n_files": 10
+  },
+  "verdict": "HCH_V44_OBJECTIVE_PROBE_INDEPENDENTLY_VERIFIED"
+}

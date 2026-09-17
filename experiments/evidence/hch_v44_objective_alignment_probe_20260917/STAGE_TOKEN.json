@@ -1,0 +1,30 @@
+{
+  "schema": "hch_v44_objective_probe_stage_token.v1",
+  "protocol_id": "HCH_V44_OBJECTIVE_ALIGNMENT_PROBE_20260917",
+  "terminal_token": "HCH_V44_OBJECTIVE_ALIGNMENT_PROBE_COMPLETE_FOR_ADJUDICATION",
+  "derivation": "COMPLETE_FOR_ADJUDICATION iff 12/12 registered runs are on disk with their freeze record, curve and selected checkpoint, every registered artifact is present and all four figures exist; otherwise BLOCKED_<first blocker class>",
+  "blockers": [],
+  "n_runs_complete": 12,
+  "runs": [
+    "GANSU_DA__PatchTST__seed7",
+    "GANSU_DA__PatchTST__seed17",
+    "GANSU_DA__PatchTST__seed37",
+    "SHANDONG_DA__iTransformer__seed7",
+    "SHANDONG_DA__iTransformer__seed17",
+    "SHANDONG_DA__iTransformer__seed37",
+    "SHAANXI_DA__TimeMixer__seed7",
+    "SHAANXI_DA__TimeMixer__seed17",
+    "SHAANXI_DA__TimeMixer__seed37",
+    "NINGXIA_DA__iTransformer__seed7",
+    "NINGXIA_DA__iTransformer__seed17",
+    "NINGXIA_DA__iTransformer__seed37"
+  ],
+  "gate_verdict": "AUXILIARY_PERSISTENCE_NOT_SHOWN_HARMFUL",
+  "gate_n_passed": 4,
+  "test_target_read_count": 0,
+  "access": {
+    "guard_installed": true,
+    "distinct_paths_blocked": []
+  },
+  "note": "The token records completion only.  The diagnostic verdict is gate_verdict and is never folded into the token."
+}
