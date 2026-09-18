@@ -1,0 +1,58 @@
+{
+  "schema": "hch_v44_optimization_recovery_access_audit.v1",
+  "protocol_id": "HCH_V44_OPTIMIZATION_RECOVERY_20260917",
+  "quarantine": "V2 TEST targets/predictions/metrics forbidden to every recovery decision",
+  "forbidden_files_enumerated": [
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/CELL_MEDIAN_RESULTS.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PER_SEED_RESULTS.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/BASELINE_COMPARISON.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/RESULTS.md",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PANEL_SUMMARY.md",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PANEL_SUMMARY.json",
+    "experiments/lab/common_benchmark_results_v2/HCH_V44_MAIN_20260917.csv",
+    "experiments/lab/common_benchmark_results_v2/RESULTS_LONG.csv",
+    "experiments/lab/common_benchmark_results_v2/BASELINE_COMPLETION_20260917.csv"
+  ],
+  "forbidden_name_patterns": [
+    "result.json",
+    "test_predictions.npz"
+  ],
+  "guard_installed": true,
+  "access_state": {
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": [],
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 0,
+    "legit_frames_built": {
+      "TRAIN": 0,
+      "VAL": 0
+    }
+  },
+  "test_target_read_count": 0,
+  "test_rows_materialised": 0,
+  "note": "R0/R1/R2 read only the frozen TRAIN/VAL frames, the shadow-OOF support and the 60 selected EMA checkpoints under no_grad; the stage takes no optimizer step.",
+  "stage": "hch_v44_repairability_spectrum_20260918",
+  "phases_executed_this_invocation": [
+    "r2",
+    "gate"
+  ],
+  "phases_evidenced_in_this_stage": [
+    "r0",
+    "summary",
+    "r1",
+    "r2",
+    "gate"
+  ],
+  "new_neural_candidates": 0,
+  "optimizer_steps": 0,
+  "new_fits": 0,
+  "o1_runs_reused": 60,
+  "o1_checkpoints_mutated": 0,
+  "src_core_edited": false,
+  "paper_edited": false,
+  "foreign_fits": 0,
+  "foreign_preflight": 0,
+  "test_reads": 0,
+  "forbidden_guard_hits": 0
+}

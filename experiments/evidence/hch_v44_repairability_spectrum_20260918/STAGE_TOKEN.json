@@ -1,0 +1,15 @@
+{
+  "schema": "hch_v44_repairability_spectrum_stage_token.v1",
+  "protocol_id": "HCH_V44_REPAIRABILITY_SPECTRUM_20260918",
+  "token": "HCH_V44_REPAIRABILITY_SPECTRUM_COMPLETE_FOR_ADJUDICATION",
+  "future_design_gate_all_passed": false,
+  "future_design_decision": "NO_FUTURE_MECHANISM_AUTHORIZED",
+  "gates_passed": {
+    "A": true,
+    "B": true,
+    "C": false,
+    "D": true,
+    "E": true
+  },
+  "stage_stops_here_regardless": true
+}

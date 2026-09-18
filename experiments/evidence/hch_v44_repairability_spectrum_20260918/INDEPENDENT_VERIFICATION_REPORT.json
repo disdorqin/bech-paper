@@ -1,0 +1,519 @@
+{
+  "schema": "hch_v44_repairability_spectrum_independent_verification.v1",
+  "stage": "hch_v44_repairability_spectrum_20260918",
+  "verifier": {
+    "imports_runner": false,
+    "imports_frozen_substrate": [
+      "recovery_common",
+      "recovery_train",
+      "pipeline",
+      "core.*"
+    ],
+    "own_implementations": [
+      "residual geometry (cross-checked against core.geometry)",
+      "decoder and six oracle swaps",
+      "ray minimiser: closed form + 40001-point grid + subgradient condition",
+      "sign-change count, W1, all 28 legal descriptors",
+      "LOMO folds, cell-macro-balanced Ridge(alpha=1.0), taxonomy, gate A-E"
+    ]
+  },
+  "sample": {
+    "n_cells": 3,
+    "days_per_role_per_cell": 4,
+    "n_geometry_residuals": 96
+  },
+  "checks": [
+    {
+      "check": "geometry_matches_core_authority",
+      "passed": true,
+      "detail": {
+        "b": 9.5367431640625e-06,
+        "B": 8.0108642578125e-05,
+        "s_plus": 2.856132175210746e-08
+      }
+    },
+    {
+      "check": "exact_reconstruction_identity",
+      "passed": true,
+      "detail": {
+        "max_abs_err": 2.842170943040401e-14
+      }
+    },
+    {
+      "check": "mass_identity",
+      "passed": true,
+      "detail": {
+        "max_abs_err": 0.0
+      }
+    },
+    {
+      "check": "ray_closed_form_matches_exact_breakpoint_minimum",
+      "passed": true,
+      "detail": {
+        "max_objective_gap": 0.0,
+        "breakpoints_better_count": 0
+      }
+    },
+    {
+      "check": "ray_breakpoint_candidate_set_is_complete",
+      "passed": true,
+      "detail": {
+        "grid_points_strictly_below_exact": 0
+      }
+    },
+    {
+      "check": "ray_subgradient_condition_holds",
+      "passed": true,
+      "detail": {
+        "violations": 0
+      }
+    },
+    {
+      "check": "ray_closed_form_matches_exact_breakpoint_minimum",
+      "passed": true,
+      "detail": {
+        "max_objective_gap": 0.0,
+        "breakpoints_better_count": 0
+      }
+    },
+    {
+      "check": "ray_breakpoint_candidate_set_is_complete",
+      "passed": true,
+      "detail": {
+        "grid_points_strictly_below_exact": 0
+      }
+    },
+    {
+      "check": "ray_subgradient_condition_holds",
+      "passed": true,
+      "detail": {
+        "violations": 0
+      }
+    },
+    {
+      "check": "ray_closed_form_matches_exact_breakpoint_minimum",
+      "passed": true,
+      "detail": {
+        "max_objective_gap": 0.0,
+        "breakpoints_better_count": 0
+      }
+    },
+    {
+      "check": "ray_breakpoint_candidate_set_is_complete",
+      "passed": true,
+      "detail": {
+        "grid_points_strictly_below_exact": 0
+      }
+    },
+    {
+      "check": "ray_subgradient_condition_holds",
+      "passed": true,
+      "detail": {
+        "violations": 0
+      }
+    },
+    {
+      "check": "mae_reproduced",
+      "passed": true,
+      "detail": {
+        "n_days_checked": 72,
+        "excess": -5.604977861665937e-09,
+        "abs_diff": 0.0,
+        "recorded": 178.41283671061197,
+        "atol": 1e-06,
+        "rtol": 0.0,
+        "label": "host_mae",
+        "passed": true
+      }
+    },
+    {
+      "check": "swap_reproduced",
+      "passed": true,
+      "detail": {
+        "n_days_checked": 72,
+        "excess": -1.5745100684132583e-06,
+        "abs_diff": 1.7798782891986775e-07,
+        "recorded": 173.75154528932612,
+        "atol": 0.0001,
+        "rtol": 1e-06,
+        "label": "mae_oBS",
+        "passed": true
+      }
+    },
+    {
+      "check": "ray_reproduced",
+      "passed": true,
+      "detail": {
+        "n_days_checked": 72,
+        "excess": -1.6685748811717925e-06,
+        "abs_diff": 0.0,
+        "recorded": 149.57187716166177,
+        "atol": 0.0001,
+        "rtol": 1e-06,
+        "label": "mae_ray",
+        "passed": true,
+        "max_objective_gap": 0.0,
+        "breakpoints_better_count": 0,
+        "grid_points_strictly_below_exact": 0
+      }
+    },
+    {
+      "check": "w1_reproduced",
+      "passed": true,
+      "detail": {
+        "n_days_checked": 72,
+        "excess": -9.872455055709536e-07,
+        "abs_diff": 0.0,
+        "recorded": 10.129192732274532,
+        "atol": 1e-05,
+        "rtol": 0.0,
+        "label": "w1_neg",
+        "passed": true
+      }
+    },
+    {
+      "check": "desc_reproduced",
+      "passed": true,
+      "detail": {
+        "n_days_checked": 72,
+        "excess": -1.0047962746380117e-05,
+        "abs_diff": 6.866455078125e-05,
+        "recorded": 653.3289184570312,
+        "atol": 0.0001,
+        "rtol": 1e-05,
+        "label": "hs_B_iqr",
+        "passed": true
+      }
+    },
+    {
+      "check": "analogue_reproduced",
+      "passed": true,
+      "detail": {
+        "n_days_checked": 72,
+        "excess": 0.0,
+        "abs_diff": 0.0,
+        "recorded": 1.0,
+        "atol": 0.0,
+        "rtol": 0.0,
+        "label": "nearest_abs_index",
+        "passed": true
+      }
+    },
+    {
+      "check": "required_per_day_columns_present",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "all_20_cells_present",
+      "passed": true,
+      "detail": {
+        "n_cells": 20
+      }
+    },
+    {
+      "check": "three_seeds_per_cell",
+      "passed": true,
+      "detail": {}
+    },
+    {
+      "check": "val_and_train_days_present",
+      "passed": true,
+      "detail": {
+        "val_cell_days": 1116,
+        "train_cell_days": 5992
+      }
+    },
+    {
+      "check": "rows_are_seed_consistent",
+      "passed": true,
+      "detail": {
+        "n_rows": 21324
+      }
+    },
+    {
+      "check": "descriptor_columns_match_frozen_schema",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "schema_declares_no_late_addition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "probe_features_are_exactly_the_frozen_descriptors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "probe_sample_has_no_market_or_host_feature_column",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "analogue_rows_cover_descriptor_rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "lomo_folds_are_market_pure_and_records_match_partition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "lomo_spearman_defined_in_every_fold",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "lomo_metrics_reproduced",
+      "passed": true,
+      "detail": {
+        "n_folds": 20,
+        "worst": {
+          "rho": 0.0,
+          "mae": 3.552713678800501e-15,
+          "const": 0.0
+        }
+      }
+    },
+    {
+      "check": "coefficient_table_covers_every_fold_and_descriptor",
+      "passed": true,
+      "detail": {
+        "n_rows": 560,
+        "expected": 560
+      }
+    },
+    {
+      "check": "coefficient_descriptors_are_exactly_the_frozen_legal_list",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "cell_taxonomy_reproduced",
+      "passed": true,
+      "detail": {
+        "max_abs_diff_pct": 0.0,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "gate_A_reproduced",
+      "passed": true,
+      "detail": {
+        "verifier_material_low_gain": 7,
+        "published": true
+      }
+    },
+    {
+      "check": "gate_B_reproduced",
+      "passed": true,
+      "detail": {
+        "verifier_family_counts": {
+          "Shape": 6,
+          "b": 1
+        },
+        "published": true
+      }
+    },
+    {
+      "check": "gate_E_reproduced",
+      "passed": true,
+      "detail": {
+        "test_rows_returned": 0,
+        "test_role_frame_refusals": 0,
+        "forbidden_guard_hits": 0,
+        "test_rows_dropped_before_return": 0,
+        "test_target_read_count_max_in_invocation": 0,
+        "n_runs_redigested": 60,
+        "core_tree_digest_now": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+        "core_tree_digest_recorded_in_runs": [
+          "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+        ],
+        "n_distinct_recorded_digests": 1,
+        "src_core_unchanged": true,
+        "run_snapshot_unchanged": true,
+        "n_run_files_hashed": 180,
+        "optimizer_steps_in_this_stage": 0,
+        "new_fits_in_this_stage": 0,
+        "passed": true,
+        "rule": "TEST reads = 0 and no existing checkpoint/evidence is mutated"
+      }
+    },
+    {
+      "check": "stage_stops_here",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_60_run_files_byte_identical",
+      "passed": true,
+      "detail": {
+        "n_hashed": 180,
+        "changed": []
+      }
+    },
+    {
+      "check": "src_core_tree_digest_unchanged",
+      "passed": true,
+      "detail": {
+        "now": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+        "recorded": [
+          "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+        ]
+      }
+    },
+    {
+      "check": "runner_published_source_tree_digest_matches_rerun",
+      "passed": true,
+      "detail": {
+        "published": [
+          "{\"backbones_tree\": \"79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B\", \"core_tree\": \"6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577\"}"
+        ]
+      }
+    },
+    {
+      "check": "single_probe_code_hash_across_all_60_runs",
+      "passed": true,
+      "detail": [
+        "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880"
+      ]
+    },
+    {
+      "check": "test_target_reads_zero",
+      "passed": true,
+      "detail": {
+        "test_rows_returned": 0,
+        "forbidden_guard_hits": 0
+      }
+    },
+    {
+      "check": "no_fits_and_no_optimizer_steps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_foreign_work",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "runner_own_reconciliation_passed",
+      "passed": true,
+      "detail": {
+        "n_checked": 60,
+        "max_abs_diff_mae": 1.1055242424617973e-05
+      }
+    },
+    {
+      "check": "runner_reported_zero_failed_cells",
+      "passed": true,
+      "detail": {
+        "n_failed": 0
+      }
+    },
+    {
+      "check": "no_partial_hour_days",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "n_checks": 48,
+  "n_failures": 0,
+  "failures": [],
+  "detail": {
+    "sample_days": {
+      "n_days_checked": 72,
+      "worst": {
+        "mae": {
+          "excess": -5.604977861665937e-09,
+          "abs_diff": 0.0,
+          "recorded": 178.41283671061197,
+          "atol": 1e-06,
+          "rtol": 0.0,
+          "label": "host_mae",
+          "passed": true
+        },
+        "swap": {
+          "excess": -1.5745100684132583e-06,
+          "abs_diff": 1.7798782891986775e-07,
+          "recorded": 173.75154528932612,
+          "atol": 0.0001,
+          "rtol": 1e-06,
+          "label": "mae_oBS",
+          "passed": true
+        },
+        "ray": {
+          "excess": -1.6685748811717925e-06,
+          "abs_diff": 0.0,
+          "recorded": 149.57187716166177,
+          "atol": 0.0001,
+          "rtol": 1e-06,
+          "label": "mae_ray",
+          "passed": true
+        },
+        "w1": {
+          "excess": -9.872455055709536e-07,
+          "abs_diff": 0.0,
+          "recorded": 10.129192732274532,
+          "atol": 1e-05,
+          "rtol": 0.0,
+          "label": "w1_neg",
+          "passed": true
+        },
+        "desc": {
+          "excess": -1.0047962746380117e-05,
+          "abs_diff": 6.866455078125e-05,
+          "recorded": 653.3289184570312,
+          "atol": 0.0001,
+          "rtol": 1e-05,
+          "label": "hs_B_iqr",
+          "passed": true
+        },
+        "analogue": {
+          "excess": 0.0,
+          "abs_diff": 0.0,
+          "recorded": 1.0,
+          "atol": 0.0,
+          "rtol": 0.0,
+          "label": "nearest_abs_index",
+          "passed": true
+        }
+      },
+      "ray_detail": {
+        "max_objective_gap": 0.0,
+        "breakpoints_better_count": 0,
+        "grid_points_strictly_below_exact": 0
+      }
+    },
+    "coverage": {
+      "n_atlas_rows": 21324,
+      "n_descriptor_rows": 7108,
+      "n_analogue_rows": 7108,
+      "n_sample_rows": 5992
+    },
+    "lomo": {
+      "n_folds": 20,
+      "worst": {
+        "rho": 0.0,
+        "mae": 3.552713678800501e-15,
+        "const": 0.0
+      }
+    },
+    "taxonomy": {
+      "worst_pct_diff": 0.0,
+      "material_low_gain": 7,
+      "family_counts": {
+        "Shape": 6,
+        "b": 1
+      }
+    },
+    "immutability": {
+      "n_run_files_hashed": 180,
+      "core_tree_now": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+    }
+  },
+  "token": "HCH_V44_REPAIRABILITY_SPECTRUM_INDEPENDENTLY_VERIFIED"
+}

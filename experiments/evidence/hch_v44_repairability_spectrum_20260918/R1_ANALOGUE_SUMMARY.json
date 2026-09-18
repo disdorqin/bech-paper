@@ -1,0 +1,128 @@
+{
+  "schema": "hch_v44_repairability_spectrum_analogue.v1",
+  "protocol_id": "HCH_V44_REPAIRABILITY_SPECTRUM_20260918",
+  "n_analogue_rows": 7108,
+  "n_descriptor_rows": 7108,
+  "n_cells": 20,
+  "k_search": 0,
+  "temperature": null,
+  "learned_retrieval": false,
+  "seed_invariance_check": {
+    "n_days": 7108,
+    "n_seed_invariant_columns": 19,
+    "mismatched_days": [],
+    "passed": true
+  },
+  "coverage": {
+    "n_atlas_cell_days": 7108,
+    "n_descriptor_cell_days": 7108,
+    "n_analogue_cell_days": 7108,
+    "descriptors_cover_atlas": true,
+    "analogue_covers_atlas": true,
+    "atlas_days_missing_analogue": []
+  },
+  "degenerate": {
+    "GANSU_DA__PatchTST": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "GANSU_DA__TimeMixer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "GANSU_DA__iTransformer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "GANSU_DA__LSTM": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHANDONG_DA__PatchTST": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHANDONG_DA__TimeMixer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHANDONG_DA__iTransformer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHANDONG_DA__LSTM": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHAANXI_DA__PatchTST": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHAANXI_DA__TimeMixer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHAANXI_DA__iTransformer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "SHAANXI_DA__LSTM": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "NINGXIA_DA__PatchTST": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "NINGXIA_DA__TimeMixer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "NINGXIA_DA__iTransformer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "NINGXIA_DA__LSTM": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "QINGHAI_DA__PatchTST": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "QINGHAI_DA__TimeMixer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "QINGHAI_DA__iTransformer": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    },
+    "QINGHAI_DA__LSTM": {
+      "n_missing_history_trajectory": 0,
+      "n_zero_historical_pos_mass": 0,
+      "n_zero_historical_neg_mass": 0
+    }
+  },
+  "descriptor_schema_sha256": "BC495E3677B58E2A6A7A7097BA22104CDA4EABAD82D6388CF345ABCB4DC7A376",
+  "n_descriptors": 28
+}

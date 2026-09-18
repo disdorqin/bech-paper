@@ -1,0 +1,16 @@
+{
+  "n_checked": 60,
+  "n_failed": 0,
+  "passed": true,
+  "tol_abs": 0.001,
+  "tol_rel": 1e-05,
+  "max_abs_diff_mae": 1.1055242424617973e-05,
+  "max_abs_diff_host": 1.33514404296875e-05,
+  "failures": [],
+  "run_snapshot_unchanged": true,
+  "n_run_files_hashed": 180,
+  "rows_written": 21324,
+  "n_days_with_partial_hours": 0,
+  "max_decoder_gap": 5.7551247664378025e-05,
+  "n_alpha_zero_direction": 0
+}

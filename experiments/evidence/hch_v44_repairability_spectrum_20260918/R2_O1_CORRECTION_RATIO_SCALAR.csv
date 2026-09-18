@@ -1,0 +1,7 @@
+group_type,group,predictor,target,n_rows,spearman_rho,note
+POOLED,POOLED,o1_correction_ratio,o1_gain_pct,5992,0.49546780179800176,"descriptive only; no fit, no threshold, no gate"
+MARKET,GANSU_DA,o1_correction_ratio,o1_gain_pct,896,0.5261241582075927,"descriptive only; no fit, no threshold, no gate"
+MARKET,NINGXIA_DA,o1_correction_ratio,o1_gain_pct,288,0.6756567763403784,"descriptive only; no fit, no threshold, no gate"
+MARKET,QINGHAI_DA,o1_correction_ratio,o1_gain_pct,268,0.6191352248406686,"descriptive only; no fit, no threshold, no gate"
+MARKET,SHAANXI_DA,o1_correction_ratio,o1_gain_pct,876,0.44736445853704254,"descriptive only; no fit, no threshold, no gate"
+MARKET,SHANDONG_DA,o1_correction_ratio,o1_gain_pct,3664,0.3895336650604527,"descriptive only; no fit, no threshold, no gate"

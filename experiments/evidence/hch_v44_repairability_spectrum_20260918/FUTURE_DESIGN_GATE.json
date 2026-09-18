@@ -1,0 +1,1069 @@
+{
+  "schema": "hch_v44_repairability_spectrum_future_design_gate.v1",
+  "protocol_id": "HCH_V44_REPAIRABILITY_SPECTRUM_20260918",
+  "gates": {
+    "A": {
+      "rule": ">= 4 of the 7 registered low-gain cells have material oracle headroom >= 2.0% of Host MAE",
+      "n_low_gain_cells": 7,
+      "n_with_material_headroom": 7,
+      "cells_with_material_headroom": [
+        "GANSU_DA__TimeMixer",
+        "GANSU_DA__iTransformer",
+        "SHANDONG_DA__TimeMixer",
+        "SHANDONG_DA__iTransformer",
+        "SHAANXI_DA__TimeMixer",
+        "SHAANXI_DA__iTransformer",
+        "SHAANXI_DA__LSTM"
+      ],
+      "passed": true
+    },
+    "B": {
+      "rule": "the same dominant headroom family explains >= 3 of those material-headroom low-gain cells",
+      "family_counts": {
+        "shape": 6,
+        "level": 1
+      },
+      "dominant_family": "shape",
+      "n_explained": 6,
+      "passed": true
+    },
+    "C": {
+      "rule": "at least one fixed legal-history signal for that family generalizes with the same direction in >= 4/5 leave-one-market-out folds and the probe improves its target over the constant baseline in >= 4/5 folds",
+      "evaluated": true,
+      "family": "shape",
+      "target": "shape_headroom_pct",
+      "c1_qualifying_descriptors": [
+        "hd_hour_max_sin",
+        "hd_shape_concentration",
+        "hd_spread",
+        "hs_B_iqr",
+        "hs_coh_neg",
+        "hs_coh_pos",
+        "hs_logB_mad",
+        "hs_mae_med"
+      ],
+      "n_descriptors_tested": 28,
+      "c2_n_folds_probe_beats_const": 1,
+      "c1_passed": true,
+      "c2_passed": false,
+      "passed": false,
+      "per_target": {
+        "B_headroom_pct": {
+          "family": "balanced_mass",
+          "n_folds": 5,
+          "n_folds_probe_beats_const": 1,
+          "c2_probe_beats_const_4of5": false,
+          "c1_qualifying_descriptors": [
+            "hd_shape_entropy",
+            "hs_absb_mad",
+            "hs_coh_neg",
+            "hs_logB_mad",
+            "hs_signchange_med"
+          ],
+          "n_descriptors_tested": 28,
+          "descriptor_detail": {
+            "hd_mean": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hd_std": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_spread": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_tv": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_max_ramp": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_shape_entropy": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hd_shape_concentration": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_hour_max_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_hour_max_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_hour_min_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hd_hour_min_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_mae_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_mae_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_absb_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_absb_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_logB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_logB_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_qL_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_qB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_trend_b": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_trend_logB": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_signchange_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_coh_pos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_coh_neg": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_mae_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_b_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_B_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            }
+          },
+          "fold_rho_median": -0.026691020741151553
+        },
+        "log1p_alpha_star": {
+          "family": "distance",
+          "n_folds": 5,
+          "n_folds_probe_beats_const": 0,
+          "c2_probe_beats_const_4of5": false,
+          "c1_qualifying_descriptors": [
+            "hd_hour_min_sin",
+            "hs_absb_mad",
+            "hs_absb_med",
+            "hs_logB_med",
+            "hs_mae_med",
+            "hs_signchange_med"
+          ],
+          "n_descriptors_tested": 28,
+          "descriptor_detail": {
+            "hd_mean": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hd_std": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_spread": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_tv": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_max_ramp": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_shape_entropy": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_shape_concentration": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_hour_max_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_hour_max_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_hour_min_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hd_hour_min_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_mae_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            },
+            "hs_mae_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_absb_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_absb_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_logB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_logB_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_qL_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_qB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_trend_b": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hs_trend_logB": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_signchange_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            },
+            "hs_coh_pos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_coh_neg": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_mae_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_b_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_B_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            }
+          },
+          "fold_rho_median": 0.006636932685680794
+        },
+        "ray_headroom_pct": {
+          "family": "distance",
+          "n_folds": 5,
+          "n_folds_probe_beats_const": 1,
+          "c2_probe_beats_const_4of5": false,
+          "c1_qualifying_descriptors": [
+            "hd_tv",
+            "hs_logB_med",
+            "hs_mae_med",
+            "hs_signchange_med",
+            "hs_trend_b"
+          ],
+          "n_descriptors_tested": 28,
+          "descriptor_detail": {
+            "hd_mean": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_std": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_spread": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_tv": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hd_max_ramp": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_shape_entropy": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_shape_concentration": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_hour_max_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_hour_max_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_hour_min_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_hour_min_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_mae_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_mae_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_absb_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hs_absb_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_logB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_logB_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_qL_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_qB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_trend_b": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_trend_logB": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_signchange_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            },
+            "hs_coh_pos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_coh_neg": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_mae_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_b_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_B_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            }
+          },
+          "fold_rho_median": 0.08654097594683927
+        },
+        "shape_headroom_pct": {
+          "family": "shape",
+          "n_folds": 5,
+          "n_folds_probe_beats_const": 1,
+          "c2_probe_beats_const_4of5": false,
+          "c1_qualifying_descriptors": [
+            "hd_hour_max_sin",
+            "hd_shape_concentration",
+            "hd_spread",
+            "hs_B_iqr",
+            "hs_coh_neg",
+            "hs_coh_pos",
+            "hs_logB_mad",
+            "hs_mae_med"
+          ],
+          "n_descriptors_tested": 28,
+          "descriptor_detail": {
+            "hd_mean": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_std": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hd_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_spread": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            },
+            "hd_tv": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_max_ramp": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_shape_entropy": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hd_shape_concentration": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hd_hour_max_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            },
+            "hd_hour_max_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hd_hour_min_sin": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hd_hour_min_cos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_mae_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_mae_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_absb_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_absb_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_logB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_logB_mad": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_qL_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_qB_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 3,
+              "qualifies": false
+            },
+            "hs_trend_b": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_trend_logB": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 0,
+              "qualifies": false
+            },
+            "hs_signchange_med": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_coh_pos": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 4,
+              "qualifies": true
+            },
+            "hs_coh_neg": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": -1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            },
+            "hs_mae_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 3,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 2,
+              "qualifies": false
+            },
+            "hs_b_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 4,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 1,
+              "qualifies": false
+            },
+            "hs_B_iqr": {
+              "n_folds": 5,
+              "n_coef_sign_modal": 5,
+              "n_coef_nonzero": 5,
+              "modal_sign": 1,
+              "n_folds_oof_spearman_agrees": 5,
+              "qualifies": true
+            }
+          },
+          "fold_rho_median": 0.01048038219977739
+        }
+      },
+      "multiplicity_disclosure": "28 legal descriptors were tested per target; the 'exists a descriptor' clause of C1 is a maximum over that set and is reported with its denominator rather than as a single-hypothesis result."
+    },
+    "D": {
+      "d1_features_legal": true,
+      "d1_detail": "probe features are exactly repair_common.DESCRIPTOR_KEYS; no market/Host column exists",
+      "d2_evaluated": true,
+      "target": "B_headroom_pct",
+      "qualifying_descriptor": "hd_shape_entropy",
+      "modal_sign": -1,
+      "folds_with_host_sign_agreement": {
+        "PatchTST": 2,
+        "TimeMixer": 3,
+        "iTransformer": 2,
+        "LSTM": 3
+      },
+      "n_host_families_agreeing": 2,
+      "host_families_agreeing": [
+        "TimeMixer",
+        "LSTM"
+      ],
+      "d2_passed": true,
+      "rule": "not market-ID dependent, and the effect is visible in >= 2 Host families",
+      "passed": true
+    },
+    "E": {
+      "test_rows_returned": 0,
+      "test_role_frame_refusals": 0,
+      "forbidden_guard_hits": 0,
+      "test_rows_dropped_before_return": 0,
+      "test_target_read_count_max_in_invocation": 0,
+      "n_runs_redigested": 60,
+      "core_tree_digest_now": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+      "core_tree_digest_recorded_in_runs": [
+        "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+      ],
+      "n_distinct_recorded_digests": 1,
+      "src_core_unchanged": true,
+      "run_snapshot_unchanged": true,
+      "n_run_files_hashed": 180,
+      "optimizer_steps_in_this_stage": 0,
+      "new_fits_in_this_stage": 0,
+      "passed": true,
+      "rule": "TEST reads = 0 and no existing checkpoint/evidence is mutated"
+    }
+  },
+  "all_passed": false,
+  "decision": "NO_FUTURE_MECHANISM_AUTHORIZED",
+  "stage_stops_here_regardless": true,
+  "stop_clause": "Regardless of outcome this stage does not implement a router, similar-day module, amplitude learner, feature branch, architecture change or foreign experiment."
+}

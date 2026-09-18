@@ -1,0 +1,1091 @@
+{
+  "schema": "hch_v44_repairability_spectrum_lomo_probe.v1",
+  "protocol_id": "HCH_V44_REPAIRABILITY_SPECTRUM_20260918",
+  "model": "sklearn.linear_model.Ridge(alpha=1.0, fit_intercept=True)",
+  "n_descriptors": 28,
+  "descriptor_order": [
+    "hd_mean",
+    "hd_std",
+    "hd_iqr",
+    "hd_spread",
+    "hd_tv",
+    "hd_max_ramp",
+    "hd_shape_entropy",
+    "hd_shape_concentration",
+    "hd_hour_max_sin",
+    "hd_hour_max_cos",
+    "hd_hour_min_sin",
+    "hd_hour_min_cos",
+    "hs_mae_med",
+    "hs_mae_mad",
+    "hs_absb_med",
+    "hs_absb_mad",
+    "hs_logB_med",
+    "hs_logB_mad",
+    "hs_qL_med",
+    "hs_qB_med",
+    "hs_trend_b",
+    "hs_trend_logB",
+    "hs_signchange_med",
+    "hs_coh_pos",
+    "hs_coh_neg",
+    "hs_mae_iqr",
+    "hs_b_iqr",
+    "hs_B_iqr"
+  ],
+  "targets": {
+    "log1p_alpha_star": "log1p(median across seeds of the per-day ray-optimal alpha*)",
+    "ray_headroom_pct": "median across seeds of the per-day ray-oracle headroom, % of that day's Host MAE",
+    "B_headroom_pct": "median across seeds of the per-day O_B balanced-mass swap headroom, % of Host MAE",
+    "shape_headroom_pct": "median across seeds of the per-day O_S Shape swap headroom, % of Host MAE"
+  },
+  "target_family": {
+    "log1p_alpha_star": "distance",
+    "ray_headroom_pct": "distance",
+    "B_headroom_pct": "balanced_mass",
+    "shape_headroom_pct": "shape"
+  },
+  "sample": {
+    "role": "TRAIN",
+    "n_rows": 5992,
+    "n_cells": 20,
+    "markets": [
+      "GANSU_DA",
+      "SHANDONG_DA",
+      "SHAANXI_DA",
+      "NINGXIA_DA",
+      "QINGHAI_DA"
+    ],
+    "cell_macro_balanced": true,
+    "scaling": "descriptor mean/std fit on the training folds only"
+  },
+  "folds": "leave-one-market-out, 5 folds",
+  "hyperparameter_search": "none",
+  "market_or_host_id_features": "none (features are exactly the 28 frozen legal descriptors)",
+  "gate_c_evidence": {
+    "B_headroom_pct": {
+      "family": "balanced_mass",
+      "n_folds": 5,
+      "n_folds_probe_beats_const": 1,
+      "c2_probe_beats_const_4of5": false,
+      "c1_qualifying_descriptors": [
+        "hd_shape_entropy",
+        "hs_absb_mad",
+        "hs_coh_neg",
+        "hs_logB_mad",
+        "hs_signchange_med"
+      ],
+      "n_descriptors_tested": 28,
+      "descriptor_detail": {
+        "hd_mean": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hd_std": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_spread": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_tv": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_max_ramp": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_shape_entropy": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hd_shape_concentration": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_hour_max_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_hour_max_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_hour_min_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hd_hour_min_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_mae_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_mae_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_absb_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_absb_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_logB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_logB_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_qL_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_qB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_trend_b": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_trend_logB": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_signchange_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_coh_pos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_coh_neg": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_mae_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_b_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_B_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        }
+      },
+      "fold_rho_median": -0.026691020741151553
+    },
+    "log1p_alpha_star": {
+      "family": "distance",
+      "n_folds": 5,
+      "n_folds_probe_beats_const": 0,
+      "c2_probe_beats_const_4of5": false,
+      "c1_qualifying_descriptors": [
+        "hd_hour_min_sin",
+        "hs_absb_mad",
+        "hs_absb_med",
+        "hs_logB_med",
+        "hs_mae_med",
+        "hs_signchange_med"
+      ],
+      "n_descriptors_tested": 28,
+      "descriptor_detail": {
+        "hd_mean": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hd_std": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_spread": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_tv": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_max_ramp": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_shape_entropy": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_shape_concentration": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_hour_max_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_hour_max_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_hour_min_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hd_hour_min_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_mae_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        },
+        "hs_mae_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_absb_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_absb_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_logB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_logB_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_qL_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_qB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_trend_b": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hs_trend_logB": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_signchange_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        },
+        "hs_coh_pos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_coh_neg": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_mae_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_b_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_B_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        }
+      },
+      "fold_rho_median": 0.006636932685680794
+    },
+    "ray_headroom_pct": {
+      "family": "distance",
+      "n_folds": 5,
+      "n_folds_probe_beats_const": 1,
+      "c2_probe_beats_const_4of5": false,
+      "c1_qualifying_descriptors": [
+        "hd_tv",
+        "hs_logB_med",
+        "hs_mae_med",
+        "hs_signchange_med",
+        "hs_trend_b"
+      ],
+      "n_descriptors_tested": 28,
+      "descriptor_detail": {
+        "hd_mean": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_std": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_spread": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_tv": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hd_max_ramp": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_shape_entropy": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_shape_concentration": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_hour_max_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_hour_max_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_hour_min_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_hour_min_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_mae_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_mae_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_absb_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hs_absb_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_logB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_logB_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_qL_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_qB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_trend_b": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_trend_logB": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_signchange_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        },
+        "hs_coh_pos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_coh_neg": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_mae_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_b_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_B_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        }
+      },
+      "fold_rho_median": 0.08654097594683927
+    },
+    "shape_headroom_pct": {
+      "family": "shape",
+      "n_folds": 5,
+      "n_folds_probe_beats_const": 1,
+      "c2_probe_beats_const_4of5": false,
+      "c1_qualifying_descriptors": [
+        "hd_hour_max_sin",
+        "hd_shape_concentration",
+        "hd_spread",
+        "hs_B_iqr",
+        "hs_coh_neg",
+        "hs_coh_pos",
+        "hs_logB_mad",
+        "hs_mae_med"
+      ],
+      "n_descriptors_tested": 28,
+      "descriptor_detail": {
+        "hd_mean": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_std": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hd_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_spread": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        },
+        "hd_tv": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_max_ramp": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_shape_entropy": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hd_shape_concentration": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hd_hour_max_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        },
+        "hd_hour_max_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hd_hour_min_sin": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hd_hour_min_cos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_mae_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_mae_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_absb_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_absb_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_logB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_logB_mad": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_qL_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_qB_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 3,
+          "qualifies": false
+        },
+        "hs_trend_b": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_trend_logB": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 0,
+          "qualifies": false
+        },
+        "hs_signchange_med": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_coh_pos": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 4,
+          "qualifies": true
+        },
+        "hs_coh_neg": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": -1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        },
+        "hs_mae_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 3,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 2,
+          "qualifies": false
+        },
+        "hs_b_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 4,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 1,
+          "qualifies": false
+        },
+        "hs_B_iqr": {
+          "n_folds": 5,
+          "n_coef_sign_modal": 5,
+          "n_coef_nonzero": 5,
+          "modal_sign": 1,
+          "n_folds_oof_spearman_agrees": 5,
+          "qualifies": true
+        }
+      },
+      "fold_rho_median": 0.01048038219977739
+    }
+  },
+  "scalar_o1_correction_ratio": [
+    {
+      "group_type": "POOLED",
+      "group": "POOLED",
+      "predictor": "o1_correction_ratio",
+      "target": "o1_gain_pct",
+      "n_rows": 5992,
+      "spearman_rho": 0.49546780179800176,
+      "note": "descriptive only; no fit, no threshold, no gate"
+    },
+    {
+      "group_type": "MARKET",
+      "group": "GANSU_DA",
+      "predictor": "o1_correction_ratio",
+      "target": "o1_gain_pct",
+      "n_rows": 896,
+      "spearman_rho": 0.5261241582075927,
+      "note": "descriptive only; no fit, no threshold, no gate"
+    },
+    {
+      "group_type": "MARKET",
+      "group": "NINGXIA_DA",
+      "predictor": "o1_correction_ratio",
+      "target": "o1_gain_pct",
+      "n_rows": 288,
+      "spearman_rho": 0.6756567763403784,
+      "note": "descriptive only; no fit, no threshold, no gate"
+    },
+    {
+      "group_type": "MARKET",
+      "group": "QINGHAI_DA",
+      "predictor": "o1_correction_ratio",
+      "target": "o1_gain_pct",
+      "n_rows": 268,
+      "spearman_rho": 0.6191352248406686,
+      "note": "descriptive only; no fit, no threshold, no gate"
+    },
+    {
+      "group_type": "MARKET",
+      "group": "SHAANXI_DA",
+      "predictor": "o1_correction_ratio",
+      "target": "o1_gain_pct",
+      "n_rows": 876,
+      "spearman_rho": 0.44736445853704254,
+      "note": "descriptive only; no fit, no threshold, no gate"
+    },
+    {
+      "group_type": "MARKET",
+      "group": "SHANDONG_DA",
+      "predictor": "o1_correction_ratio",
+      "target": "o1_gain_pct",
+      "n_rows": 3664,
+      "spearman_rho": 0.3895336650604527,
+      "note": "descriptive only; no fit, no threshold, no gate"
+    }
+  ]
+}

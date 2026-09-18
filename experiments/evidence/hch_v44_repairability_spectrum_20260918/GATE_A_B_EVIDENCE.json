@@ -1,0 +1,37 @@
+{
+  "n_cells": 20,
+  "diagnosis_counts": {
+    "DISTANCE_LIMITED": 1,
+    "LEVEL_LIMITED": 3,
+    "SHAPE_LIMITED": 16
+  },
+  "registered_low_gain_cells": [
+    "GANSU_DA__TimeMixer",
+    "GANSU_DA__iTransformer",
+    "SHANDONG_DA__TimeMixer",
+    "SHANDONG_DA__iTransformer",
+    "SHAANXI_DA__TimeMixer",
+    "SHAANXI_DA__iTransformer",
+    "SHAANXI_DA__LSTM"
+  ],
+  "low_gain_cells_material_headroom": [
+    "GANSU_DA__TimeMixer",
+    "GANSU_DA__iTransformer",
+    "SHANDONG_DA__TimeMixer",
+    "SHANDONG_DA__iTransformer",
+    "SHAANXI_DA__TimeMixer",
+    "SHAANXI_DA__iTransformer",
+    "SHAANXI_DA__LSTM"
+  ],
+  "n_low_gain_with_material_headroom": 7,
+  "low_gain_dominant_family_counts": {
+    "shape": 6,
+    "level": 1
+  },
+  "measured_vs_registered_low_gain_mismatch": [
+    "GANSU_DA__PatchTST",
+    "SHANDONG_DA__iTransformer",
+    "NINGXIA_DA__PatchTST",
+    "NINGXIA_DA__LSTM"
+  ]
+}
