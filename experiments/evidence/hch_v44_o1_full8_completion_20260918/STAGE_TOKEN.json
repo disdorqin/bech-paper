@@ -1,0 +1,32 @@
+{
+  "schema": "hch_v44_o1_full8_stage_token.v1",
+  "protocol_id": "HCH_V44_O1_FULL8_COMPLETION_20260918",
+  "terminal_token": "HCH_V44_O1_FULL8_COMPLETION_COMPLETE_FOR_ADJUDICATION",
+  "derivation": "COMPLETE_FOR_ADJUDICATION iff all 24 registered runs are on disk with their freeze record, curve and selected checkpoint (12 of them new fits and 12 reused O1 runs), every registered artifact and all eight figure files exist, and the independent verifier passed without importing the runner; otherwise BLOCKED_<first blocker class>",
+  "blockers": [],
+  "n_runs_complete": 24,
+  "n_new_fits_complete": 12,
+  "n_reused_o1_complete": 12,
+  "new_fits": [
+    "GANSU_DA__LSTM__seed17",
+    "GANSU_DA__LSTM__seed37",
+    "GANSU_DA__LSTM__seed7",
+    "QINGHAI_DA__TimeMixer__seed17",
+    "QINGHAI_DA__TimeMixer__seed37",
+    "QINGHAI_DA__TimeMixer__seed7",
+    "SHAANXI_DA__PatchTST__seed17",
+    "SHAANXI_DA__PatchTST__seed37",
+    "SHAANXI_DA__PatchTST__seed7",
+    "SHANDONG_DA__PatchTST__seed17",
+    "SHANDONG_DA__PatchTST__seed37",
+    "SHANDONG_DA__PatchTST__seed7"
+  ],
+  "gate_verdict": "AUXILIARY_PERSISTENCE_BROADLY_HARMFUL_ON_RECOVERY_PANEL",
+  "gate_n_passed": 5,
+  "test_target_read_count": 0,
+  "access": {
+    "guard_installed": true,
+    "distinct_paths_blocked": []
+  },
+  "note": "The token records completion only.  The diagnostic verdict is gate_verdict and is never folded into the token.  No B/Shape/Level-loss removal, no router deletion, no architecture simplification and no TEST evaluation follows from it."
+}

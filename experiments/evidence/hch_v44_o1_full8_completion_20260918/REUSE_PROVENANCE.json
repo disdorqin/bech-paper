@@ -1,0 +1,535 @@
+{
+  "schema": "hch_v44_o1_full8_reuse_provenance.v1",
+  "protocol_id": "HCH_V44_O1_FULL8_COMPLETION_20260918",
+  "reused_o1_runs": {
+    "GANSU_DA__PatchTST__seed7": {
+      "freeze_sha256": "1EBC1F1B2438C92C02F4A04AD26E7FD064F033D5BB18077507D7E9D3C7B46480",
+      "curve_sha256": "36B2CB35F26714B2B4F94940CDCE098A090C8EBE3E2809D94BA3AF6B23B5636B",
+      "checkpoint_sha256": "B33F2540E263425098E9341CCAA4AA8AA456D45245F94515055D3E29A0BFE379",
+      "selected_step": 1600,
+      "selected_val_mae_ema": 74.78614044189453,
+      "selected_ema_parameter_hash": "EB4EE4EC824131931C7A80FCC145EC12BC5F0F3B50E9FF5B291CFE89520F27A6",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "GANSU_DA__PatchTST__seed17": {
+      "freeze_sha256": "E2FA50CDD1DA13669C09602B4DBC4E32F1F27C3B1AC309BFE69E7D4787D633B1",
+      "curve_sha256": "37178A6FE51D3365DC08FCBEE49FB9690FDD846FCFDF97254122450F13D263CF",
+      "checkpoint_sha256": "36EBEC606BF2042822D9E430572E8CBD0608D429AC4069A679808548D326B23B",
+      "selected_step": 1200,
+      "selected_val_mae_ema": 76.62848663330078,
+      "selected_ema_parameter_hash": "A2F276EB40C910BB1AFF25CE7FC6D1CAE55A900DD9BEDDD6383D019B1AE00E5B",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "GANSU_DA__PatchTST__seed37": {
+      "freeze_sha256": "4823ECEA9CA8A32A5E34BAB0CA69046D36B4AFF89FE94476DAFDAE323DDA6ABC",
+      "curve_sha256": "DC2CD97F7D89CB75F7B23E0DEA2D23553A449B1633C31247B57F0011B83BC0B5",
+      "checkpoint_sha256": "447581382E78F3E630DA54D407479565D3C88F36C7005C2DDEBA7DB0EE18A5EF",
+      "selected_step": 1550,
+      "selected_val_mae_ema": 75.76719665527344,
+      "selected_ema_parameter_hash": "3D3CDCBC5093D7B9136DD7FE424198CD767A0756BD4CB7FAF387270B00FD9B77",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "SHANDONG_DA__iTransformer__seed7": {
+      "freeze_sha256": "4779013503592D87955C7197CE16B6F711A401CE458989ECE52242ACB2DA3D63",
+      "curve_sha256": "9BE0EAB0F4171A93CED2DE9C08586DDF0548975C74AB95F51A848AC41A649385",
+      "checkpoint_sha256": "C9183598318C16BE0F9F7B62F79C60F1730A2A42D7C7D7B7A252C8F7A3D2DE13",
+      "selected_step": 550,
+      "selected_val_mae_ema": 74.84967803955078,
+      "selected_ema_parameter_hash": "E2202AC6C99E36CD9CF5075BBDBBD4871B9AEA75645E67668E9B3BC37F30E1DC",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "SHANDONG_DA__iTransformer__seed17": {
+      "freeze_sha256": "3F445599E526C4B0A0D8CBD4D03F5000D6B77BD4411B604171DECD755F8431DF",
+      "curve_sha256": "29885B1086E187449BFD2CBFA2DC8E235C1F10989465485B905099E3DD3FA5D1",
+      "checkpoint_sha256": "A1398C9F753C5D355CF3EAA2AD798666CEAD86AE2B859B6A8186DCE0069D639C",
+      "selected_step": 600,
+      "selected_val_mae_ema": 74.52197265625,
+      "selected_ema_parameter_hash": "75795E91D5AFD8152249715D82B571814FF4579E00DA3627F639CEF5E752D75F",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "SHANDONG_DA__iTransformer__seed37": {
+      "freeze_sha256": "52FFDEA952CA920FFD9EEC3238135AE253FB82C29F6B36BE1796414D5B0A70F2",
+      "curve_sha256": "A4EAB55A2C043AB0FE6EE3881761A48B374BD8171BD9AA7993F4AF91D416AC2D",
+      "checkpoint_sha256": "7CA7CA68BBCA5D33543334BA5A002034924BE3BF731E504BC1406C38A184DFCC",
+      "selected_step": 550,
+      "selected_val_mae_ema": 74.88529205322266,
+      "selected_ema_parameter_hash": "CC6EB9FAEE13F60D7F659AFAB2933DC29DE2D858996902559DE8E6BC647A1470",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "SHAANXI_DA__TimeMixer__seed7": {
+      "freeze_sha256": "E540B6B0EBB977EBA455F1DD1E78461A25F68AE4698956D7B969C519F448B527",
+      "curve_sha256": "6FF94B0B555E1B6867AF0B477E55BA862CAA1ED5FD4542872B1D21CA3953A3D7",
+      "checkpoint_sha256": "32E4D6E8456191C1F5FB5448A7FE32C2CE9CB460D0C8226042BB92BDA1B3F350",
+      "selected_step": 300,
+      "selected_val_mae_ema": 103.449951171875,
+      "selected_ema_parameter_hash": "5A28565D6B9C17B48E1C46A888474F326C23ECE33447F9F25D9907D2882C05A1",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "SHAANXI_DA__TimeMixer__seed17": {
+      "freeze_sha256": "C815A471C33D4A928FA9A1E21955FFBF1471238D4BB720410FA2329B888A0FB7",
+      "curve_sha256": "734302D814615A72839C0D0E63710F48E049902BE72AEA9817D57DAB92FCE655",
+      "checkpoint_sha256": "2C3F4621849CAF0725C4D0A2C40342FBC1309025A62F1FA0D3A96FCAA0BE7EEB",
+      "selected_step": 250,
+      "selected_val_mae_ema": 103.49333953857422,
+      "selected_ema_parameter_hash": "6FCF247E001C16A1638C828AE3761F1923356066CE8B2F35AF925A78E0565BA1",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "SHAANXI_DA__TimeMixer__seed37": {
+      "freeze_sha256": "7570A5A52A33BB25D19C4C8C8BD88DDFEC260D95E4D102CB33BB6814E5E85633",
+      "curve_sha256": "E30BB79ADC7964EC3EE5C36CD165D3BF1B7079DF538E1E3CD7F3D79740F05CD7",
+      "checkpoint_sha256": "E7A5AC20245F179925D25EC1238C284BA5006E88C46A51494CCC6C40865CFFA9",
+      "selected_step": 250,
+      "selected_val_mae_ema": 103.47103118896484,
+      "selected_ema_parameter_hash": "CC713057D53031C59DA81408B7D398CF49CCE1F0CA095E604DFD14742C0A35F7",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "NINGXIA_DA__iTransformer__seed7": {
+      "freeze_sha256": "AC201B4F931B5D009A521CE2E96C54990DA30CBD9047D37E632B9735AAE51871",
+      "curve_sha256": "424EE3578734AC78565442DB3075B6D369A3B309D9F8BD76544A3C6F0A57EDD2",
+      "checkpoint_sha256": "E136C93EC88F551E37EC76F91FCC9BEF1E5609F9852912AFFDF4913279D839E9",
+      "selected_step": 600,
+      "selected_val_mae_ema": 68.11109924316406,
+      "selected_ema_parameter_hash": "FA23F642A620755951858AF47A5CE6679DF30F26B964805B3C8B1342B8D0DFE5",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "NINGXIA_DA__iTransformer__seed17": {
+      "freeze_sha256": "202242C4B778F016DF017C83E9E762FB2652D40BF635C37400057790D5B558C9",
+      "curve_sha256": "A1D73A390D878374A80BDF8AD663C6CA7DB28A1A7143EA3B74A06DE6E8F3F146",
+      "checkpoint_sha256": "4931AF482CE07325D37906F1309A948EB6848892499CAC82B53E06511C7B6653",
+      "selected_step": 500,
+      "selected_val_mae_ema": 69.24305725097656,
+      "selected_ema_parameter_hash": "F4582556501096A7C8CCEB62763823ABCDCCA5A915C290238E3DB0D99B506038",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    },
+    "NINGXIA_DA__iTransformer__seed37": {
+      "freeze_sha256": "06800DF8380FAC3E4EB3C4ED5F2B4DB03ACCA1891269853213EC0E90D3ACC944",
+      "curve_sha256": "68AEBFA09251418F1166E44DD556B4FB9C48B90F01A7D9A0F379756F9D99F6A3",
+      "checkpoint_sha256": "A6C0112E60A83DA0CD7134ED782A80C18AC48D534ADB018F2766C411F86AF413",
+      "selected_step": 450,
+      "selected_val_mae_ema": 69.61625671386719,
+      "selected_ema_parameter_hash": "89C7D395843AE462754C825683F55367F8B9B3F84EEE7F0C9309FB0404164A77",
+      "probe_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917",
+      "reused_not_rerun": true
+    }
+  },
+  "reused_o1_hashes_match_o1_stage_record": true,
+  "reused_o1_mismatches": [],
+  "r1_references": {
+    "GANSU_DA__PatchTST__seed7": {
+      "freeze_sha256": "F864F1547DBBF5BF2DA024A23679FC2EA5DF1D770F72903B9DD334E0F1798849",
+      "curve_sha256": "0F70283791027D79A76F1BE4111F2D195AF84A124B03F12B1723ADE018527874",
+      "checkpoint_sha256": "BA453B0FEEC60F7B3F1F7D654E9AD272252B4F2FDB7537E8252DA896FF38AEA0",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 0,
+      "selected_val_mae_ema": 77.10411071777344,
+      "selected_ema_parameter_hash": "42E86558B16423424E184356DEB290592EA81C7F0D0A270DB10C68930DED94C5",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "GANSU_DA__PatchTST__seed17": {
+      "freeze_sha256": "90527DC7A8E0380CA06712BC15D7C2E9971DF5447C160921141000B0F257859E",
+      "curve_sha256": "4A607574039B5200912A8FE4E8309A7A0C2000D8A1DACDBA82CDC5456B40D1CA",
+      "checkpoint_sha256": "A8F6BC5CF08F31FB340A4D640CFE0870517CEDD14B6A1841D0B76647D69FAB3F",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 0,
+      "selected_val_mae_ema": 77.10381317138672,
+      "selected_ema_parameter_hash": "F915D647F460B0383C3A5ED83CBC8AA097CD9AA68558AA8A7E6FFE8F4E53A9B8",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "GANSU_DA__PatchTST__seed37": {
+      "freeze_sha256": "3DA3483E12FB2B856F3D5796A91FC5BD22A526A886AA6A8D5BF72BE369549CCE",
+      "curve_sha256": "97AEE17B89258FD50F9AC4CA451ABA2163D78F0C6CE8F0CE4EE96E7F8BBF6DC0",
+      "checkpoint_sha256": "B4EB613E065C00C49C68AB95007E4AE586FEAC7D50697BBFDAB63F2ADF03CEA1",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 0,
+      "selected_val_mae_ema": 77.10397338867188,
+      "selected_ema_parameter_hash": "7E42E2E34962A8DE0F41C9A000A70579313865CD81922450CD46B5A2D16E8AE6",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "GANSU_DA__LSTM__seed7": {
+      "freeze_sha256": "94B2CFFCA82A982968BEBA84C45A82336BBB3F92232AAC013EDE991C0AFF9389",
+      "curve_sha256": "10AAD0DB903CAADC54AD6DDDC3D4E177AC60E6CBEDD2D864DF64B850CDFFAF8F",
+      "checkpoint_sha256": "0D0FDF51AAA72D3DB9B29524D0B7FAD12F80D737495B6F350F83A3750A22D32A",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 600,
+      "selected_val_mae_ema": 78.92111206054688,
+      "selected_ema_parameter_hash": "F93F411366CEA329EC2BF37F3DB6DB42FC322A14095D592BA434EA8167E2C868",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "GANSU_DA__LSTM__seed17": {
+      "freeze_sha256": "500486E0C25D5F0062CBE53B6508A8F66EAFBD6A353C0EF8A688E27606C3ED2E",
+      "curve_sha256": "F150D89F6136A26A31E29BDCFFCCFD9C2923728B384F9F8C87712ABF70C5D291",
+      "checkpoint_sha256": "FD7F9275FBE8EBCEA7CAC73DB9C14DEF229C091CA0F5B77A386C4313ED3DA611",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 500,
+      "selected_val_mae_ema": 79.66493225097656,
+      "selected_ema_parameter_hash": "AB2B9CD363A0848BF60DECF03A8F955CE0DA9A08C1C4C6699959885FC19C2CFB",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "GANSU_DA__LSTM__seed37": {
+      "freeze_sha256": "F5730443F7D8D3F70CA657071DB0A7ADDCD67DBFF8A63C795184928F961B99BD",
+      "curve_sha256": "F90C101C6FD53EBDC5553078C5B4F3D2451B146EB29DCD1C766B8D3FEE909A68",
+      "checkpoint_sha256": "8386C4AFC61760DBDD7E0A19DEF637D17DEAF78248479FE68D704452EB25C5E0",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 600,
+      "selected_val_mae_ema": 79.4853286743164,
+      "selected_ema_parameter_hash": "D7572036F8DF11AA253A268D5A661A5297F385E7B5FA2DBFC9659192DA501835",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHANDONG_DA__PatchTST__seed7": {
+      "freeze_sha256": "4708C1ADD771F0BDC1FD70964E25E18C534C6BD571EAC9AD2853A1BACF3D332A",
+      "curve_sha256": "2F323F524E089DCF70749D9FE8693CBB7BECEBB04BE4CA8127C3FAAB8E33C200",
+      "checkpoint_sha256": "B3DAEDD2C35B6EFE934D6F413E368566112BB74D8F8B586876F639D1B4FB9FC2",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 800,
+      "selected_val_mae_ema": 75.61103820800781,
+      "selected_ema_parameter_hash": "A46EE858ECC400550EEDB1634EF1E570FA9FFBF46AE8A23120426C8F5C81D40F",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHANDONG_DA__PatchTST__seed17": {
+      "freeze_sha256": "8E85B40323FF8FEE3BD6429504D1F484C1B6B5CB6DAF295187706057771D42EC",
+      "curve_sha256": "48C1907F8C300289C8048A244F44AAD329C0B3D0AECE6171516B2A0D8C391E92",
+      "checkpoint_sha256": "97467694ECB74CD072A7618CC2B3F9DECEA54622F3FF82FCA64E422F0D93CB9C",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 950,
+      "selected_val_mae_ema": 75.46000671386719,
+      "selected_ema_parameter_hash": "249C0BDA4CE9EB33DB6600D7EAFFCF720D1C61EFD3D1160C7C1DEA6F062AD0EC",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHANDONG_DA__PatchTST__seed37": {
+      "freeze_sha256": "516DDEFDB5380B40D7AEF2CB9343F89162F70C6B2B653B717356A398FE5522F4",
+      "curve_sha256": "05F8EE363106DDBE15F2CEC87FBE21226D891DF73D5B7B21C36CE50AD560ECD4",
+      "checkpoint_sha256": "C336CDF73B3990F7C38ED34CE7CA9973F60FDFC33AB960745F3BF56E3D029F5B",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 1550,
+      "selected_val_mae_ema": 75.00178527832031,
+      "selected_ema_parameter_hash": "322121E25D0F7B0DA11B58199580087A0C4B01367E137CB7E3A5F0D8BB5AA538",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHANDONG_DA__iTransformer__seed7": {
+      "freeze_sha256": "579AC92BFA0357B77F0FC9D67E59E991AA3FF0A86AB0A3253DAFEE43CA953E2E",
+      "curve_sha256": "702A92E78E0E2C2C56C6FBA6F5A98B6B048AAEF3C9181F6F0A91C0AC66C1ACE7",
+      "checkpoint_sha256": "CCBA03E4CF65796B0875D9AB6D81A3BC9BB23F2D66790CCD046898F885C0AD15",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 450,
+      "selected_val_mae_ema": 74.98084259033203,
+      "selected_ema_parameter_hash": "F252784C1235169645E647B018DF87EC7AA9BD1B6748FD1491ECDA934A6643F5",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHANDONG_DA__iTransformer__seed17": {
+      "freeze_sha256": "400CF3A95985E9EE02FA15F1D4124E2139DA0E0C07F9E94E40C0ADA312667022",
+      "curve_sha256": "8B49EDBD7044ADA83A998B645457755AF758EAEB1C74FC755DFA24CE2D8AA172",
+      "checkpoint_sha256": "7B290EACDE00CEBB00F7A34B05020B8FA9FCCF267F4CE1CE6A9B268B7D6D11C7",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 500,
+      "selected_val_mae_ema": 74.9755859375,
+      "selected_ema_parameter_hash": "0334939BCEDD09BC9386383F2DB674E3623321A45901A195164AB13B4EC0FECD",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHANDONG_DA__iTransformer__seed37": {
+      "freeze_sha256": "D4370858FB6ED2CA6917FC59D57DC684CE2AE0D52F62985D6B38541BEF0F24BF",
+      "curve_sha256": "30C7963CCC2BFFD54E92DBBABF6FACF857E5398A3E6C1DAC00D1D18140C01681",
+      "checkpoint_sha256": "CBB5D764ED805EF8E13FBD0E6EC083FA0B7B2161C7DF815B5A753616AA6340D3",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 450,
+      "selected_val_mae_ema": 75.02806091308594,
+      "selected_ema_parameter_hash": "B58D4CF7F886D9636EE7BA5DC5A91D13ED7E6BD1D3D517C754E581E48EF003B7",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHAANXI_DA__TimeMixer__seed7": {
+      "freeze_sha256": "73B3F9EFD802F6389ECD28971A5D852E78FDC49CFD1D8F0196F74237AAA8C920",
+      "curve_sha256": "10EFCDE0F8CEA3D645B4BE3A48F256B4FDCFE01DD66CB7CCDA7A172874F00302",
+      "checkpoint_sha256": "32E4D6E8456191C1F5FB5448A7FE32C2CE9CB460D0C8226042BB92BDA1B3F350",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 300,
+      "selected_val_mae_ema": 103.449951171875,
+      "selected_ema_parameter_hash": "5A28565D6B9C17B48E1C46A888474F326C23ECE33447F9F25D9907D2882C05A1",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHAANXI_DA__TimeMixer__seed17": {
+      "freeze_sha256": "977490BB5478C4F924ED1E26123A54A0A8BCB71E97981F9612ED8CA0D1B39DAB",
+      "curve_sha256": "ECFFB338474AB5E0671E06C821191A2928AA82F5AAC31402A9AD86399628FF76",
+      "checkpoint_sha256": "2C3F4621849CAF0725C4D0A2C40342FBC1309025A62F1FA0D3A96FCAA0BE7EEB",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 250,
+      "selected_val_mae_ema": 103.49333953857422,
+      "selected_ema_parameter_hash": "6FCF247E001C16A1638C828AE3761F1923356066CE8B2F35AF925A78E0565BA1",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHAANXI_DA__TimeMixer__seed37": {
+      "freeze_sha256": "3BECF2059430F9EC7F217A54AA7605E6E14266D6B420F1063C8844894835FAA5",
+      "curve_sha256": "2822443B855617DB5166DFA2F5B9469611C716878936572053CF7F7F1C1B8CD6",
+      "checkpoint_sha256": "E7A5AC20245F179925D25EC1238C284BA5006E88C46A51494CCC6C40865CFFA9",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 250,
+      "selected_val_mae_ema": 103.47103118896484,
+      "selected_ema_parameter_hash": "CC713057D53031C59DA81408B7D398CF49CCE1F0CA095E604DFD14742C0A35F7",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHAANXI_DA__PatchTST__seed7": {
+      "freeze_sha256": "853BF0308A172FFD77E44E8553D1104854C86DDE5247BD6921E5CCB8ED771150",
+      "curve_sha256": "268A9AEAE36D26BE5EB30A69505CDE1BC194670E277959DAE4E7B38D20CF8156",
+      "checkpoint_sha256": "BA453B0FEEC60F7B3F1F7D654E9AD272252B4F2FDB7537E8252DA896FF38AEA0",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 0,
+      "selected_val_mae_ema": 111.96552276611328,
+      "selected_ema_parameter_hash": "42E86558B16423424E184356DEB290592EA81C7F0D0A270DB10C68930DED94C5",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHAANXI_DA__PatchTST__seed17": {
+      "freeze_sha256": "00B8E94687DA9CE08717C27031F32F755160FB67C0799E0EE50BA4EF95CE263D",
+      "curve_sha256": "5CA9F46A6D49FEAF99A97E4B83DCC9A26375C11875C1D0C5B67EE5252627542F",
+      "checkpoint_sha256": "39D98EA1A982FB96D79EF9E43B7A7235312526116E49C5278E682206A8CAC7E1",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 700,
+      "selected_val_mae_ema": 108.53507232666016,
+      "selected_ema_parameter_hash": "A8803D7CBE9D464A827C3E10C5A843A8EFE9D5D0B9E7374B9B123117DF08EE31",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "SHAANXI_DA__PatchTST__seed37": {
+      "freeze_sha256": "FE4F0A2D2C524D8933944EE0DFAF4172FEDA248A3C7BAC169E64BAFD33307842",
+      "curve_sha256": "E269BCCB25A866D1EB8F00D8A2886D564E21CBC2337F908EA032531461AD1929",
+      "checkpoint_sha256": "AE21A5939FD336272E7BB2478A3E76DBA7A8D15ECD50EC46D1582D3392BDD1CA",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 1150,
+      "selected_val_mae_ema": 107.56716918945312,
+      "selected_ema_parameter_hash": "E2EECFE79D6696455DCECCE32DD83F8A138E802CF167A93DB75CB05633E91FC2",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "NINGXIA_DA__iTransformer__seed7": {
+      "freeze_sha256": "2E6F9E7146C30D04D86C72E3E72B299275127FD87844588A706A8C95242E67EF",
+      "curve_sha256": "B7B6743CF747F6E8B62683A90EA83FA3CEED530CB16C3CB2EE9124CE84DD6440",
+      "checkpoint_sha256": "586B93142BCE02F12FE4966F8A5A7BBE7A8B0F88FECA34DF14A06BE64A4B463E",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 600,
+      "selected_val_mae_ema": 68.36663055419922,
+      "selected_ema_parameter_hash": "6248B20C41920FAA7DF854B25A0C76E1F3EBBBF55D0DD668C425AB61C45C2933",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "NINGXIA_DA__iTransformer__seed17": {
+      "freeze_sha256": "C9F111D18EE88A3B73C42977A77D314395D4B08D42C1384CEDEC86C2F00AE630",
+      "curve_sha256": "B2AA4710A33EEBBFF573AF8DCB1F4668F2953B0EE0E007BE008C9C36F3EC9CC9",
+      "checkpoint_sha256": "0391AAB5D179865A26BC800CD29A0ED645139BA94DEA728A48EA6ED629B86D4C",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 450,
+      "selected_val_mae_ema": 69.3753662109375,
+      "selected_ema_parameter_hash": "EA873ED973B1DF584D78B9BD2251F33B61BB58DB9082FD536FCBC3A8D960FF2B",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "NINGXIA_DA__iTransformer__seed37": {
+      "freeze_sha256": "ECE28A7AC151759B642669EF6A387960D4F87F3AAA1EFC1C74C0899D39B492CC",
+      "curve_sha256": "3D7EAF9F878382B1814CBA460BC57FAA05B4FC072D1D6AA53FE729597830EC02",
+      "checkpoint_sha256": "DCE4F3A84E83A964BD1F44790E18952A2C73E789AEB5A6A767A35B37F612834D",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 450,
+      "selected_val_mae_ema": 69.63700866699219,
+      "selected_ema_parameter_hash": "5B34AC8F8BE5CE4C4DEB9C2211C938FC7AFB1627CF07A8D32982BA5AC08E0F80",
+      "pinned_by": [
+        "o1_stage_reference_provenance",
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "QINGHAI_DA__TimeMixer__seed7": {
+      "freeze_sha256": "AE1144EBAC5DBDF6DDDD8F514469863E8B01963D4B4BC88AEFFBD91880D67E1B",
+      "curve_sha256": "19DE2911B1A334986245F38591EBA5C9B91F81939AFF49DCCEE63B70FC817D68",
+      "checkpoint_sha256": "75B3006534D3BE1F323C1B7AE29967CD73A3A0D37EC4F6C32A513AAA47347D0F",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 950,
+      "selected_val_mae_ema": 152.89239501953125,
+      "selected_ema_parameter_hash": "B8FA86F348F84AEC68FEC1453666AF6F9B65B2B0F5A59ACF392ED8D476A281E1",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "QINGHAI_DA__TimeMixer__seed17": {
+      "freeze_sha256": "8419AB99FD9671D9C7A40D96715B93D635A4F1FB25311CF00AFA7171C9B3EB95",
+      "curve_sha256": "2279ABFA2B69992BFC82D4CF4B649EC96775A12CFB2863078A077160CC5C608A",
+      "checkpoint_sha256": "83BBF10CDB01C9AA1783DE1A3F004BC2A5F4BCAA8E18E6289CF5887284ADD6C1",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 1450,
+      "selected_val_mae_ema": 147.51681518554688,
+      "selected_ema_parameter_hash": "C90F37B3D2871EA3C07E5A2DB401C054C88A8961E3906BC9EBA75DC6534A6D9A",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    },
+    "QINGHAI_DA__TimeMixer__seed37": {
+      "freeze_sha256": "396A4B7F6D89B3D204A2C76A0EF771329F7BA1EC5F6694C40D2E5B1F5722FADC",
+      "curve_sha256": "E292805F7D627F00A07718B639B4C847DCC0CD5210118AE81E03383E0F7A63C4",
+      "checkpoint_sha256": "C53A35B9E188EEF89C9B39E9774BF6584B99A09A70F64153B35AA9DBC9B162EE",
+      "recipe_id": "R1_STEP_BUDGET_2000",
+      "selected_step": 750,
+      "selected_val_mae_ema": 150.66725158691406,
+      "selected_ema_parameter_hash": "D2ADF54CE5134D43AE695ECB4AB52EA1FEFF7734D56292A15386F545B571E3DD",
+      "pinned_by": [
+        "recovery_stage_published_table"
+      ],
+      "reused_not_retrained": true
+    }
+  },
+  "r1_reference_hashes_match_recorded_provenance": true,
+  "r1_reference_mismatches": [],
+  "n_reused_o1": 12,
+  "n_r1_references": 24,
+  "n_r1_references_pinned_by_o1_stage": 12,
+  "n_r1_references_pinned_by_published_table": 24,
+  "note": "Reused artifacts are referenced in place, never copied or rerun.  The O1 cells' reference is byte-identical to the one the four-cell probe used, so the four-cell and eight-cell comparisons share one reference set; the four new cells' reference was frozen by the recovery stage and is pinned against its published table.",
+  "all_24_references_present": true,
+  "reference_present": [
+    "GANSU_DA__PatchTST__seed7",
+    "GANSU_DA__PatchTST__seed17",
+    "GANSU_DA__PatchTST__seed37",
+    "GANSU_DA__LSTM__seed7",
+    "GANSU_DA__LSTM__seed17",
+    "GANSU_DA__LSTM__seed37",
+    "SHANDONG_DA__PatchTST__seed7",
+    "SHANDONG_DA__PatchTST__seed17",
+    "SHANDONG_DA__PatchTST__seed37",
+    "SHANDONG_DA__iTransformer__seed7",
+    "SHANDONG_DA__iTransformer__seed17",
+    "SHANDONG_DA__iTransformer__seed37",
+    "SHAANXI_DA__TimeMixer__seed7",
+    "SHAANXI_DA__TimeMixer__seed17",
+    "SHAANXI_DA__TimeMixer__seed37",
+    "SHAANXI_DA__PatchTST__seed7",
+    "SHAANXI_DA__PatchTST__seed17",
+    "SHAANXI_DA__PatchTST__seed37",
+    "NINGXIA_DA__iTransformer__seed7",
+    "NINGXIA_DA__iTransformer__seed17",
+    "NINGXIA_DA__iTransformer__seed37",
+    "QINGHAI_DA__TimeMixer__seed7",
+    "QINGHAI_DA__TimeMixer__seed17",
+    "QINGHAI_DA__TimeMixer__seed37"
+  ],
+  "reference_missing": [],
+  "all_12_reused_o1_present": true,
+  "reused_o1_present": [
+    "GANSU_DA__PatchTST__seed7",
+    "GANSU_DA__PatchTST__seed17",
+    "GANSU_DA__PatchTST__seed37",
+    "SHANDONG_DA__iTransformer__seed7",
+    "SHANDONG_DA__iTransformer__seed17",
+    "SHANDONG_DA__iTransformer__seed37",
+    "SHAANXI_DA__TimeMixer__seed7",
+    "SHAANXI_DA__TimeMixer__seed17",
+    "SHAANXI_DA__TimeMixer__seed37",
+    "NINGXIA_DA__iTransformer__seed7",
+    "NINGXIA_DA__iTransformer__seed17",
+    "NINGXIA_DA__iTransformer__seed37"
+  ],
+  "reused_o1_missing": [],
+  "reference_recipe_as_registered": {
+    "recipe_id": "R1_STEP_BUDGET_2000",
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "batch_size": 32,
+    "weight_decay": 0.0001,
+    "grad_clip": 1.0,
+    "ema_decay": 0.995,
+    "eval_weights": "ema",
+    "max_steps": 2000,
+    "val_every": 50,
+    "no_stop_before": 800,
+    "patience_checks": 8,
+    "readout_init": null,
+    "selection": "min EMA VAL MAE over all checks including step 0"
+  },
+  "reference_schedules_distinct": 1,
+  "reference_schedule_matches_o1_registered": true
+}

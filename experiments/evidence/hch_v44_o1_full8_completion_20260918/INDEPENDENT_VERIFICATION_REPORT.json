@@ -1,0 +1,630 @@
+{
+  "schema": "hch_v44_o1_full8_verification.v1",
+  "gate_verdict": "AUXILIARY_PERSISTENCE_BROADLY_HARMFUL_ON_RECOVERY_PANEL",
+  "checks": {
+    "registered_coordinates": true,
+    "new_fits_identity": true,
+    "reused_o1_identity": true,
+    "r1_reference_identity": true,
+    "val_surface_rebuilt": true,
+    "pre_switch_identity": true,
+    "schedule_identical": true,
+    "only_loss_schedule_changed": true,
+    "objective_switch_after_400": true,
+    "selection_rule": true,
+    "core_unchanged": true,
+    "test_quarantine": true,
+    "one_code_state": true,
+    "gate_arithmetic": true,
+    "no_new_trainer": true,
+    "terminal_token": true
+  },
+  "notes": {
+    "registered_coordinates": {
+      "n_new_fits_expected": 12,
+      "n_new_fits_found": 12,
+      "n_reused_o1_expected": 12,
+      "n_reused_o1_found_in_o1_root": 12,
+      "n_panel_runs": 24,
+      "all_runs_have_freeze_curve_checkpoint": true,
+      "violations": []
+    },
+    "new_fits_identity": {
+      "n_new_fits": 12,
+      "shared_code_hash": "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880",
+      "violations": [],
+      "per_run": {
+        "GANSU_DA__LSTM__seed7": {
+          "selected_step": 600,
+          "selected_val_mae_ema": 78.76530456542969,
+          "stopped_at_step": 1000,
+          "n_train_rows": 224,
+          "n_val_rows": 42
+        },
+        "GANSU_DA__LSTM__seed17": {
+          "selected_step": 450,
+          "selected_val_mae_ema": 79.7029037475586,
+          "stopped_at_step": 850,
+          "n_train_rows": 224,
+          "n_val_rows": 42
+        },
+        "GANSU_DA__LSTM__seed37": {
+          "selected_step": 500,
+          "selected_val_mae_ema": 79.48155975341797,
+          "stopped_at_step": 900,
+          "n_train_rows": 224,
+          "n_val_rows": 42
+        },
+        "SHANDONG_DA__PatchTST__seed7": {
+          "selected_step": 950,
+          "selected_val_mae_ema": 73.7957992553711,
+          "stopped_at_step": 1350,
+          "n_train_rows": 916,
+          "n_val_rows": 166
+        },
+        "SHANDONG_DA__PatchTST__seed17": {
+          "selected_step": 1500,
+          "selected_val_mae_ema": 73.81265258789062,
+          "stopped_at_step": 1900,
+          "n_train_rows": 916,
+          "n_val_rows": 166
+        },
+        "SHANDONG_DA__PatchTST__seed37": {
+          "selected_step": 1750,
+          "selected_val_mae_ema": 73.54141235351562,
+          "stopped_at_step": null,
+          "n_train_rows": 916,
+          "n_val_rows": 166
+        },
+        "SHAANXI_DA__PatchTST__seed7": {
+          "selected_step": 0,
+          "selected_val_mae_ema": 111.96552276611328,
+          "stopped_at_step": 800,
+          "n_train_rows": 219,
+          "n_val_rows": 41
+        },
+        "SHAANXI_DA__PatchTST__seed17": {
+          "selected_step": 800,
+          "selected_val_mae_ema": 106.83548736572266,
+          "stopped_at_step": 1200,
+          "n_train_rows": 219,
+          "n_val_rows": 41
+        },
+        "SHAANXI_DA__PatchTST__seed37": {
+          "selected_step": 1050,
+          "selected_val_mae_ema": 106.2401351928711,
+          "stopped_at_step": 1450,
+          "n_train_rows": 219,
+          "n_val_rows": 41
+        },
+        "QINGHAI_DA__TimeMixer__seed7": {
+          "selected_step": 1650,
+          "selected_val_mae_ema": 151.1068878173828,
+          "stopped_at_step": null,
+          "n_train_rows": 67,
+          "n_val_rows": 14
+        },
+        "QINGHAI_DA__TimeMixer__seed17": {
+          "selected_step": 1750,
+          "selected_val_mae_ema": 139.72242736816406,
+          "stopped_at_step": null,
+          "n_train_rows": 67,
+          "n_val_rows": 14
+        },
+        "QINGHAI_DA__TimeMixer__seed37": {
+          "selected_step": 550,
+          "selected_val_mae_ema": 151.22537231445312,
+          "stopped_at_step": 950,
+          "n_train_rows": 67,
+          "n_val_rows": 14
+        }
+      }
+    },
+    "reused_o1_identity": {
+      "n_reused": 12,
+      "violations": [],
+      "per_run": {
+        "GANSU_DA__PatchTST__seed7": {
+          "freeze_sha256": "1EBC1F1B2438C92C02F4A04AD26E7FD064F033D5BB18077507D7E9D3C7B46480",
+          "curve_sha256": "36B2CB35F26714B2B4F94940CDCE098A090C8EBE3E2809D94BA3AF6B23B5636B",
+          "checkpoint_sha256": "B33F2540E263425098E9341CCAA4AA8AA456D45245F94515055D3E29A0BFE379",
+          "selected_step": 1600,
+          "matches_o1_stage_record": true
+        },
+        "GANSU_DA__PatchTST__seed17": {
+          "freeze_sha256": "E2FA50CDD1DA13669C09602B4DBC4E32F1F27C3B1AC309BFE69E7D4787D633B1",
+          "curve_sha256": "37178A6FE51D3365DC08FCBEE49FB9690FDD846FCFDF97254122450F13D263CF",
+          "checkpoint_sha256": "36EBEC606BF2042822D9E430572E8CBD0608D429AC4069A679808548D326B23B",
+          "selected_step": 1200,
+          "matches_o1_stage_record": true
+        },
+        "GANSU_DA__PatchTST__seed37": {
+          "freeze_sha256": "4823ECEA9CA8A32A5E34BAB0CA69046D36B4AFF89FE94476DAFDAE323DDA6ABC",
+          "curve_sha256": "DC2CD97F7D89CB75F7B23E0DEA2D23553A449B1633C31247B57F0011B83BC0B5",
+          "checkpoint_sha256": "447581382E78F3E630DA54D407479565D3C88F36C7005C2DDEBA7DB0EE18A5EF",
+          "selected_step": 1550,
+          "matches_o1_stage_record": true
+        },
+        "SHANDONG_DA__iTransformer__seed7": {
+          "freeze_sha256": "4779013503592D87955C7197CE16B6F711A401CE458989ECE52242ACB2DA3D63",
+          "curve_sha256": "9BE0EAB0F4171A93CED2DE9C08586DDF0548975C74AB95F51A848AC41A649385",
+          "checkpoint_sha256": "C9183598318C16BE0F9F7B62F79C60F1730A2A42D7C7D7B7A252C8F7A3D2DE13",
+          "selected_step": 550,
+          "matches_o1_stage_record": true
+        },
+        "SHANDONG_DA__iTransformer__seed17": {
+          "freeze_sha256": "3F445599E526C4B0A0D8CBD4D03F5000D6B77BD4411B604171DECD755F8431DF",
+          "curve_sha256": "29885B1086E187449BFD2CBFA2DC8E235C1F10989465485B905099E3DD3FA5D1",
+          "checkpoint_sha256": "A1398C9F753C5D355CF3EAA2AD798666CEAD86AE2B859B6A8186DCE0069D639C",
+          "selected_step": 600,
+          "matches_o1_stage_record": true
+        },
+        "SHANDONG_DA__iTransformer__seed37": {
+          "freeze_sha256": "52FFDEA952CA920FFD9EEC3238135AE253FB82C29F6B36BE1796414D5B0A70F2",
+          "curve_sha256": "A4EAB55A2C043AB0FE6EE3881761A48B374BD8171BD9AA7993F4AF91D416AC2D",
+          "checkpoint_sha256": "7CA7CA68BBCA5D33543334BA5A002034924BE3BF731E504BC1406C38A184DFCC",
+          "selected_step": 550,
+          "matches_o1_stage_record": true
+        },
+        "SHAANXI_DA__TimeMixer__seed7": {
+          "freeze_sha256": "E540B6B0EBB977EBA455F1DD1E78461A25F68AE4698956D7B969C519F448B527",
+          "curve_sha256": "6FF94B0B555E1B6867AF0B477E55BA862CAA1ED5FD4542872B1D21CA3953A3D7",
+          "checkpoint_sha256": "32E4D6E8456191C1F5FB5448A7FE32C2CE9CB460D0C8226042BB92BDA1B3F350",
+          "selected_step": 300,
+          "matches_o1_stage_record": true
+        },
+        "SHAANXI_DA__TimeMixer__seed17": {
+          "freeze_sha256": "C815A471C33D4A928FA9A1E21955FFBF1471238D4BB720410FA2329B888A0FB7",
+          "curve_sha256": "734302D814615A72839C0D0E63710F48E049902BE72AEA9817D57DAB92FCE655",
+          "checkpoint_sha256": "2C3F4621849CAF0725C4D0A2C40342FBC1309025A62F1FA0D3A96FCAA0BE7EEB",
+          "selected_step": 250,
+          "matches_o1_stage_record": true
+        },
+        "SHAANXI_DA__TimeMixer__seed37": {
+          "freeze_sha256": "7570A5A52A33BB25D19C4C8C8BD88DDFEC260D95E4D102CB33BB6814E5E85633",
+          "curve_sha256": "E30BB79ADC7964EC3EE5C36CD165D3BF1B7079DF538E1E3CD7F3D79740F05CD7",
+          "checkpoint_sha256": "E7A5AC20245F179925D25EC1238C284BA5006E88C46A51494CCC6C40865CFFA9",
+          "selected_step": 250,
+          "matches_o1_stage_record": true
+        },
+        "NINGXIA_DA__iTransformer__seed7": {
+          "freeze_sha256": "AC201B4F931B5D009A521CE2E96C54990DA30CBD9047D37E632B9735AAE51871",
+          "curve_sha256": "424EE3578734AC78565442DB3075B6D369A3B309D9F8BD76544A3C6F0A57EDD2",
+          "checkpoint_sha256": "E136C93EC88F551E37EC76F91FCC9BEF1E5609F9852912AFFDF4913279D839E9",
+          "selected_step": 600,
+          "matches_o1_stage_record": true
+        },
+        "NINGXIA_DA__iTransformer__seed17": {
+          "freeze_sha256": "202242C4B778F016DF017C83E9E762FB2652D40BF635C37400057790D5B558C9",
+          "curve_sha256": "A1D73A390D878374A80BDF8AD663C6CA7DB28A1A7143EA3B74A06DE6E8F3F146",
+          "checkpoint_sha256": "4931AF482CE07325D37906F1309A948EB6848892499CAC82B53E06511C7B6653",
+          "selected_step": 500,
+          "matches_o1_stage_record": true
+        },
+        "NINGXIA_DA__iTransformer__seed37": {
+          "freeze_sha256": "06800DF8380FAC3E4EB3C4ED5F2B4DB03ACCA1891269853213EC0E90D3ACC944",
+          "curve_sha256": "68AEBFA09251418F1166E44DD556B4FB9C48B90F01A7D9A0F379756F9D99F6A3",
+          "checkpoint_sha256": "A6C0112E60A83DA0CD7134ED782A80C18AC48D534ADB018F2766C411F86AF413",
+          "selected_step": 450,
+          "matches_o1_stage_record": true
+        }
+      },
+      "source_evidence_root": "experiments/evidence/hch_v44_objective_alignment_probe_20260917"
+    },
+    "r1_reference_identity": {
+      "n_references": 24,
+      "violations": [],
+      "n_pinned_by_o1_stage_record": 12,
+      "n_pinned_by_published_table": 24,
+      "note": "each reference is pinned both by hash and by its own recorded checkpoint sha256"
+    },
+    "val_surface_rebuilt": {
+      "rule": "eligible = fully-finite 24h target AND a legal W=7 gap-tolerant window whose days satisfy d < target and reveal_of(d) < origin_of(target), with history taken from the shadow-OOF support days only; TRAIN days are never added and VAL days are added prequentially.  Reimplemented here from the split plan and the joint cache, independently of the runner.",
+      "cells_rebuilt": [
+        "GANSU_DA__LSTM",
+        "SHANDONG_DA__PatchTST",
+        "SHAANXI_DA__PatchTST",
+        "QINGHAI_DA__TimeMixer"
+      ],
+      "violations": [],
+      "per_cell": {
+        "GANSU_DA__LSTM": {
+          "n_train_eligible": 224,
+          "n_val_eligible": 42,
+          "n_train_registered": 291,
+          "n_val_registered": 42,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 83,
+          "train_day_ids_hash": "164B4590D09B6F8E755591272672C2AB3D4C78CE515BADCA251096BA9859C729",
+          "val_day_ids_hash": "E4F02F4FDEF2314C51EF1C101866498D9AB60857D330468EF45BE4526ADB01D9"
+        },
+        "SHANDONG_DA__PatchTST": {
+          "n_train_eligible": 916,
+          "n_val_eligible": 166,
+          "n_train_registered": 1156,
+          "n_val_registered": 166,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 330,
+          "train_day_ids_hash": "93EDB2EEAD31FEC610E813B31B0D73B8A51C1F533CFE8B834BDEF3E1A28AA420",
+          "val_day_ids_hash": "0F84BF52C6E35A68C81A4DE0666A7D236AA1A9311D71A4D6261DD15C0C2EB419"
+        },
+        "SHAANXI_DA__PatchTST": {
+          "n_train_eligible": 219,
+          "n_val_eligible": 41,
+          "n_train_registered": 284,
+          "n_val_registered": 41,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 81,
+          "train_day_ids_hash": "BF4383548D09B10257A6E0AF6D3FBDF4D4965CFED72E3CAAC7D65061B904C145",
+          "val_day_ids_hash": "CFD9221C07EC768FF4F0C3CFDB0FD7639D37F91853D9D474DF91A6AFB48410F7"
+        },
+        "QINGHAI_DA__TimeMixer": {
+          "n_train_eligible": 67,
+          "n_val_eligible": 14,
+          "n_train_registered": 94,
+          "n_val_registered": 14,
+          "test_days_in_train_or_val": 0,
+          "test_rows_dropped_from_joint_cache": 27,
+          "train_day_ids_hash": "0C26D3904A64B018770CEB353E6076F50FF530273090FEA80BEDB4566A62BDDF",
+          "val_day_ids_hash": "88C9553181C0DE80EF485E38401187B06959117B516CB53A71F56AB01BA846C5"
+        }
+      }
+    },
+    "pre_switch_identity": {
+      "note": "updates 1..400 use the reference's own loss and the same random stream, so every pre-switch checkpoint must reproduce the R1 reference exactly; any deviation would mean a second, unregistered change.  This is the strongest available check that the 12 new fits ran the inherited trainer.",
+      "n_coords_compared": 24,
+      "violations": [],
+      "per_coord": {
+        "GANSU_DA__PatchTST__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "GANSU_DA__PatchTST__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "GANSU_DA__PatchTST__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "GANSU_DA__LSTM__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "GANSU_DA__LSTM__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "GANSU_DA__LSTM__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "SHANDONG_DA__PatchTST__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "SHANDONG_DA__PatchTST__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "SHANDONG_DA__PatchTST__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "SHANDONG_DA__iTransformer__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "SHANDONG_DA__iTransformer__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "SHANDONG_DA__iTransformer__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "SHAANXI_DA__TimeMixer__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "SHAANXI_DA__TimeMixer__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "SHAANXI_DA__TimeMixer__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "SHAANXI_DA__PatchTST__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "SHAANXI_DA__PatchTST__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "SHAANXI_DA__PatchTST__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "NINGXIA_DA__iTransformer__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "NINGXIA_DA__iTransformer__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "NINGXIA_DA__iTransformer__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "reused_o1"
+        },
+        "QINGHAI_DA__TimeMixer__seed7": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "QINGHAI_DA__TimeMixer__seed17": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        },
+        "QINGHAI_DA__TimeMixer__seed37": {
+          "shared_pre_switch_steps": 9,
+          "max_relative_deviation": 0.0,
+          "source": "new_fit"
+        }
+      }
+    },
+    "schedule_identical": {
+      "n_distinct_schedules_over_24_runs": 1,
+      "violations": [],
+      "registered": {
+        "optimizer": "AdamW",
+        "lr": 0.001,
+        "batch_size": 32,
+        "weight_decay": 0.0001,
+        "grad_clip": 1.0,
+        "ema_decay": 0.995,
+        "eval_weights": "ema",
+        "max_steps": 2000,
+        "val_every": 50,
+        "no_stop_before": 800,
+        "patience_checks": 8,
+        "readout_init": null
+      },
+      "reference_schedule_matches": true,
+      "evidence_root_dirs": [
+        "PLOTS",
+        "o1_runs"
+      ]
+    },
+    "only_loss_schedule_changed": {
+      "n_removed_lines": 2,
+      "n_added_lines": 2,
+      "removed": [
+        "loss = model.compute_loss(out, sub_target, sub_res, data[\"scales\"])[\"total\"]",
+        "record_check(step, samples_seen, False, norms)"
+      ],
+      "added": [
+        "loss, used_full = objective(model.compute_loss(out, sub_target, sub_res, data[\"scales\"]), step + 1)",
+        "record_check(step, samples_seen, False, norms, float(loss.detach()), used_full)"
+      ],
+      "removed_is_exactly_expected": true,
+      "added_is_exactly_expected": true,
+      "stage_calls_train_o1": true,
+      "o1_trainer_sha256": "5DFAE93C69021745206C3A0E80DC21F42F02001207729C2ECF15274AC1779EC6",
+      "note": "the 12 new fits import the O1 stage's train_o1; this check confirms the imported trainer is still the registered one and was not edited"
+    },
+    "objective_switch_after_400": {
+      "violations": [],
+      "n_violations": 0,
+      "n_runs_checked": 24
+    },
+    "selection_rule": {
+      "violations": [],
+      "tol": 1e-07,
+      "n_runs_checked": 24
+    },
+    "core_unchanged": {
+      "working_tree_core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+      "working_tree_backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B",
+      "n_files": {
+        "core": 18,
+        "backbones": 10
+      },
+      "matches_a_frozen_stage_digest": true,
+      "n_distinct_run_core_digests": 1
+    },
+    "test_quarantine": {
+      "test_target_read_count": 0,
+      "violations": [],
+      "direct_reader_scan_hits": [],
+      "forbidden_artifacts_written_here": [],
+      "guard_installed": true,
+      "forbidden_files_enumerated": 9,
+      "forbidden_name_patterns": [
+        "result.json",
+        "test_predictions.npz"
+      ],
+      "distinct_paths_blocked_in_audit": []
+    },
+    "one_code_state": {
+      "n_distinct_probe_code_hashes": 1,
+      "probe_code_hash": [
+        "C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880"
+      ],
+      "recovery_common_sha256_matches_disk": true,
+      "note": "no run straddled a source edit, and the imported quarantine module is the one on disk; the 12 new fits and the 12 reused runs share one trainer identity"
+    },
+    "gate_arithmetic": {
+      "recomputed_checks": {
+        "g1_at_least_6_of_8_cell_medians_improve": true,
+        "g2_panel_median_relative_improvement_ge_0.5pct": true,
+        "g3_worst_cell_degradation_le_0.5pct": true,
+        "g4_not_a_step0_or_near_zero_retreat": true,
+        "g5_no_leakage_anomaly_support_or_code_violation": true
+      },
+      "recomputed_verdict": "AUXILIARY_PERSISTENCE_BROADLY_HARMFUL_ON_RECOVERY_PANEL",
+      "recorded_checks": {
+        "g1_at_least_6_of_8_cell_medians_improve": true,
+        "g2_panel_median_relative_improvement_ge_0.5pct": true,
+        "g3_worst_cell_degradation_le_0.5pct": true,
+        "g4_not_a_step0_or_near_zero_retreat": true,
+        "g5_no_leakage_anomaly_support_or_code_violation": true
+      },
+      "recorded_verdict": "AUXILIARY_PERSISTENCE_BROADLY_HARMFUL_ON_RECOVERY_PANEL",
+      "panel_median_recomputed": 0.679267055320192,
+      "step0_retreats_recomputed": 0,
+      "step0_retreat_rule_proportional": "<=4 of 24",
+      "step0_retreat_rule_absolute": "<=2 of 24",
+      "selected_correction_ratio_median_recomputed": 0.22438092529773712,
+      "per_cell_recomputed": [
+        {
+          "cell": "GANSU_DA__PatchTST",
+          "source": "reused_o1",
+          "median_gain": 1.7337326140896872,
+          "mae_o1": 75.76719665527344,
+          "mae_r1": 77.10397338867188,
+          "per_seed_gains": [
+            3.006286246350009,
+            0.6164760451333055,
+            1.7337326140896872
+          ]
+        },
+        {
+          "cell": "GANSU_DA__LSTM",
+          "source": "new_fit",
+          "median_gain": 0.004741656053131888,
+          "mae_o1": 79.48155975341797,
+          "mae_r1": 79.4853286743164,
+          "per_seed_gains": [
+            0.19742181914220208,
+            -0.04766400410961974,
+            0.004741656053131888
+          ]
+        },
+        {
+          "cell": "SHANDONG_DA__PatchTST",
+          "source": "new_fit",
+          "median_gain": 2.1830824004867604,
+          "mae_o1": 73.7957992553711,
+          "mae_r1": 75.46000671386719,
+          "per_seed_gains": [
+            2.4007591955594525,
+            2.1830824004867604,
+            1.9471175511162353
+          ]
+        },
+        {
+          "cell": "SHANDONG_DA__iTransformer",
+          "source": "reused_o1",
+          "median_gain": 0.19028728468494963,
+          "mae_o1": 74.84967803955078,
+          "mae_r1": 74.98084259033203,
+          "per_seed_gains": [
+            0.1749307506423811,
+            0.6050146532074243,
+            0.19028728468494963
+          ]
+        },
+        {
+          "cell": "SHAANXI_DA__TimeMixer",
+          "source": "reused_o1",
+          "median_gain": 0.0,
+          "mae_o1": 103.47103118896484,
+          "mae_r1": 103.47103118896484,
+          "per_seed_gains": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "cell": "SHAANXI_DA__PatchTST",
+          "source": "new_fit",
+          "median_gain": 1.2336793898933855,
+          "mae_o1": 106.83548736572266,
+          "mae_r1": 108.53507232666016,
+          "per_seed_gains": [
+            0.0,
+            1.5659315689422728,
+            1.2336793898933855
+          ]
+        },
+        {
+          "cell": "NINGXIA_DA__iTransformer",
+          "source": "reused_o1",
+          "median_gain": 0.19071461123340072,
+          "mae_o1": 69.24305725097656,
+          "mae_r1": 69.3753662109375,
+          "per_seed_gains": [
+            0.3737661326348063,
+            0.19071461123340072,
+            0.02980017884489686
+          ]
+        },
+        {
+          "cell": "QINGHAI_DA__TimeMixer",
+          "source": "new_fit",
+          "median_gain": 1.1678194994069835,
+          "mae_o1": 151.1068878173828,
+          "mae_r1": 150.66725158691406,
+          "per_seed_gains": [
+            1.1678194994069835,
+            5.283728371968321,
+            -0.3704326730995716
+          ]
+        }
+      ],
+      "checks_match": true,
+      "numbers_match": true
+    },
+    "no_new_trainer": {
+      "violations": [],
+      "imports_train_o1": true,
+      "note": "implementation inheritance is by import, not by copy"
+    },
+    "terminal_token": {
+      "written_token": "HCH_V44_O1_FULL8_COMPLETION_COMPLETE_FOR_ADJUDICATION",
+      "artifact": "STAGE_TOKEN.json",
+      "allowed": [
+        "HCH_V44_O1_FULL8_COMPLETION_COMPLETE_FOR_ADJUDICATION",
+        "HCH_V44_O1_FULL8_COMPLETION_BLOCKED_"
+      ]
+    }
+  },
+  "n_passed": 16,
+  "n_checks": 16,
+  "failed": [],
+  "issues": [],
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "core_tree_n_files": 18,
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B",
+    "backbones_tree_n_files": 10
+  },
+  "verifier_imports_runner": false,
+  "verdict": "HCH_V44_O1_FULL8_INDEPENDENTLY_VERIFIED"
+}
