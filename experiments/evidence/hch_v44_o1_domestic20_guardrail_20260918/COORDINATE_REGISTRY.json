@@ -1,0 +1,531 @@
+{
+  "schema": "hch_v44_o1_domestic20_coordinate_registry.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "n_coordinates": 60,
+  "n_reused_expected": 24,
+  "n_new_expected": 36,
+  "market_order": [
+    "GANSU_DA",
+    "SHANDONG_DA",
+    "SHAANXI_DA",
+    "NINGXIA_DA",
+    "QINGHAI_DA"
+  ],
+  "host_order": [
+    "PatchTST",
+    "TimeMixer",
+    "iTransformer",
+    "LSTM"
+  ],
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "reused_cells": [
+    "GANSU_DA__PatchTST",
+    "GANSU_DA__LSTM",
+    "SHANDONG_DA__PatchTST",
+    "SHANDONG_DA__iTransformer",
+    "SHAANXI_DA__TimeMixer",
+    "SHAANXI_DA__PatchTST",
+    "NINGXIA_DA__iTransformer",
+    "QINGHAI_DA__TimeMixer"
+  ],
+  "new_cells_in_registered_order": [
+    "GANSU_DA__TimeMixer",
+    "GANSU_DA__iTransformer",
+    "SHANDONG_DA__TimeMixer",
+    "SHANDONG_DA__LSTM",
+    "SHAANXI_DA__iTransformer",
+    "SHAANXI_DA__LSTM",
+    "NINGXIA_DA__PatchTST",
+    "NINGXIA_DA__TimeMixer",
+    "NINGXIA_DA__LSTM",
+    "QINGHAI_DA__PatchTST",
+    "QINGHAI_DA__iTransformer",
+    "QINGHAI_DA__LSTM"
+  ],
+  "coordinates": [
+    {
+      "market": "GANSU_DA",
+      "host": "PatchTST",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/GANSU_DA__PatchTST/seed7",
+      "complete": true
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "PatchTST",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/GANSU_DA__PatchTST/seed17",
+      "complete": true
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "PatchTST",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/GANSU_DA__PatchTST/seed37",
+      "complete": true
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "TimeMixer",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/GANSU_DA__TimeMixer/seed7",
+      "complete": false
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "TimeMixer",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/GANSU_DA__TimeMixer/seed17",
+      "complete": false
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "TimeMixer",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/GANSU_DA__TimeMixer/seed37",
+      "complete": false
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "iTransformer",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/GANSU_DA__iTransformer/seed7",
+      "complete": false
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "iTransformer",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/GANSU_DA__iTransformer/seed17",
+      "complete": false
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "iTransformer",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/GANSU_DA__iTransformer/seed37",
+      "complete": false
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "LSTM",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/GANSU_DA__LSTM/seed7",
+      "complete": true
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "LSTM",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/GANSU_DA__LSTM/seed17",
+      "complete": true
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "LSTM",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/GANSU_DA__LSTM/seed37",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "PatchTST",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/SHANDONG_DA__PatchTST/seed7",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "PatchTST",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/SHANDONG_DA__PatchTST/seed17",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "PatchTST",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/SHANDONG_DA__PatchTST/seed37",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "TimeMixer",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHANDONG_DA__TimeMixer/seed7",
+      "complete": false
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "TimeMixer",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHANDONG_DA__TimeMixer/seed17",
+      "complete": false
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "TimeMixer",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHANDONG_DA__TimeMixer/seed37",
+      "complete": false
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "iTransformer",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/SHANDONG_DA__iTransformer/seed7",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "iTransformer",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/SHANDONG_DA__iTransformer/seed17",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "iTransformer",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/SHANDONG_DA__iTransformer/seed37",
+      "complete": true
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "LSTM",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHANDONG_DA__LSTM/seed7",
+      "complete": false
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "LSTM",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHANDONG_DA__LSTM/seed17",
+      "complete": false
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "LSTM",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHANDONG_DA__LSTM/seed37",
+      "complete": false
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "PatchTST",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/SHAANXI_DA__PatchTST/seed7",
+      "complete": true
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "PatchTST",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/SHAANXI_DA__PatchTST/seed17",
+      "complete": true
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "PatchTST",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/SHAANXI_DA__PatchTST/seed37",
+      "complete": true
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "TimeMixer",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/SHAANXI_DA__TimeMixer/seed7",
+      "complete": true
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "TimeMixer",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/SHAANXI_DA__TimeMixer/seed17",
+      "complete": true
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "TimeMixer",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/SHAANXI_DA__TimeMixer/seed37",
+      "complete": true
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "iTransformer",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHAANXI_DA__iTransformer/seed7",
+      "complete": false
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "iTransformer",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHAANXI_DA__iTransformer/seed17",
+      "complete": false
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "iTransformer",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHAANXI_DA__iTransformer/seed37",
+      "complete": false
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "LSTM",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHAANXI_DA__LSTM/seed7",
+      "complete": false
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "LSTM",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHAANXI_DA__LSTM/seed17",
+      "complete": false
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "LSTM",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/SHAANXI_DA__LSTM/seed37",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "PatchTST",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__PatchTST/seed7",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "PatchTST",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__PatchTST/seed17",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "PatchTST",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__PatchTST/seed37",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "TimeMixer",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__TimeMixer/seed7",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "TimeMixer",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__TimeMixer/seed17",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "TimeMixer",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__TimeMixer/seed37",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "iTransformer",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/NINGXIA_DA__iTransformer/seed7",
+      "complete": true
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "iTransformer",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/NINGXIA_DA__iTransformer/seed17",
+      "complete": true
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "iTransformer",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_objective_alignment_probe_20260917/o1_runs/NINGXIA_DA__iTransformer/seed37",
+      "complete": true
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "LSTM",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__LSTM/seed7",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "LSTM",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__LSTM/seed17",
+      "complete": false
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "LSTM",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/NINGXIA_DA__LSTM/seed37",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "PatchTST",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__PatchTST/seed7",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "PatchTST",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__PatchTST/seed17",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "PatchTST",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__PatchTST/seed37",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "TimeMixer",
+      "seed": 7,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/QINGHAI_DA__TimeMixer/seed7",
+      "complete": true
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "TimeMixer",
+      "seed": 17,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/QINGHAI_DA__TimeMixer/seed17",
+      "complete": true
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "TimeMixer",
+      "seed": 37,
+      "status": "reused",
+      "run_dir": "experiments/evidence/hch_v44_o1_full8_completion_20260918/o1_runs/QINGHAI_DA__TimeMixer/seed37",
+      "complete": true
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "iTransformer",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__iTransformer/seed7",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "iTransformer",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__iTransformer/seed17",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "iTransformer",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__iTransformer/seed37",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "LSTM",
+      "seed": 7,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__LSTM/seed7",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "LSTM",
+      "seed": 17,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__LSTM/seed17",
+      "complete": false
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "LSTM",
+      "seed": 37,
+      "status": "new",
+      "run_dir": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/o1_runs/QINGHAI_DA__LSTM/seed37",
+      "complete": false
+    }
+  ]
+}

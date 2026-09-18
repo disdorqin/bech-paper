@@ -1,0 +1,37 @@
+{
+  "schema": "hch_v44_o1_domestic20_stage_token.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "terminal_token": "HCH_V44_O1_DOMESTIC20_NOT_READY",
+  "reason": "{'D0': {'exactly_60_coordinates': True, 'exactly_24_reused_runs': True, 'exactly_36_new_fits': True, 'no_reused_run_changed': True, 'one_scientific_code_state': True, 'core_tree_equals_frozen_substrate': True, 'recovery_modules_identical_across_runs': True, 'support_matches_frozen_substrate': True, 'one_registered_schedule_across_all_runs': True, 'all_metrics_finite': True, 'test_target_read_count_zero': True, 'no_retry': True}, 'D1': {'strict_host_positive_ge_16_of_20': True, 'gain_ge_minus_0p5pct_ge_19_of_20': True, 'worst_gain_ge_minus_1p0pct': True}, 'D2': {'panel_median_ge_plus_1p5pct': True, 'cells_ge_plus_2pct_ge_8_of_20': True}, 'D3': {'all_5_market_medians_positive': True, 'market_medians_ge_plus_1pct_ge_4_of_5': False}, 'D4': {'cells_with_2_of_3_seeds_beating_host_ge_15_of_20': True, 'zero_cells_with_all_three_seeds_worse_by_gt_1pct': True}}",
+  "domestic_pass": false,
+  "gate_blocks": {
+    "D0": true,
+    "D1": true,
+    "D2": true,
+    "D3": false,
+    "D4": true
+  },
+  "panel_median_gain_pct": 3.3568955741860664,
+  "n_host_positive": 20,
+  "n_ge_plus_2pct": 11,
+  "market_medians": {
+    "GANSU_DA": 0.9753623522835875,
+    "SHANDONG_DA": 2.314122995707326,
+    "SHAANXI_DA": 0.12868746961947752,
+    "NINGXIA_DA": 4.210419080766486,
+    "QINGHAI_DA": 5.941950839857343
+  },
+  "new_fits_phase_d": 36,
+  "reused_runs": 24,
+  "new_fits_phase_i": 0,
+  "phase_i_authorized_by_domestic_gate": false,
+  "international_preflight_file_present": true,
+  "out_of_order_preflight_disclosed": true,
+  "out_of_order_preflight_fits_executed": 0,
+  "new_fits_phase_m": 0,
+  "test_target_read_count": 0,
+  "protected_or_final_reads": 0,
+  "independent_verifier": "VERIFIED",
+  "token_authorizes": "nothing beyond requesting a separately authorized untouched confirmation stage; no TEST opening",
+  "written": "2026-09-18T12:28:20.648762"
+}

@@ -1,0 +1,398 @@
+{
+  "schema": "hch_v44_o1_domestic20_gradient_conflict_summary.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "role": "descriptive mechanism evidence; no gate reads this phase",
+  "protocol_reading": "all 60 available domestic O1 checkpoints audited; per-cell medians reported alongside 60-run fractions; cannot alter any gate",
+  "n_checkpoints_audited": 60,
+  "n_cells_covered": 20,
+  "n_optimizer_steps_total": 0,
+  "optimizer_constructed_anywhere": false,
+  "all_checkpoints_unchanged": true,
+  "all_shared_parameter_sets_nonempty": true,
+  "unloaded_parameter_names": [],
+  "shared_parameter_numel": [
+    13696
+  ],
+  "head_parameter_numel": [
+    1252
+  ],
+  "diag_subset_rows": [
+    67,
+    72,
+    219,
+    224,
+    256
+  ],
+  "diag_subset_rule": "np.unique(np.linspace(0, n-1, min(n, 256))) over registered TRAIN row order",
+  "forward_mode": "model.eval() under the O1 selected EMA weights; no random stream consumed",
+  "cudnn_substitution": {
+    "cudnn_disabled_for_this_audit": true,
+    "reason": "the architecture carries three GRU encoders and cuDNN's RNN kernels refuse backward outside training mode; the native path is used so the forward can stay in eval mode instead of switching the model to train mode",
+    "kernel_level_only": true,
+    "max_abs_deviation_vs_own_recorded_diag_reconstruction_mae": 0.001049041748046875,
+    "tolerance": 0.01,
+    "all_runs_within_tolerance": true,
+    "no_parameter_or_schedule_changed": true
+  },
+  "negative_cosine_fraction_overall": {
+    "cos_rec_b": 0.2631578947368421,
+    "cos_rec_B": 0.47368421052631576,
+    "cos_rec_S": 0.3,
+    "cos_rec_auxsum": 0.36666666666666664
+  },
+  "median_norm_ratio_overall": {
+    "norm_ratio_b_over_rec": 0.062286039990091496,
+    "norm_ratio_B_over_rec": 4.102441507381625,
+    "norm_ratio_S_over_rec": 4.310068867974892
+  },
+  "median_cosines_overall": {
+    "cos_rec_b": 0.13004818062606596,
+    "cos_rec_B": 0.01300396879132,
+    "cos_rec_S": 0.21227432446963285,
+    "cos_rec_auxsum": 0.11227739629804262
+  },
+  "negative_cosine_fraction_by_host": {
+    "PatchTST": {
+      "n_runs": 15,
+      "cos_rec_b": 0.15384615384615385,
+      "cos_rec_B": 0.38461538461538464,
+      "cos_rec_S": 0.13333333333333333,
+      "cos_rec_auxsum": 0.2,
+      "norm_ratio_b_over_rec": 0.17767106573936756,
+      "norm_ratio_B_over_rec": 10.82027339724129,
+      "norm_ratio_S_over_rec": 3.293443802948863
+    },
+    "TimeMixer": {
+      "n_runs": 15,
+      "cos_rec_b": 0.13333333333333333,
+      "cos_rec_B": 0.5333333333333333,
+      "cos_rec_S": 0.4,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "norm_ratio_b_over_rec": 0.03541892628255168,
+      "norm_ratio_B_over_rec": 3.0942535120452193,
+      "norm_ratio_S_over_rec": 4.664823750451817
+    },
+    "iTransformer": {
+      "n_runs": 15,
+      "cos_rec_b": 0.35714285714285715,
+      "cos_rec_B": 0.5714285714285714,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.5333333333333333,
+      "norm_ratio_b_over_rec": 0.11221125796155575,
+      "norm_ratio_B_over_rec": 2.0696836284841393,
+      "norm_ratio_S_over_rec": 4.777180049715965
+    },
+    "LSTM": {
+      "n_runs": 15,
+      "cos_rec_b": 0.4,
+      "cos_rec_B": 0.4,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.4,
+      "norm_ratio_b_over_rec": 0.023690091916620828,
+      "norm_ratio_B_over_rec": 3.8124205761603354,
+      "norm_ratio_S_over_rec": 3.4969117335869573
+    }
+  },
+  "negative_cosine_fraction_by_market": {
+    "GANSU_DA": {
+      "n_runs": 12,
+      "cos_rec_b": 0.18181818181818182,
+      "cos_rec_B": 0.6363636363636364,
+      "cos_rec_S": 0.25,
+      "cos_rec_auxsum": 0.4166666666666667,
+      "norm_ratio_b_over_rec": 0.03260666518258854,
+      "norm_ratio_B_over_rec": 8.909119820491991,
+      "norm_ratio_S_over_rec": 6.323888614871638
+    },
+    "SHANDONG_DA": {
+      "n_runs": 12,
+      "cos_rec_b": 0.16666666666666666,
+      "cos_rec_B": 0.3333333333333333,
+      "cos_rec_S": 0.25,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "norm_ratio_b_over_rec": 0.08045869235643954,
+      "norm_ratio_B_over_rec": 6.074600429755011,
+      "norm_ratio_S_over_rec": 4.275253302826653
+    },
+    "SHAANXI_DA": {
+      "n_runs": 12,
+      "cos_rec_b": 0.18181818181818182,
+      "cos_rec_B": 0.2727272727272727,
+      "cos_rec_S": 0.25,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "norm_ratio_b_over_rec": 0.07854551648939545,
+      "norm_ratio_B_over_rec": 3.8601672337071684,
+      "norm_ratio_S_over_rec": 6.153479131272874
+    },
+    "NINGXIA_DA": {
+      "n_runs": 12,
+      "cos_rec_b": 0.5454545454545454,
+      "cos_rec_B": 0.7272727272727273,
+      "cos_rec_S": 0.25,
+      "cos_rec_auxsum": 0.5,
+      "norm_ratio_b_over_rec": 0.023354855597815527,
+      "norm_ratio_B_over_rec": 3.3448791932330977,
+      "norm_ratio_S_over_rec": 3.920512663581124
+    },
+    "QINGHAI_DA": {
+      "n_runs": 12,
+      "cos_rec_b": 0.25,
+      "cos_rec_B": 0.4166666666666667,
+      "cos_rec_S": 0.5,
+      "cos_rec_auxsum": 0.25,
+      "norm_ratio_b_over_rec": 0.2284155957499389,
+      "norm_ratio_B_over_rec": 5.044950055913059,
+      "norm_ratio_S_over_rec": 1.852721742471227
+    }
+  },
+  "strongest_host_family_deviation": {
+    "pair": "cos_rec_auxsum",
+    "host": "iTransformer",
+    "fraction": 0.5333333333333333,
+    "overall_fraction": 0.36666666666666664,
+    "absolute_deviation": 0.16666666666666669
+  },
+  "by_cell": [
+    {
+      "market": "GANSU_DA",
+      "host": "PatchTST",
+      "cell": "GANSU_DA__PatchTST",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.0,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.26480831167417446,
+      "median_norm_ratio_S_over_rec": 6.278535088896761
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "TimeMixer",
+      "cell": "GANSU_DA__TimeMixer",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 1.0,
+      "cos_rec_S": 0.6666666666666666,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.3619363987771237,
+      "median_norm_ratio_S_over_rec": 6.369242140846515
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "iTransformer",
+      "cell": "GANSU_DA__iTransformer",
+      "n_runs": 3,
+      "cos_rec_b": 0.5,
+      "cos_rec_B": 1.0,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "median_cos_rec_auxsum": 0.13498418399195064,
+      "median_norm_ratio_S_over_rec": 11.26316713560302
+    },
+    {
+      "market": "GANSU_DA",
+      "host": "LSTM",
+      "cell": "GANSU_DA__LSTM",
+      "n_runs": 3,
+      "cos_rec_b": 0.3333333333333333,
+      "cos_rec_B": 0.6666666666666666,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.29351237633198446,
+      "median_norm_ratio_S_over_rec": 4.816383744115545
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "PatchTST",
+      "cell": "SHANDONG_DA__PatchTST",
+      "n_runs": 3,
+      "cos_rec_b": 0.6666666666666666,
+      "cos_rec_B": 1.0,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.04462697424378745,
+      "median_norm_ratio_S_over_rec": 3.433868576409213
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "TimeMixer",
+      "cell": "SHANDONG_DA__TimeMixer",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.3333333333333333,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.33653875304014436,
+      "median_norm_ratio_S_over_rec": 4.662043623982309
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "iTransformer",
+      "cell": "SHANDONG_DA__iTransformer",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.0,
+      "cos_rec_S": 0.6666666666666666,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.10722503881482605,
+      "median_norm_ratio_S_over_rec": 9.159650574433881
+    },
+    {
+      "market": "SHANDONG_DA",
+      "host": "LSTM",
+      "cell": "SHANDONG_DA__LSTM",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.0,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.12212818567394904,
+      "median_norm_ratio_S_over_rec": 3.0999706589954408
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "PatchTST",
+      "cell": "SHAANXI_DA__PatchTST",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.5,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "median_cos_rec_auxsum": 0.09887311613056822,
+      "median_norm_ratio_S_over_rec": 3.293443802948863
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "TimeMixer",
+      "cell": "SHAANXI_DA__TimeMixer",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.0,
+      "cos_rec_S": 0.6666666666666666,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "median_cos_rec_auxsum": 0.06149246225835796,
+      "median_norm_ratio_S_over_rec": 25.354731984911112
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "iTransformer",
+      "cell": "SHAANXI_DA__iTransformer",
+      "n_runs": 3,
+      "cos_rec_b": 0.6666666666666666,
+      "cos_rec_B": 0.6666666666666666,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.232615302051817,
+      "median_norm_ratio_S_over_rec": 4.07222857721202
+    },
+    {
+      "market": "SHAANXI_DA",
+      "host": "LSTM",
+      "cell": "SHAANXI_DA__LSTM",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.0,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.4542544466796487,
+      "median_norm_ratio_S_over_rec": 4.970057903444455
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "PatchTST",
+      "cell": "NINGXIA_DA__PatchTST",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.0,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.5673067684549786,
+      "median_norm_ratio_S_over_rec": 1.5109882512378288
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "TimeMixer",
+      "cell": "NINGXIA_DA__TimeMixer",
+      "n_runs": 3,
+      "cos_rec_b": 0.6666666666666666,
+      "cos_rec_B": 1.0,
+      "cos_rec_S": 0.0,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.04514132450531374,
+      "median_norm_ratio_S_over_rec": 3.673126124942725
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "iTransformer",
+      "cell": "NINGXIA_DA__iTransformer",
+      "n_runs": 3,
+      "cos_rec_b": 0.6666666666666666,
+      "cos_rec_B": 1.0,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.2535493490625777,
+      "median_norm_ratio_S_over_rec": 4.167899202219522
+    },
+    {
+      "market": "NINGXIA_DA",
+      "host": "LSTM",
+      "cell": "NINGXIA_DA__LSTM",
+      "n_runs": 3,
+      "cos_rec_b": 0.6666666666666666,
+      "cos_rec_B": 0.6666666666666666,
+      "cos_rec_S": 0.6666666666666666,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.29771024579191185,
+      "median_norm_ratio_S_over_rec": 4.482535560168989
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "PatchTST",
+      "cell": "QINGHAI_DA__PatchTST",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.3333333333333333,
+      "cos_rec_S": 0.6666666666666666,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.2275045456765043,
+      "median_norm_ratio_S_over_rec": 1.6822922234120352
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "TimeMixer",
+      "cell": "QINGHAI_DA__TimeMixer",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.3333333333333333,
+      "cos_rec_S": 0.6666666666666666,
+      "cos_rec_auxsum": 0.0,
+      "median_cos_rec_auxsum": 0.2660247022156736,
+      "median_norm_ratio_S_over_rec": 3.2964272042722857
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "iTransformer",
+      "cell": "QINGHAI_DA__iTransformer",
+      "n_runs": 3,
+      "cos_rec_b": 0.0,
+      "cos_rec_B": 0.3333333333333333,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.3333333333333333,
+      "median_cos_rec_auxsum": 0.4606386259950334,
+      "median_norm_ratio_S_over_rec": 2.3048193444414142
+    },
+    {
+      "market": "QINGHAI_DA",
+      "host": "LSTM",
+      "cell": "QINGHAI_DA__LSTM",
+      "n_runs": 3,
+      "cos_rec_b": 1.0,
+      "cos_rec_B": 0.6666666666666666,
+      "cos_rec_S": 0.3333333333333333,
+      "cos_rec_auxsum": 0.6666666666666666,
+      "median_cos_rec_auxsum": -0.27406939480139864,
+      "median_norm_ratio_S_over_rec": 0.8972389773617074
+    }
+  ],
+  "elapsed_seconds": 119.655616
+}

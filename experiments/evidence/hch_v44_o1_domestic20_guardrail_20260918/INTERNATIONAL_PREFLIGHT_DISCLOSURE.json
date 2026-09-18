@@ -1,0 +1,29 @@
+{
+  "schema": "hch_v44_o1_domestic20_international_preflight_disclosure.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "phase_i_authorized_by_domestic_gate": false,
+  "domestic_pass": false,
+  "failing_blocks": [
+    "D3"
+  ],
+  "preflight_file": "INTERNATIONAL_PREFLIGHT.json",
+  "phase_d_sweep_window": [
+    "2026-09-18T12:02:58.000570",
+    "2026-09-18T12:17:49.263080"
+  ],
+  "preflight_written_at": "2026-09-18T12:05:21.502912",
+  "domestic_gate_written_at": "2026-09-18T12:17:51.385627",
+  "preflight_written_during_phase_d_sweep": true,
+  "domestic_gate_existed_when_preflight_ran": false,
+  "preflight_conditioned_on_domestic_verdict": false,
+  "deviation": "PROTOCOL.md sections 3.4 and 5 do not authorize any Phase-I step, including a zero-fit preflight, for a stage whose domestic gate has not passed. This preflight was written while the Phase-D fit sweep was still running and before DOMESTIC_GATE.json existed, so it could not have been conditioned on the domestic verdict; it was never used to select, continue, stop or score anything, and the token is selected by the domestic gate before any Phase-I state is read.",
+  "fits_executed_by_preflight": 0,
+  "n_new_fits_authorized_by_preflight": 0,
+  "international_run_directories": 0,
+  "international_comparison_written": false,
+  "international_gate_written": false,
+  "test_target_read_count": 0,
+  "protected_or_final_target_reads": 0,
+  "authority_files_unchanged_since_preflight": true,
+  "effect_on_terminal_token": "none: the terminal token is selected by the domestic gate before any Phase-I state is read, and this preflight executed zero fits, authorised zero fits and wrote no international comparison and no international gate."
+}

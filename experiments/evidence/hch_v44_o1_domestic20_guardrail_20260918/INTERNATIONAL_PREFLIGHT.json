@@ -1,0 +1,215 @@
+{
+  "schema": "hch_v44_o1_domestic20_international_preflight.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "phase": "I",
+  "n_new_fits_authorized_by_this_preflight": 0,
+  "fits_executed": 0,
+  "authority_root": "experiments/evidence/hch_frozen_method_baseline_transfer_20260911",
+  "authority_file_pins": {
+    "baseline_admission_matrix.csv": {
+      "present": true,
+      "sha256": "EB732B218D83E8980EA5C941D0B0171F249CC87E4A26A1B1A8BD52D93BA2DB5D",
+      "bytes": 1774
+    },
+    "best_baseline_gap_by_cell.csv": {
+      "present": true,
+      "sha256": "7DF2F1E7500F591580A3361EBB6FC623E58EAF2044E0F931B4E70200FBE31156",
+      "bytes": 1390
+    },
+    "metrics_by_cell.csv": {
+      "present": true,
+      "sha256": "1F3C542835AF9DCC3131CD94F72F265CBBAFA2808788AF5FA22219C1C4586EB0",
+      "bytes": 10721
+    },
+    "provenance.json": {
+      "present": true,
+      "sha256": "65EC7EA563FC440417D9F9B79B5EBA5E2593BA3E15BCAB53D91B9B2A4D1C6D39",
+      "bytes": 11869
+    },
+    "transfer_fidelity_audit.md": {
+      "present": true,
+      "sha256": "6FF851B6B8E9F0B6339E9DF22A4F4DE8DF809AFEBAE48529D73C2A64F7D2882A",
+      "bytes": 8026
+    }
+  },
+  "authority_honoured": {
+    "files_read": [
+      "baseline_admission_matrix.csv",
+      "best_baseline_gap_by_cell.csv",
+      "metrics_by_cell.csv",
+      "provenance.json",
+      "transfer_fidelity_audit.md"
+    ],
+    "no_proxy_baseline_substituted": true,
+    "no_baseline_retrained": true,
+    "admitted_baseline_methods": [
+      "MatchedDirectResidual",
+      "PIR_paper_protocol",
+      "delta_Adapter_AdaY"
+    ],
+    "forbidden_methods_carried_as_forbidden": [
+      "PIR_PROXY_10epoch_K10",
+      "old 2-epoch delta wrapper",
+      "src/baselines/pir.py ridge/refiner substitute"
+    ],
+    "admitted_but_forbidden_labelled": []
+  },
+  "information_setting": {
+    "v44_protocol": "COMMON_BENCHMARK_701020_FULL_V2",
+    "v44_history_recipe": "V44_SHADOW_OOF_PREFIX_90_10_V1",
+    "v44_market_universe": [
+      "GANSU_DA",
+      "SHANDONG_DA",
+      "SHAANXI_DA",
+      "NINGXIA_DA",
+      "QINGHAI_DA"
+    ],
+    "transfer_role_system": "S1 / DIAG_FIT / DIAG_EVAL (2026-09-11 protocol)",
+    "commensurable": false,
+    "commensurability_note": "The frozen baseline and Host point estimates are DIAG_EVAL-role Overall/Normal MAE under the 2026-09-11 transfer protocol, while O1 produces a VAL-role MAE under COMMON_BENCHMARK_701020_FULL_V2. The two are not like-for-like, so even with legal support an O1-vs-baseline gap would need an explicit role reconciliation rather than a direct subtraction."
+  },
+  "cells": [
+    {
+      "market": "LAGO_DE",
+      "host": "PatchTST",
+      "cell": "LAGO_DE__PatchTST",
+      "in_v44_market_universe": false,
+      "v44_split_plan": {
+        "resolved": false,
+        "roles": null,
+        "error": "KeyError: 'market not in the common-benchmark coordinate system: LAGO_DE'"
+      },
+      "v44_frozen_host_joint_cache": {
+        "path": "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/02_hosts/LAGO_DE/PatchTST/host_predictions_joint.npz",
+        "present": false
+      },
+      "v44_legal_o1_history_support": {
+        "npz_present": false,
+        "json_present": false,
+        "recipe_required": "V44_SHADOW_OOF_PREFIX_90_10_V1"
+      },
+      "o1_legal_evidence_complete": false,
+      "frozen_transfer_host_point_estimate": {
+        "Overall_MAE": "4.7565226554870605",
+        "Normal_MAE": "4.3458251953125",
+        "fidelity": "FROZEN_HOST",
+        "source": "frozen Host cache"
+      },
+      "frozen_best_admitted_baseline": {
+        "best_baseline": "delta_Adapter_AdaY",
+        "best_baseline_MAE": "4.741259964733578",
+        "recorded_gap_pct": "-10.452914461411906"
+      }
+    },
+    {
+      "market": "LAGO_DE",
+      "host": "TimeMixer",
+      "cell": "LAGO_DE__TimeMixer",
+      "in_v44_market_universe": false,
+      "v44_split_plan": {
+        "resolved": false,
+        "roles": null,
+        "error": "KeyError: 'market not in the common-benchmark coordinate system: LAGO_DE'"
+      },
+      "v44_frozen_host_joint_cache": {
+        "path": "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/02_hosts/LAGO_DE/TimeMixer/host_predictions_joint.npz",
+        "present": false
+      },
+      "v44_legal_o1_history_support": {
+        "npz_present": false,
+        "json_present": false,
+        "recipe_required": "V44_SHADOW_OOF_PREFIX_90_10_V1"
+      },
+      "o1_legal_evidence_complete": false,
+      "frozen_transfer_host_point_estimate": {
+        "Overall_MAE": "4.70658016204834",
+        "Normal_MAE": "4.330480575561523",
+        "fidelity": "FROZEN_HOST",
+        "source": "frozen Host cache"
+      },
+      "frozen_best_admitted_baseline": {
+        "best_baseline": "delta_Adapter_AdaY",
+        "best_baseline_MAE": "4.718180374936798",
+        "recorded_gap_pct": "-8.688511366914197"
+      }
+    },
+    {
+      "market": "LAGO_PJM",
+      "host": "PatchTST",
+      "cell": "LAGO_PJM__PatchTST",
+      "in_v44_market_universe": false,
+      "v44_split_plan": {
+        "resolved": false,
+        "roles": null,
+        "error": "KeyError: 'market not in the common-benchmark coordinate system: LAGO_PJM'"
+      },
+      "v44_frozen_host_joint_cache": {
+        "path": "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/02_hosts/LAGO_PJM/PatchTST/host_predictions_joint.npz",
+        "present": false
+      },
+      "v44_legal_o1_history_support": {
+        "npz_present": false,
+        "json_present": false,
+        "recipe_required": "V44_SHADOW_OOF_PREFIX_90_10_V1"
+      },
+      "o1_legal_evidence_complete": false,
+      "frozen_transfer_host_point_estimate": {
+        "Overall_MAE": "3.019613027572632",
+        "Normal_MAE": "2.7817885875701904",
+        "fidelity": "FROZEN_HOST",
+        "source": "frozen Host cache"
+      },
+      "frozen_best_admitted_baseline": {
+        "best_baseline": "delta_Adapter_AdaY",
+        "best_baseline_MAE": "2.9756399224313945",
+        "recorded_gap_pct": "2.3563869656925966"
+      }
+    },
+    {
+      "market": "LAGO_PJM",
+      "host": "TimeMixer",
+      "cell": "LAGO_PJM__TimeMixer",
+      "in_v44_market_universe": false,
+      "v44_split_plan": {
+        "resolved": false,
+        "roles": null,
+        "error": "KeyError: 'market not in the common-benchmark coordinate system: LAGO_PJM'"
+      },
+      "v44_frozen_host_joint_cache": {
+        "path": "experiments/evidence/hch_china5_common_benchmark_701020_full_v2_20260913/02_hosts/LAGO_PJM/TimeMixer/host_predictions_joint.npz",
+        "present": false
+      },
+      "v44_legal_o1_history_support": {
+        "npz_present": false,
+        "json_present": false,
+        "recipe_required": "V44_SHADOW_OOF_PREFIX_90_10_V1"
+      },
+      "o1_legal_evidence_complete": false,
+      "frozen_transfer_host_point_estimate": {
+        "Overall_MAE": "3.2211556434631348",
+        "Normal_MAE": "3.019186496734619",
+        "fidelity": "FROZEN_HOST",
+        "source": "frozen Host cache"
+      },
+      "frozen_best_admitted_baseline": {
+        "best_baseline": "PIR_paper_protocol",
+        "best_baseline_MAE": "3.224943161010742",
+        "recorded_gap_pct": "-5.076300630396408"
+      }
+    }
+  ],
+  "n_cells_with_complete_o1_legal_evidence": 0,
+  "protected_or_final_target_reads": 0,
+  "test_target_read_count": 0,
+  "blocked": true,
+  "blocker": {
+    "reason_code": "NO_V44_LEGAL_O1_HISTORY_SUPPORT_FOR_LAGO",
+    "cells_missing_legal_evidence": [
+      "LAGO_DE__PatchTST",
+      "LAGO_DE__TimeMixer",
+      "LAGO_PJM__PatchTST",
+      "LAGO_PJM__TimeMixer"
+    ],
+    "detail": "The v4.4 information setting has no LAGO split plan, no frozen Host joint cache and no V44_SHADOW_OOF_PREFIX_90_10_V1 support for any of the four registered foreign cells. Reconstructing that support would define a new information setting, which PROTOCOL.md section 5.2 forbids; a workaround, proxy baseline or baseline retrain is likewise forbidden, so no international fit is executed."
+  }
+}

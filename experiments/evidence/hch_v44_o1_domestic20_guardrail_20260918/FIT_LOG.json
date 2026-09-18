@@ -1,0 +1,302 @@
+{
+  "schema": "hch_v44_o1_domestic20_fit_log.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "n_registered_new_fits": 36,
+  "n_fitted": 36,
+  "n_skipped_existing": 0,
+  "attempts_per_coordinate": {
+    "GANSU_DA__TimeMixer__seed7": 1,
+    "GANSU_DA__TimeMixer__seed17": 1,
+    "GANSU_DA__TimeMixer__seed37": 1,
+    "GANSU_DA__iTransformer__seed7": 1,
+    "GANSU_DA__iTransformer__seed17": 1,
+    "GANSU_DA__iTransformer__seed37": 1,
+    "SHANDONG_DA__TimeMixer__seed7": 1,
+    "SHANDONG_DA__TimeMixer__seed17": 1,
+    "SHANDONG_DA__TimeMixer__seed37": 1,
+    "SHANDONG_DA__LSTM__seed7": 1,
+    "SHANDONG_DA__LSTM__seed17": 1,
+    "SHANDONG_DA__LSTM__seed37": 1,
+    "SHAANXI_DA__iTransformer__seed7": 1,
+    "SHAANXI_DA__iTransformer__seed17": 1,
+    "SHAANXI_DA__iTransformer__seed37": 1,
+    "SHAANXI_DA__LSTM__seed7": 1,
+    "SHAANXI_DA__LSTM__seed17": 1,
+    "SHAANXI_DA__LSTM__seed37": 1,
+    "NINGXIA_DA__PatchTST__seed7": 1,
+    "NINGXIA_DA__PatchTST__seed17": 1,
+    "NINGXIA_DA__PatchTST__seed37": 1,
+    "NINGXIA_DA__TimeMixer__seed7": 1,
+    "NINGXIA_DA__TimeMixer__seed17": 1,
+    "NINGXIA_DA__TimeMixer__seed37": 1,
+    "NINGXIA_DA__LSTM__seed7": 1,
+    "NINGXIA_DA__LSTM__seed17": 1,
+    "NINGXIA_DA__LSTM__seed37": 1,
+    "QINGHAI_DA__PatchTST__seed7": 1,
+    "QINGHAI_DA__PatchTST__seed17": 1,
+    "QINGHAI_DA__PatchTST__seed37": 1,
+    "QINGHAI_DA__iTransformer__seed7": 1,
+    "QINGHAI_DA__iTransformer__seed17": 1,
+    "QINGHAI_DA__iTransformer__seed37": 1,
+    "QINGHAI_DA__LSTM__seed7": 1,
+    "QINGHAI_DA__LSTM__seed17": 1,
+    "QINGHAI_DA__LSTM__seed37": 1
+  },
+  "no_retry": true,
+  "workers": 2,
+  "finished": "2026-09-18T12:17:50.638760",
+  "results": [
+    {
+      "cell": "GANSU_DA__TimeMixer",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:02:58.335025",
+      "finished": "2026-09-18T12:03:52.011031"
+    },
+    {
+      "cell": "GANSU_DA__TimeMixer",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:02:58.339127",
+      "finished": "2026-09-18T12:03:53.908346"
+    },
+    {
+      "cell": "GANSU_DA__TimeMixer",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:03:52.011031",
+      "finished": "2026-09-18T12:04:41.913904"
+    },
+    {
+      "cell": "GANSU_DA__iTransformer",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:03:53.908346",
+      "finished": "2026-09-18T12:04:36.495389"
+    },
+    {
+      "cell": "GANSU_DA__iTransformer",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:04:36.495389",
+      "finished": "2026-09-18T12:05:32.819762"
+    },
+    {
+      "cell": "GANSU_DA__iTransformer",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:04:41.913904",
+      "finished": "2026-09-18T12:05:36.378188"
+    },
+    {
+      "cell": "SHANDONG_DA__TimeMixer",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:05:32.819762",
+      "finished": "2026-09-18T12:06:15.513844"
+    },
+    {
+      "cell": "SHANDONG_DA__TimeMixer",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:05:36.378188",
+      "finished": "2026-09-18T12:06:22.283700"
+    },
+    {
+      "cell": "SHANDONG_DA__TimeMixer",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:06:15.514425",
+      "finished": "2026-09-18T12:06:58.139678"
+    },
+    {
+      "cell": "SHANDONG_DA__LSTM",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:06:22.283700",
+      "finished": "2026-09-18T12:07:40.355286"
+    },
+    {
+      "cell": "SHANDONG_DA__LSTM",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:06:58.141283",
+      "finished": "2026-09-18T12:08:15.786555"
+    },
+    {
+      "cell": "SHANDONG_DA__LSTM",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:07:40.355286",
+      "finished": "2026-09-18T12:09:03.110476"
+    },
+    {
+      "cell": "SHAANXI_DA__iTransformer",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:08:15.786555",
+      "finished": "2026-09-18T12:09:01.430510"
+    },
+    {
+      "cell": "SHAANXI_DA__iTransformer",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:09:01.430510",
+      "finished": "2026-09-18T12:09:47.546296"
+    },
+    {
+      "cell": "SHAANXI_DA__iTransformer",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:09:03.111192",
+      "finished": "2026-09-18T12:09:53.223478"
+    },
+    {
+      "cell": "SHAANXI_DA__LSTM",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:09:47.546296",
+      "finished": "2026-09-18T12:10:26.628815"
+    },
+    {
+      "cell": "SHAANXI_DA__LSTM",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:09:53.223478",
+      "finished": "2026-09-18T12:10:32.230936"
+    },
+    {
+      "cell": "SHAANXI_DA__LSTM",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:10:26.628815",
+      "finished": "2026-09-18T12:10:54.210535"
+    },
+    {
+      "cell": "NINGXIA_DA__PatchTST",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:10:32.230936",
+      "finished": "2026-09-18T12:11:08.362883"
+    },
+    {
+      "cell": "NINGXIA_DA__PatchTST",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:10:54.210535",
+      "finished": "2026-09-18T12:11:36.436657"
+    },
+    {
+      "cell": "NINGXIA_DA__PatchTST",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:11:08.362883",
+      "finished": "2026-09-18T12:11:34.576431"
+    },
+    {
+      "cell": "NINGXIA_DA__TimeMixer",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:11:34.576431",
+      "finished": "2026-09-18T12:12:07.476973"
+    },
+    {
+      "cell": "NINGXIA_DA__TimeMixer",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:11:36.438706",
+      "finished": "2026-09-18T12:12:09.568714"
+    },
+    {
+      "cell": "NINGXIA_DA__TimeMixer",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:12:07.477971",
+      "finished": "2026-09-18T12:12:42.121554"
+    },
+    {
+      "cell": "NINGXIA_DA__LSTM",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:12:09.568714",
+      "finished": "2026-09-18T12:12:44.271939"
+    },
+    {
+      "cell": "NINGXIA_DA__LSTM",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:12:42.121554",
+      "finished": "2026-09-18T12:13:39.929528"
+    },
+    {
+      "cell": "NINGXIA_DA__LSTM",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:12:44.271939",
+      "finished": "2026-09-18T12:13:21.277091"
+    },
+    {
+      "cell": "QINGHAI_DA__PatchTST",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:13:21.277091",
+      "finished": "2026-09-18T12:14:46.487314"
+    },
+    {
+      "cell": "QINGHAI_DA__PatchTST",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:13:39.929528",
+      "finished": "2026-09-18T12:15:05.278247"
+    },
+    {
+      "cell": "QINGHAI_DA__PatchTST",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:14:46.489343",
+      "finished": "2026-09-18T12:15:32.868008"
+    },
+    {
+      "cell": "QINGHAI_DA__iTransformer",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:15:05.279285",
+      "finished": "2026-09-18T12:15:59.403629"
+    },
+    {
+      "cell": "QINGHAI_DA__iTransformer",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:15:32.868817",
+      "finished": "2026-09-18T12:16:06.544806"
+    },
+    {
+      "cell": "QINGHAI_DA__iTransformer",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:15:59.403629",
+      "finished": "2026-09-18T12:16:51.284238"
+    },
+    {
+      "cell": "QINGHAI_DA__LSTM",
+      "seed": 7,
+      "status": "fitted",
+      "started": "2026-09-18T12:16:06.544806",
+      "finished": "2026-09-18T12:17:10.242847"
+    },
+    {
+      "cell": "QINGHAI_DA__LSTM",
+      "seed": 17,
+      "status": "fitted",
+      "started": "2026-09-18T12:16:51.285237",
+      "finished": "2026-09-18T12:17:32.535516"
+    },
+    {
+      "cell": "QINGHAI_DA__LSTM",
+      "seed": 37,
+      "status": "fitted",
+      "started": "2026-09-18T12:17:10.242847",
+      "finished": "2026-09-18T12:17:49.266049"
+    }
+  ]
+}

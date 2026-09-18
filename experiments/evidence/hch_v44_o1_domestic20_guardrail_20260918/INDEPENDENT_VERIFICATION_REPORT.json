@@ -1,0 +1,485 @@
+{
+  "schema": "hch_v44_o1_domestic20_independent_verification.v1",
+  "verifier": "verification/verify.py",
+  "imports_from_implementation": [],
+  "independence": "coordinate universe, reused-cell set, seeds and all D/I thresholds are transcribed from PROTOCOL.md; CSV files are re-parsed and re-aggregated with this file's own arithmetic; checkpoints are re-hashed here",
+  "n_checks": 73,
+  "n_failed": 0,
+  "failures": [],
+  "checks": [
+    {
+      "check": "universe_60_coordinates",
+      "ok": true,
+      "detail": "complete=60 missing=[]"
+    },
+    {
+      "check": "universe_exactly_24_reused",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "universe_exactly_36_new",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_unregistered_cell_directory",
+      "ok": true,
+      "detail": "unexpected=[]"
+    },
+    {
+      "check": "shadow_support_covers_all_20_registered_cells",
+      "ok": true,
+      "detail": "missing=[] at D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_v44_china5_fullpanel_main_eval_20260917\\shadow_oof"
+    },
+    {
+      "check": "shadow_support_root_has_no_unregistered_cell_file",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "one_probe_code_hash_across_60_runs",
+      "ok": true,
+      "detail": "['C38EDD49D87E5E5A5D71ABFA6951E6C029D5F141F4DB01859E7F0A6B60144880']"
+    },
+    {
+      "check": "core_tree_equals_frozen_pin",
+      "ok": true,
+      "detail": "['6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577']"
+    },
+    {
+      "check": "core_tree_matches_recomputation",
+      "ok": true,
+      "detail": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577"
+    },
+    {
+      "check": "one_registered_schedule_across_60_runs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "reuse_snapshot_before_covers_exactly_the_reused_artifacts",
+      "ok": true,
+      "detail": "n=72 missing=[] extra=[]"
+    },
+    {
+      "check": "reused_artifacts_byte_identical_before_and_after",
+      "ok": true,
+      "detail": "changed=[]"
+    },
+    {
+      "check": "every_checkpoint_matches_its_own_recorded_sha256",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "every_run_history_support_matches_shadow_artifact",
+      "ok": true,
+      "detail": "60/60"
+    },
+    {
+      "check": "switch_exactly_once_at_step_400_in_all_60_curves",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "loss_schedule_matches_registered_switch_in_all_curves",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "test_target_read_count_zero_in_all_60_runs",
+      "ok": true,
+      "detail": "[0]"
+    },
+    {
+      "check": "reuse_provenance_declares_one_code_state",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "reuse_provenance_covers_24_runs",
+      "ok": true,
+      "detail": "24"
+    },
+    {
+      "check": "per_seed_rows_60",
+      "ok": true,
+      "detail": "60"
+    },
+    {
+      "check": "cell_rows_20",
+      "ok": true,
+      "detail": "20"
+    },
+    {
+      "check": "market_rows_5",
+      "ok": true,
+      "detail": "5"
+    },
+    {
+      "check": "cell_medians_and_gains_reproduce",
+      "ok": true,
+      "detail": "max_abs_err=0.000e+00"
+    },
+    {
+      "check": "market_medians_reproduce",
+      "ok": true,
+      "detail": "max_abs_err=0.000e+00"
+    },
+    {
+      "check": "gate_panel_median_reproduces",
+      "ok": true,
+      "detail": "3.3568955741860664 vs 3.3568955741860664"
+    },
+    {
+      "check": "gate_host_positive_count_reproduces",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gate_ge_2pct_count_reproduces",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gate_blocks_match_recomputation",
+      "ok": true,
+      "detail": "recomputed={'D0': True, 'D1': True, 'D2': True, 'D3': False, 'D4': True} recorded={'D0': True, 'D1': True, 'D2': True, 'D3': False, 'D4': True}"
+    },
+    {
+      "check": "gate_domestic_pass_is_conjunction",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gradient_rows_60",
+      "ok": true,
+      "detail": "60"
+    },
+    {
+      "check": "gradient_covers_all_20_cells",
+      "ok": true,
+      "detail": "20"
+    },
+    {
+      "check": "gradient_zero_optimizer_steps",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gradient_never_constructed_an_optimizer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gradient_all_checkpoints_unchanged",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gradient_shared_parameter_set_nonempty",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "gradient_head_parameters_excluded_from_shared_set",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "every_undefined_cosine_is_a_genuine_zero_gradient",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "gradient_overall_fractions_reproduce",
+      "ok": true,
+      "detail": "{'cos_rec_b': 0.2631578947368421, 'cos_rec_B': 0.47368421052631576, 'cos_rec_S': 0.3, 'cos_rec_auxsum': 0.36666666666666664} vs {'cos_rec_b': 0.2631578947368421, 'cos_rec_B': 0.47368421052631576, 'cos_rec_S': 0.3, 'cos_rec_auxsum': 0.36666666666666664}"
+    },
+    {
+      "check": "negative_cosine_fractions_exclude_undefined_cosines",
+      "ok": true,
+      "detail": "{\"cos_rec_b\": [57, 0.2631578947368421, 0.25], \"cos_rec_B\": [57, 0.47368421052631576, 0.45], \"cos_rec_S\": [60, 0.3, 0.3], \"cos_rec_auxsum\": [60, 0.36666666666666664, 0.36666666666666664]}"
+    },
+    {
+      "check": "gradient_host_fractions_reproduce",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "gradient_strongest_host_family_pattern_reproduces",
+      "ok": true,
+      "detail": "recomputed=iTransformer/0.16666666666666669 declared={'pair': 'cos_rec_auxsum', 'host': 'iTransformer', 'fraction': 0.5333333333333333, 'overall_fraction': 0.36666666666666664, 'absolute_deviation': 0.16666666666666669}"
+    },
+    {
+      "check": "gradient_forward_reproduces_own_recorded_diagnostic",
+      "ok": true,
+      "detail": "max_dev=1.049e-03"
+    },
+    {
+      "check": "gradient_cudnn_substitution_disclosed_and_bounded",
+      "ok": true,
+      "detail": "declared=0.001049041748046875 recomputed=0.001049041748046875"
+    },
+    {
+      "check": "preflight_authority_files_all_present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "preflight_authority_hashes_match_disk",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "preflight_records_zero_protected_reads",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "preflight_no_fits_executed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "blocked_preflight_wrote_no_international_fits",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "blocked_preflight_wrote_no_international_gate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "blocked_preflight_wrote_no_comparison_table",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "blocked_preflight_names_all_four_cells_illegal",
+      "ok": true,
+      "detail": "{'LAGO_DE__PatchTST': False, 'LAGO_DE__TimeMixer': False, 'LAGO_PJM__PatchTST': False, 'LAGO_PJM__TimeMixer': False}"
+    },
+    {
+      "check": "no_v44_host_cache_for_LAGO_DE_PatchTST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_shadow_support_for_LAGO_DE_PatchTST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_host_cache_for_LAGO_DE_TimeMixer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_shadow_support_for_LAGO_DE_TimeMixer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_host_cache_for_LAGO_PJM_PatchTST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_shadow_support_for_LAGO_PJM_PatchTST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_host_cache_for_LAGO_PJM_TimeMixer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_v44_shadow_support_for_LAGO_PJM_TimeMixer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "out_of_order_preflight_is_disclosed",
+      "ok": true,
+      "detail": "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_v44_o1_domestic20_guardrail_20260918\\INTERNATIONAL_PREFLIGHT_DISCLOSURE.json"
+    },
+    {
+      "check": "disclosure_declares_phase_i_was_not_authorized",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "disclosure_ordering_matches_file_times",
+      "ok": true,
+      "detail": "declared_during_sweep=True pre=1789704321.5029118 sweep=[1789704178.00057,1789705069.2630804] gate=1789705071.3856268"
+    },
+    {
+      "check": "disclosure_preflight_could_not_be_conditioned_on_domestic_verdict",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "disclosure_authority_files_unchanged_is_true",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "disclosure_zero_fit_counters_match_preflight_and_disk",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "disclosure_states_deviation_and_null_effect_on_token",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "access_audit_test_reads_zero",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "access_audit_no_test_rows_returned",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "access_audit_no_forbidden_path_opened",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "access_audit_source_tree_matches_frozen_pin",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "no_result_conditioned_retry",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "fits_logged_equal_registered_36",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "backbone_tree_recomputable",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "universe": {
+    "n_complete": 60,
+    "n_reused": 24,
+    "n_new": 36,
+    "new_cell_dirs_on_disk": [
+      "GANSU_DA__TimeMixer",
+      "GANSU_DA__iTransformer",
+      "NINGXIA_DA__LSTM",
+      "NINGXIA_DA__PatchTST",
+      "NINGXIA_DA__TimeMixer",
+      "QINGHAI_DA__LSTM",
+      "QINGHAI_DA__PatchTST",
+      "QINGHAI_DA__iTransformer",
+      "SHAANXI_DA__LSTM",
+      "SHAANXI_DA__iTransformer",
+      "SHANDONG_DA__LSTM",
+      "SHANDONG_DA__TimeMixer"
+    ]
+  },
+  "hashes": {
+    "n_checkpoints_rehashed": 60,
+    "bad": [],
+    "snapshot_entries": 180,
+    "reused_snapshot_entries": 72
+  },
+  "domestic": {
+    "panel_median": 3.3568955741860664,
+    "n_pos": 20,
+    "n_ge2": 11,
+    "blocks_recomputed": {
+      "D0": true,
+      "D1": true,
+      "D2": true,
+      "D3": false,
+      "D4": true
+    },
+    "market_medians": {
+      "GANSU_DA": "0.9753623522835875",
+      "SHANDONG_DA": "2.314122995707326",
+      "SHAANXI_DA": "0.12868746961947752",
+      "NINGXIA_DA": "4.210419080766486",
+      "QINGHAI_DA": "5.941950839857343"
+    }
+  },
+  "phase_m": {
+    "fractions": {
+      "cos_rec_b": 0.2631578947368421,
+      "cos_rec_B": 0.47368421052631576,
+      "cos_rec_S": 0.3,
+      "cos_rec_auxsum": 0.36666666666666664
+    },
+    "n_defined_cosines": {
+      "cos_rec_b": 57,
+      "cos_rec_B": 57,
+      "cos_rec_S": 60,
+      "cos_rec_auxsum": 60
+    },
+    "undefined_cosines": [
+      "GANSU_DA__iTransformer__seed7:cos_rec_b",
+      "GANSU_DA__iTransformer__seed7:cos_rec_B",
+      "SHAANXI_DA__PatchTST__seed7:cos_rec_b",
+      "SHAANXI_DA__PatchTST__seed7:cos_rec_B",
+      "NINGXIA_DA__PatchTST__seed37:cos_rec_b",
+      "NINGXIA_DA__PatchTST__seed37:cos_rec_B"
+    ],
+    "n_runs": 60,
+    "host_fractions": {
+      "PatchTST": {
+        "cos_rec_b": 0.15384615384615385,
+        "cos_rec_B": 0.38461538461538464,
+        "cos_rec_S": 0.13333333333333333,
+        "cos_rec_auxsum": 0.2
+      },
+      "TimeMixer": {
+        "cos_rec_b": 0.13333333333333333,
+        "cos_rec_B": 0.5333333333333333,
+        "cos_rec_S": 0.4,
+        "cos_rec_auxsum": 0.3333333333333333
+      },
+      "iTransformer": {
+        "cos_rec_b": 0.35714285714285715,
+        "cos_rec_B": 0.5714285714285714,
+        "cos_rec_S": 0.3333333333333333,
+        "cos_rec_auxsum": 0.5333333333333333
+      },
+      "LSTM": {
+        "cos_rec_b": 0.4,
+        "cos_rec_B": 0.4,
+        "cos_rec_S": 0.3333333333333333,
+        "cos_rec_auxsum": 0.4
+      }
+    },
+    "strongest_host_family": "iTransformer",
+    "max_diag_deviation": 0.001049041748046875
+  },
+  "phase_i": {
+    "blocked": true,
+    "reason": "NO_V44_LEGAL_O1_HISTORY_SUPPORT_FOR_LAGO",
+    "authorized_by_domestic_gate": false,
+    "deviation_disclosed": true,
+    "n_intl_runs": 0,
+    "n_intl_run_dirs": 0,
+    "gate_written": false
+  },
+  "no_mutation": {
+    "test_reads": 0,
+    "forbidden_opened": 0
+  },
+  "verdict": "VERIFIED"
+}

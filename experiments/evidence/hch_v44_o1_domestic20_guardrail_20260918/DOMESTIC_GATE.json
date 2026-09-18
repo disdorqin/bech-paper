@@ -1,0 +1,70 @@
+{
+  "schema": "hch_v44_o1_domestic20_gate.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "recipe_id": "O1_AUX_WARMUP_400_THEN_MAE",
+  "preregistered_before_any_new_fit": true,
+  "is_sota_claim": false,
+  "primary_statistic": "median VAL MAE across seeds 7/17/37 per cell, then relative gain vs the deterministic frozen Host MAE of the same cell",
+  "secondary_statistic": "median paired seed-level relative gain (reported, never a gate input)",
+  "panel_median_gain_pct": 3.3568955741860664,
+  "panel_median_paired_gain_pct": 3.3568955741860664,
+  "n_cells": 20,
+  "n_runs": 60,
+  "n_strict_host_positive": 20,
+  "n_ge_plus_2pct": 11,
+  "best_cell_gain_pct": 10.348659145441747,
+  "worst_cell_gain_pct": 0.08509163727824755,
+  "n_seeds_beating_host": 58,
+  "reused_artifacts_changed": [],
+  "market_medians": {
+    "GANSU_DA": 0.9753623522835875,
+    "SHANDONG_DA": 2.314122995707326,
+    "SHAANXI_DA": 0.12868746961947752,
+    "NINGXIA_DA": 4.210419080766486,
+    "QINGHAI_DA": 5.941950839857343
+  },
+  "checks": {
+    "D0": {
+      "exactly_60_coordinates": true,
+      "exactly_24_reused_runs": true,
+      "exactly_36_new_fits": true,
+      "no_reused_run_changed": true,
+      "one_scientific_code_state": true,
+      "core_tree_equals_frozen_substrate": true,
+      "recovery_modules_identical_across_runs": true,
+      "support_matches_frozen_substrate": true,
+      "one_registered_schedule_across_all_runs": true,
+      "all_metrics_finite": true,
+      "test_target_read_count_zero": true,
+      "no_retry": true
+    },
+    "D1": {
+      "strict_host_positive_ge_16_of_20": true,
+      "gain_ge_minus_0p5pct_ge_19_of_20": true,
+      "worst_gain_ge_minus_1p0pct": true
+    },
+    "D2": {
+      "panel_median_ge_plus_1p5pct": true,
+      "cells_ge_plus_2pct_ge_8_of_20": true
+    },
+    "D3": {
+      "all_5_market_medians_positive": true,
+      "market_medians_ge_plus_1pct_ge_4_of_5": false
+    },
+    "D4": {
+      "cells_with_2_of_3_seeds_beating_host_ge_15_of_20": true,
+      "zero_cells_with_all_three_seeds_worse_by_gt_1pct": true
+    }
+  },
+  "passed": {
+    "D0": true,
+    "D1": true,
+    "D2": true,
+    "D3": false,
+    "D4": true
+  },
+  "n_blocks_passed": 4,
+  "domestic_pass": false,
+  "test_target_read_count": 0,
+  "note": "D0-D4 are development gates for deciding whether to spend an untouched confirmation surface.  They are not SOTA claims, and no result here authorizes a recipe, loss, optimizer or switch-step change."
+}

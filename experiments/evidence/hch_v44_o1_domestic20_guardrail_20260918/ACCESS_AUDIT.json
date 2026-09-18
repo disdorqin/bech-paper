@@ -1,0 +1,50 @@
+{
+  "schema": "hch_v44_o1_domestic20_access_audit.v1",
+  "protocol_id": "HCH_V44_O1_DOMESTIC20_GUARDRAIL_20260918",
+  "guard_installed": true,
+  "forbidden_paths_enumerated": [
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/CELL_MEDIAN_RESULTS.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PER_SEED_RESULTS.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/BASELINE_COMPARISON.csv",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/RESULTS.md",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PANEL_SUMMARY.md",
+    "experiments/evidence/hch_v44_china5_fullpanel_main_eval_20260917/PANEL_SUMMARY.json",
+    "experiments/lab/common_benchmark_results_v2/HCH_V44_MAIN_20260917.csv",
+    "experiments/lab/common_benchmark_results_v2/RESULTS_LONG.csv",
+    "experiments/lab/common_benchmark_results_v2/BASELINE_COMPLETION_20260917.csv"
+  ],
+  "forbidden_names_by_pattern": [
+    "result.json",
+    "test_predictions.npz"
+  ],
+  "access_state": {
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": [],
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 0,
+    "legit_frames_built": {
+      "TRAIN": 0,
+      "VAL": 0
+    }
+  },
+  "test_target_read_count": 0,
+  "test_rows_materialised": 0,
+  "quarantine": {
+    "role": "V2 TEST remains contaminated development history and is quarantined",
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 0,
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": []
+  },
+  "protected_or_final_reads": {
+    "international_protected_final_target_read_count": 0,
+    "note": "Phase M opens no target at all; Phase I reuses frozen Host/baseline point estimates only."
+  },
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "clean": true
+}
