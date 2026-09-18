@@ -1,0 +1,128 @@
+{
+  "schema": "hch_final_gc_variant_configs.v1",
+  "protocol_id": "HCH_FINAL_GEOMETRY_COUPLED_CANARY_20260918",
+  "variants": {
+    "DIRECT": {
+      "parameter_count": 9443,
+      "parameter_map": {
+        "encoder": 5408,
+        "day_core": 1858,
+        "direct_head": 2177
+      },
+      "learned_temporal_encoders": 1,
+      "attention_modules": 0,
+      "encoder_class_census": [
+        "GRU"
+      ],
+      "signed_mass_queries": 0,
+      "source_router_calls": 0,
+      "latency_batch": 256,
+      "latency_device": "cuda",
+      "latency_ms_median": 1.0363999899709597,
+      "latency_ms_p95": 2.0769050082890317,
+      "latency_ms_mean": 1.2359666667180136,
+      "latency_ms_min": 0.909399997908622,
+      "direct_over_a2_ratio": 0.8995046675557249,
+      "ratio_to_v44_g2": 0.6317233074658817,
+      "within_0_70_of_v44_g2": true
+    },
+    "GEOM_FLAT": {
+      "parameter_count": 10498,
+      "parameter_map": {
+        "encoder": 5408,
+        "day_core": 1858,
+        "shape_head": 3232
+      },
+      "learned_temporal_encoders": 1,
+      "attention_modules": 0,
+      "encoder_class_census": [
+        "GRU"
+      ],
+      "signed_mass_queries": 2,
+      "source_router_calls": 0,
+      "latency_batch": 256,
+      "latency_device": "cuda",
+      "latency_ms_median": 3.0785500130150467,
+      "latency_ms_p95": 6.068750008125789,
+      "latency_ms_mean": 3.3414699990923205,
+      "latency_ms_min": 1.7588000046089292,
+      "direct_over_a2_ratio": null,
+      "ratio_to_v44_g2": 0.7023013112122023,
+      "within_0_70_of_v44_g2": false
+    },
+    "GEOM_COUPLED": {
+      "parameter_count": 10498,
+      "parameter_map": {
+        "encoder": 5408,
+        "day_core": 1858,
+        "shape_head": 3232
+      },
+      "learned_temporal_encoders": 1,
+      "attention_modules": 0,
+      "encoder_class_census": [
+        "GRU"
+      ],
+      "signed_mass_queries": 2,
+      "source_router_calls": 0,
+      "latency_batch": 256,
+      "latency_device": "cuda",
+      "latency_ms_median": 3.90775001142174,
+      "latency_ms_p95": 4.544330002681817,
+      "latency_ms_mean": 3.5585499999190993,
+      "latency_ms_min": 1.9084999803453684,
+      "direct_over_a2_ratio": null,
+      "ratio_to_v44_g2": 0.7023013112122023,
+      "within_0_70_of_v44_g2": false
+    },
+    "GEOM_COUPLED_NOHIST": {
+      "parameter_count": 10498,
+      "parameter_map": {
+        "encoder": 5408,
+        "day_core": 1858,
+        "shape_head": 3232
+      },
+      "learned_temporal_encoders": 1,
+      "attention_modules": 0,
+      "encoder_class_census": [
+        "GRU"
+      ],
+      "signed_mass_queries": 2,
+      "source_router_calls": 0,
+      "latency_batch": 256,
+      "latency_device": "cuda",
+      "latency_ms_median": 2.7375999925425276,
+      "latency_ms_p95": 5.761189994518645,
+      "latency_ms_mean": 3.264676663093269,
+      "latency_ms_min": 1.9398000149521977,
+      "direct_over_a2_ratio": null,
+      "ratio_to_v44_g2": 0.7023013112122023,
+      "within_0_70_of_v44_g2": false
+    }
+  },
+  "g5_parameter_target_ratio_of_v44_g2": 0.7,
+  "v44_g2_parameter_count": 14948,
+  "tables": {
+    "critical": {
+      "n_runs": 48,
+      "expected_runs": 48,
+      "complete": true,
+      "n_cells": 8
+    },
+    "ablation": {
+      "n_runs": 0,
+      "complete": false
+    },
+    "full20": {
+      "n_runs": 0,
+      "complete": false
+    }
+  },
+  "table_documentation": {
+    "PER_SEED_METRICS.csv": "one row per registered fit; VAL metrics of the selected EMA checkpoint",
+    "CELL_MEDIANS.csv": "one row per (variant, cell); median-over-seeds first, then gains (PROTOCOL §9)",
+    "PARAMETER_COUNTS.csv": "one row per variant: parameter count/map, structural encoder/query census, latency",
+    "TRAINING_CURVES.csv": "one row per (fit, validation check) as recorded by the trainer",
+    "MECHANISM_DIAGNOSTICS.csv": "one row per registered fit: exact-decoder mechanism quantities on VAL"
+  },
+  "generated_at": "2026-09-18T18:18:28"
+}

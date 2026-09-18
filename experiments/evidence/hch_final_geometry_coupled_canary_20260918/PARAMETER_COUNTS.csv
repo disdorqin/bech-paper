@@ -1,0 +1,5 @@
+variant,parameter_count,parameter_map,learned_temporal_encoders,attention_modules,encoder_class_census,signed_mass_queries,source_router_calls,latency_batch,latency_device,latency_ms_median,latency_ms_p95,latency_ms_mean,latency_ms_min,direct_over_a2_ratio,ratio_to_v44_g2,within_0_70_of_v44_g2
+DIRECT,9443,"{""day_core"": 1858, ""direct_head"": 2177, ""encoder"": 5408}",1,0,"[""GRU""]",0,0,256,cuda,1.03639999,2.0769050083,1.2359666667,0.9093999979,0.8995046676,0.6317233075,True
+GEOM_FLAT,10498,"{""day_core"": 1858, ""encoder"": 5408, ""shape_head"": 3232}",1,0,"[""GRU""]",2,0,256,cuda,3.078550013,6.0687500081,3.3414699991,1.7588000046,,0.7023013112,False
+GEOM_COUPLED,10498,"{""day_core"": 1858, ""encoder"": 5408, ""shape_head"": 3232}",1,0,"[""GRU""]",2,0,256,cuda,3.9077500114,4.5443300027,3.5585499999,1.9084999803,,0.7023013112,False
+GEOM_COUPLED_NOHIST,10498,"{""day_core"": 1858, ""encoder"": 5408, ""shape_head"": 3232}",1,0,"[""GRU""]",2,0,256,cuda,2.7375999925,5.7611899945,3.2646766631,1.939800015,,0.7023013112,False

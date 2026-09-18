@@ -1,0 +1,21 @@
+{
+  "schema": "hch_final_gc_stage_token.v1",
+  "protocol_id": "HCH_FINAL_GEOMETRY_COUPLED_CANARY_20260918",
+  "terminal_token": "HCH_FINAL_GC_CANARY_NOT_SUPPORTED",
+  "conditional_tokens": [],
+  "gate_summary": {
+    "G0": true,
+    "G1": true,
+    "G2": false,
+    "G3": false,
+    "G4": false,
+    "G5": true
+  },
+  "blocked_reason": null,
+  "n_critical_fits": 48,
+  "n_ablation_fits": 0,
+  "n_full20_fits": 0,
+  "test_opened": false,
+  "evidence_root": "experiments/evidence/hch_final_geometry_coupled_canary_20260918",
+  "issued_at": "2026-09-18T18:20:55"
+}

@@ -1,0 +1,633 @@
+{
+  "group": "critical",
+  "device": "cuda",
+  "workers": 3,
+  "n_registered": 48,
+  "n_fit": 47,
+  "n_skipped": 1,
+  "n_error": 0,
+  "seconds": 600.6891903877258,
+  "results": [
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "GANSU_DA",
+        "TimeMixer",
+        7
+      ],
+      "status": "skipped_existing"
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "GANSU_DA",
+        "TimeMixer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 41.91347527503967,
+      "selected_step": 0,
+      "selected_val_mae_ema": 76.60704803466797,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "GANSU_DA",
+        "TimeMixer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 42.69695496559143,
+      "selected_step": 450,
+      "selected_val_mae_ema": 76.47271728515625,
+      "stopped_at_step": 850
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "GANSU_DA",
+        "iTransformer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 60.58864212036133,
+      "selected_step": 1500,
+      "selected_val_mae_ema": 78.33423614501953,
+      "stopped_at_step": 1900
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "GANSU_DA",
+        "iTransformer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 31.74788498878479,
+      "selected_step": 0,
+      "selected_val_mae_ema": 79.17371368408203,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "GANSU_DA",
+        "iTransformer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 31.686828136444092,
+      "selected_step": 0,
+      "selected_val_mae_ema": 79.17371368408203,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHANDONG_DA",
+        "TimeMixer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 42.34535217285156,
+      "selected_step": 1950,
+      "selected_val_mae_ema": 76.61661529541016,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHANDONG_DA",
+        "TimeMixer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 29.86494469642639,
+      "selected_step": 900,
+      "selected_val_mae_ema": 78.30492401123047,
+      "stopped_at_step": 1300
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHANDONG_DA",
+        "TimeMixer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 43.0305655002594,
+      "selected_step": 1950,
+      "selected_val_mae_ema": 77.62238311767578,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHANDONG_DA",
+        "iTransformer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 44.95514392852783,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 72.82522583007812,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHANDONG_DA",
+        "iTransformer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 44.91903281211853,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 73.66779327392578,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHANDONG_DA",
+        "iTransformer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 45.93744897842407,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 72.79092407226562,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "TimeMixer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 31.488757848739624,
+      "selected_step": 200,
+      "selected_val_mae_ema": 103.5231704711914,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "TimeMixer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 31.36588954925537,
+      "selected_step": 200,
+      "selected_val_mae_ema": 103.52767181396484,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "TimeMixer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 32.38095831871033,
+      "selected_step": 250,
+      "selected_val_mae_ema": 103.52422332763672,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "iTransformer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 45.17493724822998,
+      "selected_step": 1100,
+      "selected_val_mae_ema": 110.82775115966797,
+      "stopped_at_step": 1500
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "iTransformer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 45.41057300567627,
+      "selected_step": 1100,
+      "selected_val_mae_ema": 111.33235168457031,
+      "stopped_at_step": 1500
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "iTransformer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 33.06264114379883,
+      "selected_step": 450,
+      "selected_val_mae_ema": 112.18289184570312,
+      "stopped_at_step": 850
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "LSTM",
+        17
+      ],
+      "status": "fit",
+      "seconds": 33.556456327438354,
+      "selected_step": 200,
+      "selected_val_mae_ema": 109.35614776611328,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "LSTM",
+        7
+      ],
+      "status": "fit",
+      "seconds": 36.601608991622925,
+      "selected_step": 550,
+      "selected_val_mae_ema": 108.80088806152344,
+      "stopped_at_step": 950
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "SHAANXI_DA",
+        "LSTM",
+        37
+      ],
+      "status": "fit",
+      "seconds": 34.61303520202637,
+      "selected_step": 200,
+      "selected_val_mae_ema": 109.3416976928711,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "QINGHAI_DA",
+        "PatchTST",
+        7
+      ],
+      "status": "fit",
+      "seconds": 32.70746374130249,
+      "selected_step": 850,
+      "selected_val_mae_ema": 135.9527130126953,
+      "stopped_at_step": 1250
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "QINGHAI_DA",
+        "PatchTST",
+        37
+      ],
+      "status": "fit",
+      "seconds": 32.410295248031616,
+      "selected_step": 900,
+      "selected_val_mae_ema": 135.49781799316406,
+      "stopped_at_step": 1300
+    },
+    {
+      "spec": [
+        "GEOM_FLAT",
+        "QINGHAI_DA",
+        "PatchTST",
+        17
+      ],
+      "status": "fit",
+      "seconds": 46.76791214942932,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 134.34559631347656,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "GANSU_DA",
+        "TimeMixer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 37.86638021469116,
+      "selected_step": 500,
+      "selected_val_mae_ema": 76.4864273071289,
+      "stopped_at_step": 900
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "GANSU_DA",
+        "TimeMixer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 36.73971199989319,
+      "selected_step": 450,
+      "selected_val_mae_ema": 76.47246551513672,
+      "stopped_at_step": 850
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "GANSU_DA",
+        "TimeMixer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 36.460870027542114,
+      "selected_step": 0,
+      "selected_val_mae_ema": 76.60704803466797,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "GANSU_DA",
+        "iTransformer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 35.633033752441406,
+      "selected_step": 0,
+      "selected_val_mae_ema": 79.17371368408203,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "GANSU_DA",
+        "iTransformer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 35.13115978240967,
+      "selected_step": 0,
+      "selected_val_mae_ema": 79.17371368408203,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "GANSU_DA",
+        "iTransformer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 56.67498230934143,
+      "selected_step": 1500,
+      "selected_val_mae_ema": 78.28936004638672,
+      "stopped_at_step": 1900
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHANDONG_DA",
+        "TimeMixer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 32.55652904510498,
+      "selected_step": 900,
+      "selected_val_mae_ema": 78.3052978515625,
+      "stopped_at_step": 1300
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHANDONG_DA",
+        "TimeMixer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 45.692614793777466,
+      "selected_step": 1950,
+      "selected_val_mae_ema": 76.6011962890625,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHANDONG_DA",
+        "TimeMixer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 45.012492418289185,
+      "selected_step": 1950,
+      "selected_val_mae_ema": 77.65451049804688,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHANDONG_DA",
+        "iTransformer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 44.148141860961914,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 72.84112548828125,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHANDONG_DA",
+        "iTransformer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 43.82790493965149,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 73.70436096191406,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHANDONG_DA",
+        "iTransformer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 44.68739175796509,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 72.76209259033203,
+      "stopped_at_step": null
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "TimeMixer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 29.477144956588745,
+      "selected_step": 200,
+      "selected_val_mae_ema": 103.52314758300781,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "TimeMixer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 29.26714563369751,
+      "selected_step": 200,
+      "selected_val_mae_ema": 103.52772521972656,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "TimeMixer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 28.09106993675232,
+      "selected_step": 250,
+      "selected_val_mae_ema": 103.52365112304688,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "iTransformer",
+        7
+      ],
+      "status": "fit",
+      "seconds": 41.11203932762146,
+      "selected_step": 1100,
+      "selected_val_mae_ema": 110.8279800415039,
+      "stopped_at_step": 1500
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "iTransformer",
+        17
+      ],
+      "status": "fit",
+      "seconds": 41.230345249176025,
+      "selected_step": 1100,
+      "selected_val_mae_ema": 111.25447082519531,
+      "stopped_at_step": 1500
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "iTransformer",
+        37
+      ],
+      "status": "fit",
+      "seconds": 30.800182819366455,
+      "selected_step": 450,
+      "selected_val_mae_ema": 112.17879486083984,
+      "stopped_at_step": 850
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "LSTM",
+        17
+      ],
+      "status": "fit",
+      "seconds": 29.019739389419556,
+      "selected_step": 200,
+      "selected_val_mae_ema": 109.35549926757812,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "LSTM",
+        7
+      ],
+      "status": "fit",
+      "seconds": 31.7043240070343,
+      "selected_step": 550,
+      "selected_val_mae_ema": 108.8089370727539,
+      "stopped_at_step": 950
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "SHAANXI_DA",
+        "LSTM",
+        37
+      ],
+      "status": "fit",
+      "seconds": 29.85896921157837,
+      "selected_step": 200,
+      "selected_val_mae_ema": 109.34137725830078,
+      "stopped_at_step": 800
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "QINGHAI_DA",
+        "PatchTST",
+        7
+      ],
+      "status": "fit",
+      "seconds": 29.04559063911438,
+      "selected_step": 850,
+      "selected_val_mae_ema": 135.98240661621094,
+      "stopped_at_step": 1250
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "QINGHAI_DA",
+        "PatchTST",
+        37
+      ],
+      "status": "fit",
+      "seconds": 29.101221323013306,
+      "selected_step": 900,
+      "selected_val_mae_ema": 135.61688232421875,
+      "stopped_at_step": 1300
+    },
+    {
+      "spec": [
+        "GEOM_COUPLED",
+        "QINGHAI_DA",
+        "PatchTST",
+        17
+      ],
+      "status": "fit",
+      "seconds": 40.8465690612793,
+      "selected_step": 2000,
+      "selected_val_mae_ema": 134.85281372070312,
+      "stopped_at_step": null
+    }
+  ],
+  "finished_at": "2026-09-18T18:11:07"
+}

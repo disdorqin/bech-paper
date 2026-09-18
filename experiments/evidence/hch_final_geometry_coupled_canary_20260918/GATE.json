@@ -1,0 +1,177 @@
+{
+  "schema": "hch_final_gc_gate.v1",
+  "protocol_id": "HCH_FINAL_GEOMETRY_COUPLED_CANARY_20260918",
+  "generated_at": "2026-09-18T18:20:55",
+  "n_critical_runs": 48,
+  "critical_fits_expected": 48,
+  "gates": {
+    "G0": {
+      "passed": true,
+      "checks": {
+        "source_audit_clean": true,
+        "unit_test_gate_clean": true,
+        "fits_complete_a1_24_of_24": true,
+        "fits_complete_a2_24_of_24": true,
+        "o1_reused_never_retrained": true,
+        "o1_artifacts_unmutated": true,
+        "one_scientific_code_state": true,
+        "all_finite": true,
+        "test_reads_zero": true
+      },
+      "detail": {
+        "n_a1": 24,
+        "n_a2": 24,
+        "distinct_code_hash": [
+          "AC7D96F892277B5F664D27A7B3AC85331B2AAF22ACAA30B45177EBEF5EDD9E81"
+        ],
+        "distinct_common_code_hash": [
+          "B7289A0A82C961869E78D3EFAB3B503674448EB04F9379A58076C61FE2D9EADA"
+        ],
+        "trainer_hash_on_disk": "9339915DD82F12EC516DD940E40F2B67A8251AA41626A95F35F4967CB631F91A",
+        "common_hash_on_disk": "B7289A0A82C961869E78D3EFAB3B503674448EB04F9379A58076C61FE2D9EADA",
+        "runs_whose_recorded_hash_differs_from_disk": [
+          "GEOM_COUPLED/GANSU_DA__TimeMixer/seed17",
+          "GEOM_COUPLED/GANSU_DA__TimeMixer/seed37",
+          "GEOM_COUPLED/GANSU_DA__TimeMixer/seed7",
+          "GEOM_COUPLED/GANSU_DA__iTransformer/seed17",
+          "GEOM_COUPLED/GANSU_DA__iTransformer/seed37",
+          "GEOM_COUPLED/GANSU_DA__iTransformer/seed7",
+          "GEOM_COUPLED/QINGHAI_DA__PatchTST/seed17",
+          "GEOM_COUPLED/QINGHAI_DA__PatchTST/seed37",
+          "GEOM_COUPLED/QINGHAI_DA__PatchTST/seed7",
+          "GEOM_COUPLED/SHAANXI_DA__LSTM/seed17",
+          "GEOM_COUPLED/SHAANXI_DA__LSTM/seed37",
+          "GEOM_COUPLED/SHAANXI_DA__LSTM/seed7",
+          "GEOM_COUPLED/SHAANXI_DA__TimeMixer/seed17",
+          "GEOM_COUPLED/SHAANXI_DA__TimeMixer/seed37",
+          "GEOM_COUPLED/SHAANXI_DA__TimeMixer/seed7",
+          "GEOM_COUPLED/SHAANXI_DA__iTransformer/seed17",
+          "GEOM_COUPLED/SHAANXI_DA__iTransformer/seed37",
+          "GEOM_COUPLED/SHAANXI_DA__iTransformer/seed7",
+          "GEOM_COUPLED/SHANDONG_DA__TimeMixer/seed17",
+          "GEOM_COUPLED/SHANDONG_DA__TimeMixer/seed37",
+          "GEOM_COUPLED/SHANDONG_DA__TimeMixer/seed7",
+          "GEOM_COUPLED/SHANDONG_DA__iTransformer/seed17",
+          "GEOM_COUPLED/SHANDONG_DA__iTransformer/seed37",
+          "GEOM_COUPLED/SHANDONG_DA__iTransformer/seed7",
+          "GEOM_FLAT/GANSU_DA__TimeMixer/seed17",
+          "GEOM_FLAT/GANSU_DA__TimeMixer/seed37",
+          "GEOM_FLAT/GANSU_DA__TimeMixer/seed7",
+          "GEOM_FLAT/GANSU_DA__iTransformer/seed17",
+          "GEOM_FLAT/GANSU_DA__iTransformer/seed37",
+          "GEOM_FLAT/GANSU_DA__iTransformer/seed7",
+          "GEOM_FLAT/QINGHAI_DA__PatchTST/seed17",
+          "GEOM_FLAT/QINGHAI_DA__PatchTST/seed37",
+          "GEOM_FLAT/QINGHAI_DA__PatchTST/seed7",
+          "GEOM_FLAT/SHAANXI_DA__LSTM/seed17",
+          "GEOM_FLAT/SHAANXI_DA__LSTM/seed37",
+          "GEOM_FLAT/SHAANXI_DA__LSTM/seed7",
+          "GEOM_FLAT/SHAANXI_DA__TimeMixer/seed17",
+          "GEOM_FLAT/SHAANXI_DA__TimeMixer/seed37",
+          "GEOM_FLAT/SHAANXI_DA__TimeMixer/seed7",
+          "GEOM_FLAT/SHAANXI_DA__iTransformer/seed17",
+          "GEOM_FLAT/SHAANXI_DA__iTransformer/seed37",
+          "GEOM_FLAT/SHAANXI_DA__iTransformer/seed7",
+          "GEOM_FLAT/SHANDONG_DA__TimeMixer/seed17",
+          "GEOM_FLAT/SHANDONG_DA__TimeMixer/seed37",
+          "GEOM_FLAT/SHANDONG_DA__TimeMixer/seed7",
+          "GEOM_FLAT/SHANDONG_DA__iTransformer/seed17",
+          "GEOM_FLAT/SHANDONG_DA__iTransformer/seed37",
+          "GEOM_FLAT/SHANDONG_DA__iTransformer/seed7"
+        ],
+        "n_runs_whose_recorded_hash_differs_from_disk": 48,
+        "n_distinct_source_tree_digests": 1,
+        "source_tree_digest_matches_current": true,
+        "sum_test_target_read_counts": 0,
+        "sum_test_rows_materialised": 0,
+        "nonfinite_runs": [],
+        "source_prior_drift": {
+          "changed": [],
+          "added": [],
+          "removed": []
+        }
+      }
+    },
+    "G1": {
+      "n_host_positive": 7,
+      "n_cells": 8,
+      "worst_gain_vs_host_pct": 0.0,
+      "thresholds": {
+        "n_host_positive": 7,
+        "worst_gain_vs_host_pct": -0.5
+      },
+      "passed": true
+    },
+    "G2": {
+      "n_cells_better_than_o1": 3,
+      "panel_median_gain_vs_o1_pct": -0.0431532502,
+      "worst_gain_vs_o1_pct": -5.5948799994,
+      "thresholds": {
+        "n_cells_better_than_o1": 5,
+        "panel_median_gain_vs_o1_pct": 0.5,
+        "worst_gain_vs_o1_pct": -1.5
+      },
+      "passed": false
+    },
+    "G3": {
+      "n_cells_better_than_a1": 4,
+      "panel_median_gain_vs_a1_pct": 0.000146529,
+      "n_weak_cells": 6,
+      "n_weak_cells_improved": 4,
+      "weak_median_gain_vs_a1_pct": 0.00042289165,
+      "weak_cells": [
+        "GANSU_DA__TimeMixer",
+        "SHAANXI_DA__LSTM",
+        "SHAANXI_DA__TimeMixer",
+        "SHAANXI_DA__iTransformer",
+        "SHANDONG_DA__TimeMixer",
+        "SHANDONG_DA__iTransformer"
+      ],
+      "thresholds": {
+        "n_cells_better_than_a1": 6,
+        "panel_median_gain_vs_a1_pct": 0.5,
+        "n_weak_cells_improved": 4,
+        "weak_median_gain_vs_a1_pct": 0.75
+      },
+      "passed": false
+    },
+    "G4": {
+      "cell": "QINGHAI_DA__PatchTST",
+      "gain_vs_o1_pct": -5.5948799994,
+      "gain_vs_host_pct": 5.3327742068,
+      "thresholds": {
+        "min_gain_vs_o1_pct": -1.0
+      },
+      "passed": false
+    },
+    "G5": {
+      "learned_temporal_encoders": 1,
+      "signed_mass_queries": 2,
+      "source_router_calls": 0,
+      "attention_modules": 0,
+      "parameter_count": 10498,
+      "parameter_map": "{\"day_core\": 1858, \"encoder\": 5408, \"shape_head\": 3232}",
+      "latency_ms_median": 3.9077500114,
+      "latency_ms_p95": 4.5443300027,
+      "latency_batch": 256,
+      "latency_device": "cuda",
+      "ratio_to_v44_g2": 0.7023013112,
+      "thresholds": {
+        "learned_temporal_encoders": 1,
+        "signed_mass_queries": 2,
+        "source_router_calls": 0
+      },
+      "is_validity_reporting_gate": true,
+      "passed": true
+    }
+  },
+  "all_gates_passed": false,
+  "blocked_reason": null,
+  "primary_statistic": "median VAL MAE across seeds first, then relative gain (PROTOCOL §9)",
+  "fits_critical_summary": {
+    "n_registered": 48,
+    "n_fit": 47,
+    "n_skipped": 1,
+    "n_error": 0
+  }
+}

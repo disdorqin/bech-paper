@@ -1,0 +1,197 @@
+{
+  "schema": "hch_final_gc_run.v1",
+  "protocol_id": "HCH_FINAL_GEOMETRY_COUPLED_CANARY_20260918",
+  "recipe_id": "GC_AUX_WARMUP_400_THEN_MAE",
+  "variant": "GEOM_COUPLED",
+  "market": "QINGHAI_DA",
+  "host": "PatchTST",
+  "seed": 17,
+  "device": "cuda",
+  "optimization": {
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "grad_clip": 1.0,
+    "ema_decay": 0.995,
+    "eval_weights": "ema",
+    "max_steps": 2000,
+    "val_every": 50,
+    "no_stop_before": 800,
+    "patience_checks": 8,
+    "switch_step": 400,
+    "objective": "L_rec + (L_b + L_B + L_S)/3 through step 400, L_rec afterwards",
+    "stopped_at_step": null,
+    "slots_available": 2000
+  },
+  "variant_config": {
+    "variant": "GEOM_COUPLED",
+    "structured_decoder": true,
+    "signed_mass_query_coupled": true,
+    "history_prior_enabled": true,
+    "hour_channels": 16,
+    "day_context_channels": 21,
+    "width": 32,
+    "query_dim": 32,
+    "learned_temporal_encoders": 1,
+    "signed_mass_queries": 2,
+    "source_router_calls": 0,
+    "parameter_count": 10498,
+    "parameter_map": {
+      "encoder": 5408,
+      "day_core": 1858,
+      "shape_head": 3232
+    }
+  },
+  "n_train_rows": 67,
+  "n_val_rows": 14,
+  "train_rows_excluded": {
+    "no_history": 27,
+    "non_finite_current_day": 0
+  },
+  "steps_per_epoch": 3,
+  "epochs_generated": 956,
+  "diag_subset": {
+    "n_rows": 67,
+    "rule": "np.linspace over registered TRAIN order, capped at 256"
+  },
+  "interleaver_audit": {
+    "n_train": 67,
+    "bins": 4,
+    "bin_sizes": {
+      "0": 17,
+      "1": 17,
+      "2": 16,
+      "3": 17
+    },
+    "all_epochs_exact_once": true,
+    "epochs_audited": 958,
+    "oversampling": false,
+    "reweighting": false
+  },
+  "selected_step": 2000,
+  "selected_check": 40,
+  "selected_val_mae_ema": 134.85281372070312,
+  "selected_metrics": {
+    "check": 40,
+    "step": 2000,
+    "is_initial": false,
+    "samples_seen": 64000,
+    "epoch_equivalent": 955.223880597015,
+    "lr": 0.001,
+    "val_mae_ema": 134.85281372070312,
+    "val_mae_raw": 133.46633911132812,
+    "val_host_mae": 143.2564239501953,
+    "val_gain_vs_host_pct": 5.866131512827512,
+    "val_correction_ratio": 0.25275087356567383,
+    "val_mean_abs_correction": 36.208187103271484,
+    "train_mae_ema": 34.744136810302734,
+    "train_host_mae": 59.92037582397461,
+    "train_correction_ratio": 0.6423880457878113,
+    "diag_reconstruction_mae": 1.6924078464508057,
+    "diag_level": 0.513454020023346,
+    "diag_B": 3.0698461532592773,
+    "diag_shape": 2.529266357421875,
+    "step_loss_optimized": 1.8514270782470703,
+    "is_optimization_step": true,
+    "used_full_loss_at_this_step": false,
+    "loss_schedule": "L_rec_only",
+    "objective_switch_here": false,
+    "grad_norms_preclip": {
+      "encoder": 7.987925924965325,
+      "day_core": 5.509602413924481,
+      "shape_head": 1.0520096522458422,
+      "direct_head": null
+    },
+    "best_val_mae_ema_so_far": 134.85281372070312,
+    "best_step_so_far": 2000
+  },
+  "selected_after_switch": true,
+  "checkpoint": "experiments/evidence/hch_final_geometry_coupled_canary_20260918/runs/GEOM_COUPLED/QINGHAI_DA__PatchTST/seed17/selected_ema.pt",
+  "selected_ema_checkpoint_sha256": "3E342A99B77C67DC1D938F6B3A7C44E6C6E9DAFD3D0E9D6FAC1DC34B6FB8512F",
+  "selected_ema_parameter_hash": "3E342A99B77C67DC1D938F6B3A7C44E6C6E9DAFD3D0E9D6FAC1DC34B6FB8512F",
+  "val_predictions": {
+    "path": "val_predictions.npz",
+    "sha256": "E61D9F106E5056E99C193417B93150C92B924722E37BA1ECC78B3EB74CE39445",
+    "fields": [
+      "B_hat",
+      "a_minus",
+      "a_plus",
+      "b_hat",
+      "correction",
+      "day_id",
+      "host_pred",
+      "hour_valid",
+      "m_minus",
+      "m_plus",
+      "overlap_gap",
+      "residual",
+      "s_minus_hat",
+      "s_plus_hat"
+    ],
+    "n_rows": 14
+  },
+  "check_count": 41,
+  "frame": {
+    "market": "QINGHAI_DA",
+    "host": "PatchTST",
+    "n_train_rows": 67,
+    "n_val_rows": 14,
+    "train_excluded": {
+      "no_history": 27,
+      "non_finite_current_day": 0
+    },
+    "train_day_ids_hash": "0C26D3904A64B018770CEB353E6076F50FF530273090FEA80BEDB4566A62BDDF",
+    "val_day_ids_hash": "88C9553181C0DE80EF485E38401187B06959117B516CB53A71F56AB01BA846C5",
+    "history_support_hash": "DD185A333C698504C4D399B387673768BCE7FA78F0CAF2D17E778512E74B1E44",
+    "history_oof_days": 75,
+    "scales": {
+      "fingerprint": "9313b669f330e7998ced57c7924588fb6873101f9a784640b59d5b0aad3348a8",
+      "s_r": 20.529409677886957,
+      "s_b": 43.02858888645172,
+      "s_B": 196.3826043457031,
+      "n_train_days_fit": 94
+    },
+    "val_days": [
+      "2026-02-15",
+      "2026-02-16",
+      "2026-02-17",
+      "2026-02-18",
+      "2026-02-19",
+      "2026-02-20",
+      "2026-02-21",
+      "2026-02-22",
+      "2026-02-23",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-02-26",
+      "2026-02-27",
+      "2026-02-28"
+    ],
+    "prior_availability_fraction": 1.0,
+    "prior_days_used_min": 7
+  },
+  "code_hash": "AC7D96F892277B5F664D27A7B3AC85331B2AAF22ACAA30B45177EBEF5EDD9E81",
+  "common_code_hash": "B7289A0A82C961869E78D3EFAB3B503674448EB04F9379A58076C61FE2D9EADA",
+  "source_tree_digest": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "test_target_read_count": 0,
+  "test_rows_materialised": 0,
+  "test_rows_dropped_from_joint_cache": 4218,
+  "optional_features_active": false,
+  "rescue_used": false,
+  "is_registered_fit": true,
+  "access_state": {
+    "forbidden_guard_hits": 0,
+    "distinct_paths_blocked": [],
+    "test_role_frame_refusals": 0,
+    "test_rows_returned": 0,
+    "test_rows_dropped_before_return": 4218,
+    "legit_frames_built": {
+      "TRAIN": 15,
+      "VAL": 15
+    }
+  }
+}

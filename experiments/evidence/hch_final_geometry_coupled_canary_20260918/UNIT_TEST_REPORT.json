@@ -1,0 +1,479 @@
+{
+  "schema": "hch_final_gc_unit_test_report.v1",
+  "protocol_id": "HCH_FINAL_GEOMETRY_COUPLED_CANARY_20260918",
+  "device": "cuda",
+  "n_checks": 26,
+  "n_failed": 0,
+  "schedule_smoke_passed": true,
+  "all_passed": true,
+  "groups": {
+    "geometry_prior": {
+      "n": 5,
+      "failed": 0
+    },
+    "architecture_identity": {
+      "n": 5,
+      "failed": 0
+    },
+    "exact_decoder": {
+      "n": 3,
+      "failed": 0
+    },
+    "near_host_startup": {
+      "n": 2,
+      "failed": 0
+    },
+    "training_schedule": {
+      "n": 3,
+      "failed": 0
+    },
+    "access": {
+      "n": 4,
+      "failed": 0
+    },
+    "source_boundary": {
+      "n": 4,
+      "failed": 0
+    }
+  },
+  "checks": [
+    {
+      "group": "geometry_prior",
+      "name": "causal_window_boundary_enforced",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "target_day_refused": true,
+        "late_reveal_refused": true,
+        "availability_without_target_day": 1.0
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "geometry_prior",
+      "name": "median_b_and_B_exact",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "median_b_expected": -0.24595427513122559,
+        "median_b_got": -0.24595427513122559,
+        "median_B_expected": 6.136216163635254,
+        "median_B_got": 6.136216163635254
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "geometry_prior",
+      "name": "signed_shape_barycenter_simplex",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "identities": {
+          "positive_shape_simplex_or_zero": true,
+          "negative_shape_simplex_or_zero": true,
+          "shapes_nonnegative": true,
+          "B_bar_nonnegative": true,
+          "zero_mass_implies_zero_availability": true,
+          "all_finite": true
+        },
+        "sum_plus": 1.0,
+        "sum_minus": 0.9999999403953552
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "geometry_prior",
+      "name": "zero_sign_mass_fallback",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "pos_avail": [
+          1.0,
+          0.0
+        ],
+        "neg_avail": [
+          0.0,
+          1.0
+        ],
+        "zero_avail": [
+          0.0,
+          0.0
+        ]
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "geometry_prior",
+      "name": "valid_mask_respected_and_day_dropped",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "n_days_used": 7,
+        "n_days_used_with_one_empty_day": 6,
+        "masked_day_b_expected": -0.08560311794281006,
+        "available_days": 7
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "architecture_identity",
+      "name": "a1_a2_identical_parameter_tensors",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "same_state_dict_keys": true,
+        "same_shapes": true,
+        "parameter_count": 10498,
+        "checks": {
+          "a1_a2_equal_parameter_count": true
+        }
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "architecture_identity",
+      "name": "a1_a2_delta_is_only_the_signed_mass_scalar",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "a1_equals_a2_with_scalar_forced_zero": true,
+        "coupled_differs_from_flat": true,
+        "max_signed_mass_scalar": 0.0027749042492359877,
+        "max_abs_correction_difference": 2.3283064365386963e-10,
+        "mean_abs_m_plus_minus_gap": 0.0
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "architecture_identity",
+      "name": "a2_a3_identical_and_a3_history_invariant",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "a3_invariant_to_prior_mutation": true,
+        "parameter_count": 10498
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "architecture_identity",
+      "name": "direct_within_parameter_budget",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "parameter_counts": {
+          "DIRECT": 9443,
+          "GEOM_FLAT": 10498,
+          "GEOM_COUPLED": 10498,
+          "GEOM_COUPLED_NOHIST": 10498
+        },
+        "direct_over_a2_ratio": 0.8995046675557249,
+        "budget": 1.25
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "architecture_identity",
+      "name": "direct_uses_same_day_core",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "shared_module_shapes_match": true
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "exact_decoder",
+      "name": "identities_hold_on_model_output",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "identities": {
+          "daily_signed_sum_identity": true,
+          "overlap_nonnegative": true,
+          "overlap_matches_definition": true,
+          "total_variation_within_bound": true,
+          "total_variation_equality_iff_disjoint": true
+        }
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "exact_decoder",
+      "name": "one_signed_and_zero_targets_finite",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "finite": true,
+        "loss_finite": true
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "exact_decoder",
+      "name": "shape_simplex_under_mask",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "full_sums_to_one": true,
+        "dead_row_is_zero": true
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "near_host_startup",
+      "name": "step0_output_finite_and_near_host",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "correction_ratio_step0": 3.8670476197326365e-08,
+        "threshold": 0.05,
+        "max_abs_b_hat_at_init": 0.0,
+        "B_hat_over_s_B_at_init": 0.010000001639127731,
+        "finite": true
+      },
+      "started": "2026-09-18T18:19:00"
+    },
+    {
+      "group": "near_host_startup",
+      "name": "gradient_reaches_query_key_and_day_core",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "grad_norms": {
+          "shape_head.query_plus.weight": 0.0011144099989905953,
+          "shape_head.query_minus.weight": 0.0016827109502628446,
+          "shape_head.key.weight": 0.0022181884851306677,
+          "day_core.affine.weight": 2.075390875688754e-05,
+          "day_core.b_affine.weight": 0.002000352367758751,
+          "day_core.B_affine.weight": 0.013875565491616726,
+          "encoder.gru.weight_ih_l0": 1.4856581401545554e-05,
+          "encoder.input_affine.weight": 2.359860263823066e-05
+        }
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "training_schedule",
+      "name": "staged_objective_boundaries",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "auxiliary_updates": [
+          1,
+          2,
+          399,
+          400
+        ],
+        "update_zero_refused": true,
+        "switch_step": 400,
+        "first_reconstruction_only_update": 401,
+        "direct_uses_reconstruction_only": true
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "training_schedule",
+      "name": "defaults_match_completed_o1_recipe",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "schedule": {
+          "max_steps": 2000,
+          "val_every": 50,
+          "no_stop_before": 800,
+          "patience_checks": 8,
+          "switch_step": 400
+        },
+        "o1_schedule": {
+          "max_steps": 2000,
+          "val_every": 50,
+          "no_stop_before": 800,
+          "patience_checks": 8,
+          "switch_step": 400
+        },
+        "optimizer_matches_o1": true
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "training_schedule",
+      "name": "ema_selection_rule_is_min_over_all_checks",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "source_rule_present": true
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "access",
+      "name": "final_input_rejects_target_and_residual_fields",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "per_token": {
+          "target": true,
+          "residual": true,
+          "y_true": true,
+          "actual": true,
+          "observed": true,
+          "truth": true,
+          "label": true
+        }
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "access",
+      "name": "forbidden_token_list_matches_frozen_source",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "frozen": [
+          "target",
+          "residual",
+          "y_true",
+          "actual",
+          "observed",
+          "truth",
+          "label"
+        ],
+        "local": [
+          "target",
+          "residual",
+          "y_true",
+          "actual",
+          "observed",
+          "truth",
+          "label"
+        ]
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "access",
+      "name": "test_role_refused_and_no_test_rows_returned",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "test_role_refusals": 1,
+        "test_rows_returned": 0,
+        "distinct_paths_blocked": []
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "access",
+      "name": "legit_frames_are_train_and_val_only",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "legit_frames_built": {
+          "TRAIN": 1,
+          "VAL": 1
+        }
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "source_boundary",
+      "name": "no_forbidden_import_on_the_active_path",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "violations": {},
+        "files_scanned": [
+          "gc_common.py",
+          "geometry_prior.py",
+          "fused_encoder.py",
+          "global_local.py",
+          "final_model.py",
+          "gc_data.py",
+          "trainer.py",
+          "gc_runner.py"
+        ]
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "source_boundary",
+      "name": "no_removed_module_on_the_active_path",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "violations": {}
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "source_boundary",
+      "name": "model_has_no_forbidden_submodule",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "model_classes": [
+          "DayRepairCore",
+          "Dropout",
+          "FinalSharedEncoder",
+          "GRU",
+          "HCHFinalCore",
+          "LayerNorm",
+          "Linear",
+          "SignedMassQueryShapeHead"
+        ],
+        "violations": []
+      },
+      "started": "2026-09-18T18:19:16"
+    },
+    {
+      "group": "source_boundary",
+      "name": "one_temporal_encoder_two_queries_no_router",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "variant_config": {
+          "variant": "GEOM_COUPLED",
+          "structured_decoder": true,
+          "signed_mass_query_coupled": true,
+          "history_prior_enabled": true,
+          "hour_channels": 16,
+          "day_context_channels": 21,
+          "width": 32,
+          "query_dim": 32,
+          "learned_temporal_encoders": 1,
+          "signed_mass_queries": 2,
+          "source_router_calls": 0,
+          "parameter_count": 10498,
+          "parameter_map": {
+            "encoder": 5408,
+            "day_core": 1858,
+            "shape_head": 3232
+          }
+        }
+      },
+      "started": "2026-09-18T18:19:16"
+    }
+  ],
+  "schedule_smoke": {
+    "passed": true,
+    "max_steps": 500,
+    "optimizer_steps_run": 500,
+    "stopped_at_step": null,
+    "switch_step": 400,
+    "checks_before_or_at_switch": 8,
+    "checks_after_switch": 2,
+    "all_pre_switch_used_auxiliaries": true,
+    "all_post_switch_used_reconstruction_only": true,
+    "objective_switch_here_steps": [
+      400
+    ],
+    "selected_step": 500,
+    "selected_val_mae_ema": 76.4864273071289,
+    "is_registered_fit": true
+  },
+  "note": "Failure of any check blocks all scientific fits (PROTOCOL §8). The smoke is a non-registered 500-step fit on GANSU_DA/TimeMixer written outside the evidence runs tree; it is not one of the 48 critical-path fits and it is gating only because it is the one direct observation of the staged schedule.",
+  "generated_at": "2026-09-18T18:19:40",
+  "subprocess_returncode": 0,
+  "subprocess_tail": "[unit-tests] 26/26 passed, smoke=True -> D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_final_geometry_coupled_canary_20260918\\UNIT_TEST_REPORT.json\n"
+}

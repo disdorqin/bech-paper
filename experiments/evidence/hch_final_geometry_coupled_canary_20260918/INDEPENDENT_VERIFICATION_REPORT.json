@@ -1,0 +1,182 @@
+{
+  "schema": "hch_final_gc_independent_verification.v1",
+  "protocol_id": "HCH_FINAL_GEOMETRY_COUPLED_CANARY_20260918",
+  "generated_at": "2026-09-18T18:20:58",
+  "verifier": "verification/verify_canary.py",
+  "imports_implementation_runner": false,
+  "n_checks": 11,
+  "n_checks_passed": 11,
+  "verdict": "INDEPENDENT_VERIFICATION_PASS",
+  "checks": [
+    {
+      "name": "canary_coordinates",
+      "passed": true,
+      "n_critical_runs": 48,
+      "n_cells": 8,
+      "variants_present": [
+        "GEOM_COUPLED",
+        "GEOM_FLAT"
+      ],
+      "problems": []
+    },
+    {
+      "name": "evidence_files_present",
+      "passed": true,
+      "missing": [],
+      "required": [
+        "SOURCE_AUDIT.json",
+        "UNIT_TEST_REPORT.json",
+        "VARIANT_CONFIGS.json",
+        "O1_REUSE_PROVENANCE.json",
+        "PARAMETER_COUNTS.csv",
+        "PER_SEED_METRICS.csv",
+        "CELL_MEDIANS.csv",
+        "TRAINING_CURVES.csv",
+        "MECHANISM_DIAGNOSTICS.csv",
+        "GATE.json",
+        "RESULTS.md",
+        "STAGE_TOKEN.json"
+      ],
+      "note": "The thirteenth §13 file, INDEPENDENT_VERIFICATION_REPORT.json, is this program's own output and is therefore not part of the pre-existing set it checks; its presence is what this run produces."
+    },
+    {
+      "name": "o1_reuse_hashes",
+      "passed": true,
+      "n_reused_runs": 24,
+      "expected_runs": 24,
+      "one_probe_code_hash": true,
+      "one_recorded_tree_digest": true,
+      "problems": []
+    },
+    {
+      "name": "source_hashes",
+      "passed": true,
+      "n_active_path_files": 8,
+      "recomputed_tree_digest": {
+        "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+        "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+      },
+      "audited_tree_digest": {
+        "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+        "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+      },
+      "n_distinct_run_digests": 1,
+      "problems": []
+    },
+    {
+      "name": "parameter_counts",
+      "passed": true,
+      "recomputed_parameter_counts": {
+        "GEOM_FLAT": 10498,
+        "GEOM_COUPLED": 10498
+      },
+      "direct_over_a2_ratio": null,
+      "a2_over_v44_g2": 0.7023013112122023,
+      "a2_within_0_70_of_v44_g2": false,
+      "n_parameter_tensors": {
+        "GEOM_FLAT": 26,
+        "GEOM_COUPLED": 26
+      },
+      "problems": []
+    },
+    {
+      "name": "active_path_forbidden_import_scan",
+      "passed": true,
+      "files_scanned": [
+        "final_model.py",
+        "fused_encoder.py",
+        "gc_common.py",
+        "gc_data.py",
+        "gc_runner.py",
+        "geometry_prior.py",
+        "global_local.py",
+        "trainer.py"
+      ],
+      "forbidden_imports": {},
+      "removed_symbols": {},
+      "cross_check": []
+    },
+    {
+      "name": "decoder_identities",
+      "passed": true,
+      "n_runs_checked": 48,
+      "worst_abs_deviation": {
+        "daily_sum": 0.00025177001953125,
+        "overlap": 0.00028228759765625,
+        "tv": 0.0,
+        "mae": 6.057527050254791,
+        "redump_mae": 1.3751643052728468e-05
+      },
+      "n_own_npz_matches_recorded_ema": 8,
+      "n_own_npz_deviates_from_recorded_ema": 40,
+      "n_cross_validated_redumps": 8,
+      "own_npz_deviation_explained_by_selected_check_not_being_last": true,
+      "identities": [
+        "a_plus = B_hat + relu(H b_hat)",
+        "a_minus = B_hat + relu(-H b_hat)",
+        "correction = a_plus*S+ - a_minus*S-",
+        "sum_h c_h = H b_hat",
+        "||c||_1 <= H|b_hat| + 2 B_hat",
+        "overlap = (a+ + a-) - ||c||_1 >= 0",
+        "S+/S- are horizon simplexes",
+        "redump of selected_ema.pt: mean|r-c| = recorded EMA VAL MAE",
+        "redump equals the run's own npz wherever that npz is the selected pass",
+        "the run npz deviates from the recorded EMA exactly when the selected check is not the run's last check"
+      ],
+      "problems": []
+    },
+    {
+      "name": "seed_median_first_aggregation",
+      "passed": true,
+      "n_cells_recomputed": 16,
+      "max_abs_deviation": 1.26048532722578e-10,
+      "median_paired_gain_minus_median_first_max_abs_diff_pct": 0.0,
+      "rule": "median over seeds first, then relative gain (PROTOCOL §9)",
+      "problems": []
+    },
+    {
+      "name": "gate_arithmetic",
+      "passed": true,
+      "recomputed": {
+        "G1": true,
+        "G2": false,
+        "G3": false,
+        "G4": false,
+        "G0_partial": true,
+        "G5": true
+      },
+      "recorded": {
+        "G0": true,
+        "G1": true,
+        "G2": false,
+        "G3": false,
+        "G4": false,
+        "G5": true
+      },
+      "n_a1_runs": 24,
+      "n_a2_runs": 24,
+      "all_gates_passed": false,
+      "blocked_reason": null,
+      "problems": []
+    },
+    {
+      "name": "test_reads_zero",
+      "passed": true,
+      "n_runs": 48,
+      "sum_test_target_read_count": 0,
+      "sum_test_rows_materialised": 0,
+      "access_state_test_rows_returned": 0,
+      "distinct_paths_blocked": [],
+      "test_role_frame_refusals": 0
+    },
+    {
+      "name": "no_prior_evidence_mutation",
+      "passed": true,
+      "n_o1_checkpoint_pins": 72,
+      "n_prior_evidence_pins": 220,
+      "n_pinned_prior_still_present": 220,
+      "note": "Only legally readable prior artifacts are pinned. The nine quarantined TEST result tables are never opened by this stage, so they are neither pinned nor hashed here; the access guard is what keeps them shut.",
+      "problems": []
+    }
+  ]
+}
