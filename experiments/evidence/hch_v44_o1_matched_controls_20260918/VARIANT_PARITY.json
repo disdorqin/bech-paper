@@ -1,0 +1,80 @@
+{
+  "schema": "hch_v44_o1_matched_variant_parity.v1",
+  "protocol_id": "HCH_V44_O1_MATCHED_CONTROLS_20260918",
+  "scales_source_cell": "GANSU_DA__PatchTST",
+  "scales_fingerprint": "2ae8e9ad83c39456b4c40d63032b43efb069738d7cf9da504e373c6dcf0d995b",
+  "init_seed": 1234,
+  "core_assert_variant_parity": {
+    "parameter_counts": {
+      "G1_GEOM_SHARED_CONTEXT": 14948,
+      "G2_GEOM_COORD_CONTEXT": 14948,
+      "G3_DIRECT_CONTEXT_CTRL": 16897
+    },
+    "checks": {
+      "g1_g2_equal_parameter_count": true,
+      "g3_within_budget": true
+    },
+    "g3_over_g2_ratio": 1.1303853358308804
+  },
+  "g3_over_g2_ratio": 1.1303853358308804,
+  "g3_over_g2_ratio_le_1.25": true,
+  "checks": {
+    "g1_g2_equal_parameter_count": true,
+    "g1_g2_identical_named_parameter_keys": true,
+    "g1_g2_identical_named_parameter_shapes": true,
+    "g1_g2_bitwise_identical_at_init": true,
+    "g1_g2_forward_bitwise_identical_at_init": true,
+    "g1_g2_only_tied_identity_flag_differs": true,
+    "g3_within_budget": true,
+    "g3_shared_adds_no_parameter_to_g3": true,
+    "g3_shared_only_tied_identity_flag_differs": true
+  },
+  "all_pass": true,
+  "tie_mechanism": "G1 and G2 differ only in MaskedSoftmaxAllocator.coordinate_vectors(tied=self.tied_identity): tied returns coord_embed.mean(dim=0).expand(3,-1), released returns coord_embed. coord_embed is one (3, token_dim) parameter that starts at zero, so the tie is exact at initialization and only the released variant can break it. No other module reads tied_identity.",
+  "parameter_table": [
+    {
+      "variant": "G1_GEOM_SHARED_CONTEXT",
+      "role": "Phase-A candidate (shared context)",
+      "n_trainable_parameters": 14948,
+      "ratio_to_g2": 1.0,
+      "within_1.25x_budget": true,
+      "tied_identity": true,
+      "structured_decoder": true,
+      "n_named_parameter_tensors": 57,
+      "note": "parameter-for-parameter identical to G2"
+    },
+    {
+      "variant": "G2_GEOM_COORD_CONTEXT",
+      "role": "Phase-A baseline (reused, never retrained)",
+      "n_trainable_parameters": 14948,
+      "ratio_to_g2": 1.0,
+      "within_1.25x_budget": true,
+      "tied_identity": false,
+      "structured_decoder": true,
+      "n_named_parameter_tensors": 57,
+      "note": "reference; fitted by the closed O1 stages"
+    },
+    {
+      "variant": "G3_DIRECT_CONTEXT_CTRL",
+      "role": "Phase-B direct control when G2 is selected",
+      "n_trainable_parameters": 16897,
+      "ratio_to_g2": 1.1303853358308804,
+      "within_1.25x_budget": true,
+      "tied_identity": false,
+      "structured_decoder": false,
+      "n_named_parameter_tensors": 49,
+      "note": "shares encoders, allocator and the three router calls"
+    },
+    {
+      "variant": "G3_SHARED_DIRECT_CONTEXT_CTRL",
+      "role": "Phase-B direct control when G1 is selected",
+      "n_trainable_parameters": 16897,
+      "ratio_to_g2": 1.1303853358308804,
+      "within_1.25x_budget": true,
+      "tied_identity": true,
+      "structured_decoder": false,
+      "n_named_parameter_tensors": 49,
+      "note": "existing G3 model with tied_identity=True; adds no parameter"
+    }
+  ]
+}

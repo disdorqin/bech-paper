@@ -1,0 +1,91 @@
+{
+  "schema": "hch_v44_o1_matched_phase_a_gate.v1",
+  "protocol_id": "HCH_V44_O1_MATCHED_CONTROLS_20260918",
+  "statistic": "3-seed median VAL MAE per method per cell, then gain(candidate,baseline)",
+  "a1_coordinate_identity_supported": false,
+  "a1_checks": {
+    "a1_cells_g2_beats_g1_ge_6of8": false,
+    "a1_panel_median_gain_ge_0.5pct": false,
+    "a1_worst_cell_ge_-0.5pct": false,
+    "a1_g2_host_positive_ge_7of8": true,
+    "a1_no_access_source_numerical_failure": true
+  },
+  "a1_detail": {
+    "cells_beating": 1,
+    "cells_required": 6,
+    "panel_median_gain_pct": -0.03548477654921121,
+    "median_threshold_pct": 0.5,
+    "worst_cell_gain_pct": -3.6570331239734197,
+    "worst_threshold_pct": -0.5,
+    "best_cell_gain_pct": 0.00507478153770311,
+    "struct_host_positive_cells": 8,
+    "host_positive_required": 7,
+    "gains_by_cell": {
+      "GANSU_DA__PatchTST": 0.00507478153770311,
+      "GANSU_DA__LSTM": -0.020642000787852364,
+      "SHANDONG_DA__PatchTST": -0.007154768710211292,
+      "SHANDONG_DA__iTransformer": -0.05032755231057005,
+      "SHAANXI_DA__TimeMixer": -0.0010101741495992707,
+      "SHAANXI_DA__PatchTST": -0.07378786371520929,
+      "NINGXIA_DA__iTransformer": -0.16154614604619175,
+      "QINGHAI_DA__TimeMixer": -3.6570331239734197
+    }
+  },
+  "a2_shared_context_sufficient": true,
+  "a2_note": "A2 is evaluated only because A1 failed; its checks are recorded either way for audit.",
+  "a2_checks": {
+    "a2_g1_within_0.50pct_of_g2_ge_7of8": true,
+    "a2_panel_median_g1_vs_g2_gain_ge_-0.25pct": true,
+    "a2_worst_g1_vs_g2_cell_ge_-1.00pct": true,
+    "a2_g1_host_positive_ge_7of8": true,
+    "a2_no_access_source_numerical_failure": true
+  },
+  "a2_detail": {
+    "cells_within_0.50pct": 7,
+    "panel_median_g1_vs_g2_gain_pct": 0.0354699885857322,
+    "worst_g1_vs_g2_cell_pct": -0.005075039084849619,
+    "best_g1_vs_g2_cell_pct": 3.5280125368817203,
+    "g1_host_positive_cells": 8,
+    "per_cell_abs_gap_pct": {
+      "GANSU_DA__PatchTST": 0.00507478153770311,
+      "GANSU_DA__LSTM": 0.020642000787852364,
+      "SHANDONG_DA__PatchTST": 0.007154768710211292,
+      "SHANDONG_DA__iTransformer": 0.05032755231057005,
+      "SHAANXI_DA__TimeMixer": 0.0010101741495992707,
+      "SHAANXI_DA__PatchTST": 0.07378786371520929,
+      "NINGXIA_DA__iTransformer": 0.16154614604619175,
+      "QINGHAI_DA__TimeMixer": 3.6570331239734197
+    },
+    "per_cell_g1_vs_g2_gain_pct": {
+      "GANSU_DA__PatchTST": -0.00507478153770311,
+      "GANSU_DA__LSTM": 0.020642000787852364,
+      "SHANDONG_DA__PatchTST": 0.007154768710211292,
+      "SHANDONG_DA__iTransformer": 0.05032755231057005,
+      "SHAANXI_DA__TimeMixer": 0.0010101741495992707,
+      "SHAANXI_DA__PatchTST": 0.07378786371520929,
+      "NINGXIA_DA__iTransformer": 0.16154614604619175,
+      "QINGHAI_DA__TimeMixer": 3.6570331239734197
+    }
+  },
+  "verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+  "selected_structured_variant": "G1_GEOM_SHARED_CONTEXT",
+  "n_rows": 24,
+  "n_cells": 8,
+  "compliance": {
+    "n_new_runs": 24,
+    "access_clean": true,
+    "all_finite": true,
+    "source_digest_frozen": true,
+    "schedule_registered": true,
+    "variant_as_registered": true,
+    "reference_variant_is_g2": true,
+    "history_support_matched_to_reference": true,
+    "data_identity_matched_to_reference": true,
+    "scales_fingerprint_matched_to_reference": true,
+    "step0_val_mae_bitwise_equal_to_reference": true,
+    "reused_artifacts_unmodified": true,
+    "loss_switched_after_400_not_before": true,
+    "clean": true,
+    "reused_artifacts_unmodified_vs_before_file": true
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "schema": "hch_v44_o1_matched_fit_log.v1",
+  "protocol_id": "HCH_V44_O1_MATCHED_CONTROLS_20260918",
+  "phase": "g1",
+  "variant": "G1_GEOM_SHARED_CONTEXT",
+  "n_registered_new_fits": 24,
+  "n_fitted": 24,
+  "n_skipped_existing": 0,
+  "attempts_per_coordinate": {
+    "GANSU_DA__PatchTST__seed7": 1,
+    "GANSU_DA__PatchTST__seed17": 1,
+    "GANSU_DA__PatchTST__seed37": 1,
+    "GANSU_DA__LSTM__seed7": 1,
+    "GANSU_DA__LSTM__seed17": 1,
+    "GANSU_DA__LSTM__seed37": 1,
+    "SHANDONG_DA__PatchTST__seed7": 1,
+    "SHANDONG_DA__PatchTST__seed17": 1,
+    "SHANDONG_DA__PatchTST__seed37": 1,
+    "SHANDONG_DA__iTransformer__seed7": 1,
+    "SHANDONG_DA__iTransformer__seed17": 1,
+    "SHANDONG_DA__iTransformer__seed37": 1,
+    "SHAANXI_DA__TimeMixer__seed7": 1,
+    "SHAANXI_DA__TimeMixer__seed17": 1,
+    "SHAANXI_DA__TimeMixer__seed37": 1,
+    "SHAANXI_DA__PatchTST__seed7": 1,
+    "SHAANXI_DA__PatchTST__seed17": 1,
+    "SHAANXI_DA__PatchTST__seed37": 1,
+    "NINGXIA_DA__iTransformer__seed7": 1,
+    "NINGXIA_DA__iTransformer__seed17": 1,
+    "NINGXIA_DA__iTransformer__seed37": 1,
+    "QINGHAI_DA__TimeMixer__seed7": 1,
+    "QINGHAI_DA__TimeMixer__seed17": 1,
+    "QINGHAI_DA__TimeMixer__seed37": 1
+  },
+  "no_retry": true,
+  "workers": 2,
+  "finished": "2026-09-18T13:22:41.849168+00:00",
+  "results": [
+    {
+      "cell": "GANSU_DA__PatchTST",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "GANSU_DA__PatchTST",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "GANSU_DA__PatchTST",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "GANSU_DA__LSTM",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "GANSU_DA__LSTM",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "GANSU_DA__LSTM",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHANDONG_DA__PatchTST",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHANDONG_DA__PatchTST",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHANDONG_DA__PatchTST",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHANDONG_DA__iTransformer",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHANDONG_DA__iTransformer",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHANDONG_DA__iTransformer",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHAANXI_DA__TimeMixer",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHAANXI_DA__TimeMixer",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHAANXI_DA__TimeMixer",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHAANXI_DA__PatchTST",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHAANXI_DA__PatchTST",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "SHAANXI_DA__PatchTST",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "NINGXIA_DA__iTransformer",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "NINGXIA_DA__iTransformer",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "NINGXIA_DA__iTransformer",
+      "seed": 37,
+      "status": "fitted"
+    },
+    {
+      "cell": "QINGHAI_DA__TimeMixer",
+      "seed": 7,
+      "status": "fitted"
+    },
+    {
+      "cell": "QINGHAI_DA__TimeMixer",
+      "seed": 17,
+      "status": "fitted"
+    },
+    {
+      "cell": "QINGHAI_DA__TimeMixer",
+      "seed": 37,
+      "status": "fitted"
+    }
+  ]
+}

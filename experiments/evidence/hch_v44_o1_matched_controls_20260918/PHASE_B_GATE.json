@@ -1,0 +1,52 @@
+{
+  "schema": "hch_v44_o1_matched_phase_b_gate.v1",
+  "protocol_id": "HCH_V44_O1_MATCHED_CONTROLS_20260918",
+  "struct_variant": "G1_GEOM_SHARED_CONTEXT",
+  "direct_variant": "G3_SHARED_DIRECT_CONTEXT_CTRL",
+  "statistic": "3-seed median VAL MAE per method per cell, then gain(STRUCT,DIRECT) = 100*(MAE_DIRECT-MAE_STRUCT)/MAE_DIRECT",
+  "b1_exact_geometry_supported": false,
+  "b1_checks": {
+    "b1_cells_structured_beats_direct_ge_6of8": true,
+    "b1_panel_median_gain_ge_0.5pct": true,
+    "b1_worst_cell_ge_-0.5pct": false,
+    "b1_structured_host_positive_ge_7of8": true,
+    "b1_no_access_source_numerical_failure": true
+  },
+  "b1_detail": {
+    "cells_beating": 6,
+    "cells_required": 6,
+    "panel_median_gain_pct": 0.5408146009202842,
+    "median_threshold_pct": 0.5,
+    "worst_cell_gain_pct": -2.717205370067868,
+    "worst_threshold_pct": -0.5,
+    "best_cell_gain_pct": 6.279712595005994,
+    "struct_host_positive_cells": 8,
+    "host_positive_required": 7,
+    "gains_by_cell": {
+      "GANSU_DA__PatchTST": 1.0638306350547884,
+      "GANSU_DA__LSTM": 0.7585607611809891,
+      "SHANDONG_DA__PatchTST": -0.46322557525364133,
+      "SHANDONG_DA__iTransformer": 0.32306844065957924,
+      "SHAANXI_DA__TimeMixer": 0.051160884843053554,
+      "SHAANXI_DA__PatchTST": 1.6503116193183736,
+      "NINGXIA_DA__iTransformer": -2.717205370067868,
+      "QINGHAI_DA__TimeMixer": 6.279712595005994
+    }
+  },
+  "verdict": "B2_EXACT_GEOMETRY_NOT_SUPPORTED",
+  "n_rows": 24,
+  "n_cells": 8,
+  "compliance": {
+    "n_new_runs": 24,
+    "access_clean": true,
+    "all_finite": true,
+    "source_digest_frozen": true,
+    "schedule_registered": true,
+    "direct_variant_as_registered": true,
+    "direct_reconstruction_only_throughout": true,
+    "history_support_matched_to_structured": true,
+    "data_identity_matched_to_structured": true,
+    "no_auxiliary_term_exists": true,
+    "clean": true
+  }
+}

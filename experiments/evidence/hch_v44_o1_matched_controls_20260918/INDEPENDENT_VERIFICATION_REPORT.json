@@ -1,0 +1,458 @@
+{
+  "schema": "hch_v44_o1_matched_independent_verification.v1",
+  "verifier": "D:\\作业\\science\\solar_leak_price_model\\experiments\\current\\hch_v44_o1_matched_controls_20260918\\verification\\verify_matched.py",
+  "verifier_imports_scientific_runner": false,
+  "panel_and_seeds": {
+    "pass": true,
+    "detail": {
+      "n_cells": 8,
+      "seeds": [
+        7,
+        17,
+        37
+      ],
+      "g1_cells_present": 8,
+      "direct_cells_present": 8,
+      "unexpected_cells": [],
+      "all_24_g1_runs_complete": true,
+      "all_24_direct_runs_complete": true
+    },
+    "scientific": true
+  },
+  "source_digest": {
+    "pass": true,
+    "detail": {
+      "recomputed_core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+      "recomputed_backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B",
+      "frozen_core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+      "frozen_backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B",
+      "new_runs_with_other_digest": [],
+      "reused_runs_with_other_digest": [],
+      "core_file_count": 18
+    },
+    "scientific": true
+  },
+  "reference_identity": {
+    "pass": true,
+    "detail": {
+      "n_reused_runs": 24,
+      "rehash_mismatches_vs_own_provenance": [],
+      "rehash_mismatches_vs_domestic20_witness": [],
+      "value_mismatches_vs_domestic20_witness": [],
+      "witness_values_cross_checked": [
+        "selected_val_mae_ema",
+        "selected_step",
+        "selected_ema_parameter_hash",
+        "test_target_read_count",
+        "history_support_matches_shadow_artifact"
+      ],
+      "absent": [],
+      "missing": [],
+      "one_probe_code_hash_across_reused": true,
+      "independent_witness": "experiments/evidence/hch_v44_o1_domestic20_guardrail_20260918/REUSE_PROVENANCE.json"
+    },
+    "scientific": true
+  },
+  "variant_parity": {
+    "pass": true,
+    "detail": {
+      "g1_manifest_identical_to_g2_on_every_fitted_checkpoint": true,
+      "mismatches": [],
+      "n_parameters_g1": 14948,
+      "n_parameters_g2": 14948,
+      "g1_equals_g2_parameter_count": true,
+      "n_direct_checkpoints": 24,
+      "direct_over_g2_ratio_max": 1.1303853358308804,
+      "direct_within_1.25x": true,
+      "direct_within_1.25x_rule": "measured",
+      "direct_base_variant_mismatches": [],
+      "parameter_counts_csv_agrees": true,
+      "recorded_g3_over_g2_ratio": 1.1303853358308804,
+      "tied_identity_assignment_from_registry": true,
+      "tied_identity_creates_parameter": false,
+      "tied_identity_mentions_by_file": {
+        "src/core/model.py": 2
+      },
+      "tied_identity_read_only_by_src_core_model_py": true,
+      "tie_consumed_in": "src/core/allocation.py: coordinate_vectors(tied)"
+    },
+    "scientific": true
+  },
+  "only_tied_identity_delta": {
+    "pass": true,
+    "detail": {
+      "step0_bitwise_identity_failures": [],
+      "schedule_mismatches": [],
+      "diff_line_count": 26,
+      "diff_hunks": [
+        "-def train_o1(market: str, host: str, seed: int, out_dir: Path, *, max_steps: int=2000, val_every: int=50, no_stop_before: int=800, patience_checks: int=8, device: str='cuda', recipe_id: str='O1_AUX_WARMUP_400_THEN_MAE', switch_step: int=SWITCH_STEP, write_outputs: bool=True) -> dict:",
+        "-    \"\"\"One registered O1 run.  TRAIN+VAL only; TEST is unreachable.\"\"\"",
+        "+def train_matched(market: str, host: str, seed: int, out_dir: Path, *, variant: str, max_steps: int=2000, val_every: int=50, no_stop_before: int=800, patience_checks: int=8, device: str='cuda', recipe_id: str=MC.RECIPE_ID, switch_step: int=SWITCH_STEP, write_outputs: bool=True) -> dict:",
+        "+    \"\"\"One registered run of ``variant`` under the O1 schedule.  TRAIN+VAL only.\"\"\"",
+        "+    if variant in FORBIDDEN_VARIANTS:",
+        "+        raise ValueError(f'variant {variant!r} is forbidden in this stage')",
+        "+    if variant not in ALLOWED_VARIANTS:",
+        "+        raise ValueError(f'unknown variant {variant!r}')",
+        "-    model = RT.build_model(data, device, cfg.profile, None)",
+        "+    model = MC.build_model_for_variant(data, device, cfg.profile, variant)",
+        "+    structured = bool(getattr(model, 'structured', True))",
+        "-        stats = RT.evaluate(model, ema, data, diag_idx, cfg.profile, device, grad_norms or {})",
+        "-        comp = diag_components(model, ema, data, diag_idx, device)",
+        "-        _assert_component_consistency(comp, stats, scales)",
+        "-        entry = {'check': check_index, 'step': int(step), 'is_initial': bool(is_initial), 'samples_seen': int(samples_seen), 'epoch_equivalent': float(samples_seen / n), 'lr': _lr_now(), **stats, 'train_reconstruction_mae': float(stats['diag_reconstruction_mae']), 'step_loss_optimized': None if step_loss is None else float(step_loss), 'is_optimization_step': not bool(is_initial), 'used_full_loss_at_this_step': None if is_initial else bool(used_full), 'loss_schedule': 'L_rec_plus_aux' if used_full else 'L_rec_only', 'objective_switch_here': bool(int(step) == SWITCH_STEP), 'L_rec': comp['L_rec'], 'L_b': comp['L_b'], 'L_B': comp['L_B'], 'L_S': comp['L_S'], 'L_total_frozen': comp['total'], 'aux_mean': (comp['L_b'] + comp['L_B'] + comp['L_S']) / 3.0, 'selected': False}",
+        "+        stats = evaluate_matched(model, ema, data, diag_idx, cfg.profile, device, grad_norms or {})",
+        "+        comp = diag_components_matched(model, ema, data, diag_idx, device)",
+        "+        if structured:",
+        "+            PT._assert_component_consistency(comp, stats, scales)",
+        "+        else:",
+        "+            _assert_direct_consistency(comp, stats, scales)",
+        "+        entry = {'check': check_index, 'step': int(step), 'is_initial': bool(is_initial), 'samples_seen': int(samples_seen), 'epoch_equivalent': float(samples_seen / n), 'lr': _lr_now(), **stats, 'train_reconstruction_mae': float(stats['diag_reconstruction_mae']), 'step_loss_optimized': None if step_loss is None else float(step_loss), 'is_optimization_step': not bool(is_initial), 'used_full_loss_at_this_step': None if is_initial else bool(used_full), 'loss_schedule': 'L_rec_plus_aux' if used_full else 'L_rec_only', 'objective_switch_here': bool(int(step) == SWITCH_STEP), 'L_rec': comp['L_rec'], 'L_b': comp['L_b'], 'L_B': comp['L_B'], 'L_S': comp['L_S'], 'L_total_frozen': comp['total'], 'aux_mean': None if not structured else (comp['L_b'] + comp['L_B'] + comp['L_S']) / 3.0, 'selected': False}",
+        "-            loss, used_full = objective(model.compute_loss(out, sub_target, sub_res, data['scales']), step + 1)",
+        "+            loss, used_full = PT.objective(model.compute_loss(out, sub_target, sub_res, data['scales']), step + 1)",
+        "-    record = {'schema': 'v44_objective_probe_run.v1', 'protocol_id': PC.PROTOCOL_ID, 'recipe_id': recipe_id, 'market': market, 'host': host, 'seed': int(seed), 'variant': RC.VARIANT, 'device': device, 'optimization': {'optimizer': cfg.optimizer, 'lr': _lr_now(), 'weight_decay': cfg.weight_decay, 'batch_size': cfg.batch_size, 'grad_clip': cfg.grad_clip, 'ema_decay': cfg.ema_decay, 'eval_weights': cfg.eval_weights, 'max_steps': int(max_steps), 'val_every': int(val_every), 'no_stop_before': int(no_stop_before), 'patience_checks': int(patience_checks), 'readout_init': None, 'stopped_at_step': stopped_at, 'slots_available': int(max_steps)}, 'objective_probe': {'switch_step': SWITCH_STEP, 'updates_full_loss': n_full, 'updates_reconstruction_only': int(max(0, (stopped_at or max_steps) - SWITCH_STEP)), 'loss_full': 'L_rec + (L_b + L_B + L_S)/3', 'loss_after_switch': 'L_rec', 'changed_vs_reference': ['loss schedule after update 400'], 'unchanged_vs_reference': ['src/core/**', 'architecture', 'b/B/S+/S- geometry and decoder', 'feature set', 'Host/history/calendar evidence', 'initialization', 'AdamW', 'lr', 'batch_size', 'weight_decay', 'grad_clip', 'ema_decay and EMA-primary selection', 'seeds', 'data split', 'history support', 'TRAIN-only scales', 'max_steps', 'val_every', 'no_stop_before', 'patience_checks', 'per-cell tuning (none)'], 'components_evaluated_on': 'registered diagnostic subset, EMA weights, no_grad'}, 'n_train_rows': n, 'train_rows_excluded': data['train_excluded'], 'n_val_rows': len(data['val_rows']), 'steps_per_epoch_old_semantics': steps_per_epoch, 'epochs_generated': int(epoch), 'diag_subset': {'n_rows': int(diag_idx.numel()), 'rule': 'np.linspace over registered TRAIN order, capped at 256'}, 'interleaver_audit': {'n_train': audit['n_train'], 'bins': audit['bins'], 'bin_sizes': audit['bin_sizes'], 'all_epochs_exact_once': audit['all_epochs_exact_once'], 'epochs_audited': epochs_needed, 'oversampling': False, 'reweighting': False}, 'selected_step': int(best['step']), 'selected_check': int(best['check']), 'selected_val_mae_ema': float(best['val_mae']), 'selected_metrics': {k: v for k, v in selected_entry.items() if k != 'selected'}, 'selected_after_switch': bool(int(best['step']) > SWITCH_STEP), 'val_optimum_post_switch': {'step': int(opt_post['step']) if opt_post else None, 'val_mae_ema': float(opt_post['val_mae_ema']) if opt_post else None, 'better_than_at_switch': bool(opt_post is not None and float(opt_post['val_mae_ema']) < float(next((e for e in curve if int(e['step']) == SWITCH_STEP))['val_mae_ema']))}, 'selected_ema_checkpoint': str(ckpt.relative_to(RC.REPO)).replace('\\\\', '/') if ckpt else None, 'selected_ema_checkpoint_sha256': U.sha256(ckpt) if ckpt else None, 'selected_ema_parameter_hash': ckpt_hash, 'epoch_history_check_count': len(curve), 'scales': {'fingerprint': data['arts']['fingerprint'], 's_r': data['arts']['s_r'], 's_b': data['arts']['s_b'], 's_B': data['arts']['s_B'], 'n_train_days_fit': data['arts']['n_train_days_fit']}, 'history_support_hash': data['support']['support_hash'], 'history_oof_days': data['support']['oof_days'], 'train_day_ids_hash': U.sha256_bytes(json.dumps([r.day.isoformat() for r in data['train_rows']]).encode()), 'val_day_ids_hash': U.sha256_bytes(json.dumps([r.day.isoformat() for r in data['val_rows']]).encode()), 'recovery_common_sha256': U.sha256(RC.HERE), 'recovery_train_sha256': U.sha256(Path(RT.__file__).resolve()), 'probe_code_hash': PC.probe_tree_digest(), 'source_tree_digest': RC.source_tree_digest(), 'test_target_read_count': 0, 'test_rows_materialised': 0, 'test_rows_dropped_from_joint_cache': int(RC.ACCESS_STATE['test_rows_dropped_before_return']), 'optional_features_active': False, 'rescue_used': False, 'is_registered_fit': True, 'access_state': json.loads(json.dumps(RC.ACCESS_STATE))}",
+        "+    record = {'schema': 'v44_o1_matched_control_run.v1', 'protocol_id': MC.PROTOCOL_ID, 'recipe_id': recipe_id, 'market': market, 'host': host, 'seed': int(seed), 'variant': variant, 'base_variant': MC.G3 if variant == MC.G3_SHARED else variant, 'tied_identity': bool(getattr(model, 'tied_identity', None)), 'structured_decoder': structured, 'device': device, 'optimization': {'optimizer': cfg.optimizer, 'lr': _lr_now(), 'weight_decay': cfg.weight_decay, 'batch_size': cfg.batch_size, 'grad_clip': cfg.grad_clip, 'ema_decay': cfg.ema_decay, 'eval_weights': cfg.eval_weights, 'max_steps': int(max_steps), 'val_every': int(val_every), 'no_stop_before': int(no_stop_before), 'patience_checks': int(patience_checks), 'readout_init': None, 'stopped_at_step': stopped_at, 'slots_available': int(max_steps)}, 'objective_probe': {'switch_step': SWITCH_STEP, 'updates_full_loss': n_full, 'updates_reconstruction_only': int(max(0, (stopped_at or max_steps) - SWITCH_STEP)), 'loss_full': 'L_rec + (L_b + L_B + L_S)/3', 'loss_after_switch': 'L_rec', 'loss_effective_for_direct_control': 'L_rec throughout (total == L_rec)', 'changed_vs_reference': ['loss schedule after update 400'] if structured else ['loss is L_rec only throughout; no auxiliary term exists'], 'unchanged_vs_reference': ['src/core/**', 'architecture', 'b/B/S+/S- geometry and decoder', 'feature set', 'Host/history/calendar evidence', 'initialization', 'AdamW', 'lr', 'batch_size', 'weight_decay', 'grad_clip', 'ema_decay and EMA-primary selection', 'seeds', 'data split', 'history support', 'TRAIN-only scales', 'max_steps', 'val_every', 'no_stop_before', 'patience_checks', 'per-cell tuning (none)'], 'components_evaluated_on': 'registered diagnostic subset, EMA weights, no_grad'}, 'n_train_rows': n, 'train_rows_excluded': data['train_excluded'], 'n_val_rows': len(data['val_rows']), 'steps_per_epoch_old_semantics': steps_per_epoch, 'epochs_generated': int(epoch), 'diag_subset': {'n_rows': int(diag_idx.numel()), 'rule': 'np.linspace over registered TRAIN order, capped at 256'}, 'interleaver_audit': {'n_train': audit['n_train'], 'bins': audit['bins'], 'bin_sizes': audit['bin_sizes'], 'all_epochs_exact_once': audit['all_epochs_exact_once'], 'epochs_audited': epochs_needed, 'oversampling': False, 'reweighting': False}, 'selected_step': int(best['step']), 'selected_check': int(best['check']), 'selected_val_mae_ema': float(best['val_mae']), 'selected_metrics': {k: v for k, v in selected_entry.items() if k != 'selected'}, 'selected_after_switch': bool(int(best['step']) > SWITCH_STEP), 'val_optimum_post_switch': {'step': int(opt_post['step']) if opt_post else None, 'val_mae_ema': float(opt_post['val_mae_ema']) if opt_post else None, 'better_than_at_switch': bool(opt_post is not None and float(opt_post['val_mae_ema']) < float(next((e for e in curve if int(e['step']) == SWITCH_STEP))['val_mae_ema']))}, 'selected_ema_checkpoint': str(ckpt.relative_to(RC.REPO)).replace('\\\\', '/') if ckpt else None, 'selected_ema_checkpoint_sha256': U.sha256(ckpt) if ckpt else None, 'selected_ema_parameter_hash': ckpt_hash, 'epoch_history_check_count': len(curve), 'scales': {'fingerprint': data['arts']['fingerprint'], 's_r': data['arts']['s_r'], 's_b': data['arts']['s_b'], 's_B': data['arts']['s_B'], 'n_train_days_fit': data['arts']['n_train_days_fit']}, 'history_support_hash': data['support']['support_hash'], 'history_oof_days': data['support']['oof_days'], 'train_day_ids_hash': U.sha256_bytes(json.dumps([r.day.isoformat() for r in data['train_rows']]).encode()), 'val_day_ids_hash': U.sha256_bytes(json.dumps([r.day.isoformat() for r in data['val_rows']]).encode()), 'recovery_common_sha256': U.sha256(RC.HERE), 'recovery_train_sha256': U.sha256(Path(RT.__file__).resolve()), 'o1_probe_train_sha256': U.sha256(Path(PT.__file__).resolve()), 'o1_probe_code_hash': PC.probe_tree_digest(), 'probe_code_hash': PC.probe_tree_digest(), 'matched_code_hash': MC.matched_tree_digest(), 'matched_train_sha256': U.sha256(Path(__file__).resolve()), 'source_tree_digest': RC.source_tree_digest(), 'test_target_read_count': 0, 'test_rows_materialised': 0, 'test_rows_dropped_from_joint_cache': int(RC.ACCESS_STATE['test_rows_dropped_before_return']), 'optional_features_active': False, 'rescue_used': False, 'is_registered_fit': True, 'access_state': json.loads(json.dumps(RC.ACCESS_STATE))}"
+      ],
+      "variant_agnostic_calls_missing": [],
+      "variant_agnostic_calls_in_the_loop_body": [
+        "RT.build_cell_data",
+        "RT.to_device",
+        "RT.build_optimizer",
+        "grad_norms_by_group",
+        "RT.DIAG_MAX_ROWS",
+        "PT.objective",
+        "PT._assert_component_consistency",
+        "_bind_prior",
+        "build_primary_train_config",
+        "EMA(",
+        "DifficultyInterleaver(",
+        "clip_gradients(",
+        "neural_autocast(",
+        "fp32_region(",
+        "daily_difficulty("
+      ],
+      "functions_defined_in_matched_train": [
+        "_assert_direct_consistency",
+        "_evaluate_direct",
+        "_lr_now",
+        "diag_components_matched",
+        "evaluate_matched",
+        "record_check",
+        "train_matched"
+      ],
+      "new_functions_are_the_declared_shims": false
+    },
+    "scientific": true
+  },
+  "seed_median_first": {
+    "pass": true,
+    "detail": {
+      "phase_a_cell_median_mismatches": [],
+      "phase_a_per_seed_mismatches": [],
+      "cell_medians_recomputed": {
+        "GANSU_DA__PatchTST": 0.00507478153770311,
+        "GANSU_DA__LSTM": -0.020642000787852364,
+        "SHANDONG_DA__PatchTST": -0.007154768710211292,
+        "SHANDONG_DA__iTransformer": -0.05032755231057005,
+        "SHAANXI_DA__TimeMixer": -0.0010101741495992707,
+        "SHAANXI_DA__PatchTST": -0.07378786371520929,
+        "NINGXIA_DA__iTransformer": -0.16154614604619175,
+        "QINGHAI_DA__TimeMixer": -3.6570331239734197
+      },
+      "pooled_gain_for_contrast_pct": -0.034320873746186725,
+      "statistic": "median of each method's 3-seed VAL MAE first, then gain"
+    },
+    "scientific": true
+  },
+  "loss_switch": {
+    "pass": true,
+    "detail": {
+      "phase_a_violations": [],
+      "direct_auxiliary_present": [],
+      "switch_step": 400,
+      "rule": "updates 1..400 full structured objective; 401.. L_rec only"
+    },
+    "scientific": true
+  },
+  "test_reads": {
+    "pass": true,
+    "detail": {
+      "new_run_test_target_reads": 0,
+      "reused_run_test_target_reads": 0,
+      "runs_failing_the_access_clauses": [],
+      "forbidden_files_inside_evidence_root": [],
+      "access_audit_total": 0,
+      "access_audit_reused_reads": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ground_truth_horizon": "the terminal token must not depend on any TEST value"
+    },
+    "scientific": true
+  },
+  "no_prior_mutation": {
+    "pass": true,
+    "detail": {
+      "snapshot_before_equals_now": true,
+      "snapshot_after_phase_a_equals_before": true,
+      "mismatches_vs_domestic20_witness": [],
+      "n_artifacts": 72,
+      "note": "mtime is not evidence of authorship; only content hashes are compared"
+    },
+    "scientific": true
+  },
+  "code_state": {
+    "pass": true,
+    "detail": {
+      "distinct_matched_code_hash": [
+        "761EA24AABC78491583470F27BEF029B959EE0D9EFAED4C571721B8E548169F5"
+      ],
+      "recomputed_fit_time_digest": "761EA24AABC78491583470F27BEF029B959EE0D9EFAED4C571721B8E548169F5",
+      "runs_not_matching_recomputed_digest": [],
+      "distinct_matched_train_sha256": [
+        "2688B40C5AC54E574F3568353BC7CBF05695FE28E6BC93578D4E1EB73F633AD2"
+      ],
+      "fit_time_file_set": [
+        "experiments/current/hch_v44_o1_matched_controls_20260918/AI_EXECUTION_PROMPT.md",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/PROTOCOL.md",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/README.md",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/implementation/matched_common.py",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/implementation/matched_runner.py",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/implementation/matched_train.py"
+      ],
+      "files_added_after_the_fits": [
+        "experiments/current/hch_v44_o1_matched_controls_20260918/verification/finalize.py",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/verification/phase_b_driver.py",
+        "experiments/current/hch_v44_o1_matched_controls_20260918/verification/verify_matched.py"
+      ],
+      "rule": "the runs pinned the stage tree as it stood at fit time; the verifier recomputes over that same file set and lists whatever was archived into the stage afterwards"
+    },
+    "scientific": true
+  },
+  "runner_cli_is_self_consistent": {
+    "pass": false,
+    "detail": {
+      "advertised_steps": [
+        "access",
+        "finalize",
+        "gate_a",
+        "gate_b",
+        "phase_a",
+        "phase_b",
+        "source"
+      ],
+      "dispatched_steps": [
+        "access",
+        "curves",
+        "gate_a",
+        "gate_b",
+        "phase_a",
+        "phase_b",
+        "source"
+      ],
+      "dispatched_but_undocumented": [
+        "curves"
+      ],
+      "note": "advertised-but-undispatched steps are reported under disclosed_defects, not here"
+    },
+    "scientific": false
+  },
+  "recomputed_phase_a": {
+    "verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+    "selected": "G1_GEOM_SHARED_CONTEXT",
+    "panel_median_gain_pct": -0.03548477654921121,
+    "worst_cell_gain_pct": -3.6570331239734197,
+    "best_cell_gain_pct": 0.00507478153770311,
+    "cells_beating": 1,
+    "a1_checks": {
+      "a1_cells_g2_beats_g1_ge_6of8": false,
+      "a1_panel_median_gain_ge_0.5pct": false,
+      "a1_worst_cell_ge_-0.5pct": false,
+      "a1_g2_host_positive_ge_7of8": true,
+      "a1_no_access_source_numerical_failure": true
+    },
+    "a2_checks": {
+      "a2_g1_within_0.50pct_of_g2_ge_7of8": true,
+      "a2_panel_median_g1_vs_g2_gain_ge_-0.25pct": true,
+      "a2_worst_g1_vs_g2_cell_ge_-1.00pct": true,
+      "a2_g1_host_positive_ge_7of8": true,
+      "a2_no_access_source_numerical_failure": true
+    },
+    "per_cell_gain_pct": {
+      "GANSU_DA__PatchTST": 0.00507478153770311,
+      "GANSU_DA__LSTM": -0.020642000787852364,
+      "SHANDONG_DA__PatchTST": -0.007154768710211292,
+      "SHANDONG_DA__iTransformer": -0.05032755231057005,
+      "SHAANXI_DA__TimeMixer": -0.0010101741495992707,
+      "SHAANXI_DA__PatchTST": -0.07378786371520929,
+      "NINGXIA_DA__iTransformer": -0.16154614604619175,
+      "QINGHAI_DA__TimeMixer": -3.6570331239734197
+    }
+  },
+  "recomputed_phase_b": {
+    "verdict": "B2_EXACT_GEOMETRY_NOT_SUPPORTED",
+    "panel_median_gain_pct": 0.5408146009202842,
+    "worst_cell_gain_pct": -2.717205370067868,
+    "best_cell_gain_pct": 6.279712595005994,
+    "cells_beating": 6,
+    "b1_checks": {
+      "b1_cells_structured_beats_direct_ge_6of8": true,
+      "b1_panel_median_gain_ge_0.5pct": true,
+      "b1_worst_cell_ge_-0.5pct": false,
+      "b1_structured_host_positive_ge_7of8": true,
+      "b1_no_access_source_numerical_failure": true
+    },
+    "per_cell_gain_pct": {
+      "GANSU_DA__PatchTST": 1.0638306350547884,
+      "GANSU_DA__LSTM": 0.7585607611809891,
+      "SHANDONG_DA__PatchTST": -0.46322557525364133,
+      "SHANDONG_DA__iTransformer": 0.32306844065957924,
+      "SHAANXI_DA__TimeMixer": 0.051160884843053554,
+      "SHAANXI_DA__PatchTST": 1.6503116193183736,
+      "NINGXIA_DA__iTransformer": -2.717205370067868,
+      "QINGHAI_DA__TimeMixer": 6.279712595005994
+    }
+  },
+  "direct_control_identity": {
+    "pass": true,
+    "detail": {
+      "phase_a_verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+      "phase_a_selected": "G1_GEOM_SHARED_CONTEXT",
+      "required_direct_variant": "G3_SHARED_DIRECT_CONTEXT_CTRL",
+      "n_direct_runs_present": 24,
+      "distinct_direct_variants": [
+        "G3_SHARED_DIRECT_CONTEXT_CTRL"
+      ],
+      "mismatches": [],
+      "rule": "G2 selected -> G3_DIRECT_CONTEXT_CTRL (tied off); G1 selected -> existing G3 model with tied_identity=True"
+    },
+    "scientific": true
+  },
+  "gate_clauses": {
+    "pass": true,
+    "detail": {
+      "phase_a": {
+        "written_verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+        "recomputed_verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+        "recomputed_a1_checks": {
+          "a1_cells_g2_beats_g1_ge_6of8": false,
+          "a1_panel_median_gain_ge_0.5pct": false,
+          "a1_worst_cell_ge_-0.5pct": false,
+          "a1_g2_host_positive_ge_7of8": true,
+          "a1_no_access_source_numerical_failure": true
+        },
+        "recomputed_a2_checks": {
+          "a2_g1_within_0.50pct_of_g2_ge_7of8": true,
+          "a2_panel_median_g1_vs_g2_gain_ge_-0.25pct": true,
+          "a2_worst_g1_vs_g2_cell_ge_-1.00pct": true,
+          "a2_g1_host_positive_ge_7of8": true,
+          "a2_no_access_source_numerical_failure": true
+        },
+        "panel_median_gain_pct": -0.03548477654921121,
+        "worst_cell_gain_pct": -3.6570331239734197,
+        "cells_beating": 1
+      },
+      "phase_b": {
+        "written_verdict": "B2_EXACT_GEOMETRY_NOT_SUPPORTED",
+        "recomputed_verdict": "B2_EXACT_GEOMETRY_NOT_SUPPORTED",
+        "recomputed_b1_checks": {
+          "b1_cells_structured_beats_direct_ge_6of8": true,
+          "b1_panel_median_gain_ge_0.5pct": true,
+          "b1_worst_cell_ge_-0.5pct": false,
+          "b1_structured_host_positive_ge_7of8": true,
+          "b1_no_access_source_numerical_failure": true
+        },
+        "panel_median_gain_pct": 0.5408146009202842,
+        "worst_cell_gain_pct": -2.717205370067868,
+        "cells_beating": 6
+      },
+      "compliance_consistency": {
+        "written_clean": true,
+        "expected_clean_from_independent_checks": true,
+        "inputs": {
+          "test_reads": true,
+          "source_digest": true,
+          "no_prior_mutation": true,
+          "only_tied_identity_delta": true,
+          "reference_identity": true,
+          "variant_parity": true
+        }
+      },
+      "mismatches": [],
+      "phase_a_recomputation_error": null,
+      "phase_a_recomputation_rule": "recomputed from PHASE_A_GATE.json-free raw artifacts: freeze.json + training_curve.json for all 8 cells x 3 seeds on both arms"
+    },
+    "scientific": true
+  },
+  "terminal_token": {
+    "pass": true,
+    "detail": {
+      "written_token": "HCH_O1_MATCHED_CONTROL_GEOMETRY_NOT_SUPPORTED",
+      "expected_from_recomputed_verdict": "HCH_O1_MATCHED_CONTROL_GEOMETRY_NOT_SUPPORTED",
+      "phase_a_verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+      "phase_b_verdict": "B2_EXACT_GEOMETRY_NOT_SUPPORTED",
+      "selected_structured_variant": "G1_GEOM_SHARED_CONTEXT"
+    },
+    "scientific": true
+  },
+  "disclosed_defects": [
+    {
+      "defect": "runner docstring advertises steps that main() does not dispatch",
+      "advertised": [
+        "source",
+        "phase_a",
+        "gate_a",
+        "phase_b",
+        "gate_b",
+        "access",
+        "finalize"
+      ],
+      "dispatched": [
+        "access",
+        "curves",
+        "gate_a",
+        "gate_b",
+        "phase_a",
+        "phase_b",
+        "source"
+      ],
+      "advertised_without_dispatch": [
+        "finalize"
+      ],
+      "impact": "none on any scientific number; the affected artifacts (RESULTS.md, STAGE_TOKEN.json) are written by the executor under the design authority's section 11 file list"
+    },
+    {
+      "defect": "no finalize step exists in matched_runner.main()",
+      "impact": "RESULTS.md and STAGE_TOKEN.json are executor-written"
+    }
+  ],
+  "failures": [],
+  "hygiene_failures": [
+    "runner_cli_is_self_consistent"
+  ],
+  "n_checks": 13,
+  "n_failures": 0,
+  "all_pass": true,
+  "hygiene_pass": false
+}

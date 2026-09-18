@@ -1,0 +1,5 @@
+variant,role,n_trainable_parameters,ratio_to_g2,within_1.25x_budget,tied_identity,structured_decoder,n_named_parameter_tensors,note
+G1_GEOM_SHARED_CONTEXT,Phase-A candidate (shared context),14948,1.0,true,true,true,57,parameter-for-parameter identical to G2
+G2_GEOM_COORD_CONTEXT,"Phase-A baseline (reused, never retrained)",14948,1.0,true,false,true,57,reference; fitted by the closed O1 stages
+G3_DIRECT_CONTEXT_CTRL,Phase-B direct control when G2 is selected,16897,1.1303853358308804,true,false,false,49,"shares encoders, allocator and the three router calls"
+G3_SHARED_DIRECT_CONTEXT_CTRL,Phase-B direct control when G1 is selected,16897,1.1303853358308804,true,true,false,49,existing G3 model with tied_identity=True; adds no parameter

@@ -1,0 +1,52 @@
+{
+  "schema": "hch_v44_o1_matched_source_audit.v1",
+  "protocol_id": "HCH_V44_O1_MATCHED_CONTROLS_20260918",
+  "digest_rule": "sha256 over sorted 'relpath|sha256(file)' lines, .py and .md, per tree; identical to recovery_common.source_tree_digest",
+  "observed": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "frozen_expected": {
+    "core_tree": "6F18C0E4241A299E32C8D8A617061BAEAA7B8DC98B4EE069DC67199B87531577",
+    "backbones_tree": "79B51A56499860D489C1FE4642F111EBB6BABC0281028F57F683A21484C12E7B"
+  },
+  "core_tree_matches_frozen_o1_g2": true,
+  "backbones_tree_matches_frozen_o1_g2": true,
+  "source_parity_pass": true,
+  "core_file_count": 18,
+  "core_files": [
+    "src/core/DESIGN_CONTRACT.md",
+    "src/core/README.md",
+    "src/core/__init__.py",
+    "src/core/allocation.py",
+    "src/core/bundles.py",
+    "src/core/calendar.py",
+    "src/core/contracts.py",
+    "src/core/decoder.py",
+    "src/core/encoders.py",
+    "src/core/feature_engineering.py",
+    "src/core/geometry.py",
+    "src/core/heads.py",
+    "src/core/history.py",
+    "src/core/losses.py",
+    "src/core/model.py",
+    "src/core/rescues.py",
+    "src/core/scales.py",
+    "src/core/training_support.py"
+  ],
+  "backbones_file_count": 10,
+  "backbones_files": [
+    "src/backbones/README.md",
+    "src/backbones/__init__.py",
+    "src/backbones/backbones.py",
+    "src/backbones/base.py",
+    "src/backbones/factory.py",
+    "src/backbones/itransformer.py",
+    "src/backbones/lstm.py",
+    "src/backbones/official_loader.py",
+    "src/backbones/patchtst.py",
+    "src/backbones/timemixer.py"
+  ],
+  "src_core_modified": false,
+  "written_utc": "2026-09-18T13:12:18.466321+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "hch_v44_o1_matched_stage_token.v1",
+  "protocol_id": "HCH_V44_O1_MATCHED_CONTROLS_20260918",
+  "terminal_token": "HCH_O1_MATCHED_CONTROL_GEOMETRY_NOT_SUPPORTED",
+  "phase_a_verdict": "A2_SHARED_CONTEXT_SUFFICIENT",
+  "phase_b_verdict": "B2_EXACT_GEOMETRY_NOT_SUPPORTED",
+  "selected_structured_variant": "G1_GEOM_SHARED_CONTEXT",
+  "derived_from": "INDEPENDENT_VERIFICATION_REPORT.json (independently recomputed), not the runner gate",
+  "verifier_all_pass": true
+}
