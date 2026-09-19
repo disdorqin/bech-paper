@@ -85,31 +85,46 @@ def one(market: str, host: str) -> dict:
     return rec
 
 
-def main() -> int:
-    dest = EVID / "P0_BLOCK_DIAGNOSTIC.jsonl"
+def main(argv: list[str]) -> int:
+    """With no argument, walk all 16 cells into one JSONL.
+
+    With ``MARKET/HOST`` arguments, run only those cells and write a per-market
+    JSONL instead.  Each cell pins ``torch.set_num_threads(1)``, so several such
+    processes may run concurrently without changing any cell's bits -- parallel
+    processes are the only legitimate way to speed this up.  (A GPU would change
+    both the device and the torch build, so every digest comparison against the
+    CPU-frozen manifests would be meaningless rather than merely slower.)
+    """
+    if argv:
+        specs = [tuple(a.split("/", 1)) for a in argv]
+        # name the file after the first cell too, so two processes covering
+        # different cells of the same market never append to one file
+        dest = EVID / f"P0_BLOCK_DIAGNOSTIC.{specs[0][0]}.{specs[0][1]}.jsonl"
+    else:
+        specs = [(m, h) for m in MARKETS for h in HOSTS]
+        dest = EVID / "P0_BLOCK_DIAGNOSTIC.jsonl"
     done = set()
     if dest.is_file():
         for line in dest.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 r = json.loads(line)
                 done.add((r["market"], r["host"]))
-    for market in MARKETS:
-        for host in HOSTS:
-            if (market, host) in done:
-                print(f"[skip] {market}/{host}", flush=True)
-                continue
-            try:
-                rec = one(market, host)
-            except Exception as exc:  # a failure is itself the evidence
-                rec = {"market": market, "host": host, "family": S.family_of(market),
-                       "error": f"{type(exc).__name__}: {exc}"}
-            with dest.open("a", encoding="utf-8") as f:
-                f.write(json.dumps(rec, ensure_ascii=False, default=str) + "\n")
-            print(f"[DIAG] {market}/{host} exact={rec.get('checkpoint_identity_exact')} "
-                  f"maxabs={rec.get('max_abs_prediction_delta')} {rec.get('seconds','-')}s",
-                  flush=True)
+    for market, host in specs:
+        if (market, host) in done:
+            print(f"[skip] {market}/{host}", flush=True)
+            continue
+        try:
+            rec = one(market, host)
+        except Exception as exc:  # a failure is itself the evidence
+            rec = {"market": market, "host": host, "family": S.family_of(market),
+                   "error": f"{type(exc).__name__}: {exc}"}
+        with dest.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False, default=str) + "\n")
+        print(f"[DIAG] {market}/{host} exact={rec.get('checkpoint_identity_exact')} "
+              f"maxabs={rec.get('max_abs_prediction_delta')} {rec.get('seconds','-')}s",
+              flush=True)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))

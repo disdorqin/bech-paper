@@ -26,46 +26,243 @@
     ]
   },
   "falsified_hypotheses": [
-    {"hypothesis": "thread pinning differed at freeze time", "test": "re-derive LAGO_NP/TimeMixer at torch.set_num_threads in {1,2,4,8,12,16,24,32}", "result": "eight distinct digests, none equal to the frozen one; each within 1.2e-4..1.6e-4 of the frozen predictions -> ruled out"},
-    {"hypothesis": "interop thread pool differed", "test": "torch.set_num_interop_threads(1) + set_num_threads(1) before any parallel work", "result": "digest AF3C613B... != frozen; also identical to the threads=4 digest, showing the digest is not a unique function of the pool setting -> ruled out"},
-    {"hypothesis": "float32 matmul precision / deterministic algorithms", "test": "3 precision levels x deterministic on/off", "result": "all six combinations give the byte-identical digest E5E4E7D7... -> ruled out (setting is inert for this workload)"},
-    {"hypothesis": "process/environment nondeterminism", "test": "repeat the same re-derivation 3x in one process and across processes", "result": "digest identical every time -> ruled out (this environment is deterministic; re-running cannot converge to the frozen weights)"},
-    {"hypothesis": "host recipe differs from the manifest", "test": "compare host_cfg / official_config_for against the manifest's effective_host_config / official_config on failing and passing cells", "result": "equal on every cell tested -> ruled out"},
-    {"hypothesis": "dataset, split or cache drift", "test": "compare n_train/n_val, source_sha256, split_hash and every source_path against the frozen manifest", "result": "all equal, all source files present, all FILE entries of IMPLEMENTATION_HASH_REGISTRY.csv match (0 mismatches in both families) -> ruled out"},
-    {"hypothesis": "implementation drift between the two freeze commits", "test": "git diff --stat 6fb98416fc37 8e2062b354b2 -- src/ experiments/current/china5_posthoc_baseline_panel/ experiments/foundation/", "result": "empty output -> ruled out"},
-    {"hypothesis": "official vendor tree drifted (it is untracked, so git is blind to it)", "test": "git ls-files on experiments/foundation/reference_deps (0 entries) plus file mtimes", "result": "the whole vendor tree is untracked (status '??'), but it was last written 2026-09-10, i.e. BEFORE both freezes of 2026-09-12 (nem_nord 17:05, gefcom_np 20:53), and is shared by both families -> drift cannot explain a family split"},
-    {"hypothesis": "torch build differs from the frozen version string", "test": "compare torch.__version__ against the frozen sidecar", "result": "2.13.0+cpu exact match in the stage venv (s1b2_frozen_env) -> the version string matches, yet the numerics do not; the carrier is below the version string (compiled kernels / CPU ISA), which nothing records"}
+    {
+      "hypothesis": "thread pinning differed at freeze time",
+      "test": "re-derive LAGO_NP/TimeMixer at torch.set_num_threads in {1,2,4,8,12,16,24,32}",
+      "result": "eight distinct digests, none equal to the frozen one; each within 1.2e-4..1.6e-4 of the frozen predictions -> ruled out"
+    },
+    {
+      "hypothesis": "interop thread pool differed",
+      "test": "torch.set_num_interop_threads(1) + set_num_threads(1) before any parallel work",
+      "result": "digest AF3C613B... != frozen; also identical to the threads=4 digest, showing the digest is not a unique function of the pool setting -> ruled out"
+    },
+    {
+      "hypothesis": "float32 matmul precision / deterministic algorithms",
+      "test": "3 precision levels x deterministic on/off",
+      "result": "all six combinations give the byte-identical digest E5E4E7D7... -> ruled out (setting is inert for this workload)"
+    },
+    {
+      "hypothesis": "process/environment nondeterminism",
+      "test": "repeat the same re-derivation 3x in one process and across processes",
+      "result": "digest identical every time -> ruled out (this environment is deterministic; re-running cannot converge to the frozen weights)"
+    },
+    {
+      "hypothesis": "host recipe differs from the manifest",
+      "test": "compare host_cfg / official_config_for against the manifest's effective_host_config / official_config on failing and passing cells",
+      "result": "equal on every cell tested -> ruled out"
+    },
+    {
+      "hypothesis": "dataset, split or cache drift",
+      "test": "compare n_train/n_val, source_sha256, split_hash and every source_path against the frozen manifest",
+      "result": "all equal, all source files present, all FILE entries of IMPLEMENTATION_HASH_REGISTRY.csv match (0 mismatches in both families) -> ruled out"
+    },
+    {
+      "hypothesis": "implementation drift between the two freeze commits",
+      "test": "git diff --stat 6fb98416fc37 8e2062b354b2 -- src/ experiments/current/china5_posthoc_baseline_panel/ experiments/foundation/",
+      "result": "empty output -> ruled out"
+    },
+    {
+      "hypothesis": "official vendor tree drifted (it is untracked, so git is blind to it)",
+      "test": "git ls-files on experiments/foundation/reference_deps (0 entries) plus file mtimes",
+      "result": "the whole vendor tree is untracked (status '??'), but it was last written 2026-09-10, i.e. BEFORE both freezes of 2026-09-12 (nem_nord 17:05, gefcom_np 20:53), and is shared by both families -> drift cannot explain a family split"
+    },
+    {
+      "hypothesis": "torch build differs from the frozen version string",
+      "test": "compare torch.__version__ against the frozen sidecar",
+      "result": "2.13.0+cpu exact match in the stage venv (s1b2_frozen_env) -> the version string matches, yet the numerics do not; the carrier is below the version string (compiled kernels / CPU ISA), which nothing records"
+    }
   ],
   "family_split": {
-    "note": "the split is by dataset family, not by Host",
-    "nem_nord_family_NORD_DK1_NEM_SA1": "reproduces the frozen digest exactly on every cell verified to date (7 of 7 characterised: NEM_SA1 x4 hosts, NORD_DK1 x3 hosts); re-derived blobs are on disk under host_rederivation/",
-    "gefcom_np_family_LAGO_NP_GEFCOM14P": "fails on every cell verified to date (LAGO_NP x4 hosts and GEFCOM14P/PatchTST as first-in-order of the frozen preflight order); numerically equivalent, not bit-identical",
-    "source_commit_differs_by_family": {"gefcom_np": "6fb98416fc37", "nem_nord": "8e2062b354b2"}
+    "note": "the split is by dataset family, not by Host, and it is now complete: 16 of 16 cells characterised",
+    "nem_nord_family_NORD_DK1_NEM_SA1": "8 of 8 cells re-derive BIT-EXACTLY: every one of NORD_DK1 and NEM_SA1 x four Hosts has max abs open-role prediction delta exactly 0.0 and checkpoint_identity_exact true",
+    "gefcom_np_family_LAGO_NP_GEFCOM14P": "8 of 8 cells fail identity: every one of LAGO_NP and GEFCOM14P x four Hosts is numerically equivalent but not bit-identical, max abs open-role prediction delta 1.53e-05 to 0.000759 on prices whose frozen mean abs is 47-166",
+    "source_commit_differs_by_family": {
+      "gefcom_np": "6fb98416fc37",
+      "nem_nord": "8e2062b354b2"
+    },
+    "interpretation": "the frozen Hosts are reproducible on this machine exactly when the family is nem_nord, so this environment is not generically broken; the gefcom_np frozen Hosts were produced under a numerical build this machine is not, and the difference is below the version string (compiled kernels / CPU ISA), which no frozen artifact of either family records"
   },
   "frozen_host_digest_registry": [
-    {"market": "LAGO_NP", "host": "PatchTST", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "CCFE99D11BAACF1AA245368A", "rederivation_verified_exact": false},
-    {"market": "LAGO_NP", "host": "TimeMixer", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "6DF846F3AE70EA2165586E56", "rederivation_verified_exact": false},
-    {"market": "LAGO_NP", "host": "iTransformer", "recipe": "breadth_new_host_itransformer_v1", "frozen_digest_prefix": "843001034DB311B7150F3EFB", "rederivation_verified_exact": false},
-    {"market": "LAGO_NP", "host": "LSTM", "recipe": "breadth_new_host_lstm_v1", "frozen_digest_prefix": "AB5D51D44ECB772813543064", "rederivation_verified_exact": false},
-    {"market": "GEFCOM14P", "host": "PatchTST", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "AF6AE1AB8D9F2F3690E6F672", "rederivation_verified_exact": false},
-    {"market": "GEFCOM14P", "host": "TimeMixer", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "46A4A34740456D6250594B53", "rederivation_verified_exact": false},
-    {"market": "GEFCOM14P", "host": "iTransformer", "recipe": "breadth_new_host_itransformer_v1", "frozen_digest_prefix": "6B6A93D1FFB7B0B15CF470B5", "rederivation_verified_exact": false},
-    {"market": "GEFCOM14P", "host": "LSTM", "recipe": "breadth_new_host_lstm_v1", "frozen_digest_prefix": "CDF5E9292E29278C660AD276", "rederivation_verified_exact": false},
-    {"market": "NORD_DK1", "host": "PatchTST", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "E6E783AC657BEEF87D4EFDE8", "rederivation_verified_exact": null},
-    {"market": "NORD_DK1", "host": "TimeMixer", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "83EF6BC9DF779A5F88357F60", "rederivation_verified_exact": true},
-    {"market": "NORD_DK1", "host": "iTransformer", "recipe": "breadth_new_host_itransformer_v1", "frozen_digest_prefix": "BAA54DB71D5F7AE01241B903", "rederivation_verified_exact": true},
-    {"market": "NORD_DK1", "host": "LSTM", "recipe": "breadth_new_host_lstm_v1", "frozen_digest_prefix": "A439ACB0ADA2DAC478E03578", "rederivation_verified_exact": true},
-    {"market": "NEM_SA1", "host": "PatchTST", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "42BE98C7039E87A418DE6E2C", "rederivation_verified_exact": true},
-    {"market": "NEM_SA1", "host": "TimeMixer", "recipe": "gansu_da_frozen_recipe_v1", "frozen_digest_prefix": "6FC9D55102D27F6238DF11AA", "rederivation_verified_exact": true},
-    {"market": "NEM_SA1", "host": "iTransformer", "recipe": "breadth_new_host_itransformer_v1", "frozen_digest_prefix": "3FC857635B2414CD3BC5D6F4", "rederivation_verified_exact": true},
-    {"market": "NEM_SA1", "host": "LSTM", "recipe": "breadth_new_host_lstm_v1", "frozen_digest_prefix": "CA73FFE51DFC41C1D2238036", "rederivation_verified_exact": true}
+    {
+      "market": "LAGO_NP",
+      "host": "PatchTST",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "CCFE99D11BAACF1AA245368A",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 4.1961669921875e-05,
+      "rederivation_seconds": 1331.65
+    },
+    {
+      "market": "LAGO_NP",
+      "host": "TimeMixer",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "6DF846F3AE70EA2165586E56",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 0.0001163482666015625,
+      "rederivation_seconds": 25.24
+    },
+    {
+      "market": "LAGO_NP",
+      "host": "iTransformer",
+      "recipe": "breadth_new_host_itransformer_v1",
+      "frozen_digest_prefix": "843001034DB311B7150F3EFB",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 4.9591064453125e-05,
+      "rederivation_seconds": 20.65
+    },
+    {
+      "market": "LAGO_NP",
+      "host": "LSTM",
+      "recipe": "breadth_new_host_lstm_v1",
+      "frozen_digest_prefix": "AB5D51D44ECB772813543064",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 0.000759124755859375,
+      "rederivation_seconds": 118.9
+    },
+    {
+      "market": "GEFCOM14P",
+      "host": "PatchTST",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "AF6AE1AB8D9F2F3690E6F672",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 9.1552734375e-05,
+      "rederivation_seconds": 786.06
+    },
+    {
+      "market": "GEFCOM14P",
+      "host": "TimeMixer",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "46A4A34740456D6250594B53",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 0.000213623046875,
+      "rederivation_seconds": 14.58
+    },
+    {
+      "market": "GEFCOM14P",
+      "host": "iTransformer",
+      "recipe": "breadth_new_host_itransformer_v1",
+      "frozen_digest_prefix": "6B6A93D1FFB7B0B15CF470B5",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 6.4849853515625e-05,
+      "rederivation_seconds": 10.51
+    },
+    {
+      "market": "GEFCOM14P",
+      "host": "LSTM",
+      "recipe": "breadth_new_host_lstm_v1",
+      "frozen_digest_prefix": "CDF5E9292E29278C660AD276",
+      "rederivation_verified_exact": false,
+      "prediction_bit_exact": false,
+      "max_abs_open_role_prediction_delta": 1.52587890625e-05,
+      "rederivation_seconds": 62.3
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "PatchTST",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "E6E783AC657BEEF87D4EFDE8",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 731.42
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "TimeMixer",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "83EF6BC9DF779A5F88357F60",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 13.28
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "iTransformer",
+      "recipe": "breadth_new_host_itransformer_v1",
+      "frozen_digest_prefix": "BAA54DB71D5F7AE01241B903",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 8.85
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "LSTM",
+      "recipe": "breadth_new_host_lstm_v1",
+      "frozen_digest_prefix": "A439ACB0ADA2DAC478E03578",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 78.98
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "PatchTST",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "42BE98C7039E87A418DE6E2C",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 316.73
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "TimeMixer",
+      "recipe": "gansu_da_frozen_recipe_v1",
+      "frozen_digest_prefix": "6FC9D55102D27F6238DF11AA",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 7.44
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "iTransformer",
+      "recipe": "breadth_new_host_itransformer_v1",
+      "frozen_digest_prefix": "3FC857635B2414CD3BC5D6F4",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 3.54
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "LSTM",
+      "recipe": "breadth_new_host_lstm_v1",
+      "frozen_digest_prefix": "CA73FFE51DFC41C1D2238036",
+      "rederivation_verified_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "rederivation_seconds": 65.83
+    }
   ],
   "diagnostic_table": {
     "file": "P0_BLOCK_DIAGNOSTIC.jsonl",
+    "file_sha256": "F3B2B07EFEC50E47A8206EFBAED76E80B264B48B23EA02388A909068E3DB48C1",
     "producer": "experiments/current/hch_s1_b2_international_confirmation_20260919/implementation/p0_block_diagnostic.py",
-    "sha256": "065EEFD13B5D9DB4EC512F3786FE21D3849F64856B06DB5EEAE4A4A072AC5EF1",
-    "status": "completing in the background: it re-derives all 16 Hosts one at a time and appends frozen digest, re-derived digest, bit-exactness and max abs open-role prediction delta per cell.  It is diagnostic only: it gates nothing and never enables the protected-final reader.",
-    "why_it_matters": "p0_preflight.py raises at the first non-identical Host and therefore reports only the first failure; this table is what turns that into a complete 16-cell picture."
+    "producer_sha256": "C1868F4E0D3A37F775E0A6A66DED58170C0DDEAF7746E52F822C2E98D2B6AF26",
+    "status": "COMPLETE: all 16 cells characterised",
+    "cells": 16,
+    "cells_exact": 8,
+    "cells_failing": 8,
+    "total_fit_seconds": 3596,
+    "protected_final_windows_read_in_total": 0,
+    "roles_present_on_every_cell": [
+      "DEV_EVAL",
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN"
+    ],
+    "parallelism_note": "run as 8 concurrent processes, each pinning torch.set_num_threads(1); single-threaded reductions are order-fixed, so concurrency changes no cell's bits.  A GPU was not used and must not be: it would change both the torch build and the device, making every digest comparison against the CPU-frozen manifests meaningless.",
+    "why_it_matters": "p0_preflight.py raises at the first non-identical Host and therefore reports only the first failure; this table is what turns that into a complete 16-cell picture, and it is what localises the defect to one family rather than to the machine."
   },
   "protected_final_access": {
     "read_count": 0,
@@ -76,7 +273,14 @@
     "sealed_rows_parsed": 0,
     "labelled_online_tta": false,
     "windows_materialised": "open roles only (HOST_TRAIN, HOST_VAL, POST_TRAIN, DEV_EVAL) on every code path executed",
-    "protected_days_never_scored": {"LAGO_NP": 654, "GEFCOM14P": 321, "NORD_DK1": 289, "NEM_SA1": 108, "total": 1372}
+    "protected_days_never_scored": {
+      "LAGO_NP": 654,
+      "GEFCOM14P": 321,
+      "NORD_DK1": 289,
+      "NEM_SA1": 108,
+      "total": 1372
+    },
+    "read_count_evidence": "every one of the 16 diagnostic cells records protected_final_windows_read = 0 and roles_present = [DEV_EVAL, HOST_TRAIN, HOST_VAL, POST_TRAIN]"
   },
   "constraints_honoured": {
     "no_proxy_rows_manufactured": true,
@@ -107,7 +311,9 @@
   "provenance_hashes": {
     "p0_preflight_sha256": "6D4260EC67CD5EE1EC94DCB4ECB1C008C433C8475F6D676A32313238D004EF57",
     "confirmation_executor_sha256": "781C3EEEABAB5B74033FDD31E64B7C150779B2A1FC08766742FE99240F8FD4AE",
-    "intl_shared_sha256": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C"
+    "intl_shared_sha256": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C",
+    "p0_block_diagnostic_sha256": "C1868F4E0D3A37F775E0A6A66DED58170C0DDEAF7746E52F822C2E98D2B6AF26",
+    "p0_block_diagnostic_jsonl_sha256": "F3B2B07EFEC50E47A8206EFBAED76E80B264B48B23EA02388A909068E3DB48C1"
   },
   "next_authorised_action": "none in this stage.  Re-establishing the gefcom_np frozen Hosts would require either a recorded environment identity or the frozen weights themselves; neither exists on disk, and manufacturing a numerically-close substitute is a proxy row and is forbidden by the freeze."
 }
