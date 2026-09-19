@@ -1,0 +1,28 @@
+{
+  "schema": "hch_s1_b2_international_verifier_result.v1",
+  "verifier_imports_executor": false,
+  "verifier_reads_price_values": false,
+  "checks": [
+    {
+      "check": "p0.pass_token_present",
+      "ok": false,
+      "detail": "P0_PASS.json is absent: the frozen-Host identity preflight never passed, so the protected-final reader was never enabled and there is no executor output to verify.  No panel, no medians, no gates, no ranking exist."
+    }
+  ],
+  "n_checks": 1,
+  "n_failed": 1,
+  "failures": [
+    "p0.pass_token_present"
+  ],
+  "recomputed_aggregates": null,
+  "chronology": null,
+  "snapshot": {
+    "verifier_sha256": "6D8DA7F811904C0A6127492D6353953020C7443526A830A86C24B6F387036936",
+    "protocol_sha256": "D741D4DFCADB979486BBFB59B7ACD601F3286CFA15A899551F7D3E61A12DE42C",
+    "executor_sha256": "781C3EEEABAB5B74033FDD31E64B7C150779B2A1FC08766742FE99240F8FD4AE",
+    "shared_contract_sha256": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C",
+    "p0_preflight_sha256": "6D4260EC67CD5EE1EC94DCB4ECB1C008C433C8475F6D676A32313238D004EF57",
+    "evidence_files": {}
+  },
+  "token": "HCH_S1_B2_INTERNATIONAL_VERIFIER_FAIL"
+}
