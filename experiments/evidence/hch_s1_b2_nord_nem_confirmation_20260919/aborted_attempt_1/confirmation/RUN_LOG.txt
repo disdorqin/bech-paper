@@ -1,0 +1,14 @@
+[14:02:22] ==============================================================================
+[14:02:22] S1-B2 bounded NORD_DK1/NEM_SA1 confirmation -- PROTECTED_FINAL, one pass, 8 cells
+[14:02:22] [GATE] protected reader unlocked by experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_PASS.json (verdict=PASS, protected reads=0)
+[14:02:23] [ENV] torch=2.13.0+cpu threads=1 runner_STEPS=1000 flags={"b3": false, "c": false, "checkpoint": "inner", "objective": "mse", "ray_norm": "l2", "scalar": "normalized", "scale": "mean"}
+[14:02:23] [THR] re-used frozen thresholds: NORD_DK1(q05=20.11,q95=487.2,s90=291.4), NEM_SA1(q05=-52.86,q95=241.4,s90=392.8)
+[14:02:23] [FAIL] NORD_DK1  PatchTST      AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NORD_DK1  TimeMixer     AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NORD_DK1  iTransformer  AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NORD_DK1  LSTM          AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NEM_SA1   PatchTST      AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NEM_SA1   TimeMixer     AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NEM_SA1   iTransformer  AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [FAIL] NEM_SA1   LSTM          AttributeError: 'NoneType' object has no attribute 'load_state_dict'
+[14:02:23] [VERDICT] HCH_S1_B2_NORD_NEM_INVALID

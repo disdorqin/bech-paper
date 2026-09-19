@@ -1,0 +1,25 @@
+{
+  "schema": "hch_s1_b2_nord_nem_protected_access.v1",
+  "p0_token": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_PASS.json",
+  "p0_token_sha256": "6FD218CFC835D22A5EE32D10F5E74E8FF8EEAE28C7306730A0AD33EC99D8930B",
+  "p0_declared_protected_reads": 0,
+  "cells_accessing_protected": {},
+  "n_cells": 0,
+  "protected_days_predicted_total": 0,
+  "read_audit_this_process": {},
+  "sealed_target_rows_parsed_by_stage_reader": {
+    "NORD_DK1": 0,
+    "NEM_SA1": 0
+  },
+  "host_forward_is_the_only_protected_source": true,
+  "fits_on_protected_days": 0,
+  "tuning_on_protected_days": 0,
+  "scalar_refits_on_protected_days": 0,
+  "checkpoint_changes_on_protected_days": 0,
+  "labelled_online_tta": false,
+  "markets_never_touched": [
+    "LAGO_NP",
+    "GEFCOM14P"
+  ],
+  "note": "S1-B2 is offline: every protected day is scored by a model fitted on POST_TRAIN only. Only COSA is ONLINE_TTA, and it is reported on its own line and excluded from best_static and from the offline ranking."
+}

@@ -1,0 +1,152 @@
+{
+  "schema": "hch_s1_b2_nord_nem_verdict.v1",
+  "token": "HCH_S1_B2_NORD_NEM_INVALID",
+  "panel": {
+    "n_cells": 0,
+    "expected_cells": 8,
+    "failures": [
+      "NORD_DK1/PatchTST: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NORD_DK1/TimeMixer: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NORD_DK1/iTransformer: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NORD_DK1/LSTM: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NEM_SA1/PatchTST: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NEM_SA1/TimeMixer: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NEM_SA1/iTransformer: AttributeError: 'NoneType' object has no attribute 'load_state_dict'",
+      "NEM_SA1/LSTM: AttributeError: 'NoneType' object has no attribute 'load_state_dict'"
+    ],
+    "all_8_cells_scored": false,
+    "host_positive_count": 0,
+    "best_static_win_count": 0,
+    "host_nonworse_within_1pct_count": 0,
+    "within_2pct_of_best_static_count": 0,
+    "panel_median_host_gain_pct": NaN,
+    "panel_median_gain_vs_best_static_pct": NaN,
+    "worst_cell_host_gain_pct": NaN,
+    "best_cell_host_gain_pct": NaN,
+    "market_median_host_gain_pct": {
+      "NORD_DK1": NaN,
+      "NEM_SA1": NaN
+    },
+    "market_medians_host_positive": 0,
+    "worst_market_median_host_gain_pct": NaN,
+    "host_family_median_host_gain_pct": {
+      "PatchTST": NaN,
+      "TimeMixer": NaN,
+      "iTransformer": NaN,
+      "LSTM": NaN
+    },
+    "best_static_choice_counts": {
+      "Host": 0,
+      "delta-Adapter": 0,
+      "PIR": 0
+    },
+    "mdr_worse_than_host_count_internal_control": 0,
+    "protected_days_total": 0,
+    "protected_hours_total": 0,
+    "negative_hours_total": 0,
+    "extreme_days_total": 0,
+    "cells_with_unstable_subset_counts": [],
+    "cosa_chronology_failures": 0,
+    "cosa_chronology_failures_detail": [],
+    "n_cosa_cells": 0,
+    "pir_rows_legal": 0,
+    "pir_rows_expected": 4,
+    "proxy_rows": 0
+  },
+  "gates": {
+    "g1_panel_median_host_gain>0": false,
+    "g2_host_nonworse_within_-1.0%>=6": false,
+    "g3_panel_median_gain_vs_best_static>=-1.0%": false,
+    "g4_within_-2.0%_of_best_static>=6": false,
+    "g5_worst_market_median>=-3.0%": false,
+    "g6_no_access_provenance_chronology_failure": false,
+    "strong:s1_beat_host>=6": false,
+    "strong:s2_beat_best_static>=5": false,
+    "strong:s3_panel_median_gain_vs_best_static>0": false
+  },
+  "s1_b2_remains_frozen": true,
+  "method_change_after_protected_access": false,
+  "rescue_applied": false,
+  "datasets_added": false,
+  "proxy_rows": 0,
+  "lago_gefcom_blocker_relaxed": false,
+  "continuity": {
+    "available": true,
+    "source": "experiments/evidence/hch_s1_b2_international_confirmation_20260919/CONTINUITY_PANEL.json",
+    "source_sha256": "534A38FC00D766502030C5533E09A6C65380AF98BC2DC0C4B30B696E145F11FF",
+    "label": "DEVELOPMENT_CONTINUITY",
+    "rerun_here": false,
+    "enters_primary_aggregate": false,
+    "content": {
+      "schema": "hch_s1_b2_international_continuity_panel.v1",
+      "label": "DEVELOPMENT_CONTINUITY",
+      "is_untouched_confirmation": false,
+      "enters_primary_16_cell_aggregate": false,
+      "enters_section_8_gate": false,
+      "why_excluded": "LAGO_DE and LAGO_PJM participated in historical S1/B2 development, so these cells are continuity evidence, not an untouched confirmation surface (freeze section 9).",
+      "scope_differences_from_the_confirmation_matrix": [
+        "DEV_EVAL partition, not PROTECTED_FINAL",
+        "single seed 17, not the seed median of 7/17/37",
+        "PatchTST and TimeMixer only; iTransformer and LSTM absent",
+        "different markets from the four confirmation markets"
+      ],
+      "method": "frozen S1-B2 = survivor B2 of the S1 sequential surgical repair stage",
+      "method_unchanged_here": true,
+      "rerun_here": false,
+      "cells": [
+        {
+          "market": "LAGO_DE",
+          "host": "PatchTST",
+          "seed": 17,
+          "S1_B2_MAE": 3.9102546139637573,
+          "Host_MAE": 4.7565226554870605,
+          "gain_vs_Host_pct": 17.791737847544148,
+          "historical_S1_MAE": 4.245660116226809,
+          "gain_vs_historical_S1_pct": 7.899961209356814
+        },
+        {
+          "market": "LAGO_DE",
+          "host": "TimeMixer",
+          "seed": 17,
+          "S1_B2_MAE": 3.972773544722472,
+          "Host_MAE": 4.70658016204834,
+          "gain_vs_Host_pct": 15.591078703873801,
+          "historical_S1_MAE": 4.3082407367489,
+          "gain_vs_historical_S1_pct": 7.786639896069946
+        },
+        {
+          "market": "LAGO_PJM",
+          "host": "PatchTST",
+          "seed": 17,
+          "S1_B2_MAE": 2.8915011146329577,
+          "Host_MAE": 3.019613027572632,
+          "gain_vs_Host_pct": 4.24265996238131,
+          "historical_S1_MAE": 3.045757513709513,
+          "gain_vs_historical_S1_pct": 5.064631651804819
+        },
+        {
+          "market": "LAGO_PJM",
+          "host": "TimeMixer",
+          "seed": 17,
+          "S1_B2_MAE": 2.821816782415499,
+          "Host_MAE": 3.2211556434631348,
+          "gain_vs_Host_pct": 12.397378619627881,
+          "historical_S1_MAE": 3.061235350998428,
+          "gain_vs_historical_S1_pct": 7.820978824932295
+        }
+      ],
+      "cell_count": 4,
+      "median_gain_vs_Host_pct": 13.994228661750842,
+      "cells_beating_Host": 4,
+      "provenance": {
+        "source_evidence_root": "experiments/evidence/hch_s1_sequential_surgical_repair_20260918",
+        "source_file": "experiments/evidence/hch_s1_sequential_surgical_repair_20260918/CELL_MEDIANS.csv",
+        "source_file_sha256": "59ED68A9878636F79BED396E856C532F4FA1927CA25AE460A26C2ECEA8CF36DD",
+        "source_stage_token": "HCH_S1_SURGICAL_REPAIR_SUPPORTED_FOR_BREADTH",
+        "source_independent_verifier": "HCH_S1_SURGICAL_REPAIR_INDEPENDENTLY_VERIFIED",
+        "source_results_md_sha256": "36A2B61C9BB5A743BC58468CE56C7EAA92BD6F9D7E935B05B1B3C7EFC05B9AAE"
+      },
+      "note": "Reused verbatim from the verified development stage; nothing was refitted, retuned or re-scored here. Reported only so the manuscript can show foreign-market continuity without letting development cells into the untouched gate."
+    }
+  }
+}

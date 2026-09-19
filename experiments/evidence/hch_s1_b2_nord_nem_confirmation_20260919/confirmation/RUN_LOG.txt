@@ -1,0 +1,50 @@
+[14:35:37] ==============================================================================
+[14:35:37] S1-B2 bounded NORD_DK1/NEM_SA1 confirmation -- PROTECTED_FINAL, one pass, 8 cells
+[14:35:37] [GATE] protected reader unlocked by experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_PASS.json (verdict=PASS, protected reads=0)
+[14:35:38] [ENV] torch=2.13.0+cpu threads=1 runner_STEPS=1000 flags={"b3": false, "c": false, "checkpoint": "inner", "objective": "mse", "ray_norm": "l2", "scalar": "normalized", "scale": "mean"}
+[14:35:38] [THR] re-used frozen thresholds: NORD_DK1(q05=20.11,q95=487.2,s90=291.4), NEM_SA1(q05=-52.86,q95=241.4,s90=392.8)
+[14:36:21] [HCH] NORD_DK1  PatchTST      MAE=   20.4535 (Host    21.1277)  gain=+3.1912%  alpha=1.1335    42.8s
+[14:36:21] [BASE] NORD_DK1  PatchTST      delta-Adapter          MAE=   20.7983 gain=+1.5589%
+[14:36:22] [BASE] NORD_DK1  PatchTST      MatchedDirectResidual  MAE=   25.8140 gain=-22.1811%
+[14:36:41] [COSA] NORD_DK1  PatchTST      MAE=   20.6493 gain=+2.2641%  chronology=PASS
+[14:37:20] [HCH] NORD_DK1  TimeMixer     MAE=   19.5775 (Host    20.0873)  gain=+2.5382%  alpha=1.1991    39.1s
+[14:37:20] [BASE] NORD_DK1  TimeMixer     delta-Adapter          MAE=   20.0954 gain=-0.0400%
+[14:37:21] [BASE] NORD_DK1  TimeMixer     MatchedDirectResidual  MAE=   25.1838 gain=-25.3716%
+[14:37:40] [COSA] NORD_DK1  TimeMixer     MAE=   19.7320 gain=+1.7690%  chronology=PASS
+[14:38:20] [HCH] NORD_DK1  iTransformer  MAE=   20.4108 (Host    20.7825)  gain=+1.7886%  alpha=1.0565    39.7s
+[14:38:20] [BASE] NORD_DK1  iTransformer  delta-Adapter          MAE=   20.5779 gain=+0.9842%
+[14:38:20] [BASE] NORD_DK1  iTransformer  MatchedDirectResidual  MAE=   24.6334 gain=-18.5297%
+[14:38:40] [COSA] NORD_DK1  iTransformer  MAE=   20.5248 gain=+1.2400%  chronology=PASS
+[14:39:20] [HCH] NORD_DK1  LSTM          MAE=   23.7876 (Host    30.8500)  gain=+22.8927%  alpha=3.2230    40.6s
+[14:39:20] [BASE] NORD_DK1  LSTM          delta-Adapter          MAE=   30.8922 gain=-0.1368%
+[14:39:21] [BASE] NORD_DK1  LSTM          MatchedDirectResidual  MAE=   27.0075 gain=+12.4554%
+[14:39:40] [COSA] NORD_DK1  LSTM          MAE=   22.2096 gain=+28.0077%  chronology=PASS
+[14:40:12] [HCH] NEM_SA1   PatchTST      MAE=  128.1948 (Host   130.4882)  gain=+1.7575%  alpha=0.5937    31.3s
+[14:40:12] [BASE] NEM_SA1   PatchTST      delta-Adapter          MAE=  131.3537 gain=-0.6633%
+[14:40:12] [BASE] NEM_SA1   PatchTST      MatchedDirectResidual  MAE=  240.4927 gain=-84.3022%
+[14:40:18] [COSA] NEM_SA1   PatchTST      MAE=  128.8858 gain=+1.2280%  chronology=PASS
+[14:40:48] [HCH] NEM_SA1   TimeMixer     MAE=   90.4748 (Host    92.5583)  gain=+2.2510%  alpha=1.0139    30.0s
+[14:40:48] [BASE] NEM_SA1   TimeMixer     delta-Adapter          MAE=   93.7626 gain=-1.3012%
+[14:40:49] [BASE] NEM_SA1   TimeMixer     MatchedDirectResidual  MAE=  213.8919 gain=-131.0889%
+[14:40:55] [COSA] NEM_SA1   TimeMixer     MAE=   90.2764 gain=+2.4653%  chronology=PASS
+[14:41:25] [HCH] NEM_SA1   iTransformer  MAE=  119.7089 (Host   120.3425)  gain=+0.5264%  alpha=0.4090    30.2s
+[14:41:26] [BASE] NEM_SA1   iTransformer  delta-Adapter          MAE=  120.4099 gain=-0.0560%
+[14:41:26] [BASE] NEM_SA1   iTransformer  MatchedDirectResidual  MAE=  230.3895 gain=-91.4449%
+[14:41:32] [COSA] NEM_SA1   iTransformer  MAE=  118.6850 gain=+1.3773%  chronology=PASS
+[14:42:02] [HCH] NEM_SA1   LSTM          MAE=   77.8228 (Host    78.5295)  gain=+0.8999%  alpha=0.5364    30.0s
+[14:42:02] [BASE] NEM_SA1   LSTM          delta-Adapter          MAE=   78.7431 gain=-0.2721%
+[14:42:03] [BASE] NEM_SA1   LSTM          MatchedDirectResidual  MAE=  225.0321 gain=-186.5575%
+[14:42:10] [COSA] NEM_SA1   LSTM          MAE=   75.8718 gain=+3.3843%  chronology=PASS
+[14:43:52] [BASE] NORD_DK1  PatchTST      PIR                    MAE=   21.0406 gain=+0.4119%
+[14:46:31] [BASE] NORD_DK1  TimeMixer     PIR                    MAE=   20.3759 gain=-1.4366%
+[14:46:52] [BASE] NEM_SA1   PatchTST      PIR                    MAE=  125.9673 gain=+3.4646%
+[14:47:32] [BASE] NEM_SA1   TimeMixer     PIR                    MAE=  145.7023 gain=-57.4168%
+[14:47:32] [CELL] NORD_DK1  PatchTST      best_static=delta-Adapter (   20.7983)  beats_Host=True beats_best_static=True
+[14:47:32] [CELL] NORD_DK1  TimeMixer     best_static=Host (   20.0873)  beats_Host=True beats_best_static=True
+[14:47:32] [CELL] NORD_DK1  iTransformer  best_static=delta-Adapter (   20.5779)  beats_Host=True beats_best_static=True
+[14:47:32] [CELL] NORD_DK1  LSTM          best_static=Host (   30.8500)  beats_Host=True beats_best_static=True
+[14:47:32] [CELL] NEM_SA1   PatchTST      best_static=PIR (  125.9673)  beats_Host=True beats_best_static=False
+[14:47:32] [CELL] NEM_SA1   TimeMixer     best_static=Host (   92.5583)  beats_Host=True beats_best_static=True
+[14:47:32] [CELL] NEM_SA1   iTransformer  best_static=Host (  120.3425)  beats_Host=True beats_best_static=True
+[14:47:32] [CELL] NEM_SA1   LSTM          best_static=Host (   78.5295)  beats_Host=True beats_best_static=True
+[14:47:32] [VERDICT] HCH_S1_B2_NORD_NEM_STRONG_CONFIRMED

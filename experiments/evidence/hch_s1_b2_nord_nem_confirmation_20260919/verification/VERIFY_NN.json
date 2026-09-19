@@ -1,0 +1,323 @@
+{
+  "schema": "hch_s1_b2_nord_nem_verification.v1",
+  "verifier": "verification/verify_nn.py",
+  "verifier_sha256": "0E0A32FBE6A25998F11BD32E18C2E36F3F849C88722E3F108208951A9B243555",
+  "imports_from_executor": false,
+  "checks": [
+    {
+      "check": "V1.reused_contract_layer_digest",
+      "ok": true,
+      "detail": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C vs published 617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C"
+    },
+    {
+      "check": "V1b.p0_recorded_the_same_digest",
+      "ok": true,
+      "detail": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C"
+    },
+    {
+      "check": "V1c.bounded_scope_is_two_markets",
+      "ok": true,
+      "detail": [
+        "NORD_DK1",
+        "NEM_SA1"
+      ]
+    },
+    {
+      "check": "V2.p0_token_is_a_clean_pass",
+      "ok": true,
+      "detail": "PASS"
+    },
+    {
+      "check": "V2b.token_binds_the_preflight_by_content",
+      "ok": true,
+      "detail": "ED494B22A456C428A988C36B6B9A2E2240968D740F63B73278E74B996C7821FF"
+    },
+    {
+      "check": "V2c.executor_cites_the_token_on_disk",
+      "ok": true,
+      "detail": "4BC9ED391F60E4FFE033C0B5B9382646BEF9117FC5F7F5C70A82305ACFB8AC07"
+    },
+    {
+      "check": "V3.p0_covered_all_8_hosts",
+      "ok": true,
+      "detail": 8
+    },
+    {
+      "check": "V3.NORD_DK1/PatchTST.host_identity_exact",
+      "ok": true,
+      "detail": "manifest E6E783AC657BEEF87D4EFDE8106E78F57458A91D8930A4AD8CA0B392F3D815E2 vs E6E783AC657BEEF87D4EFDE8106E78F57458A91D8930A4AD8CA0B392F3D815E2"
+    },
+    {
+      "check": "V3.NORD_DK1/TimeMixer.host_identity_exact",
+      "ok": true,
+      "detail": "manifest 83EF6BC9DF779A5F88357F60B61A9498CB95AE125A32A71324FD2433ECB91FAC vs 83EF6BC9DF779A5F88357F60B61A9498CB95AE125A32A71324FD2433ECB91FAC"
+    },
+    {
+      "check": "V3.NORD_DK1/iTransformer.host_identity_exact",
+      "ok": true,
+      "detail": "manifest BAA54DB71D5F7AE01241B9033DA365F8D86CF58BA874026E97F0129912FADB6B vs BAA54DB71D5F7AE01241B9033DA365F8D86CF58BA874026E97F0129912FADB6B"
+    },
+    {
+      "check": "V3.NORD_DK1/LSTM.host_identity_exact",
+      "ok": true,
+      "detail": "manifest A439ACB0ADA2DAC478E03578A0A9C5D10E8744A42F0AEDFFCB59481C0781C8A3 vs A439ACB0ADA2DAC478E03578A0A9C5D10E8744A42F0AEDFFCB59481C0781C8A3"
+    },
+    {
+      "check": "V3.NEM_SA1/PatchTST.host_identity_exact",
+      "ok": true,
+      "detail": "manifest 42BE98C7039E87A418DE6E2C9B7618DA2072E3F6D2911F9D3D51C773BE04FF87 vs 42BE98C7039E87A418DE6E2C9B7618DA2072E3F6D2911F9D3D51C773BE04FF87"
+    },
+    {
+      "check": "V3.NEM_SA1/TimeMixer.host_identity_exact",
+      "ok": true,
+      "detail": "manifest 6FC9D55102D27F6238DF11AA53542AF3EB7BB5A8C34F3F4F6C75598811D8E595 vs 6FC9D55102D27F6238DF11AA53542AF3EB7BB5A8C34F3F4F6C75598811D8E595"
+    },
+    {
+      "check": "V3.NEM_SA1/iTransformer.host_identity_exact",
+      "ok": true,
+      "detail": "manifest 3FC857635B2414CD3BC5D6F4A51B4AAB23B0EF1F248E40F01784236B3B8D3725 vs 3FC857635B2414CD3BC5D6F4A51B4AAB23B0EF1F248E40F01784236B3B8D3725"
+    },
+    {
+      "check": "V3.NEM_SA1/LSTM.host_identity_exact",
+      "ok": true,
+      "detail": "manifest CA73FFE51DFC41C1D2238036D7A1320926260D98783AC2C811A4E4EBF9AB51D6 vs CA73FFE51DFC41C1D2238036D7A1320926260D98783AC2C811A4E4EBF9AB51D6"
+    },
+    {
+      "check": "V3b.p0_build_and_reader_fidelity",
+      "ok": true,
+      "detail": [
+        "NEM_SA1",
+        "NORD_DK1"
+      ]
+    },
+    {
+      "check": "V3c.p0_read_zero_protected_values",
+      "ok": true,
+      "detail": "PASS"
+    },
+    {
+      "check": "V4.every_cell_forwarded_the_frozen_digest",
+      "ok": true,
+      "detail": [
+        "NEM_SA1/LSTM",
+        "NEM_SA1/PatchTST",
+        "NEM_SA1/TimeMixer",
+        "NEM_SA1/iTransformer",
+        "NORD_DK1/LSTM",
+        "NORD_DK1/PatchTST",
+        "NORD_DK1/TimeMixer",
+        "NORD_DK1/iTransformer"
+      ]
+    },
+    {
+      "check": "V5.NORD_DK1.day_count_matches_the_frozen_freeze",
+      "ok": true,
+      "detail": "frozen 289 days"
+    },
+    {
+      "check": "V5b.NORD_DK1.access_audit_days_match",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "check": "V5.NEM_SA1.day_count_matches_the_frozen_freeze",
+      "ok": true,
+      "detail": "frozen 108 days"
+    },
+    {
+      "check": "V5b.NEM_SA1.access_audit_days_match",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "check": "V5c.protected_totals_are_consistent",
+      "ok": true,
+      "detail": 1588
+    },
+    {
+      "check": "V6.per_seed_gain_arithmetic",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V6b.seed_contract",
+      "ok": true,
+      "detail": "24 rows"
+    },
+    {
+      "check": "V7.cell_median_MAE_recomputes",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V7b.cell_Host_MAE_recomputes",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V7c.cell_gain_definitions_recompute",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V8.baselines_share_the_host_array",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V9.best_static_ranking_recomputes",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V9b.cosa_and_mdr_are_never_best_static",
+      "ok": true,
+      "detail": [
+        "Host",
+        "PIR",
+        "delta-Adapter"
+      ]
+    },
+    {
+      "check": "V10.forbidden_markets_absent_from_every_result_row",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V10b.PIR_only_on_its_legal_hosts",
+      "ok": true,
+      "detail": "4 rows"
+    },
+    {
+      "check": "V10c.blockers_unrelaxed",
+      "ok": true,
+      "detail": "HCH_S1_B2_NORD_NEM_STRONG_CONFIRMED"
+    },
+    {
+      "check": "V10d.PIR_rows_are_scored_once_each",
+      "ok": true,
+      "detail": "28 baseline rows"
+    },
+    {
+      "check": "V11.cosa_is_online_tta_and_separate",
+      "ok": true,
+      "detail": "8 rows"
+    },
+    {
+      "check": "V11b.cosa_chronology_passed_everywhere",
+      "ok": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "check": "V12.protected_rows_parsed_match_the_inventory",
+      "ok": true,
+      "detail": {
+        "NORD_DK1": 6936,
+        "NEM_SA1": 2592
+      }
+    },
+    {
+      "check": "V12b.no_fit_tuning_or_reselection_on_protected_days",
+      "ok": true,
+      "detail": "S1-B2 is offline: every protected day is scored by a model f"
+    },
+    {
+      "check": "V13.frozen_modules_unchanged_since_p0",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "check": "V13b.executor_and_verifier_sources_accounted",
+      "ok": true,
+      "detail": "4975AEF4C8FBE77062C57809D7B66BBF7B88CEDC2894FB695D1E1A968197096B"
+    },
+    {
+      "check": "V14.continuity_is_cited_not_rerun",
+      "ok": true,
+      "detail": "experiments/evidence/hch_s1_b2_international_confirmation_20260919/CONTINUITY_PANEL.json"
+    },
+    {
+      "check": "V15.gates_recompute",
+      "ok": true,
+      "detail": {
+        "g1": true,
+        "g2": true,
+        "g3": true,
+        "g4": true,
+        "g5": true,
+        "g6": true,
+        "s1": true,
+        "s2": true,
+        "s3": true
+      }
+    },
+    {
+      "check": "V15b.terminal_token_recomputes",
+      "ok": true,
+      "detail": "HCH_S1_B2_NORD_NEM_STRONG_CONFIRMED vs HCH_S1_B2_NORD_NEM_STRONG_CONFIRMED"
+    },
+    {
+      "check": "V15c.panel_aggregates_recompute",
+      "ok": true,
+      "detail": {
+        "market": {
+          "NORD_DK1": 2.8646774272949145,
+          "NEM_SA1": 1.3287434824039974
+        }
+      }
+    }
+  ],
+  "n_checks": 45,
+  "n_failed": 0,
+  "failures": [],
+  "recomputed": {
+    "protected_days_per_market": {
+      "NORD_DK1": 289,
+      "NEM_SA1": 108
+    },
+    "protected_days_total": 1588,
+    "panel_median_host_gain_pct": 2.0198122498193736,
+    "panel_median_gain_vs_best_static_pct": 1.2790392073719272,
+    "market_median_host_gain_pct": {
+      "NORD_DK1": 2.8646774272949145,
+      "NEM_SA1": 1.3287434824039974
+    },
+    "gates": {
+      "g1": true,
+      "g2": true,
+      "g3": true,
+      "g4": true,
+      "g5": true,
+      "g6": true,
+      "s1": true,
+      "s2": true,
+      "s3": true
+    },
+    "terminal_token": "HCH_S1_B2_NORD_NEM_STRONG_CONFIRMED"
+  },
+  "verified_artifacts": {
+    "S1B2_CELL_MEDIANS.csv": "FCE00AC179419F0C4B22688424DBC1E1CF431882B4BDAE0CF4FBAD7C6F1DA78D",
+    "S1B2_CELL_SEED_RESULTS.csv": "69720A0127AF025576B0CA07C472142A5E9F92C81328397BC0A6B925E2BE721C",
+    "S1B2_BASELINE_RESULTS.csv": "E99EBD44AF38DD65B3BB999D9EEB2E85704DBEA662365A2280A5092F1F4F5D20",
+    "S1B2_PANEL.json": "D1B78FA99BC03C5A36095E98057D124B589DD2A7CE248F1B48C155A90FA9EB9C",
+    "PROTECTED_ACCESS_AUDIT.json": "9C78069542007D7372768D702E67AB519003DB678D9339FC7908E25D979BB4D7",
+    "VERDICT.json": "6B03A1B7D9CFA141957C448F2E41100D241C77F786FA71A6795834149A3A8E7F"
+  },
+  "p0": {
+    "token_sha256": "4BC9ED391F60E4FFE033C0B5B9382646BEF9117FC5F7F5C70A82305ACFB8AC07",
+    "preflight_sha256": "ED494B22A456C428A988C36B6B9A2E2240968D740F63B73278E74B996C7821FF"
+  },
+  "reused_contract_layer_sha256": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C",
+  "blocked_predecessor_sha256": "68C949B01B647417DF3BB02AD5AB42472CBCCC0BE4437C95ED20D255F379538C",
+  "evidence_root": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919",
+  "mtime_used_as_evidence": false
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "hch_s1_b2_nord_nem_protected_access.v1",
+  "p0_token": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_PASS.json",
+  "p0_token_sha256": "4BC9ED391F60E4FFE033C0B5B9382646BEF9117FC5F7F5C70A82305ACFB8AC07",
+  "p0_declared_protected_reads": 0,
+  "cells_accessing_protected": {
+    "NORD_DK1/PatchTST": {
+      "protected_days_predicted": 289,
+      "protected_hours_predicted": 6936,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "E6E783AC657BEEF87D4EFDE8106E78F57458A91D8930A4AD8CA0B392F3D815E2"
+    },
+    "NORD_DK1/TimeMixer": {
+      "protected_days_predicted": 289,
+      "protected_hours_predicted": 6936,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "83EF6BC9DF779A5F88357F60B61A9498CB95AE125A32A71324FD2433ECB91FAC"
+    },
+    "NORD_DK1/iTransformer": {
+      "protected_days_predicted": 289,
+      "protected_hours_predicted": 6936,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "BAA54DB71D5F7AE01241B9033DA365F8D86CF58BA874026E97F0129912FADB6B"
+    },
+    "NORD_DK1/LSTM": {
+      "protected_days_predicted": 289,
+      "protected_hours_predicted": 6936,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "A439ACB0ADA2DAC478E03578A0A9C5D10E8744A42F0AEDFFCB59481C0781C8A3"
+    },
+    "NEM_SA1/PatchTST": {
+      "protected_days_predicted": 108,
+      "protected_hours_predicted": 2592,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "42BE98C7039E87A418DE6E2C9B7618DA2072E3F6D2911F9D3D51C773BE04FF87"
+    },
+    "NEM_SA1/TimeMixer": {
+      "protected_days_predicted": 108,
+      "protected_hours_predicted": 2592,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "6FC9D55102D27F6238DF11AA53542AF3EB7BB5A8C34F3F4F6C75598811D8E595"
+    },
+    "NEM_SA1/iTransformer": {
+      "protected_days_predicted": 108,
+      "protected_hours_predicted": 2592,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "3FC857635B2414CD3BC5D6F4A51B4AAB23B0EF1F248E40F01784236B3B8D3725"
+    },
+    "NEM_SA1/LSTM": {
+      "protected_days_predicted": 108,
+      "protected_hours_predicted": 2592,
+      "host_forward_source": "REDERIVED_FROZEN_HOST_FORWARD",
+      "host_digest": "CA73FFE51DFC41C1D2238036D7A1320926260D98783AC2C811A4E4EBF9AB51D6"
+    }
+  },
+  "n_cells": 8,
+  "protected_days_predicted_total": 1588,
+  "read_audit_this_process": {
+    "NORD_DK1": {
+      "roles_read": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN",
+        "PROTECTED_FINAL"
+      ],
+      "target_rows": 92256,
+      "context_rows": 96288,
+      "target_rows_by_role": {
+        "HOST_TRAIN": 10368,
+        "HOST_VAL": 1152,
+        "POST_TRAIN": 3456,
+        "DEV_EVAL": 1152,
+        "PROTECTED_FINAL": 6936
+      }
+    },
+    "NEM_SA1": {
+      "roles_read": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN",
+        "PROTECTED_FINAL"
+      ],
+      "target_rows": 34464,
+      "context_rows": 35616,
+      "target_rows_by_role": {
+        "HOST_TRAIN": 3888,
+        "HOST_VAL": 408,
+        "POST_TRAIN": 1296,
+        "DEV_EVAL": 432,
+        "PROTECTED_FINAL": 2592
+      }
+    }
+  },
+  "sealed_target_rows_parsed_by_stage_reader": {
+    "NORD_DK1": 6936,
+    "NEM_SA1": 2592
+  },
+  "host_forward_is_the_only_protected_source": true,
+  "fits_on_protected_days": 0,
+  "tuning_on_protected_days": 0,
+  "scalar_refits_on_protected_days": 0,
+  "checkpoint_changes_on_protected_days": 0,
+  "labelled_online_tta": false,
+  "markets_never_touched": [
+    "LAGO_NP",
+    "GEFCOM14P"
+  ],
+  "note": "S1-B2 is offline: every protected day is scored by a model fitted on POST_TRAIN only. Only COSA is ONLINE_TTA, and it is reported on its own line and excluded from best_static and from the offline ranking."
+}

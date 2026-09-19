@@ -1,0 +1,1081 @@
+{
+  "schema": "hch_s1_b2_nord_nem_p0.v1",
+  "stage": "hch_s1_b2_nord_nem_confirmation_20260919",
+  "authority": "docs/current/HCH_S1_B2_NORD_NEM_CONFIRMATION_20260919.md",
+  "bounded_successor_of": "experiments/evidence/hch_s1_b2_international_confirmation_20260919/P0_BLOCKED.json",
+  "computed_before_protected_access": true,
+  "seal_state_at_preflight": "CLOSED",
+  "markets": [
+    "NORD_DK1",
+    "NEM_SA1"
+  ],
+  "hosts": [
+    "PatchTST",
+    "TimeMixer",
+    "iTransformer",
+    "LSTM"
+  ],
+  "seeds": [
+    7,
+    17,
+    37
+  ],
+  "bounded_scope_note": "LAGO_NP / GEFCOM14P are excluded because their frozen Host identity is unrecoverable, not because their result was unwelcome. The blocker is inherited unchanged and no proxy Host is manufactured.",
+  "environment": {
+    "interpreter": "D:\\computer_download\\environment\\conda\\s1b2_frozen_env\\Scripts\\python.exe",
+    "torch_version": "2.13.0+cpu",
+    "frozen_torch_version": {
+      "2.13.0+cpu": 8
+    },
+    "cells_covered": 8,
+    "frozen_build_exact": true,
+    "why_this_gate_exists": "reproduction under a different torch build is silently wrong, so the build is pinned rather than inferred from the digest comparison"
+  },
+  "sources": {
+    "NORD_DK1": {
+      "market": "NORD_DK1",
+      "family": "nem_nord",
+      "source_path": "data/NORDPOOL/NORD_DK1/NordPool_DK1_2022_2024.csv",
+      "source_sha256": "5DE0CE364EA56765E2F70951489226F81860410D10433401DD2DE0FCF2C1D2FC",
+      "timezone": "Europe/Copenhagen (local wall clock, HourDK semantics)",
+      "hour_label_convention": "hour_beginning",
+      "day_definition": "day D = rows labelled D 00:00 .. D 23:00 (24 contiguous hourly rows)",
+      "split_hash": "23e6976c6402f5fff14de3b48605f32916e7628314da24a5a84a24105ab27c15",
+      "counts": {
+        "HOST_TRAIN": 432,
+        "HOST_VAL": 48,
+        "POST_TRAIN": 144,
+        "DEV_EVAL": 48,
+        "PROTECTED_FINAL": 289
+      },
+      "eligible_days": 961,
+      "irregular_excluded_days": 0,
+      "contract_audit": {
+        "target_column": "price",
+        "target_day_values_read": 16128,
+        "causal_context_values_read": 16848,
+        "protected_final_target_values_read": 0,
+        "protected_positions_guarded": 6936,
+        "rows_parsed": 16968,
+        "source_rows": 24189,
+        "imputation": "none"
+      },
+      "frozen_split_manifest_sha256": "B3BB563925E2D6296736FC0B34D9F55E3366E81D1E783AAB879A64D00FDB7B56",
+      "eligible_days_sha256": "4BB2AE65199F89E4B13138CB6204B3DD63A3B035C0C5065E922C3D805CD8D961",
+      "frozen_read_audit": {
+        "target_column": "price",
+        "target_day_values_read": 16128,
+        "causal_context_values_read": 0,
+        "protected_final_target_values_read": 0,
+        "protected_positions_guarded": 6936,
+        "reader_access_count": 16128
+      },
+      "declared_sealed_read_counters": {
+        "protected_final_target_values_read": 0
+      },
+      "role_day_span": {
+        "HOST_TRAIN": {
+          "n": 432,
+          "first": "2022-01-08",
+          "last": "2023-04-08"
+        },
+        "HOST_VAL": {
+          "n": 48,
+          "first": "2023-04-09",
+          "last": "2023-05-26"
+        },
+        "POST_TRAIN": {
+          "n": 144,
+          "first": "2023-05-27",
+          "last": "2023-10-17"
+        },
+        "DEV_EVAL": {
+          "n": 48,
+          "first": "2023-10-18",
+          "last": "2023-12-12"
+        },
+        "PROTECTED_FINAL": {
+          "n": 289,
+          "first": "2023-12-13",
+          "last": "2024-10-04"
+        }
+      }
+    },
+    "NEM_SA1": {
+      "market": "NEM_SA1",
+      "family": "nem_nord",
+      "source_path": "data/AEMO_NEM/NEM_SA1/processed/SA1_2024_hourly.csv",
+      "source_sha256": "06E0FB851A4AE6A6E752A71FADA9CA79CFBB2E5846E9FBDC44363ED790D9E20F",
+      "timezone": "Australia/Brisbane (NEM time, AEST/UTC+10, no DST)",
+      "hour_label_convention": "hour_beginning",
+      "day_definition": "day D = rows labelled D 00:00 .. D 23:00 (24 contiguous hourly rows)",
+      "split_hash": "27926a99d6aa9ad11cfdb77ba14319c77f79352f65c6042351af520310b469f6",
+      "counts": {
+        "HOST_TRAIN": 162,
+        "HOST_VAL": 17,
+        "POST_TRAIN": 54,
+        "DEV_EVAL": 18,
+        "PROTECTED_FINAL": 108
+      },
+      "eligible_days": 359,
+      "irregular_excluded_days": 0,
+      "contract_audit": {
+        "target_column": "price",
+        "target_day_values_read": 6024,
+        "causal_context_values_read": 6168,
+        "protected_final_target_values_read": 0,
+        "protected_positions_guarded": 2592,
+        "rows_parsed": 6192,
+        "source_rows": 8785,
+        "imputation": "none"
+      },
+      "frozen_split_manifest_sha256": "12D3E7E9AF50410002270360010FED20268D0C9694E8A01A3E8124380C6F3673",
+      "eligible_days_sha256": "C6B39A6885DED73EFD300D73348FF50BEB2473C8076C2573CAEA18EF9AE0DB23",
+      "frozen_read_audit": {
+        "target_column": "price",
+        "target_day_values_read": 6024,
+        "causal_context_values_read": 0,
+        "protected_final_target_values_read": 0,
+        "protected_positions_guarded": 2592,
+        "reader_access_count": 6024
+      },
+      "declared_sealed_read_counters": {
+        "protected_final_target_values_read": 0
+      },
+      "role_day_span": {
+        "HOST_TRAIN": {
+          "n": 162,
+          "first": "2024-01-08",
+          "last": "2024-06-17"
+        },
+        "HOST_VAL": {
+          "n": 17,
+          "first": "2024-06-18",
+          "last": "2024-07-04"
+        },
+        "POST_TRAIN": {
+          "n": 54,
+          "first": "2024-07-05",
+          "last": "2024-08-27"
+        },
+        "DEV_EVAL": {
+          "n": 18,
+          "first": "2024-08-28",
+          "last": "2024-09-14"
+        },
+        "PROTECTED_FINAL": {
+          "n": 108,
+          "first": "2024-09-15",
+          "last": "2024-12-31"
+        }
+      }
+    }
+  },
+  "frozen_modules": {
+    "reused_contract_layer": {
+      "reused_module": "D:\\作业\\science\\solar_leak_price_model\\experiments\\current\\hch_s1_b2_international_confirmation_20260919\\implementation\\intl_shared.py",
+      "reused_module_sha256": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C",
+      "published_sha256": "617D8FDFAE228ADC0EB0AC4164983CB4755147EDA5465588477C3E2D3163356C",
+      "digest_verified_before_rebinding": true,
+      "rebound": {
+        "STAGE": "D:\\作业\\science\\solar_leak_price_model\\experiments\\current\\hch_s1_b2_nord_nem_confirmation_20260919",
+        "EVID": "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_s1_b2_nord_nem_confirmation_20260919",
+        "IMPL": "D:\\作业\\science\\solar_leak_price_model\\experiments\\current\\hch_s1_b2_nord_nem_confirmation_20260919\\implementation",
+        "MARKETS": [
+          "NORD_DK1",
+          "NEM_SA1"
+        ],
+        "CELLS": [
+          "('NORD_DK1', 'PatchTST')",
+          "('NORD_DK1', 'TimeMixer')",
+          "('NORD_DK1', 'iTransformer')",
+          "('NORD_DK1', 'LSTM')",
+          "('NEM_SA1', 'PatchTST')",
+          "('NEM_SA1', 'TimeMixer')",
+          "('NEM_SA1', 'iTransformer')",
+          "('NEM_SA1', 'LSTM')"
+        ],
+        "P0_TOKEN": "D:\\作业\\science\\solar_leak_price_model\\experiments\\evidence\\hch_s1_b2_nord_nem_confirmation_20260919\\P0_PASS.json"
+      },
+      "locked_unrebound": {
+        "HOSTS": [
+          "PatchTST",
+          "TimeMixer",
+          "iTransformer",
+          "LSTM"
+        ],
+        "SEEDS": [
+          7,
+          17,
+          37
+        ],
+        "FIT_ROLE": "POST_TRAIN",
+        "EVAL_ROLE": "PROTECTED_FINAL",
+        "PIR_LEGAL_HOSTS": [
+          "PatchTST",
+          "TimeMixer"
+        ],
+        "BLOCKED_METHODS": [
+          "UEC-STD",
+          "OMPB"
+        ],
+        "OPEN_ROLES": [
+          "HOST_TRAIN",
+          "HOST_VAL",
+          "POST_TRAIN",
+          "DEV_EVAL"
+        ]
+      },
+      "markets_reachable": [
+        "NORD_DK1",
+        "NEM_SA1"
+      ],
+      "excluded_markets": [
+        "LAGO_NP",
+        "GEFCOM14P"
+      ],
+      "excluded_markets_reachable": false,
+      "seal_rule": "a PROTECTED_FINAL coordinate raises until EVID/P0_PASS.json exists and declares zero protected reads"
+    },
+    "nem_nord/contracts": {
+      "path": "experiments/current/hch_international_nem_nord_baseline_matrix/implementation/contracts.py",
+      "sha256": "7366074CC5CBA4886809B2364E74A3D96AE42E2CA8B491CEDBD2911B535A9837"
+    },
+    "nem_nord/icells": {
+      "path": "experiments/current/hch_international_nem_nord_baseline_matrix/implementation/icells.py",
+      "sha256": "CFC5B9968883FCB9AC4A2012EB5C1B29567EA1CF9B2460A9FF59AC8DCF2370C6"
+    },
+    "nem_nord/ihosts": {
+      "path": "experiments/current/hch_international_nem_nord_baseline_matrix/implementation/ihosts.py",
+      "sha256": "393CAD5B9C70B8205F7FFA3F2F7D96F6FD45531FE30C270CF857A1CD1C77060D"
+    },
+    "s1b2_runner": {
+      "path": "experiments/current/hch_s1_sequential_surgical_repair_20260918/implementation/runner.py",
+      "sha256": "419AD33405FBCBCBA27DE92C31524ECE140CF576B8A9E28B984276FBF9F52983"
+    },
+    "baseline_transfers": {
+      "path": "experiments/current/hch_frozen_method_baseline_transfer/transfers.py",
+      "sha256": "FD353745F2A7B2507846F67A65D7E4FB2388F1FC50D2A90AB92ABD1D98A0D59F"
+    },
+    "baseline_pir_transfer": {
+      "path": "experiments/current/hch_frozen_method_baseline_transfer/pir_transfer.py",
+      "sha256": "99D8C37BDA03BA62BF2A71CA6F36D71FFB9AA8A5A18F58B5B80B17DD3F3D4C14"
+    },
+    "baseline_cosa_transfer": {
+      "path": "experiments/current/china5_posthoc_baseline_panel/cosa_transfer.py",
+      "sha256": "10FE41A94495D64F9545E3F55E1B4D70F39799FA7EBADBC504A9ACAF6C4ECF9D"
+    },
+    "panel_metrics": {
+      "path": "experiments/current/china5_posthoc_baseline_panel/panel_metrics.py",
+      "sha256": "9C846BC8538A57CCBB5CBCAF1DEADBDEA2809BDB87FA6FB1181E2E601C711C62"
+    },
+    "s1b2_authority": {
+      "path": "docs/current/HCH_S1_B2_NORD_NEM_CONFIRMATION_20260919.md",
+      "sha256": "A02CB039B66D56722A0B60C1C7EEB7D0C88E149261F9991A4622A259101CAD08"
+    },
+    "s1b2_adjudication": {
+      "path": "docs/current/HCH_S1_B2_PAPER_READY_ADJUDICATION_20260919.md",
+      "sha256": "8C5861F1A3C94C895145B763773D2ABE9E5043DDABEDE7EB82A282C34791C7CA"
+    },
+    "blocked_predecessor": {
+      "path": "experiments/evidence/hch_s1_b2_international_confirmation_20260919/P0_BLOCKED.json",
+      "sha256": "68C949B01B647417DF3BB02AD5AB42472CBCCC0BE4437C95ED20D255F379538C"
+    }
+  },
+  "host_rederivation": [
+    {
+      "market": "NORD_DK1",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "frozen_checkpoint_sha256": "E6E783AC657BEEF87D4EFDE8106E78F57458A91D8930A4AD8CA0B392F3D815E2",
+      "rederived_checkpoint_sha256": "E6E783AC657BEEF87D4EFDE8106E78F57458A91D8930A4AD8CA0B392F3D815E2",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "B0283A1C1BA0F31AACE4D2A56BCBFDF9ABE0C8B5B296B7C48244EA3A06DA04A3",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NORD_DK1/PatchTST.pt",
+      "rederived_blob_sha256": "A17B2AC976EDE8FB4518B5DB2DF1A451ECD044FC748AE2F2F8FC2534225E7C5C",
+      "batch_n_train": 432,
+      "batch_n_val": 48,
+      "open_role_days_predicted": 672,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 384.3044714999851,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 100,
+        "batch_size": 128,
+        "lr": 0.0001,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": "OneCycleLR",
+        "pct_start": 0.3,
+        "patience": 100,
+        "seed": 7,
+        "device": "cpu",
+        "official_params": {
+          "patch_len": 16,
+          "stride": 8,
+          "padding_patch": "end",
+          "revin": 1,
+          "affine": 0,
+          "subtract_last": 0,
+          "decomposition": 0,
+          "d_model": 512,
+          "n_heads": 8,
+          "e_layers": 2,
+          "d_ff": 2048,
+          "dropout": 0.05,
+          "fc_dropout": 0.05,
+          "head_dropout": 0.0
+        }
+      },
+      "official_config": {
+        "patch_len": 16,
+        "stride": 8,
+        "padding_patch": "end",
+        "revin": 1,
+        "affine": 0,
+        "subtract_last": 0,
+        "decomposition": 0,
+        "d_model": 512,
+        "n_heads": 8,
+        "e_layers": 2,
+        "d_ff": 2048,
+        "dropout": 0.05,
+        "fc_dropout": 0.05,
+        "head_dropout": 0.0
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NORD_DK1.json",
+      "blob_sha256_rechecked": "A17B2AC976EDE8FB4518B5DB2DF1A451ECD044FC748AE2F2F8FC2534225E7C5C"
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "frozen_checkpoint_sha256": "83EF6BC9DF779A5F88357F60B61A9498CB95AE125A32A71324FD2433ECB91FAC",
+      "rederived_checkpoint_sha256": "83EF6BC9DF779A5F88357F60B61A9498CB95AE125A32A71324FD2433ECB91FAC",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "F3F714A3DB84B01F8FA2CE8A987AC11CABB80EF85DE7DBCAC8248F33CE37FCF4",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NORD_DK1/TimeMixer.pt",
+      "rederived_blob_sha256": "9799C271CEF65EB419F8A972D4272613801B1277612054D2BCFADD45EE34E96E",
+      "batch_n_train": 432,
+      "batch_n_val": 48,
+      "open_role_days_predicted": 672,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 2.923681000014767,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 10,
+        "batch_size": 128,
+        "lr": 0.01,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": "OneCycleLR",
+        "pct_start": 0.3,
+        "patience": 10,
+        "seed": 7,
+        "device": "cpu",
+        "official_params": {
+          "d_model": 16,
+          "d_ff": 32,
+          "e_layers": 2,
+          "dropout": 0.1,
+          "down_sampling_layers": 3,
+          "down_sampling_window": 2,
+          "down_sampling_method": "avg",
+          "moving_avg": 25,
+          "decomp_method": "moving_avg",
+          "use_norm": 1,
+          "channel_independence": 1,
+          "use_future_temporal_feature": 0,
+          "label_len": 0,
+          "embed": "timeF",
+          "freq": "h",
+          "top_k": 5
+        }
+      },
+      "official_config": {
+        "d_model": 16,
+        "d_ff": 32,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "down_sampling_layers": 3,
+        "down_sampling_window": 2,
+        "down_sampling_method": "avg",
+        "moving_avg": 25,
+        "decomp_method": "moving_avg",
+        "use_norm": 1,
+        "channel_independence": 1,
+        "use_future_temporal_feature": 0,
+        "label_len": 0,
+        "embed": "timeF",
+        "freq": "h",
+        "top_k": 5
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NORD_DK1.json",
+      "blob_sha256_rechecked": "9799C271CEF65EB419F8A972D4272613801B1277612054D2BCFADD45EE34E96E"
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "frozen_checkpoint_sha256": "BAA54DB71D5F7AE01241B9033DA365F8D86CF58BA874026E97F0129912FADB6B",
+      "rederived_checkpoint_sha256": "BAA54DB71D5F7AE01241B9033DA365F8D86CF58BA874026E97F0129912FADB6B",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "F822DCB7768751DE0E10F8A6DA8A16135A88AC4670F697FBA8810E84607C7D3A",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NORD_DK1/iTransformer.pt",
+      "rederived_blob_sha256": "D1D7C092A987ACF4E551EA78315E31F6EE9DE4D40FE10A2E406BD326AEC70B86",
+      "batch_n_train": 432,
+      "batch_n_val": 48,
+      "open_role_days_predicted": 672,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 2.56264130002819,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 10,
+        "batch_size": 32,
+        "lr": 0.0001,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": null,
+        "pct_start": 0.3,
+        "patience": 3,
+        "seed": 2023,
+        "device": "cpu",
+        "official_params": {
+          "d_model": 256,
+          "d_ff": 256,
+          "n_heads": 8,
+          "e_layers": 2,
+          "dropout": 0.1,
+          "activation": "gelu",
+          "factor": 1,
+          "embed": "timeF",
+          "freq": "h",
+          "class_strategy": "projection",
+          "output_attention": false,
+          "use_norm": 1,
+          "channel_independence": false
+        }
+      },
+      "official_config": {
+        "d_model": 256,
+        "d_ff": 256,
+        "n_heads": 8,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "activation": "gelu",
+        "factor": 1,
+        "embed": "timeF",
+        "freq": "h",
+        "class_strategy": "projection",
+        "output_attention": false,
+        "use_norm": 1,
+        "channel_independence": false
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NORD_DK1.json",
+      "blob_sha256_rechecked": "D1D7C092A987ACF4E551EA78315E31F6EE9DE4D40FE10A2E406BD326AEC70B86"
+    },
+    {
+      "market": "NORD_DK1",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "frozen_checkpoint_sha256": "A439ACB0ADA2DAC478E03578A0A9C5D10E8744A42F0AEDFFCB59481C0781C8A3",
+      "rederived_checkpoint_sha256": "A439ACB0ADA2DAC478E03578A0A9C5D10E8744A42F0AEDFFCB59481C0781C8A3",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "7F3ABB68166CE6F46552AD3B0CF3DFC80FABFC3C3E7BAA5299A9BA0C977BACFC",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NORD_DK1/LSTM.pt",
+      "rederived_blob_sha256": "23F4DDA847CC8E2F4591652213B08DF1FE95C9C9C05D9BF4A1F76F3E6DF35ACF",
+      "batch_n_train": 432,
+      "batch_n_val": 48,
+      "open_role_days_predicted": 672,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 17.954987599980086,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 100,
+        "batch_size": 128,
+        "lr": 0.001,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": null,
+        "pct_start": 0.3,
+        "patience": 10,
+        "seed": 7,
+        "device": "cpu",
+        "official_params": {
+          "hidden": 64,
+          "num_layers": 2,
+          "dropout": 0.1
+        }
+      },
+      "official_config": {
+        "hidden": 64,
+        "num_layers": 2,
+        "dropout": 0.1,
+        "d_model": 64
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NORD_DK1.json",
+      "blob_sha256_rechecked": "23F4DDA847CC8E2F4591652213B08DF1FE95C9C9C05D9BF4A1F76F3E6DF35ACF"
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "PatchTST",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "frozen_checkpoint_sha256": "42BE98C7039E87A418DE6E2C9B7618DA2072E3F6D2911F9D3D51C773BE04FF87",
+      "rederived_checkpoint_sha256": "42BE98C7039E87A418DE6E2C9B7618DA2072E3F6D2911F9D3D51C773BE04FF87",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "81A265E084A549C8C9682B1BE36177EDF1CBB36F4E384DBECB0BDC6D0B5882D8",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NEM_SA1/PatchTST.pt",
+      "rederived_blob_sha256": "715279B900FC62933A09B7B968F8FD99F308131CAE62AC9B5EAB16B3B56B7177",
+      "batch_n_train": 162,
+      "batch_n_val": 17,
+      "open_role_days_predicted": 251,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 150.65778979996685,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 100,
+        "batch_size": 128,
+        "lr": 0.0001,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": "OneCycleLR",
+        "pct_start": 0.3,
+        "patience": 100,
+        "seed": 7,
+        "device": "cpu",
+        "official_params": {
+          "patch_len": 16,
+          "stride": 8,
+          "padding_patch": "end",
+          "revin": 1,
+          "affine": 0,
+          "subtract_last": 0,
+          "decomposition": 0,
+          "d_model": 512,
+          "n_heads": 8,
+          "e_layers": 2,
+          "d_ff": 2048,
+          "dropout": 0.05,
+          "fc_dropout": 0.05,
+          "head_dropout": 0.0
+        }
+      },
+      "official_config": {
+        "patch_len": 16,
+        "stride": 8,
+        "padding_patch": "end",
+        "revin": 1,
+        "affine": 0,
+        "subtract_last": 0,
+        "decomposition": 0,
+        "d_model": 512,
+        "n_heads": 8,
+        "e_layers": 2,
+        "d_ff": 2048,
+        "dropout": 0.05,
+        "fc_dropout": 0.05,
+        "head_dropout": 0.0
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NEM_SA1.json",
+      "blob_sha256_rechecked": "715279B900FC62933A09B7B968F8FD99F308131CAE62AC9B5EAB16B3B56B7177"
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "TimeMixer",
+      "host_recipe_id": "gansu_da_frozen_recipe_v1",
+      "frozen_checkpoint_sha256": "6FC9D55102D27F6238DF11AA53542AF3EB7BB5A8C34F3F4F6C75598811D8E595",
+      "rederived_checkpoint_sha256": "6FC9D55102D27F6238DF11AA53542AF3EB7BB5A8C34F3F4F6C75598811D8E595",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "470882AB3D0208F5D14B3521B650AE91844270ABA2336BB6E4B9BB0D9AEAE277",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NEM_SA1/TimeMixer.pt",
+      "rederived_blob_sha256": "ECD790F92EFBFF1A4C33336D0E4679173DF8174071674179446DA21DDC71C8E6",
+      "batch_n_train": 162,
+      "batch_n_val": 17,
+      "open_role_days_predicted": 251,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 1.3434760000091046,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 10,
+        "batch_size": 128,
+        "lr": 0.01,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": "OneCycleLR",
+        "pct_start": 0.3,
+        "patience": 10,
+        "seed": 7,
+        "device": "cpu",
+        "official_params": {
+          "d_model": 16,
+          "d_ff": 32,
+          "e_layers": 2,
+          "dropout": 0.1,
+          "down_sampling_layers": 3,
+          "down_sampling_window": 2,
+          "down_sampling_method": "avg",
+          "moving_avg": 25,
+          "decomp_method": "moving_avg",
+          "use_norm": 1,
+          "channel_independence": 1,
+          "use_future_temporal_feature": 0,
+          "label_len": 0,
+          "embed": "timeF",
+          "freq": "h",
+          "top_k": 5
+        }
+      },
+      "official_config": {
+        "d_model": 16,
+        "d_ff": 32,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "down_sampling_layers": 3,
+        "down_sampling_window": 2,
+        "down_sampling_method": "avg",
+        "moving_avg": 25,
+        "decomp_method": "moving_avg",
+        "use_norm": 1,
+        "channel_independence": 1,
+        "use_future_temporal_feature": 0,
+        "label_len": 0,
+        "embed": "timeF",
+        "freq": "h",
+        "top_k": 5
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NEM_SA1.json",
+      "blob_sha256_rechecked": "ECD790F92EFBFF1A4C33336D0E4679173DF8174071674179446DA21DDC71C8E6"
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "iTransformer",
+      "host_recipe_id": "breadth_new_host_itransformer_v1",
+      "frozen_checkpoint_sha256": "3FC857635B2414CD3BC5D6F4A51B4AAB23B0EF1F248E40F01784236B3B8D3725",
+      "rederived_checkpoint_sha256": "3FC857635B2414CD3BC5D6F4A51B4AAB23B0EF1F248E40F01784236B3B8D3725",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "44CF61721A548260F628DC793E6985BB0EBE7ACB104F18282773C050242BC2C4",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NEM_SA1/iTransformer.pt",
+      "rederived_blob_sha256": "9B53E8E9FF4ABAEDD1D203B1D8CBA2616F7F3E4F3B6DB5A526BB53131362A7CE",
+      "batch_n_train": 162,
+      "batch_n_val": 17,
+      "open_role_days_predicted": 251,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 1.2371318999794312,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 10,
+        "batch_size": 32,
+        "lr": 0.0001,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": null,
+        "pct_start": 0.3,
+        "patience": 3,
+        "seed": 2023,
+        "device": "cpu",
+        "official_params": {
+          "d_model": 256,
+          "d_ff": 256,
+          "n_heads": 8,
+          "e_layers": 2,
+          "dropout": 0.1,
+          "activation": "gelu",
+          "factor": 1,
+          "embed": "timeF",
+          "freq": "h",
+          "class_strategy": "projection",
+          "output_attention": false,
+          "use_norm": 1,
+          "channel_independence": false
+        }
+      },
+      "official_config": {
+        "d_model": 256,
+        "d_ff": 256,
+        "n_heads": 8,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "activation": "gelu",
+        "factor": 1,
+        "embed": "timeF",
+        "freq": "h",
+        "class_strategy": "projection",
+        "output_attention": false,
+        "use_norm": 1,
+        "channel_independence": false
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NEM_SA1.json",
+      "blob_sha256_rechecked": "9B53E8E9FF4ABAEDD1D203B1D8CBA2616F7F3E4F3B6DB5A526BB53131362A7CE"
+    },
+    {
+      "market": "NEM_SA1",
+      "host": "LSTM",
+      "host_recipe_id": "breadth_new_host_lstm_v1",
+      "frozen_checkpoint_sha256": "CA73FFE51DFC41C1D2238036D7A1320926260D98783AC2C811A4E4EBF9AB51D6",
+      "rederived_checkpoint_sha256": "CA73FFE51DFC41C1D2238036D7A1320926260D98783AC2C811A4E4EBF9AB51D6",
+      "checkpoint_identity_exact": true,
+      "prediction_bit_exact": true,
+      "max_abs_open_role_prediction_delta": 0.0,
+      "frozen_cache_sha256": "26C60ECD395A142B495CB6877F30512255522117ED0E618D80DD8B5636D30D46",
+      "rederived_blob_path": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/host_rederivation/NEM_SA1/LSTM.pt",
+      "rederived_blob_sha256": "2B13899074EEEDD822E4786D47AD33153A601C86D7C1FBEC50BCC7BAC5FDD9B6",
+      "batch_n_train": 162,
+      "batch_n_val": 17,
+      "open_role_days_predicted": 251,
+      "open_roles_present": [
+        "DEV_EVAL",
+        "HOST_TRAIN",
+        "HOST_VAL",
+        "POST_TRAIN"
+      ],
+      "protected_final_days_predicted": 0,
+      "protected_final_windows_read": 0,
+      "train_seconds": 13.85949130001245,
+      "effective_host_config": {
+        "seq_len": 168,
+        "pred_len": 24,
+        "channels": 1,
+        "d_model": 64,
+        "e_layers": 2,
+        "dropout": 0.1,
+        "epochs": 100,
+        "batch_size": 128,
+        "lr": 0.001,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "scheduler": null,
+        "pct_start": 0.3,
+        "patience": 10,
+        "seed": 7,
+        "device": "cpu",
+        "official_params": {
+          "hidden": 64,
+          "num_layers": 2,
+          "dropout": 0.1
+        }
+      },
+      "official_config": {
+        "hidden": 64,
+        "num_layers": 2,
+        "dropout": 0.1,
+        "d_model": 64
+      },
+      "torch_version": "2.13.0+cpu",
+      "torch_num_threads": 1,
+      "source_file": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919/P0_HOSTS.NEM_SA1.json",
+      "blob_sha256_rechecked": "2B13899074EEEDD822E4786D47AD33153A601C86D7C1FBEC50BCC7BAC5FDD9B6"
+    }
+  ],
+  "reader_fidelity": {
+    "NORD_DK1": {
+      "n_open_days": 672,
+      "bit_exact_vs_frozen_windows": true,
+      "context_shape": [
+        672,
+        168,
+        1
+      ]
+    },
+    "NEM_SA1": {
+      "n_open_days": 251,
+      "bit_exact_vs_frozen_windows": true,
+      "context_shape": [
+        251,
+        168,
+        1
+      ]
+    }
+  },
+  "support": {
+    "NORD_DK1": {
+      "fit_role": "POST_TRAIN",
+      "eval_role": "PROTECTED_FINAL",
+      "n_fit_days": 144,
+      "n_protected_final_days": 289,
+      "inner_split_n_train": 115,
+      "inner_split_n_val": 29,
+      "inner_split_admits_fit_block": true,
+      "n_fit_days_with_168h_history": 144,
+      "total_history_hours_resolved": 24192,
+      "residual_floor": 3.2335924548864803e-06,
+      "nstate": 0,
+      "legal_state_columns": [],
+      "realised_demand_substituted": false,
+      "forbidden_target_day_inputs": [
+        "price"
+      ],
+      "target_day_realized_state_reads": 0,
+      "protected_final_target_values_read": 0,
+      "inner_split_replayed_indices": {
+        "n_train": 115,
+        "n_val": 29
+      }
+    },
+    "NEM_SA1": {
+      "fit_role": "POST_TRAIN",
+      "eval_role": "PROTECTED_FINAL",
+      "n_fit_days": 54,
+      "n_protected_final_days": 108,
+      "inner_split_n_train": 43,
+      "inner_split_n_val": 11,
+      "inner_split_admits_fit_block": true,
+      "n_fit_days_with_168h_history": 54,
+      "total_history_hours_resolved": 9072,
+      "residual_floor": 4.764669642128812e-05,
+      "nstate": 0,
+      "legal_state_columns": [],
+      "realised_demand_substituted": false,
+      "forbidden_target_day_inputs": [
+        "price",
+        "TOTALDEMAND"
+      ],
+      "target_day_realized_state_reads": 0,
+      "protected_final_target_values_read": 0,
+      "inner_split_replayed_indices": {
+        "n_train": 43,
+        "n_val": 11
+      }
+    }
+  },
+  "state_manifest": {
+    "NORD_DK1": {
+      "market": "NORD_DK1",
+      "manifest_gated": true,
+      "nstate": 0,
+      "columns": [],
+      "realised_demand_substituted": false,
+      "forbidden_column_reads": 0,
+      "target_day_price_reads": 0,
+      "rows_read": 0,
+      "reader": "no legally forecast-known target-day state (freeze section 3)"
+    },
+    "NEM_SA1": {
+      "market": "NEM_SA1",
+      "manifest_gated": true,
+      "nstate": 0,
+      "columns": [],
+      "realised_demand_substituted": false,
+      "forbidden_column_reads": 0,
+      "target_day_price_reads": 0,
+      "rows_read": 0,
+      "reader": "no legally forecast-known target-day state (freeze section 3)"
+    }
+  },
+  "baseline_matrix": {
+    "host": {
+      "cells": 8,
+      "setting": "OFFLINE_HOST_REFERENCE"
+    },
+    "delta-Adapter": {
+      "cells": 8,
+      "setting": "OFFLINE_STATIC_POSTHOC",
+      "seed": 7
+    },
+    "MatchedDirectResidual": {
+      "cells": 8,
+      "setting": "INTERNAL_CONTROL_ONLY",
+      "in_external_ranking": false
+    },
+    "PIR": {
+      "cells": 4,
+      "setting": "OFFLINE_STATIC_POSTHOC",
+      "seed": 2021,
+      "legal_hosts": [
+        "PatchTST",
+        "TimeMixer"
+      ],
+      "blocked_hosts": [
+        "iTransformer",
+        "LSTM"
+      ],
+      "blocker": "PIR_FROZEN_BACKBONE_CONFIG_ABSENT_FOR_NEW_HOST"
+    },
+    "COSA": {
+      "cells": 8,
+      "setting": "ONLINE_TTA",
+      "in_best_static": false,
+      "seed": 2021
+    },
+    "UEC-STD": {
+      "status": "INHERITED_BLOCKER",
+      "proxy_used": false
+    },
+    "OMPB": {
+      "status": "INHERITED_BLOCKER",
+      "proxy_used": false
+    },
+    "best_static_rule": "min MAE among Host, delta-Adapter, PIR when PIR is legally available",
+    "proxy_rows": 0
+  },
+  "snapshot": {
+    "implementation_tree_sha256": "4975AEF4C8FBE77062C57809D7B66BBF7B88CEDC2894FB695D1E1A968197096B",
+    "verification_tree_sha256": "490EBF8A626D63758859E7783E0CFAF84D1C657E26ABA30C57795225CF02FD5A",
+    "protocol_sha256": "DF01513C896CBF1AB61DE677060869C2184635E4F032744D512A436FBB00EEB5",
+    "launcher_sha256": "72262A8A2D3178FCA7A5DC2453EA7BF57CDC986C84B41133A5204D3EB9D07B12",
+    "elapsed_seconds": 7.122610700025689
+  },
+  "protected_final_access_audit": {
+    "reader_seal_state": "CLOSED for the whole of P0",
+    "sealed_roles_materialised": false,
+    "protected_final_target_values_read": 0,
+    "protected_final_days_predicted": 0,
+    "read_audit_this_process": {
+      "NORD_DK1": {
+        "roles_read": [
+          "DEV_EVAL",
+          "HOST_TRAIN",
+          "HOST_VAL",
+          "POST_TRAIN"
+        ],
+        "target_rows": 19584,
+        "context_rows": 20448,
+        "target_rows_by_role": {
+          "HOST_TRAIN": 10368,
+          "HOST_VAL": 1152,
+          "POST_TRAIN": 3456,
+          "DEV_EVAL": 1152
+        }
+      },
+      "NEM_SA1": {
+        "roles_read": [
+          "DEV_EVAL",
+          "HOST_TRAIN",
+          "HOST_VAL",
+          "POST_TRAIN"
+        ],
+        "target_rows": 7320,
+        "context_rows": 7608,
+        "target_rows_by_role": {
+          "HOST_TRAIN": 3888,
+          "HOST_VAL": 408,
+          "POST_TRAIN": 1296,
+          "DEV_EVAL": 432
+        }
+      }
+    },
+    "declared_by_frozen_contracts": {
+      "NORD_DK1": 0,
+      "NEM_SA1": 0
+    },
+    "roles_read_this_process": [
+      "DEV_EVAL",
+      "HOST_TRAIN",
+      "HOST_VAL",
+      "POST_TRAIN"
+    ]
+  },
+  "verdict": "PASS",
+  "p0_evidence_root": "experiments/evidence/hch_s1_b2_nord_nem_confirmation_20260919"
+}
